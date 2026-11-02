@@ -72,6 +72,7 @@ module.exports = {
 	Src: 'Źródło',
 	Title: 'Tytuł',
 	Alternative: 'Tekst alternatywny',
+	Caption: 'Podpis',
 	Link: 'Link',
 	'Open link in new tab': 'Otwórz w nowej zakładce',
 	Image: 'Grafika',

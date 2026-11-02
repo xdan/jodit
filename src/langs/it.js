@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'Fonte',
 	Title: 'Titolo',
 	Alternative: 'Testo Alternativo',
+	Caption: 'Didascalia',
 	Link: 'Link',
 	'Open link in new tab': 'Apri il link in una nuova scheda',
 	Image: 'Immagine',

@@ -23,6 +23,7 @@ import {
 	hAlignElement
 } from 'jodit/core/helpers/utils/align';
 import { css } from 'jodit/core/helpers/utils/css';
+import { getCaptionWrapper } from 'jodit/core/helpers/utils/image-caption';
 import { getMediaWrapper } from 'jodit/core/helpers/utils/media-wrapper';
 
 // A Normal image sits where the text of its line is aligned (#1531)
@@ -48,11 +49,20 @@ const lineAlign = (editor: IJodit, elm: Nullable<HTMLElement>): string => {
 	}
 };
 
+// A captioned image is aligned by the element holding it and its caption
+const alignedBox = (
+	editor: IJodit,
+	elm: Nullable<HTMLElement>
+): Nullable<HTMLElement> => getCaptionWrapper(editor, elm) ?? elm;
+
 const currentAlign = (
 	editor: IJodit,
 	elm: Nullable<HTMLElement>
-): ImageHAlign =>
-	elm ? getHAlign(elm, getAlignClasses(editor, elm)) : 'normal';
+): ImageHAlign => {
+	const box = alignedBox(editor, elm);
+
+	return box ? getHAlign(box, getAlignClasses(editor, box)) : 'normal';
+};
 
 export const align: IControlType<IJodit> = {
 	name: 'left',
@@ -95,10 +105,12 @@ export const align: IControlType<IJodit> = {
 			return false;
 		}
 
+		const box = alignedBox(editor, elm)!;
+
 		hAlignElement(
-			elm,
+			box,
 			command as ImageHAlign,
-			getAlignClasses(editor, elm)
+			getAlignClasses(editor, box)
 		);
 
 		if (
@@ -130,7 +142,8 @@ export default [
 		icon: 'bin',
 		tooltip: 'Delete',
 		exec: (editor: IJodit, image): void => {
-			image && editor.s.removeNode(image);
+			image &&
+				editor.s.removeNode(getCaptionWrapper(editor, image) ?? image);
 		}
 	},
 	{
@@ -145,17 +158,40 @@ export default [
 		tooltip: 'Edit'
 	},
 	{
+		name: 'caption',
+		exec: (editor: IJodit, image): void => {
+			if (!Dom.isTag(image, 'img')) {
+				return;
+			}
+
+			const caption = editor.e.fire('toggleImageCaption', image);
+			editor.synchronizeValues();
+
+			if (Dom.isHTMLElement(caption)) {
+				editor.e.fire('hideResizer');
+				editor.s.setCursorIn(caption);
+			} else {
+				editor.e.fire('recalcPositionPopup');
+			}
+		},
+		isActive: (editor: IJodit, button): boolean =>
+			Boolean(getCaptionWrapper(editor, button.target)),
+		tooltip: 'Caption'
+	},
+	{
 		name: 'valign',
 		list: ['Top', 'Middle', 'Bottom', 'Normal'],
 		tooltip: 'Vertical align',
-		// `vertical-align` only moves an image in the line, not a floated or block one
+		// `vertical-align` only moves an image in the line, not a floated or block
+		// one, nor a captioned one, which is placed by its caption's element
 		isDisabled: (editor: IJodit, button): boolean => {
 			const image = button.target;
 
 			return Boolean(
 				image &&
 				(['left', 'right'].includes(css(image, 'float') as string) ||
-					css(image, 'display') === 'block')
+					css(image, 'display') === 'block' ||
+					getCaptionWrapper(editor, image))
 			);
 		},
 		exec: (editor: IJodit, image, { control }): void | false => {

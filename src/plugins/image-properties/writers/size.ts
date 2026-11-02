@@ -14,13 +14,32 @@ import { css } from 'jodit/core/helpers/utils/css';
 
 import { normalSizeToString } from '../utils/utils';
 
-/** @private */
+/**
+ * A captioned image fills its caption's element, `box`, which takes the width
+ * @private
+ */
 export function applySize(
 	image: HTMLImageElement,
 	imageWidth: number | string,
 	imageHeight: number | string,
-	sizeIsLocked: boolean
+	sizeIsLocked: boolean,
+	box: HTMLElement = image
 ): void {
+	if (box !== image) {
+		const width = imageWidth ? normalSizeToString(imageWidth) : null;
+
+		css(box, 'width', width);
+		css(image, {
+			width: width && '100%',
+			height:
+				sizeIsLocked || !imageHeight
+					? null
+					: normalSizeToString(imageHeight)
+		});
+
+		return;
+	}
+
 	// Size
 	if (
 		imageWidth !== image.offsetWidth ||

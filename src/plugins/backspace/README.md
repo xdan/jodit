@@ -146,3 +146,4 @@ Fired after deletion is complete.
 - Required plugin: `hotkeys`
 - Handles complex cases like deleting across formatting, merging blocks, and managing lists
 - Word/sentence deletion uses Unicode word boundaries for proper multilingual support
+- In an editable element inside non-editable content, as an image's caption, Backspace at its start and Delete at its end do nothing, as the browser keeps the caret in it

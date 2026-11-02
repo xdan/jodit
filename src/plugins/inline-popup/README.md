@@ -117,7 +117,7 @@ Jodit.make('#editor', {
 ## Default Popup Configurations
 
 - **`a`** (links): Link editing and unlinking tools
-- **`img`** (images): Image manipulation tools
+- **`img`** (images): Image manipulation tools: Delete, Edit (the image properties dialog), Caption (see the `imageCaption` plugin), Vertical align and Align. For a captioned image, Delete and Align act on the element holding the image and its caption, Vertical align is disabled, and the popup opens below the caption
 - **`cells`** (table cells): Table modification tools
 - **`selection`**: Bold, italic, underline, lists, alignment, etc.
 - **`toolbar`**: General inline toolbar

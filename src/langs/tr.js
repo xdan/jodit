@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Kaynak',
 	Title: 'Başlık',
 	Alternative: 'Alternatif Yazı',
+	Caption: 'Resim yazısı',
 	Link: 'Link',
 	'Open link in new tab': 'Bağlantıyı yeni sekmede aç',
 	Image: 'Resim',

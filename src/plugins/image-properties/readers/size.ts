@@ -8,6 +8,7 @@
  * @module plugins/image-properties
  */
 
+import type { Nullable } from 'jodit/types';
 import { isNumeric } from 'jodit/core/helpers/checker/is-numeric';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
@@ -19,7 +20,8 @@ import { normalSizeFromString } from '../utils/utils';
 export async function readSizes(
 	image: HTMLImageElement,
 	values: EditValues,
-	state: ImagePropertiesState
+	state: ImagePropertiesState,
+	captionWrapper?: Nullable<HTMLElement>
 ): Promise<void> {
 	try {
 		await image.decode();
@@ -27,7 +29,10 @@ export async function readSizes(
 		console.error(e);
 	}
 
-	const width = css(image, 'width', true) || attr(image, 'width') || false;
+	const width =
+		css(captionWrapper ?? image, 'width', true) ||
+		attr(image, 'width') ||
+		false;
 
 	const height = css(image, 'height', true) || attr(image, 'height') || false;
 

@@ -15,7 +15,13 @@ import { INVISIBLE_SPACE_REG_EXP, SOURCE_CONSUMER } from 'jodit/core/constants';
 import { autobind, cached, debounce, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { getContainer, pluginSystem } from 'jodit/core/global';
-import { $$, dataBind, getWrappedMedia } from 'jodit/core/helpers';
+import {
+	$$,
+	dataBind,
+	getCaptionedImage,
+	getCaptionWrapper,
+	getWrappedMedia
+} from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { dataURItoBlob } from 'jodit/modules/uploader/helpers/data-uri-to-blob';
 
@@ -94,7 +100,8 @@ export class imageProcessor extends Plugin {
 	 * paints the rest of a block image's line with its parent's highlight. See #1528.
 	 * Media in a wrapper (`jodit-media`, the resizer's `jodit` for an embed, or
 	 * one from `mediaWrappers`) isn't highlighted either, as Safari paints its
-	 * wrapper's whole line, and its resize frame shows it's selected
+	 * wrapper's whole line, and its resize frame shows it's selected. Nor is
+	 * a captioned image's caption
 	 */
 	@autobind
 	private onSelectionChange(): void {
@@ -128,9 +135,11 @@ export class imageProcessor extends Plugin {
 					replaceDataURIToBlobUUID(editor, elm);
 				}
 
+				// A captioned image is selected with its caption, so Delete
+				// removes both
 				editor.e.on(elm, 'mousedown touchstart', () => {
 					removeCaretText(elm);
-					editor.s.select(elm);
+					editor.s.select(getCaptionWrapper(editor, elm) ?? elm);
 				});
 			}
 		});
@@ -153,7 +162,9 @@ function isImageSelected(jodit: IJodit): boolean {
 		startContainer === endContainer &&
 		endOffset === startOffset + 1 &&
 		(Dom.isTag(node, SELECTED_TAGS) ||
-			Boolean(getWrappedMedia(jodit, node))) &&
+			Boolean(
+				getWrappedMedia(jodit, node) ?? getCaptionedImage(jodit, node)
+			)) &&
 		Dom.isOrContains(jodit.editor, startContainer)
 	);
 }

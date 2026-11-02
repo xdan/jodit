@@ -10,11 +10,17 @@
 
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
-import { attr, getAlignClasses, hAlignElement } from 'jodit/core/helpers/utils';
+import {
+	attr,
+	getAlignClasses,
+	getCaptionWrapper,
+	hAlignElement
+} from 'jodit/core/helpers/utils';
 import { css } from 'jodit/core/helpers/utils/css';
 
 import type { ImagePropertiesState } from '../interface';
 
+import { applyCaption } from './caption';
 import { applyLink } from './link';
 import { applyMargin } from './margin';
 import { applySize } from './size';
@@ -34,6 +40,7 @@ export function applyValuesToImage(
 		borderRadius,
 		imageTitle,
 		imageAlt,
+		imageCaption,
 		imageLink,
 		imageWidth,
 		imageHeight,
@@ -58,7 +65,7 @@ export function applyValuesToImage(
 	if (imageSrc) {
 		attr(image, 'src', imageSrc);
 	} else {
-		Dom.safeRemove(image);
+		Dom.safeRemove(getCaptionWrapper(j, image) ?? image);
 		return;
 	}
 
@@ -74,8 +81,20 @@ export function applyValuesToImage(
 	// Link
 	applyLink(j, image, imageLink, imageLinkOpenInNewTab);
 
+	if (opt.image.editClass) {
+		attr(image, 'class', classes || null);
+	}
+
+	if (opt.image.editId) {
+		attr(image, 'id', id || null);
+	}
+
+	// The caption's element takes the image's place on the page and its width,
+	// so it's added or taken away after the image's own style and classes
+	const box = applyCaption(j, image, imageCaption);
+
 	// Size
-	applySize(image, imageWidth, imageHeight, state.sizeIsLocked);
+	applySize(image, imageWidth, imageHeight, state.sizeIsLocked, box);
 
 	// Margin
 	if (j.o.image.editMargins) {
@@ -85,20 +104,12 @@ export function applyValuesToImage(
 			marginRight,
 			marginBottom,
 			marginLeft,
-			image,
+			box,
 			state.marginIsLocked
 		);
 	}
 
-	if (opt.image.editClass) {
-		attr(image, 'class', classes || null);
-	}
-
-	if (opt.image.editId) {
-		attr(image, 'id', id || null);
-	}
-
 	if (opt.image.editAlign) {
-		hAlignElement(image, align, getAlignClasses(j, image));
+		hAlignElement(box, align, getAlignClasses(j, box));
 	}
 }

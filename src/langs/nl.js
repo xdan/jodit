@@ -72,6 +72,7 @@ module.exports = {
 	Src: 'Src',
 	Title: 'Titel',
 	Alternative: 'Alternatieve tekst',
+	Caption: 'Bijschrift',
 	Link: 'Link',
 	'Open link in new tab': 'Link in nieuwe tab openen',
 	Image: 'Afbeelding',

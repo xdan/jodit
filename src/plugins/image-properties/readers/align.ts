@@ -17,7 +17,7 @@ import type { EditValues } from '../interface';
  * @private
  */
 export function readAlign(
-	image: HTMLImageElement,
+	image: HTMLElement,
 	values: EditValues,
 	classes?: Nullable<HAlignClasses>
 ): void {

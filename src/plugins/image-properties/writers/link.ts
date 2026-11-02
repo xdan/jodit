@@ -11,6 +11,7 @@
 import type { IJodit } from 'jodit/types';
 import { Dom } from 'jodit/core/dom/dom';
 import { attr } from 'jodit/core/helpers/utils/attr';
+import { getCaptionWrapper } from 'jodit/core/helpers/utils/image-caption';
 
 /** @private */
 export function applyLink(
@@ -36,8 +37,11 @@ export function applyLink(
 				.filter(p => p && p !== 'noopener' && p !== 'noreferrer');
 			attr(link, 'rel', relParts.length ? relParts.join(' ') : null);
 		}
-	} else {
-		if (link && link.parentNode) {
+	} else if (link && link.parentNode) {
+		// Froala keeps a linked image's caption inside the link
+		if (getCaptionWrapper(j, image)) {
+			Dom.unwrap(link);
+		} else {
 			Dom.replace(link, image, undefined, false, true);
 		}
 	}

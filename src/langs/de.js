@@ -72,6 +72,7 @@ module.exports = {
 	Src: 'Pfad',
 	Title: 'Titel',
 	Alternative: 'Alternativer Text',
+	Caption: 'Beschriftung',
 	Link: 'Link',
 	'Open link in new tab': 'Link in neuem Tab öffnen',
 	Image: 'Bild',

@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Src',
 	Title: 'Judul',
 	Alternative: 'Teks alternatif',
+	Caption: 'Keterangan',
 	Link: 'Tautan',
 	'Open link in new tab': 'Buka tautan di tab baru',
 	Image: 'Gambar',

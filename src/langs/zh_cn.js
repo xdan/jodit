@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'Src',
 	Title: 'Title',
 	Alternative: 'Alternative',
+	Caption: '题注',
 	Link: 'Link',
 	'Open link in new tab': '在新窗口打开链接',
 	Image: '图片',

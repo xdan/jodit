@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Src',
 	Title: 'العنوان',
 	Alternative: 'العنوان البديل',
+	Caption: 'تسمية توضيحية',
 	Link: 'الرابط',
 	'Open link in new tab': 'افتح الرابط في نافذة جديدة',
 	Image: 'الصورة',

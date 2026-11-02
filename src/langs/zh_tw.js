@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Src',
 	Title: 'Title',
 	Alternative: '替代',
+	Caption: '標號',
 	Link: 'Link',
 	'Open link in new tab': '在新分頁開啟連結',
 	Image: '圖片',

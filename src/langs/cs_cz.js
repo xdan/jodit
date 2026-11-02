@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'src',
 	Title: 'Titulek',
 	Alternative: 'Alternativní text (alt)',
+	Caption: 'Titulek',
 	Link: 'Link',
 	'Open link in new tab': 'Otevřít link v nové záložce',
 	Image: 'Obrázek',

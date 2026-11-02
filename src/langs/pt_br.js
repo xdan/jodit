@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Fonte',
 	Title: 'Título',
 	Alternative: 'Texto Alternativo',
+	Caption: 'Legenda',
 	Link: 'Link',
 	'Open link in new tab': 'Abrir link em nova aba',
 	Image: 'Imagem',

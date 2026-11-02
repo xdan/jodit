@@ -20,7 +20,7 @@ export function applyMargin(
 	marginRight: number | string,
 	marginBottom: number | string,
 	marginLeft: number | string,
-	image: HTMLImageElement,
+	image: HTMLElement,
 	marginIsLocked: boolean
 ): void {
 	const margins = [marginTop, marginRight, marginBottom, marginLeft];

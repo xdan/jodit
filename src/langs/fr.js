@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Source',
 	Title: 'Titre',
 	Alternative: 'Alternative',
+	Caption: 'Légende',
 	Filter: 'Filtre',
 	Link: 'Lien',
 	'Open link in new tab': 'Ouvrir le lien dans un nouvel onglet',

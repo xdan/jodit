@@ -13,6 +13,7 @@ import { Dom } from 'jodit/core/dom';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { clearCenterAlign, css, cssInline } from 'jodit/core/helpers/utils/css';
+import { getCaptionedImage } from 'jodit/core/helpers/utils/image-caption';
 import { getWrappedMedia } from 'jodit/core/helpers/utils/media-wrapper';
 
 // The sets of class names an alignment lists, the first being the one to write
@@ -24,7 +25,7 @@ const classSets = (value?: string | string[]): string[][] =>
 /**
  * The class names to align `elm` with: `alignClasses` for its tag, or for the
  * media in it when it wraps media (a `mediaWrappers` wrapper, `jodit` or
- * `jodit-media`)
+ * `jodit-media`) or a captioned image (see `imageCaption`)
  */
 export function getAlignClasses(
 	jodit: IJodit,
@@ -36,7 +37,7 @@ export function getAlignClasses(
 
 	const media = Dom.isTag(elm, new Set(['jodit', 'jodit-media'] as const))
 		? elm.firstElementChild
-		: getWrappedMedia(jodit, elm);
+		: (getWrappedMedia(jodit, elm) ?? getCaptionedImage(jodit, elm));
 
 	return (
 		jodit.o.alignClasses?.[(media ?? elm).nodeName.toLowerCase()] ?? null
@@ -53,20 +54,10 @@ export function hAlignElement(
 	classes?: Nullable<HAlignClasses>
 ): void {
 	if (classes) {
-		hAlignElement(image, 'normal');
-
-		Object.values(classes).forEach(value =>
-			classSets(value).forEach(set => image.classList.remove(...set))
-		);
+		clearHAlign(image, classes);
 		image.classList.add(
 			...(classSets(classes[align || 'normal'])[0] ?? [])
 		);
-
-		['class', 'style'].forEach(name => {
-			if (!attr(image, name)?.trim()) {
-				attr(image, name, null);
-			}
-		});
 
 		return;
 	}
@@ -95,6 +86,29 @@ export function hAlignElement(
 
 		clearCenterAlign(image);
 	}
+}
+
+/**
+ * Remove the alignment `hAlignElement` set on an element, with the classes of
+ * every alignment in `classes`
+ */
+export function clearHAlign(
+	elm: HTMLElement,
+	classes?: Nullable<HAlignClasses>
+): void {
+	hAlignElement(elm, 'normal');
+
+	if (classes) {
+		Object.values(classes).forEach(value =>
+			classSets(value).forEach(set => elm.classList.remove(...set))
+		);
+	}
+
+	['class', 'style'].forEach(name => {
+		if (!attr(elm, name)?.trim()) {
+			attr(elm, name, null);
+		}
+	});
 }
 
 /**

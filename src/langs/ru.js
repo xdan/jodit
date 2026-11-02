@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'src',
 	Title: 'Заголовок',
 	Alternative: 'Альтернативный текст (alt)',
+	Caption: 'Подпись',
 	Link: 'Ссылка',
 	'Open link in new tab': 'Открывать ссылку в новом окне',
 	file: 'Файл',

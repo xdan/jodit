@@ -72,6 +72,7 @@ module.exports = {
 	Src: 'Forrás',
 	Title: 'Cím',
 	Alternative: 'Helyettesítő szöveg',
+	Caption: 'Képaláírás',
 	Link: 'Link',
 	'Open link in new tab': 'Link megnyitása új lapon',
 	Image: 'Kép',

@@ -14,7 +14,13 @@ import type { IViewComponent, Nullable } from 'jodit/types';
 import { autobind, throttle } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
 import { getContainer, pluginSystem } from 'jodit/core/global';
-import { css, ctrlKey, dataBind, splitArray } from 'jodit/core/helpers';
+import {
+	css,
+	ctrlKey,
+	dataBind,
+	getCaptionWrapper,
+	splitArray
+} from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 
 import './config';
@@ -129,7 +135,11 @@ export class dragAndDropElement extends Plugin {
 			lastTarget = lastTarget.parentElement;
 		}
 
-		this.startDragging(lastTarget, event);
+		// A captioned image goes with its caption
+		this.startDragging(
+			getCaptionWrapper(this.j, lastTarget) ?? lastTarget,
+			event
+		);
 	}
 
 	/**

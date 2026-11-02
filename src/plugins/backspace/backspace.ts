@@ -107,6 +107,21 @@ export class backspace extends Plugin {
 				return;
 			}
 
+			// An editable element inside non-editable content, as an image's
+			// caption is, keeps the caret, so nothing past its edge goes
+			const host = Dom.closest(
+				fakeNode,
+				elm =>
+					Dom.isElement(elm) &&
+					elm.hasAttribute('contenteditable') &&
+					!Dom.isContentEditable(elm.parentNode, jodit.editor),
+				jodit.editor
+			);
+
+			if (host && sel.cursorInTheEdge(backspace, host, fakeNode)) {
+				return false;
+			}
+
 			if (jodit.e.fire('backSpaceBeforeCases', backspace, fakeNode)) {
 				return false;
 			}

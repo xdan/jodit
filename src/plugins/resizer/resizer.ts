@@ -21,6 +21,7 @@ import {
 	attr,
 	css,
 	dataBind,
+	getCaptionWrapper,
 	getWrappedMedia,
 	innerWidth,
 	markOwner,
@@ -504,6 +505,19 @@ export class resizer extends Plugin {
 		key: 'width' | 'height',
 		value: number | string
 	): void {
+		// A captioned image fills the element holding it and its caption,
+		// which takes the width
+		const wrapper =
+			key === 'width' && Dom.isTag(element, 'img')
+				? getCaptionWrapper(this.j, element)
+				: null;
+
+		if (wrapper) {
+			css(wrapper, 'width', value);
+			css(element, 'width', '100%');
+			return;
+		}
+
 		const changeAttrs =
 			Dom.isImage(element) && this.j.o.resizer.forImageChangeAttributes;
 
@@ -534,7 +548,9 @@ export class resizer extends Plugin {
 		}
 
 		if (this.element.tagName !== 'JODIT') {
-			this.j.s.select(this.element);
+			this.j.s.select(
+				getCaptionWrapper(this.j, this.element) ?? this.element
+			);
 		} else {
 			Dom.safeRemove(this.element);
 			this.hide();

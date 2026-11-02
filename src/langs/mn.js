@@ -72,6 +72,7 @@ module.exports = {
 	Src: 'Эх үүсвэр',
 	Title: 'Гарчиг',
 	Alternative: 'Алтернатив текст',
+	Caption: 'Тайлбар',
 	Link: 'Холбоос',
 	'Open link in new tab': 'Холбоосыг шинэ хавтсанд нээх',
 	Image: 'Зураг',
