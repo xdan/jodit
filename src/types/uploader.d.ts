@@ -19,6 +19,13 @@ interface IUploaderData {
 	path?: string;
 	baseurl: string;
 	newfilename?: string;
+
+	/**
+	 * The names the files had on the user's device. Only set when the
+	 * images were read as base64 (`insertImageAsBase64URI`), where `files`
+	 * holds data URIs.
+	 */
+	fileNames?: string[];
 }
 
 interface IUploaderAnswer {

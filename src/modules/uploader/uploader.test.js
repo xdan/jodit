@@ -132,6 +132,107 @@ describe('Test uploader module', function () {
 					);
 				});
 			});
+
+			describe('File names (#1089)', function () {
+				it('Should pass the dropped file name to the success handler', function (done) {
+					const file = new FileImage(),
+						editor = getJodit({
+							uploader: {
+								insertImageAsBase64URI: true,
+								defaultHandlerSuccess: function (data) {
+									try {
+										expect(data.files).deep.equals([
+											file.dataURI
+										]);
+										expect(data.fileNames).deep.equals([
+											'logo.gif'
+										]);
+										done();
+									} catch (e) {
+										done(e);
+									}
+								}
+							}
+						});
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+
+					simulateEvent('drop', editor.editor, function (data) {
+						fillXY(data, editor);
+						Object.defineProperty(data, 'dataTransfer', {
+							value: {
+								files: [file]
+							}
+						});
+					});
+				});
+
+				it('Should give each image its own name when the reads finish out of order', function () {
+					const files = [
+							{
+								name: 'first.png',
+								type: 'image/png',
+								dataURI: 'data:image/png;base64,Zmlyc3Q='
+							},
+							{
+								name: 'second.png',
+								type: 'image/png',
+								dataURI: 'data:image/png;base64,c2Vjb25k'
+							}
+						],
+						received = [],
+						editor = getJodit({
+							uploader: {
+								insertImageAsBase64URI: true,
+								defaultHandlerSuccess: function (data) {
+									received.push([
+										data.fileNames[0],
+										data.files[0]
+									]);
+								}
+							}
+						});
+
+					editor.value = '<p>test|</p>';
+					setCursorToChar(editor);
+
+					const MockReader = window.FileReader,
+						pending = [];
+
+					window.FileReader = function () {
+						const self = this;
+						self.readAsDataURL = function (file) {
+							pending.push(function () {
+								self.result = file.dataURI;
+								self.onloadend();
+							});
+						};
+					};
+
+					try {
+						simulateEvent('drop', editor.editor, function (data) {
+							fillXY(data, editor);
+							Object.defineProperty(data, 'dataTransfer', {
+								value: {
+									files: files
+								}
+							});
+						});
+					} finally {
+						window.FileReader = MockReader;
+					}
+
+					pending.reverse().forEach(function (finish) {
+						finish();
+					});
+
+					expect(received).deep.equals([
+						['second.png', 'data:image/png;base64,c2Vjb25k'],
+						['first.png', 'data:image/png;base64,Zmlyc3Q=']
+					]);
+				});
+			});
 		});
 
 		describe('Drop Image and upload on server', function () {
