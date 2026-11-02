@@ -54,6 +54,57 @@ describe('Link plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1749
+	describe('Focus in the link popup', () => {
+		it('Should put the caret in the URL field of the toolbar popup, and still link the selected text', () => {
+			const editor = getJodit();
+			editor.value = '<p>Hello |world|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+			const url = popup.querySelector('[ref=url_input]');
+
+			expect(editor.od.activeElement).equals(url);
+
+			url.value = 'https://example.com';
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(
+				'<p>Hello <a href="https://example.com">world</a></p>'
+			);
+		});
+
+		it('Should give the focus and the selection back to the content when Escape closes the popup', () => {
+			const editor = getJodit();
+			editor.value = '<p>Hello |world|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const url = getOpenedPopup(editor).querySelector('[ref=url_input]');
+
+			simulateEvent('keydown', Jodit.KEY_ESC, url);
+
+			expect(getOpenedPopup(editor)).is.null;
+			expect(editor.od.activeElement).equals(editor.editor);
+			expect(editor.s.sel.toString()).equals('world');
+			expect(editor.editor.innerHTML).equals('<p>Hello world</p>');
+		});
+
+		it("Should put the caret in the URL field of the form a link's own popup opens", () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Hello <a href="https://example.com">world</a></p>';
+
+			simulateEvent('click', editor.editor.querySelector('a'));
+			clickButton('link', getOpenedPopup(editor));
+			const url = getOpenedPopup(editor).querySelector('[ref=url_input]');
+
+			expect(url.value).equals('https://example.com');
+			expect(editor.od.activeElement).equals(url);
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1248
 	describe('deriveUrlFromText', () => {
 		const openLinkFor = (value, opts) => {

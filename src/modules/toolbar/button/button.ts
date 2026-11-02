@@ -50,6 +50,7 @@ import { assert } from 'jodit/core/helpers/utils/assert';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { call, keys } from 'jodit/core/helpers/utils/utils';
 import { UIButton, UIButtonState } from 'jodit/core/ui/button';
+import { focusFormField } from 'jodit/core/ui/helpers/focus-form-field';
 import { findControlType } from 'jodit/core/ui/helpers/get-control-type';
 import { Icon } from 'jodit/core/ui/icon';
 import { Popup } from 'jodit/core/ui/popup/popup';
@@ -405,6 +406,10 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 									? this.container
 									: undefined
 							);
+
+						// The focus stays in the content for a list, which
+						// typing searches, but goes to a form, as in a dialog
+						focusFormField(popup.container);
 					} else {
 						this.__closePopup();
 					}
@@ -785,11 +790,14 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			.off('keydown', this.__onEditorKeyDown);
 
 		// The keyboard brought the focus into the dropdown: give it back to
-		// the button, otherwise it would fall out to the document
+		// the button, otherwise it would fall out to the document. A form
+		// gives it back to the content, with the selection it was opened for
 		const { activeElement } = this.od,
 			hadFocus =
 				activeElement &&
-				Dom.isOrContains(popup.container, activeElement);
+				Dom.isOrContains(popup.container, activeElement),
+			inForm =
+				hadFocus && Dom.closest(activeElement, 'form', popup.container);
 
 		this.state.activated = false;
 		popup.close();
@@ -799,7 +807,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 			attr(this.trigger, 'aria-expanded', false);
 		}
 
-		if (hadFocus) {
+		if (inForm && isJoditObject(this.j)) {
+			this.j.s.focus();
+		} else if (hadFocus) {
 			this.focus();
 		}
 	}
