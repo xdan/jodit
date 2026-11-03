@@ -23,8 +23,8 @@ import './config';
 import { replaceOldTags } from './helpers/visitor/filters/replace-old-tags';
 import {
 	getHash,
-	removeFormatForCollapsedSelection,
 	removeFormatForSelection,
+	removeFormatForWord,
 	removePlaceholderBr,
 	visitNodeWalker
 } from './helpers';
@@ -147,7 +147,7 @@ export class cleanHtml extends Plugin {
 	protected beforeCommand(command: string): void | false {
 		if (command.toLowerCase() === 'removeformat') {
 			if (this.j.s.isCollapsed()) {
-				removeFormatForCollapsedSelection(this.j);
+				removeFormatForWord(this.j);
 			} else {
 				removeFormatForSelection(this.j);
 			}
