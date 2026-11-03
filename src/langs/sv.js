@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'Källa',
 	Title: 'Titel',
 	Alternative: 'Alternativ',
+	Caption: 'Bildtext',
 	Filter: 'Filter',
 	Link: 'Länk',
 	'Open link in new tab': 'Öppna länk i ny flik',

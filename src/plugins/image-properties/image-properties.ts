@@ -15,6 +15,8 @@ import { cache, cached, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import {
+	getCaptionWrapper,
+	getImageCaption,
 	isAbortError,
 	isNumeric,
 	markOwner,
@@ -65,6 +67,7 @@ export class imageProperties extends Plugin {
 			borderRadius: 0,
 			imageTitle: '',
 			imageAlt: '',
+			imageCaption: false,
 			imageLink: '',
 			imageLinkOpenInNewTab: false,
 			imageWidth: 0,
@@ -119,11 +122,13 @@ export class imageProperties extends Plugin {
 		});
 
 		buttons.remove.onAction(() => {
+			const { sourceImage } = this.state;
+			const target = getCaptionWrapper(j, sourceImage) ?? sourceImage;
 			const caret = j.s.createRange();
-			caret.setStartBefore(this.state.sourceImage);
+			caret.setStartBefore(target);
 			caret.collapse(true);
 
-			j.s.removeNode(this.state.sourceImage);
+			j.s.removeNode(target);
 			dialog.close();
 			j.s.selectRange(caret);
 		});
@@ -146,13 +151,26 @@ export class imageProperties extends Plugin {
 				return;
 			}
 
+			const wrapper = getCaptionWrapper(j, sourceImage);
+			const caption = getImageCaption(j, wrapper);
+
+			// A blank caption, as one the dialog has added, takes the caret, as
+			// the image popup's Caption button does
+			if (caption && Dom.isEmpty(caption)) {
+				j.s.setCursorIn(caption);
+				return;
+			}
+
+			// A captioned image is selected with its caption, as a click selects it
+			const target = wrapper ?? sourceImage;
+
 			if (j.o.image.selectImageAfterClose) {
-				j.s.select(sourceImage);
+				j.s.select(target);
 				return;
 			}
 
 			const caret = j.s.createRange();
-			caret.setStartAfter(sourceImage);
+			caret.setStartAfter(target);
 			caret.collapse(true);
 			j.s.selectRange(caret);
 		});

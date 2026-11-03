@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'Zdroj',
 	Title: 'Názov',
 	Alternative: 'Alternatívny text (alt)',
+	Caption: 'Popis',
 	Link: 'Odkaz',
 	'Open link in new tab': 'Otvoriť odkaz na novej karte',
 	Image: 'Obrázok',

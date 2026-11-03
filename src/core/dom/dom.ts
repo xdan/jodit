@@ -366,15 +366,17 @@ export class Dom {
 	 * The node is editable
 	 */
 	static isContentEditable(node: Nullable<Node>, root: HTMLElement): boolean {
+		// The nearest element that says decides, as an editable caption inside
+		// a non-editable figure is editable
+		const host = Dom.closest(
+			node,
+			elm => Dom.isElement(elm) && elm.hasAttribute('contenteditable'),
+			root
+		);
+
 		return (
 			Dom.isNode(node) &&
-			!Dom.closest(
-				node,
-				elm =>
-					Dom.isElement(elm) &&
-					elm.getAttribute('contenteditable') === 'false',
-				root
-			)
+			host?.getAttribute('contenteditable') !== 'false'
 		);
 	}
 

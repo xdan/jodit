@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'ソース',
 	Title: 'タイトル',
 	Alternative: '代替テキスト',
+	Caption: 'キャプション',
 	Link: 'リンク',
 	'Open link in new tab': '新しいタブで開く',
 	Image: '画像',

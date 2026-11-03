@@ -25,6 +25,7 @@ import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import {
 	camelCase,
+	getCaptionWrapper,
 	getMediaWrapper,
 	getWrappedMedia,
 	isArray,
@@ -82,9 +83,10 @@ export class inlinePopup extends Plugin {
 			const isMedia = type === 'jodit-media';
 
 			// Beside the media in a wrapper kept in the content, which can fill
-			// the line
+			// the line, and below a captioned image's caption, so it stays in view
 			const bound =
 				(mediaWrapper && getWrappedMedia(this.j, mediaWrapper)) ||
+				getCaptionWrapper(this.j, target) ||
 				target;
 
 			this.showPopup(() => this.__bound(bound, isMedia), type, target);

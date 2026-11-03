@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'Fuente',
 	Title: 'Título',
 	Alternative: 'Texto Alternativo',
+	Caption: 'Leyenda',
 	Filter: 'Filtrar',
 	Link: 'Vínculo',
 	'Open link in new tab': 'Abrir vínculo en nueva pestaña',

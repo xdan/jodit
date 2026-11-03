@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'سورس',
 	Title: 'عنوان',
 	Alternative: 'جایگزین',
+	Caption: 'زیرنویس',
 	Link: 'لینک',
 	'Open link in new tab': 'باز کزدن لینک در تب جدید',
 	Image: 'عکس',

@@ -86,6 +86,8 @@ import {
 	ViewWithToolbar
 } from 'jodit/modules';
 
+const FOCUS_EVENTS = new Set(['focus', 'blur', 'focusin', 'focusout']);
+
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
 const NOEDIT = {
@@ -1729,10 +1731,34 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 			.on(
 				editor,
 				'selectionchange selectionstart keydown keyup input keypress dblclick mousedown mouseup ' +
-					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur',
+					'click copy cut dragstart drop dragover paste resize touchstart touchend focus blur focusin focusout',
 				(event: Event): false | void => {
 					if (this.o.readonly || this.__isSilentChange) {
 						return;
+					}
+
+					let type = event.type;
+
+					// `focus` and `blur` don't bubble from an editable element inside
+					// the editor, as an image's caption, so `focusin` and `focusout`
+					// stand in for them there. The focus moving between the editor
+					// and such an element stays in the editor
+					if (FOCUS_EVENTS.has(type)) {
+						const inner = type === 'focusin' || type === 'focusout';
+
+						if (
+							inner === (event.target === editor) ||
+							Dom.isOrContains(
+								editor,
+								(event as FocusEvent).relatedTarget as Node
+							)
+						) {
+							return;
+						}
+
+						if (inner) {
+							type = type === 'focusin' ? 'focus' : 'blur';
+						}
 					}
 
 					const w = this.ew;
@@ -1744,7 +1770,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					}
 
 					if (this.e && this.e.fire) {
-						if (this.e.fire(event.type, event) === false) {
+						if (this.e.fire(type, event) === false) {
 							return false;
 						}
 

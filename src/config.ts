@@ -843,7 +843,8 @@ class Config implements IViewOptions {
 	 * spaces. An alignment can also list several such sets, to recognise each
 	 * of them; aligning writes the first. A media wrapper (see
 	 * `mediaWrappers`), and Jodit's own `jodit` and `jodit-media` wrappers,
-	 * are aligned with the classes for the media in them.
+	 * are aligned with the classes for the media in them, and a captioned
+	 * image's wrapper (see `imageCaption`) with those for `img`.
 	 *
 	 * ```javascript
 	 * const media = {

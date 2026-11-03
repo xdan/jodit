@@ -33,6 +33,7 @@ import 'jodit/plugins/hotkeys/hotkeys';
 import 'jodit/plugins/hr/hr';
 import 'jodit/plugins/iframe/iframe';
 import 'jodit/plugins/image/image';
+import 'jodit/plugins/image-caption/image-caption';
 import 'jodit/plugins/image-processor/image-processor';
 import 'jodit/plugins/image-properties/image-properties';
 import 'jodit/plugins/indent/indent';

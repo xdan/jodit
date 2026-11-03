@@ -69,6 +69,7 @@ module.exports = {
 	Src: 'Kilde',
 	Title: 'Tittel',
 	Alternative: 'Alternativ',
+	Caption: 'Bildetekst',
 	Filter: 'Filter',
 	Link: 'Lenke',
 	'Open link in new tab': 'Åpne lenke i ny fane',

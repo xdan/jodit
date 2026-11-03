@@ -28,6 +28,7 @@ Config.prototype.image = {
 	useImageEditor: true,
 	editTitle: true,
 	editAlt: true,
+	showCaptionCheckbox: true,
 	editLink: true,
 	editSize: true,
 	editBorderRadius: true,

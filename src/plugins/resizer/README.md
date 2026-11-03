@@ -33,7 +33,7 @@ Adds interactive resizing capability for images, iframes, videos, tables, and cu
 
 **Default:** `new Set(['img', 'iframe', 'table', 'jodit', 'video'])`
 
-Set of HTML tag names that can be resized by the plugin. Clicking a media wrapper (`jodit-media`, or one from `mediaWrappers`) resizes the media in it.
+Set of HTML tag names that can be resized by the plugin. Clicking a media wrapper (`jodit-media`, or one from `mediaWrappers`) resizes the media in it. A captioned image (see the `imageCaption` plugin) fills the element holding it and its caption, which takes the width as the image is resized.
 
 **Example:**
 ```typescript
@@ -407,7 +407,7 @@ A video that has a height, or one resized freely (Alt, or `useAspectRatio` leavi
 
 When element is selected and Delete or Backspace key pressed:
 
-- **Non-table elements**: Selects element (browser then deletes)
+- **Non-table elements**: Selects element (browser then deletes), or a captioned image's element with its caption
 - **Jodit wrapper**: Directly removes element and hides frame
 - **Tables**: Delete key ignored (table has own deletion logic)
 

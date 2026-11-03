@@ -138,6 +138,23 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+#### `image.showCaptionCheckbox`
+
+**Type:** `boolean`
+
+**Default:** `true`
+
+Shows the Caption checkbox, which gives the image a caption with the `imageCaption` plugin, or takes it away. The dialog has no field for the caption's text: a caption it gives takes the caret when the dialog closes, to be typed under the image. With the checkbox hidden, the dialog leaves the image's caption as it is. For a captioned image, the dialog's width, margins and alignment are the caption element's (see the `imageCaption` plugin).
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    image: {
+        showCaptionCheckbox: false
+    }
+});
+```
+
 #### `image.editLink`
 
 **Type:** `boolean`

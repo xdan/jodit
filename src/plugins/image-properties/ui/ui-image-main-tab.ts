@@ -55,6 +55,12 @@ export class UIImageMainTab extends UIGroup<IJodit> {
 			<label>~Alternative~</label>
 			<input type="text" class="jodit-input &__imageAlt"/>
 		</div>
+		<div class="jodit-form__group &__captionCheckbox">
+			<label class="jodit_vertical_middle">
+				<input type="checkbox" class="jodit-checkbox &__imageCaption"/>
+				<span>~Caption~</span>
+			</label>
+		</div>
 		<div class="jodit-form__group &__editLink">
 			<label>~Link~</label>
 			<input type="text" class="jodit-input &__imageLink"/>
@@ -124,6 +130,19 @@ export class UIImageMainTab extends UIGroup<IJodit> {
 		).value;
 	}
 
+	@watch('state.values.imageCaption')
+	protected onStateCaptionChange(): void {
+		const caption = this.getElm('imageCaption') as HTMLInputElement;
+		caption.checked = this.state.values.imageCaption;
+	}
+
+	@watch('imageCaption:change')
+	protected onCaptionChange(): void {
+		this.state.values.imageCaption = (
+			this.getElm('imageCaption') as HTMLInputElement
+		).checked;
+	}
+
 	@watch('state.values.imageLink')
 	protected onStateImageLinkChange(): void {
 		const imageLink = this.getElm('imageLink') as HTMLInputElement;
@@ -162,6 +181,7 @@ export class UIImageMainTab extends UIGroup<IJodit> {
 				['editSrc', 'editSrc'],
 				['editTitle', 'editTitle'],
 				['editAlt', 'editAlt'],
+				['showCaptionCheckbox', 'captionCheckbox'],
 				['editLink', 'editLink'],
 				['editLink', 'editLinkTarget'],
 				['useImageEditor', 'editImage']

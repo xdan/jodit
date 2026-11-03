@@ -740,10 +740,18 @@ export class Selection implements ISelect {
 	 * Checks whether the editor currently in focus
 	 */
 	isFocused(): boolean {
-		return (
+		const active = this.doc.activeElement;
+
+		// An editable element inside the editor, as an image's caption, has the
+		// focus while the caret is in it
+		return Boolean(
 			this.doc.hasFocus &&
 			this.doc.hasFocus() &&
-			this.area === this.doc.activeElement
+			active &&
+			(this.area === active ||
+				(Dom.isHTMLElement(active) &&
+					active.isContentEditable &&
+					Dom.isOrContains(this.area, active)))
 		);
 	}
 
@@ -1481,6 +1489,9 @@ export class Selection implements ISelect {
 	 * there: the arrow keys then have nothing to move from and the selection
 	 * cannot be escaped. Selecting the island itself keeps the range in editable
 	 * content, so the caret can step over it. See #1184
+	 *
+	 * An editable element inside an island, as an image's caption, is editable
+	 * content of its own, so the search stops there.
 	 */
 	private __closestNotEditable(node: Node): Nullable<HTMLElement> {
 		const { area } = this;
@@ -1489,11 +1500,16 @@ export class Selection implements ISelect {
 			elm: Nullable<Node> = node.parentNode;
 
 		while (elm && elm !== area && area.contains(elm)) {
-			if (
-				Dom.isElement(elm) &&
-				elm.getAttribute('contenteditable') === 'false'
-			) {
-				result = elm as HTMLElement;
+			if (Dom.isElement(elm)) {
+				const editable = elm.getAttribute('contenteditable');
+
+				if (editable === 'true') {
+					break;
+				}
+
+				if (editable === 'false') {
+					result = elm as HTMLElement;
+				}
 			}
 
 			elm = elm.parentNode;

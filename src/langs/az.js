@@ -77,6 +77,7 @@ module.exports = {
 	Src: 'Mənbə',
 	Title: 'Başlıq',
 	Alternative: 'Alternativ mətn',
+	Caption: 'Şəkilaltı yazı',
 	Link: 'Keçid',
 	'Open link in new tab': 'Keçidi yeni vərəqdə aç',
 	Image: 'Şəkil',

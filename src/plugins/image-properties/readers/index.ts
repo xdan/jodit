@@ -12,6 +12,7 @@ import type { IJodit } from 'jodit/types';
 import { getAlignClasses } from 'jodit/core/helpers/utils/align';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { cssInline } from 'jodit/core/helpers/utils/css';
+import { getCaptionWrapper } from 'jodit/core/helpers/utils/image-caption';
 
 import type { ImagePropertiesState } from '../interface';
 
@@ -29,7 +30,14 @@ export async function readValuesFromImage(
 	state: ImagePropertiesState
 ): Promise<void> {
 	const { sourceImage: image, values } = state;
-	readAlign(image, values, getAlignClasses(j, image));
+
+	// A captioned image's caption element holds its place on the page and
+	// its width
+	const wrapper = getCaptionWrapper(j, image);
+	const box = wrapper ?? image;
+	values.imageCaption = Boolean(wrapper);
+
+	readAlign(box, values, getAlignClasses(j, box));
 
 	// Border radius
 	values.borderRadius =
@@ -54,7 +62,7 @@ export async function readValuesFromImage(
 	);
 
 	// Margins
-	readMargins(image, values, state);
+	readMargins(box, values, state);
 
 	// Link
 	readLink(state, j, values);
@@ -63,5 +71,5 @@ export async function readValuesFromImage(
 	values.imageSrc = attr(image, 'src') || '';
 
 	// Image size
-	return readSizes(image, values, state);
+	return readSizes(image, values, state, wrapper);
 }

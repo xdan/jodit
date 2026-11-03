@@ -69,6 +69,7 @@ module.exports = {
 	Src: '경로(src)',
 	Title: '제목',
 	Alternative: '대체 텍스트(alt)',
+	Caption: '캡션',
 	Link: '링크',
 	'Open link in new tab': '새 탭에서 열기',
 	file: '파일',

@@ -14,7 +14,7 @@ import type { EditValues, ImagePropertiesState } from '../interface';
 
 /** @private */
 export function readMargins(
-	image: HTMLImageElement,
+	image: HTMLElement,
 	values: EditValues,
 	state: ImagePropertiesState
 ): void {

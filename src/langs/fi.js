@@ -71,6 +71,7 @@ module.exports = {
 	Src: 'Fuente',
 	Title: 'Otsikko',
 	Alternative: 'Vaihtoehtoinen teksti',
+	Caption: 'Kuvateksti',
 	Filter: 'Suodatin',
 	Link: 'Linkki',
 	'Open link in new tab': 'Avaa uudessa välilehdessä',

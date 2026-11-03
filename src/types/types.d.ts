@@ -285,6 +285,25 @@ export interface MediaWrapper {
 	className: string;
 }
 
+/**
+ * The elements a captioned image is kept in, see `imageCaption`. An empty
+ * `className` matches the tag alone
+ */
+export interface ImageCaptionMarkup {
+	/**
+	 * Holds the image, or its link, and the caption
+	 */
+	wrapper: MediaWrapper;
+
+	/**
+	 * Inside the wrapper, round the image and the caption, as Froala's
+	 * `span.fr-img-wrap`
+	 */
+	inner: Nullable<MediaWrapper>;
+
+	caption: MediaWrapper;
+}
+
 export interface ImageBox {
 	w: number;
 	h: number;

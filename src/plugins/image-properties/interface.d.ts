@@ -16,6 +16,7 @@ export type EditValues = {
 	borderRadius: number;
 	imageTitle: string;
 	imageAlt: string;
+	imageCaption: boolean;
 	imageLink: string;
 	imageLinkOpenInNewTab: boolean;
 	imageWidth: number | string;
@@ -70,6 +71,12 @@ export interface ImagePropertiesOptions {
 	 * Show edit 'alt' input
 	 */
 	editAlt: boolean;
+
+	/**
+	 * Show the Caption checkbox, which gives the image a caption or takes it
+	 * away (see `imageCaption`). The caption itself is typed under the image
+	 */
+	showCaptionCheckbox: boolean;
 
 	/**
 	 * Show edit image link's options

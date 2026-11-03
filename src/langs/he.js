@@ -70,6 +70,7 @@ module.exports = {
 	Src: 'מקור',
 	Title: 'כותרת',
 	Alternative: 'כיתוב חלופי',
+	Caption: 'כיתוב',
 	Link: 'קישור',
 	'Open link in new tab': 'פתח בכרטיסיה חדשה',
 	Image: 'תמונה',
