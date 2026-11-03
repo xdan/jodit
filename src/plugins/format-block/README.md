@@ -44,6 +44,49 @@ The `paragraph` control can be customized through the `controls` configuration:
 }
 ```
 
+### `formatBlock.previewProperties`
+
+The list sits outside the editing area, and in iframe mode outside its document, so on its own each preview would take the toolbar's styles. Each preview copies these CSS properties from how the content shows its tag, so a theme's heading fonts and colours show in the list. Lengths become `em`, so they scale with the preview, and size, line height and margins stay with the list.
+
+**Default:**
+```typescript
+[
+    'font-family',
+    'font-style',
+    'font-weight',
+    'font-variant',
+    'font-stretch',
+    'color',
+    'letter-spacing',
+    'word-spacing',
+    'text-transform',
+    'text-decoration',
+    'text-shadow',
+    '-webkit-font-smoothing',
+    '-moz-osx-font-smoothing'
+]
+```
+
+The two smoothing properties matter on macOS, where a theme's `antialiased` or `grayscale` draws its text thinner than the toolbar's. A browser that doesn't know a property leaves it out.
+
+In iframe mode the content's web fonts load only inside the iframe, and the list is in the page. So while `font-family` is in the list, each time the list opens it adds the content's web fonts to the page's `document.fonts` under names only that editor uses, such as `jodit-preview-1-poppins`, and puts those names first in each preview's `font-family`. Nothing else on the page can use them, and they go when the editor is destroyed. A stylesheet from another site, such as Google Fonts, is fetched for its `@font-face` rules, which needs that site to allow it, as Google Fonts does. Where it doesn't, the preview falls back to the page's fonts.
+
+Replace it with `Jodit.atom`, as an array in a plugin's options merges with the default. An empty list keeps the toolbar's styles:
+
+```javascript
+Jodit.make('#editor', {
+    formatBlock: {
+        previewProperties: Jodit.atom(['font-family', 'color'])
+    }
+});
+
+Jodit.make('#editor', {
+    formatBlock: {
+        previewProperties: Jodit.atom([])
+    }
+});
+```
+
 ## Usage Examples
 
 ### Basic Usage
@@ -227,8 +270,9 @@ The `childTemplate` function creates preview elements:
 
 1. **Element Creation**: Wraps the label in the actual HTML tag (e.g., `<h1>Label</h1>`)
 2. **Style Reset**: Applies `margin:0; padding:0` to prevent layout issues
-3. **Localization**: Translates the label using `editor.i18n()`
-4. **Preview**: Users see how each format looks before selecting it
+3. **Content Styles**: Copies `formatBlock.previewProperties` from a hidden probe of the same tag in the editing area, added and removed in one step, so the value and the history don't change. In iframe mode it also adds the content's web fonts to the page under names only that editor uses
+4. **Localization**: Translates the label using `editor.i18n()`
+5. **Preview**: Users see how each format looks before selecting it
 
 ## Commands
 
