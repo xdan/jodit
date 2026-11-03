@@ -948,7 +948,12 @@ describe('Image caption plugin', () => {
 				);
 			});
 
-			it('should wait for the click to end when the focus goes to the image, and then open its popup below it', async () => {
+			it('should wait for the click to end when the focus goes to the image, and then open its popup below it', async function () {
+				// Headless Firefox fires no focus events while its window isn't focused
+				if (!document.hasFocus()) {
+					this.skip();
+				}
+
 				const editor = getJodit({ defaultTimeout: 0, height: 700 });
 				const image = IMAGE.replace('300px', '100px');
 				editor.value = `<p>${image}</p>`;
