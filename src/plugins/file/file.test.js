@@ -58,10 +58,13 @@ describe('File plugin', function () {
 					defaultHandlerSuccess: function (data) {
 						try {
 							expect(this).equals(editor);
+							expect(data.items).deep.equals([
+								{ file: 'logo.gif', isImage: true }
+							]);
 							expect(data.files).deep.equals(['logo.gif']);
 
 							this.s.insertHTML(
-								`<a class="file" href="${data.baseurl}${data.files[0]}">Logo</a>`
+								`<a class="file" href="${data.baseurl}${data.items[0].file}">Logo</a>`
 							);
 
 							expect(editor.value).equals(
@@ -79,6 +82,22 @@ describe('File plugin', function () {
 			setCursorToChar(editor);
 
 			dropInFilePopup(editor, new FileImage());
+		});
+
+		it('Should still insert the files file.defaultHandlerSuccess is given as arrays (#1752)', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			editor.o.file.defaultHandlerSuccess.call(editor, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				files: ['file.xls']
+			});
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
 		});
 
 		it('Should make the selected text the link to an uploaded file', async function () {

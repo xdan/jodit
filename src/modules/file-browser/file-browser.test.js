@@ -822,6 +822,82 @@
 							throw e;
 						});
 				});
+
+				it('Should pass one object per chosen file (#1752)', async function () {
+					const filebrowser = new Jodit.modules.FileBrowser({
+						filebrowser: {
+							saveStateInStorage: false
+						},
+						ajax: {
+							url: 'https://xdsoft.net/jodit/connector/index.php'
+						}
+					});
+
+					let data;
+
+					await filebrowser.open(function (d) {
+						data = d;
+					});
+
+					simulateEvent(
+						'click',
+						getFirstFBItem(filebrowser, 0, true)
+					);
+					simulateEvent(
+						'click',
+						getButton('select', filebrowser._dialog)
+					);
+
+					filebrowser.destruct();
+
+					expect(data.items).deep.equals([
+						{
+							file: 'https://xdsoft.net/jodit/files/test.txt',
+							isImage: false
+						}
+					]);
+					expect(data.files).deep.equals([
+						'https://xdsoft.net/jodit/files/test.txt'
+					]);
+					expect(data.isImages).deep.equals([false]);
+				});
+			});
+		});
+
+		describe('Default callback (#1752)', function () {
+			const baseurl = 'https://xdsoft.net/jodit/files/';
+
+			it('Should insert the items it is given', function () {
+				const editor = getJodit();
+
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				editor.filebrowser.o.defaultCallback({
+					baseurl,
+					items: [{ file: 'file.xls', isImage: false }]
+				});
+
+				expect(editor.value).equals(
+					'<p>test<a href="https://xdsoft.net/jodit/files/file.xls" title="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+				);
+			});
+
+			it('Should still insert the files it is given as arrays', function () {
+				const editor = getJodit();
+
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				editor.filebrowser.o.defaultCallback({
+					baseurl,
+					files: ['file.xls'],
+					isImages: [false]
+				});
+
+				expect(editor.value).equals(
+					'<p>test<a href="https://xdsoft.net/jodit/files/file.xls" title="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+				);
 			});
 		});
 

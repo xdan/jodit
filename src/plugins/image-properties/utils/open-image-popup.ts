@@ -36,17 +36,17 @@ export function openImagePopup(
 				j,
 				{
 					upload: (data: IFileBrowserCallBackData) => {
-						if (data.files && data.files.length) {
+						if (data.items?.length) {
 							state.values.imageSrc =
-								data.baseurl + data.files[0];
+								data.baseurl + data.items[0].file;
 						}
 
 						closePopup();
 					},
 
 					filebrowser: async (data: IFileBrowserCallBackData) => {
-						if (data && isArray(data.files) && data.files.length) {
-							state.values.imageSrc = data.files[0];
+						if (data && isArray(data.items) && data.items.length) {
+							state.values.imageSrc = data.items[0].file;
 							closePopup();
 						}
 					}

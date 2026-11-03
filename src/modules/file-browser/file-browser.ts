@@ -23,6 +23,7 @@ import type {
 	IFileBrowserState,
 	IJodit,
 	IStorage,
+	IUploadedFile,
 	IUploader,
 	IUploaderOptions,
 	IViewOptions
@@ -47,6 +48,7 @@ import { Storage } from 'jodit/core/storage';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { ViewWithToolbar } from 'jodit/core/view/view-with-toolbar';
 import { Config } from 'jodit/config';
+import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 
 import './config';
 
@@ -101,25 +103,25 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	): CallbackFunction {
 		return (): boolean => {
 			if (this.state.activeElements.length) {
-				const files: string[] = [];
-				const isImages: boolean[] = [];
+				const items: IUploadedFile[] = [];
 
 				this.state.activeElements.forEach(elm => {
 					const url = elm.fileURL;
 
 					if (url) {
-						files.push(url);
-						isImages.push(elm.isImage || false);
+						items.push({
+							file: url,
+							isImage: elm.isImage || false
+						});
 					}
 				});
 
 				this.close();
 
-				const data = {
+				const data = normalizeUploaderData({
 					baseurl: '',
-					files,
-					isImages
-				} as IFileBrowserCallBackData;
+					items
+				} as IFileBrowserCallBackData);
 
 				if (isFunction(callback)) {
 					callback(data);
@@ -231,10 +233,9 @@ export class FileBrowser extends ViewWithToolbar implements IFileBrowser, Dlgs {
 	 * ```javascript
 	 * var fb = new Jodit.modules.FileBrowser(parent);
 	 * fb.open(function (data) {
-	 *     var i;
-	 *     for (i = 0;i < data.files.length; i += 1) {
-	 *         parent.s.insertImage(data.baseurl + data.files[i]);
-	 *     }
+	 *     data.items.forEach(function (item) {
+	 *         parent.s.insertImage(data.baseurl + item.file);
+	 *     });
 	 * });
 	 * ```
 	 */

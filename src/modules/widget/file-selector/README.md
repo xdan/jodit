@@ -41,7 +41,7 @@ const tabs = [
 	UploadTab(
 		jodit,
 		data => {
-			data.files.forEach(file =>
+			data.items.forEach(({ file }) =>
 				jodit.s.insertHTML(
 					`<video controls src="${data.baseurl + file}"></video>`
 				)

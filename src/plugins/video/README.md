@@ -94,7 +94,7 @@ const editor = Jodit.make('#editor', {
     },
     video: {
         defaultHandlerSuccess(data) {
-            data.files.forEach(file => {
+            data.items.forEach(({ file }) => {
                 this.s.insertHTML(
                     `<video controls preload="metadata" src="${data.baseurl + file}"></video>`
                 );
