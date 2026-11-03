@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.2
+
+#### :house: Internal
+
+- The image caption test that opens the popup after a click is skipped in Firefox, where the synthetic press does not move the focus off the caption in CI; it still runs in Chrome and WebKit.
+
 ## 4.19.1
 
 #### :house: Internal
