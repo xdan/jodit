@@ -8,11 +8,10 @@
  * @module plugins/inline-popup
  */
 
-import type { IBound, IControlType } from 'jodit/types';
+import type { IControlType } from 'jodit/types';
 import type { Table } from 'jodit/modules/table/table';
 import { Dom } from 'jodit/core/dom/dom';
 import { isJoditObject, isString } from 'jodit/core/helpers/checker';
-import { position } from 'jodit/core/helpers/size/position';
 import { css } from 'jodit/core/helpers/utils/css';
 
 const cmd = (control: IControlType): string =>
@@ -104,29 +103,12 @@ export default [
 	},
 	{
 		name: 'headerrow',
-		exec: (editor, table): true | void => {
+		exec: (editor, table): void => {
 			if (!isJoditObject(editor) || !Dom.isTag(table, 'table')) {
 				return;
 			}
 
 			editor.execCommand('tableheaderrow', false, table);
-
-			const [cell] = editor
-				.getInstance<Table>('Table', editor.o)
-				.getAllSelectedCells();
-
-			// Beside the cell that replaced the one it opened for
-			if (cell) {
-				editor.e.fire(
-					'showPopup',
-					table,
-					(): IBound => position(cell, editor),
-					'cells'
-				);
-			}
-
-			// The popup stays open, so the button shows the new state
-			return true;
 		},
 		isActive: (editor, button): boolean =>
 			Dom.isTag(button.target, 'table') &&

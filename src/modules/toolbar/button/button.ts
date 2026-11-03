@@ -23,6 +23,7 @@ import type {
 	IViewBased,
 	Nullable
 } from 'jodit/types';
+import { Component } from 'jodit/core/component/component';
 import { STATUSES } from 'jodit/core/component/statuses';
 import {
 	KEY_DOWN,
@@ -837,10 +838,12 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 					this.parentElement.update();
 				}
 
+				this.__closePopups();
+
 				/**
 				 * Fired after calling `button.exec` function
 				 */
-				this.j?.e?.fire('closeAllPopups afterExec');
+				this.j?.e?.fire('afterExec');
 			}
 
 			if (result !== false) {
@@ -866,8 +869,31 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				ctr.args && ctr.args[0]
 			);
 
-			this.j.e.fire('closeAllPopups');
+			this.__closePopups();
 		}
+	}
+
+	/**
+	 * After the button's action, a popup that stays open (an element's)
+	 * keeps its place beside the element, and only the lists the button is
+	 * in close. Otherwise every popup closes
+	 */
+	private __closePopups(): void {
+		const openers: ToolbarButton[] = [this];
+
+		for (let pe = this.parentElement; pe; pe = pe.parentElement) {
+			if (Component.isInstanceOf<Popup>(pe, Popup) && pe.keepOpen) {
+				openers.forEach(button => button.__closePopup());
+				pe.updatePosition();
+				return;
+			}
+
+			if (Component.isInstanceOf<ToolbarButton>(pe, ToolbarButton)) {
+				openers.push(pe);
+			}
+		}
+
+		this.j?.e?.fire('closeAllPopups');
 	}
 
 	override destruct(): any {
