@@ -482,6 +482,20 @@ describe('After a join the caret is where typing goes (#1726)', () => {
 			expect(sortAttributes(editor.value)).equals(result);
 		});
 	});
+
+	it('Should keep the caret after a text node of non-breaking spaces', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<p>Name:</p>';
+		const paragraph = editor.editor.firstChild;
+		paragraph.appendChild(editor.createInside.text('\u00a0\u00a0'));
+		paragraph.appendChild(editor.createInside.text('X'));
+		editor.s.setCursorAfter(paragraph.lastChild);
+
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		editor.s.insertHTML('Y');
+
+		expect(editor.value).equals('<p>Name:&nbsp;&nbsp;Y</p>');
+	});
 });
 
 // https://github.com/xdan/jodit/issues/1683

@@ -51,3 +51,17 @@ export function getMoveFilter(jodit: IJodit): (node: Node) => boolean {
 	return (node: Node): boolean =>
 		jodit.e.fire('backSpaceIsMovedIgnore', node) !== true;
 }
+
+/**
+ * Helper add BR element inside empty block element
+ * @private
+ */
+export function addBRInsideEmptyBlock(jodit: IJodit, node: Node): void {
+	if (
+		node.parentElement !== jodit.editor &&
+		Dom.isBlock(node.parentElement) &&
+		Dom.each(node.parentElement, Dom.isEmptyTextNode)
+	) {
+		Dom.after(node, jodit.createInside.element('br'));
+	}
+}

@@ -42,6 +42,17 @@ describe('Placeholder plugin', function () {
 			});
 		});
 
+		describe('Non-breaking spaces, as Tab inserts with tab.spaces', function () {
+			it('Should not show placeholder', function () {
+				const area = appendTestArea();
+				area.value = '<p>&nbsp;&nbsp;&nbsp;&nbsp;</p>';
+				const editor = Jodit.make(area);
+
+				expect(editor.container.querySelector('.jodit-placeholder')).is
+					.null;
+			});
+		});
+
 		describe('Empty UL/LI', function () {
 			it('Should not show placeholder', function () {
 				const area = appendTestArea();

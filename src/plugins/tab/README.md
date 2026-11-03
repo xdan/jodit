@@ -1,12 +1,12 @@
 ---
 title: Tab Plugin
-description: Handles the Tab and Shift+Tab keys inside list items to indent and outdent them, creating or removing nested sublists while preserving the cursor.
-keywords: jodit, tab plugin, list indent, nested list, outdent, sublist
+description: Handles the Tab and Shift+Tab keys inside list items to indent and outdent them, creating or removing nested sublists while preserving the cursor, and optionally inserts spaces for Tab elsewhere.
+keywords: jodit, tab plugin, list indent, nested list, outdent, sublist, tab spaces
 ---
 
 # Tab Plugin
 
-Handles Tab key behavior inside lists, allowing users to indent/outdent list items by pressing Tab/Shift+Tab, creating nested sublists.
+Handles Tab key behavior inside lists, allowing users to indent/outdent list items by pressing Tab/Shift+Tab, creating nested sublists. With `tab.spaces`, Tab elsewhere inserts spaces or indents a selection.
 
 ## Features
 
@@ -19,6 +19,7 @@ Handles Tab key behavior inside lists, allowing users to indent/outdent list ite
 - Supports partially filled lists
 - Fires `afterTab` event
 - Configurable enable/disable
+- Optional `tab.spaces`: Tab outside lists and tables inserts spaces, and indents a selection
 
 ## Configuration Options
 
@@ -43,6 +44,32 @@ const editor = Jodit.make('#editor', {
 const editor2 = Jodit.make('#editor2', {
     tab: {
         tabInsideLiInsertNewList: false
+    }
+});
+```
+
+### `tab.spaces`
+
+**Type:** `number`
+
+**Default:** `0`
+
+Outside lists and table cells, Tab isn't handled, so the browser moves the focus on, as forms expect. With `spaces` above 0:
+
+- **Tab at a caret** inserts that many non-breaking spaces. Where white space is kept, as in a `<pre>`, it inserts a tab character instead.
+- **Shift+Tab at a caret** takes out what Tab put in: a tab or up to that many spaces just before the caret, if one of them is non-breaking, so a space between words stays; or else a tab or up to that many spaces at the start of its line; or else the indent of its block.
+- **Neither key moves the focus on.** Escape and then Tab or Shift+Tab does, as in code editors, from a table cell too. An Escape that closes a popup doesn't count, a modifier key in between doesn't matter, and any other key or a click cancels it. `Alt+F10` moves the focus to the toolbar. WCAG's "No Keyboard Trap" (2.1.2) asks that people are told how to leave, so say so where the editor is.
+- **Tab with a selection** indents the selected blocks, and **Shift+Tab** outdents them, through the `indent` and `outdent` commands.
+- **Backspace** just after that many spaces, non-breaking or not, removes them together, as it would a tab.
+- **A tab in pasted text** becomes the spaces, as HTML would show it as one space. Tabs that already show stay: in `white-space: pre` or `pre-wrap`, such as Safari's `Apple-tab-span` and Google Docs' spans, in a `<pre>`, or pasted into one. So do tabs that only lay out the HTML, and those in a `<style>` or `<script>`.
+
+In a list, Tab still nests an item that has one before it. In a list's first item it indents the whole list, as Word does, and Shift+Tab there outdents it. In a table cell, Tab still moves to the next cell.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    tab: {
+        spaces: 4
     }
 });
 ```
@@ -167,8 +194,18 @@ const editor = Jodit.make('#editor', {
 Plugin intercepts:
 1. `keydown` event with Tab key via `@watch(':keydown.tab')`
 2. `beforeCommand` event for `indent`/`outdent` commands via `@watch(':beforeCommand.tab')`
+3. `backSpaceBeforeCases` event, to remove a Tab's spaces in one press
+4. `beforePasteInsert` event, to turn tabs in pasted text into spaces
 
-Both call `__onShift()` method with shift flag.
+The first two call `__onShift()` method with shift flag. When it doesn't handle a Tab, `onTabSpaces()` does, if `tab.spaces` is set.
+
+### Tab Spaces
+
+The functions in `./cases/tab-spaces.ts` do nothing while `tab.spaces` is 0:
+
+- `onTabSpaces()` skips table cells. With a selection it runs `indent` or `outdent`. In a list's first item it indents or outdents the list. Otherwise, for Tab, it inserts the spaces, or a tab where the computed `white-space` keeps it. For Shift+Tab it takes out a tab or the spaces before the caret, then those at the start of the line (after a `<br>`, or a newline where white space is kept), then the block's indent, and keeps the focus even if there was nothing to take out. After an Escape, a `keydown` handler without a namespace, so ahead of table navigation, stops the editor's handlers for the next Tab and leaves it to the browser.
+- `removeTabSpaces()` looks back from the caret through the text nodes before it. If the last `spaces` characters are spaces or non-breaking spaces, it removes them.
+- `tabsToSpaces()` parses the pasted HTML in a `<template>`, so nothing loads or runs, and replaces the tabs in text nodes that have other characters too, unless their own styles or a `<pre>` keep white space. It leaves the HTML as it was if the caret is somewhere that keeps white space.
 
 ### Tab Press Handler
 
@@ -307,9 +344,9 @@ editor.e.on('afterTab', (shift) => {
 
 ## Edge Cases
 
-1. **First Item Tab**: Can't indent first item (no previous sibling), Tab ignored
-2. **Top-Level Shift+Tab**: Can't outdent top-level LI (no parent LI), Shift+Tab ignored
-3. **Cursor Not in LI**: Tab uses browser default behavior
+1. **First Item Tab**: Can't indent first item (no previous sibling), Tab ignored, or indents the whole list with `tab.spaces`
+2. **Top-Level Shift+Tab**: Can't outdent top-level LI (no parent LI), Shift+Tab ignored, or with `tab.spaces` takes out spaces or outdents an indented list from its first item, and keeps the focus
+3. **Cursor Not in LI**: Tab uses browser default behavior, unless `tab.spaces` is set
 4. **Multiple List Levels**: Works at any nesting depth
 5. **Cursor in Middle**: Works regardless of cursor position in LI text
 6. **Empty LI**: Works with empty list items
@@ -336,7 +373,7 @@ editor.e.on('afterTab', (shift) => {
 - Plugin handles both tab keypress and indent/outdent commands
 - Returns `false` to prevent default browser Tab behavior
 - The `finally` block ensures cursor restoration even on errors
-- No configuration beyond enable/disable flag
+- Configured by `tabInsideLiInsertNewList` and `spaces`
 - Works with both unordered (`<ul>`) and ordered (`<ol>`) lists
 
 ## Typical Use Case

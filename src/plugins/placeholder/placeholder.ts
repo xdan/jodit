@@ -12,7 +12,7 @@
 
 import type { HTMLTagNames, IJodit } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { INSEPARABLE_TAGS } from 'jodit/core/constants';
+import { INSEPARABLE_TAGS, NBSP_SPACE } from 'jodit/core/constants';
 import { debounce } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -30,6 +30,12 @@ import './placeholder.less';
  * @private
  */
 export function isEditorEmpty(root: HTMLElement): boolean {
+	// A non-breaking space is typed, where other white space can just lay out
+	// the HTML
+	return isBlank(root) && !root.textContent?.includes(NBSP_SPACE);
+}
+
+function isBlank(root: HTMLElement): boolean {
 	if (!root.firstChild) {
 		return true;
 	}

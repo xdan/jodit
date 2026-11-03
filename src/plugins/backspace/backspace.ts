@@ -174,12 +174,17 @@ export class backspace extends Plugin {
 			return;
 		}
 
-		const text = findMostNestedNeighbor(
-			fakeNode,
-			false,
-			jodit.editor,
-			true
-		);
+		// The search for text skips text of only non-breaking spaces, but the
+		// browser types after it
+		let before = fakeNode.previousSibling;
+
+		while (Dom.isText(before) && !/\S|\u00A0/.test(before.data)) {
+			before = before.previousSibling;
+		}
+
+		const text = Dom.isText(before)
+			? before
+			: findMostNestedNeighbor(fakeNode, false, jodit.editor, true);
 		const link = Dom.closest(text, 'a', jodit.editor);
 
 		if (

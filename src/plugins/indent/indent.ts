@@ -14,42 +14,11 @@ import type { IJodit } from 'jodit/types';
 import { BR } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { attr, call } from 'jodit/core/helpers/utils';
-import { css, cssInline } from 'jodit/core/helpers/utils/css';
+import { call } from 'jodit/core/helpers/utils';
 
 import './config';
 
-import { getKey } from './helpers';
-
-const applyIndentToBox = (
-	processedElements: Set<HTMLElement>,
-	currentBox: HTMLElement,
-	editor: IJodit,
-	command: string
-): void => {
-	if (!currentBox) {
-		return;
-	}
-
-	if (processedElements.has(currentBox)) {
-		return;
-	}
-
-	const key = getKey(editor.o.direction, currentBox);
-
-	processedElements.add(currentBox);
-
-	const current = cssInline(currentBox, key);
-	let value = current ? parseInt(current, 10) : 0;
-
-	value += editor.o.indentMargin * (command === 'outdent' ? -1 : 1);
-
-	css(currentBox, key, value > 0 ? value : '');
-
-	if (!attr(currentBox, 'style')) {
-		attr(currentBox, 'style', null);
-	}
-};
+import { applyIndentToBox } from './helpers';
 
 /**
  * Indents the line containing the selection or insertion point.
