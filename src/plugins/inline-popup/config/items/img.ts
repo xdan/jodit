@@ -168,7 +168,7 @@ export default [
 			editor.synchronizeValues();
 
 			if (Dom.isHTMLElement(caption)) {
-				editor.e.fire('hideResizer');
+				editor.e.fire('hidePopup hideResizer');
 				editor.s.setCursorIn(caption);
 			} else {
 				editor.e.fire('recalcPositionPopup');

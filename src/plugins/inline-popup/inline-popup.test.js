@@ -1126,10 +1126,10 @@ describe('Text Inline Popup plugin', () => {
 					'<p><strong>some text</strong></p>'
 				);
 
-				// the selection is still there — the toolbar must be reopened
+				// the selection is still there, so the toolbar stays open
 				expect(editor.s.isCollapsed()).is.false;
 				const popupAfter = getOpenedPopup(editor);
-				expect(popupAfter).is.not.null;
+				expect(popupAfter).equals(popup);
 				expect(getButton('italic', popupAfter)).is.not.null;
 			});
 		});
@@ -1353,6 +1353,397 @@ describe('Text Inline Popup plugin', () => {
 			expect(valignBtn).is.not.undefined;
 		});
 	});
+	describe('A button in an inline popup (#1741)', () => {
+		// In the middle, as the column resizer can sit on the cell's edge
+		const clickCell = (editor, cell) => {
+			const pos = Jodit.modules.Helpers.position(cell);
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], cell, e => {
+				Object.assign(e, {
+					clientX: pos.left + pos.width / 2,
+					clientY: pos.top + pos.height / 2
+				});
+			});
+
+			return getOpenedPopup(editor);
+		};
+
+		const marked = editor =>
+			editor.getInstance('Table', editor.o).getAllSelectedCells();
+
+		// The popup sits just above or just below the box
+		const isBeside = (popup, box) => {
+			const p = popup.getBoundingClientRect(),
+				b = box.getBoundingClientRect();
+
+			return (
+				Math.abs(p.top - b.bottom) < 10 ||
+				Math.abs(p.bottom - b.top) < 10
+			);
+		};
+
+		const TABLE =
+			'<table style="width: 300px;"><tbody>' +
+			'<tr><td>1</td><td>2</td></tr>' +
+			'<tr><td>3</td><td>4</td></tr>' +
+			'</tbody></table>';
+
+		describe('Cell popup', () => {
+			it('Should stay open after a choice from its list, which closes', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const td = editor.editor.querySelectorAll('td')[2];
+				const popup = clickCell(editor, td);
+
+				clickTrigger('addrow', popup);
+				const list = getOpenedPopup(editor);
+				expect(list).does.not.equal(popup);
+
+				clickButton('tableaddrowafter', list);
+
+				expect(editor.editor.querySelectorAll('tr').length).equals(3);
+				expect(list.isConnected).is.false;
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(marked(editor)).deep.equals([td]);
+			});
+
+			it('Should stay open, with the cell marked, for one command after another', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const td = editor.editor.querySelectorAll('td')[2];
+				const popup = clickCell(editor, td);
+
+				clickTrigger('addrow', popup);
+				clickButton('tableaddrowafter', getOpenedPopup(editor));
+				clickTrigger('addrow', popup);
+				clickButton('tableaddrowbefore', getOpenedPopup(editor));
+				clickTrigger('valign', popup);
+				clickButton('Bottom', getOpenedPopup(editor));
+				clickButton('headerrow', popup);
+
+				expect(editor.editor.querySelectorAll('tr').length).equals(4);
+				expect(td.style.verticalAlign).equals('bottom');
+				expect(editor.editor.querySelector('thead')).is.not.null;
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(marked(editor)).deep.equals([td]);
+			});
+
+			it('Should follow the cell when a row is inserted above it', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const td = editor.editor.querySelectorAll('td')[2];
+				const popup = clickCell(editor, td);
+				const top = td.getBoundingClientRect().top;
+
+				clickTrigger('addrow', popup);
+				clickButton('tableaddrowbefore', getOpenedPopup(editor));
+
+				expect(td.getBoundingClientRect().top).is.above(top);
+				expect(isBeside(popup, td)).is.true;
+			});
+
+			it('Should stay beside the cell a merge leaves', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const [first, second] = editor.editor.querySelectorAll('td');
+
+				simulateEvent('mousedown', first);
+				simulateEvent(['mousemove', 'mouseup'], second);
+
+				const popup = getOpenedPopup(editor);
+				clickButton('merge', popup);
+
+				expect(first.colSpan).equals(2);
+				expect(second.isConnected).is.false;
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(marked(editor)).deep.equals([first]);
+				expect(isBeside(popup, first)).is.true;
+			});
+
+			it('Should keep a split cell marked', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const td = editor.editor.querySelector('td');
+				const popup = clickCell(editor, td);
+
+				clickTrigger('splitv', popup);
+				clickButton('tablesplitv', getOpenedPopup(editor));
+
+				expect(td.parentNode.cells.length).equals(3);
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(marked(editor)).deep.equals([td]);
+			});
+
+			it('Should close once a delete removes the row', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const popup = clickCell(
+					editor,
+					editor.editor.querySelector('td')
+				);
+
+				clickTrigger('deleteTable', popup);
+				clickButton('tablebinrow', getOpenedPopup(editor));
+
+				expect(editor.editor.querySelectorAll('tr').length).equals(1);
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
+			it('Should still close, unmarking the cell, once the cell is typed in', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const popup = clickCell(
+					editor,
+					editor.editor.querySelector('td')
+				);
+
+				clickTrigger('addrow', popup);
+				clickButton('tableaddrowafter', getOpenedPopup(editor));
+
+				simulateEvent('keydown', 'a', editor.editor);
+				editor.e.fire('change');
+				editor.e.fire('change');
+
+				expect(popup.isConnected).is.false;
+				expect(marked(editor)).deep.equals([]);
+			});
+		});
+
+		describe('Image popup', () => {
+			it('Should close when Delete removes the image', () => {
+				const editor = getJodit();
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+				clickButton('delete', getOpenedPopup(editor));
+
+				expect(editor.value).equals('<p>text  text</p>');
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
+			it('Should close when Caption puts the caret in the new caption', async () => {
+				const editor = getJodit({ defaultTimeout: 0 });
+				editor.value = '<p><img alt="" src="tests/artio.jpg"></p>';
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+				await editor.async.requestIdlePromise();
+				clickButton('caption', getOpenedPopup(editor));
+
+				expect(editor.editor.querySelector('figcaption')).is.not.null;
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
+			it('Should move below the image when Caption takes the caption off', async () => {
+				const editor = getJodit({ defaultTimeout: 0, height: 700 });
+				editor.value =
+					'<figure style="width: 100px;"><img alt="" src="tests/artio.jpg" style="width: 100%;"><figcaption>A caption</figcaption></figure>';
+
+				const img = editor.editor.querySelector('img');
+				await onLoadImage(img);
+
+				simulateEvent('click', img);
+				await editor.async.requestIdlePromise();
+
+				const popup = getOpenedPopup(editor);
+				clickButton('caption', popup);
+				await editor.async.requestIdlePromise();
+
+				expect(editor.editor.querySelector('figure')).is.null;
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(isBeside(popup, img)).is.true;
+			});
+		});
+
+		describe('Link popup', () => {
+			it('Should close when Unlink removes the link', () => {
+				const editor = getJodit();
+				editor.value =
+					'<p>some <a href="https://xdsoft.net/">link</a> text</p>';
+
+				simulateEvent('click', editor.editor.querySelector('a'));
+				clickButton('unlink', getOpenedPopup(editor));
+
+				expect(editor.value).equals('<p>some link text</p>');
+				expect(getOpenedPopup(editor)).is.null;
+			});
+		});
+
+		describe('Selection toolbar', () => {
+			it('Should stay open after a choice from its list', async () => {
+				const editor = getJodit({ toolbarInlineForSelection: true });
+				editor.value = '<p>|some text|</p>';
+
+				const p = editor.editor.querySelector('p');
+
+				simulateEvent('mousedown', p);
+				setCursorToChar(editor);
+				simulateEvent(['mouseup', 'selectionchange'], p);
+				await delay(editor.defaultTimeout + 50);
+
+				const popup = getOpenedPopup(editor);
+
+				clickTrigger('paragraph', popup);
+				const list = getOpenedPopup(editor);
+				clickButton('h1', list);
+
+				expect(editor.value).equals('<h1>some text</h1>');
+				expect(list.isConnected).is.false;
+				expect(getOpenedPopup(editor)).equals(popup);
+			});
+
+			it('Should close once a button leaves no selection', async () => {
+				const editor = getJodit({
+					toolbarInlineForSelection: true,
+					popup: {
+						selection: [
+							{
+								name: 'stamp',
+								exec: editor => editor.s.insertHTML('stamp')
+							}
+						]
+					}
+				});
+				editor.value = '<p>|some text|</p>';
+
+				const p = editor.editor.querySelector('p');
+
+				simulateEvent('mousedown', p);
+				setCursorToChar(editor);
+				simulateEvent(['mouseup', 'selectionchange'], p);
+				await delay(editor.defaultTimeout + 50);
+
+				clickButton('stamp', getOpenedPopup(editor));
+
+				expect(editor.value).equals('<p>stamp</p>');
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
+			describe('Should not open for only a line break', () => {
+				const TEXT = '<p>some text</p><p>next line</p>';
+
+				[
+					[
+						'as a double click past the end of a line selects',
+						TEXT,
+						editor => [editor.editor, 1]
+					],
+					[
+						'as a drag from there to the start of the next line selects in Safari',
+						TEXT,
+						editor => [
+							editor.editor.querySelectorAll('p')[1].firstChild,
+							0
+						]
+					],
+					[
+						'across an empty line',
+						'<p>some text</p><p><br></p><p>next line</p>',
+						editor => [
+							editor.editor.querySelectorAll('p')[2].firstChild,
+							0
+						]
+					],
+					[
+						'with a video on the next line, which a double click past the end of the line selects with it',
+						'<p>some text</p><p><video src="" width="160" height="90"></video></p><p>next line</p>',
+						editor => [
+							editor.editor.querySelectorAll('p')[2].firstChild,
+							0
+						]
+					]
+				].forEach(([name, html, end]) => {
+					it(name, async () => {
+						const editor = getJodit({
+							toolbarInlineForSelection: true
+						});
+						editor.value = html;
+
+						const p = editor.editor.querySelector('p');
+						const range = editor.s.createRange();
+						range.setStart(p.firstChild, p.firstChild.length);
+						range.setEnd(...end(editor));
+
+						simulateEvent('mousedown', p);
+						editor.s.selectRange(range);
+						simulateEvent(['mouseup', 'selectionchange'], p);
+						await delay(editor.defaultTimeout + 50);
+
+						expect(editor.s.isCollapsed()).is.false;
+						expect(getOpenedPopup(editor)).is.null;
+					});
+				});
+			});
+		});
+
+		describe('With toolbarInlineKeepOpen off', () => {
+			it('Should close the cell popup after a choice from its list', () => {
+				const editor = getJodit({ toolbarInlineKeepOpen: false });
+				editor.value = TABLE;
+
+				const td = editor.editor.querySelectorAll('td')[2];
+				const popup = clickCell(editor, td);
+
+				clickTrigger('addrow', popup);
+				clickButton('tableaddrowafter', getOpenedPopup(editor));
+
+				expect(editor.editor.querySelectorAll('tr').length).equals(3);
+				expect(getOpenedPopup(editor)).is.null;
+				expect(marked(editor)).deep.equals([td]);
+			});
+
+			it('Should close the image popup after an alignment', async () => {
+				const editor = getJodit({
+					defaultTimeout: 0,
+					toolbarInlineKeepOpen: false
+				});
+				editor.value =
+					'<p>text <img alt="" src="tests/artio.jpg"> text</p>';
+
+				const img = editor.editor.querySelector('img');
+				editor.s.focus();
+
+				simulateEvent('click', img);
+				clickTrigger('left', getOpenedPopup(editor));
+				clickButton('Left', getOpenedPopup(editor));
+				await delay(20);
+
+				expect(img.style.float).eq('left');
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
+			it('Should close the selection toolbar after Bold', async () => {
+				const editor = getJodit({
+					toolbarInlineForSelection: true,
+					toolbarInlineKeepOpen: false
+				});
+				editor.value = '<p>|some text|</p>';
+
+				const p = editor.editor.querySelector('p');
+
+				simulateEvent('mousedown', p);
+				setCursorToChar(editor);
+				simulateEvent(['mouseup', 'selectionchange'], p);
+				await delay(editor.defaultTimeout + 50);
+
+				clickButton('bold', getOpenedPopup(editor));
+				await delay(editor.defaultTimeout + 50);
+
+				expect(editor.value).equals(
+					'<p><strong>some text</strong></p>'
+				);
+				expect(getOpenedPopup(editor)).is.null;
+			});
+		});
+	});
+
 	describe('A key that moves the caret off the element (#1643)', () => {
 		// The browser moves the caret between keydown and keyup
 		function pressKey(editor, key, moveCaret) {

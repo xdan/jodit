@@ -34,7 +34,8 @@ import {
 	keys,
 	position,
 	splitArray,
-	toArray
+	toArray,
+	trim
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { isMoved } from 'jodit/core/selection/helpers';
@@ -56,7 +57,9 @@ export class inlinePopup extends Plugin {
 
 	@cache
 	private get popup(): IPopup {
-		return new Popup(this.jodit, false);
+		const popup = new Popup(this.jodit, false);
+		popup.keepOpen = this.j.o.toolbarInlineKeepOpen;
+		return popup;
 	}
 
 	@cache
@@ -84,12 +87,12 @@ export class inlinePopup extends Plugin {
 
 			// Beside the media in a wrapper kept in the content, which can fill
 			// the line, and below a captioned image's caption, so it stays in view
-			const bound =
+			const bound = (): HTMLElement =>
 				(mediaWrapper && getWrappedMedia(this.j, mediaWrapper)) ||
 				getCaptionWrapper(this.j, target) ||
 				target;
 
-			this.showPopup(() => this.__bound(bound, isMedia), type, target);
+			this.showPopup(() => this.__bound(bound(), isMedia), type, target);
 
 			return false;
 		}
@@ -310,99 +313,31 @@ export class inlinePopup extends Plugin {
 			)
 			.on('mousedown keydown', this.onSelectionStart)
 			.on('change', () => {
-				if (
-					this.popup.isOpened &&
-					this.previousTarget &&
-					!this.previousTarget.parentNode
-				) {
+				if (!this.popup.isOpened) {
+					return;
+				}
+
+				if (this.previousTarget && !this.previousTarget.parentNode) {
 					this.hidePopup();
 					this.previousTarget = undefined;
+				} else if (
+					this.type === 'selection' &&
+					!this.__hasSelectedText()
+				) {
+					this.hidePopup();
 				}
 			})
-			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd)
-			.on(
-				[this.j.ew, this.j.ow],
-				'mousedown touchstart',
-				this.__onDocumentMouseDown
-			)
-			.on('closeAllPopups', this.__onCloseAllPopups);
+			.on([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
 
 		this.addListenersForElements();
 	}
 
 	/**
-	 * The user pressed a button inside the selection toolbar — after the
-	 * command fires `closeAllPopups`, the toolbar should be shown again
-	 * while the selection is still there. See #1238
+	 * Follow the element once a control has moved it, as the alignments do
 	 */
-	private __reopenSelectionPopup = false;
-
-	/**
-	 * The alignment controls fire `recalcPositionPopup` once they have moved
-	 * the element, and their button then fires `closeAllPopups`. The popup
-	 * opens again beside the element, as the selection toolbar does
-	 */
-	private __reopenFor: Nullable<HTMLElement> = null;
-
 	@watch(':recalcPositionPopup')
 	protected onRecalcPositionPopup(): void {
-		if (
-			this.popup.isOpened &&
-			this.type !== 'selection' &&
-			this.previousTarget
-		) {
-			this.__reopenFor = this.previousTarget;
-		}
-	}
-
-	@autobind
-	private __onDocumentMouseDown(e: MouseEvent): void {
-		this.__reopenFor = null;
-
-		if (
-			this.popup.isOpened &&
-			this.type === 'selection' &&
-			e.target &&
-			UIElement.closestElement(e.target as Node, Popup)
-		) {
-			this.__reopenSelectionPopup = true;
-		}
-	}
-
-	@autobind
-	private __onCloseAllPopups(): void {
-		const target = this.__reopenFor;
-
-		if (target) {
-			this.__reopenFor = null;
-
-			// After the popup's own `closeAllPopups` handler, as below
-			this.j.async.setTimeout(() => {
-				if (this.j.editor.contains(target)) {
-					this.onClick(target);
-				}
-			}, 1);
-		}
-
-		if (!this.__reopenSelectionPopup) {
-			return;
-		}
-
-		this.__reopenSelectionPopup = false;
-
-		if (!this.j.o.toolbarInlineForSelection) {
-			return;
-		}
-
-		// a zero timeout would run synchronously — before the popup's own
-		// `closeAllPopups` handler closes it; defer to the next macrotask
-		this.j.async.setTimeout(() => {
-			const sel = this.j.s.sel;
-
-			if (sel && !sel.isCollapsed) {
-				this.showPopup(() => this.__selectionBound(), 'selection');
-			}
-		}, 1);
+		this.popup.updatePosition();
 	}
 
 	/**
@@ -474,10 +409,9 @@ export class inlinePopup extends Plugin {
 		}
 
 		const type = 'selection';
-		const sel = this.j.s.sel;
 		const range = this.j.s.range;
 
-		if (sel?.isCollapsed || this.isSelectedTarget(range)) {
+		if (!this.__hasSelectedText() || this.isSelectedTarget(range)) {
 			if (this.type === type && this.popup.isOpened) {
 				this.hidePopup();
 			}
@@ -492,6 +426,17 @@ export class inlinePopup extends Plugin {
 		}
 
 		this.showPopup(() => this.__selectionBound(), type);
+	}
+
+	/**
+	 * The selection holds text to format. A double click past the end of a
+	 * line, or a drag from there to the start of the next, selects only the
+	 * line break, and a video on the next line with it
+	 */
+	private __hasSelectedText(): boolean {
+		const { sel, range } = this.j.s;
+
+		return Boolean(sel && !sel.isCollapsed && trim(range.toString()));
 	}
 
 	/**
@@ -522,13 +467,7 @@ export class inlinePopup extends Plugin {
 	protected beforeDestruct(jodit: IJodit): void {
 		jodit.e
 			.off('showPopup')
-			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd)
-			.off(
-				[this.j.ew, this.j.ow],
-				'mousedown touchstart',
-				this.__onDocumentMouseDown
-			)
-			.off('closeAllPopups', this.__onCloseAllPopups);
+			.off([this.j.ew, this.j.ow], 'mouseup keyup', this.onSelectionEnd);
 
 		this.removeListenersForElements();
 	}

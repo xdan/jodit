@@ -20,6 +20,7 @@ Provides context-sensitive inline popup toolbars for various elements in the edi
 - Mobile-optimized with extra buttons
 - Auto-hide on click outside, editor changes, or when a key moves the caret off the element
 - A key that moves the caret into a link opens its popup, as a click does
+- Stays open after one of its buttons runs, beside its element or the selection, so the next can follow
 
 ## Configuration Options
 
@@ -34,6 +35,21 @@ Enables inline popup toolbars.
 **Type:** `boolean` | **Default:** `false`
 
 Shows inline toolbar when text is selected.
+
+### `toolbarInlineKeepOpen`
+
+**Type:** `boolean` | **Default:** `true`
+
+Keeps an inline toolbar open after one of its buttons runs, beside its element (a table cell, an image, a video, a link) or the selection. A list that a button opened, such as the cell toolbar's Add row, still closes once something is chosen in it. The toolbar closes on a click outside it, on a key that moves the caret off the element, and when a button removes the element, as Delete does.
+
+Set it to `false` to close the toolbar after every button.
+
+**Example:**
+```typescript
+Jodit.make('#editor', {
+    toolbarInlineKeepOpen: false
+});
+```
 
 ### `toolbarInlineDisableFor`
 
