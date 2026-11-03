@@ -5,6 +5,44 @@
  */
 describe('Process Images plugins', function () {
 	describe('Toolbar', function () {
+		// https://github.com/xdan/jodit/issues/1749
+		describe('Focus in the popup', function () {
+			const urlField = popup => popup.querySelector('input[name=url]');
+
+			it('Should put the caret in the URL field when the popup opens on it', function () {
+				const editor = getJodit();
+				editor.value = '<p>test</p>';
+				editor.s.focus();
+
+				clickButton('image', editor);
+				const popup = getOpenedPopup(editor);
+
+				expect(editor.od.activeElement).equals(urlField(popup));
+			});
+
+			it('Should leave the focus in the content on the Upload tab, and put it in the URL field when that tab is chosen', function () {
+				const editor = getJodit({
+					uploader: { url: 'https://example.com/upload' }
+				});
+				editor.value = '<p>test</p>';
+				editor.s.focus();
+
+				clickButton('image', editor);
+				const popup = getOpenedPopup(editor);
+
+				expect(popup.contains(editor.od.activeElement)).is.false;
+
+				simulateEvent(
+					'click',
+					Array.from(
+						popup.querySelectorAll('.jodit-tabs__button')
+					).find(button => button.textContent.trim() === 'URL')
+				);
+
+				expect(editor.od.activeElement).equals(urlField(popup));
+			});
+		});
+
 		describe('uploader.showTabInFileSelector', function () {
 			// https://github.com/xdan/jodit/issues/1406
 			it('Should hide the Upload tab when disabled, keeping Browse and URL', function () {

@@ -16,6 +16,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Button, UIElement } from 'jodit/core/ui';
+import { focusFormField } from 'jodit/core/ui/helpers/focus-form-field';
 
 import './tabs.less';
 
@@ -145,6 +146,8 @@ export const TabsWidget = (
 			if (state) {
 				state.activeTab = name;
 			}
+
+			focusFormField(tab);
 
 			return false;
 		});

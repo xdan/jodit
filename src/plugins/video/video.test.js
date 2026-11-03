@@ -157,6 +157,33 @@ describe('video plugin', () => {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1749
+	describe('Focus in the popup', () => {
+		it("should put the caret in the Link tab's URL field, and in the embed code when the Code tab is chosen", () => {
+			const jodit = getJodit();
+			jodit.value = '<p>test</p>';
+			jodit.s.focus();
+
+			clickButton('video', jodit);
+			const popup = getOpenedPopup(jodit);
+
+			expect(jodit.od.activeElement).equals(
+				popup.querySelector('input[name=url]')
+			);
+
+			simulateEvent(
+				'click',
+				Array.from(popup.querySelectorAll('.jodit-tabs__button')).find(
+					button => button.textContent.trim() === 'Code'
+				)
+			);
+
+			expect(jodit.od.activeElement).equals(
+				popup.querySelector('textarea[name=code]')
+			);
+		});
+	});
+
 	describe('Upload tab (#1509)', () => {
 		const url =
 			'https://xdsoft.net/jodit/connector/index.php?action=fileUpload';

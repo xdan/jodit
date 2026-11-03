@@ -6,6 +6,19 @@
 ('colorPlugin' in window.skipTest ? describe.skip : describe)(
 	'Color plugin',
 	function () {
+		// https://github.com/xdan/jodit/issues/1749
+		it('Should leave the focus in the content, as the picker is not a form', function () {
+			const editor = getJodit();
+			editor.value = '<p>text</p>';
+			editor.s.focus();
+
+			clickButton('brush', editor);
+			const popup = getOpenedPopup(editor);
+
+			expect(popup.querySelector('input')).is.not.null;
+			expect(popup.contains(editor.od.activeElement)).is.false;
+		});
+
 		it('Open color picker set background and color. After this, click in another any place. White when popap will be closed. Open again and remove all styles.', function () {
 			const editor = getJodit();
 
