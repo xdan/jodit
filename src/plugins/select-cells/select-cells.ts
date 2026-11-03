@@ -345,19 +345,6 @@ export class selectCells extends Plugin {
 
 		this.j.e.fire('hidePopup');
 		e.stopPropagation();
-
-		// Hack for FireFox for force redraw selection
-		((): void => {
-			const n = this.j.createInside.fromHTML(
-				'<div style="color:rgba(0,0,0,0.01);width:0;height:0">&nbsp;</div>'
-			);
-
-			Dom.append(cell, n);
-
-			this.j.async.setTimeout(() => {
-				Dom.safeRemove(n);
-			}, this.j.defaultTimeout / 5);
-		})();
 	}
 
 	/**

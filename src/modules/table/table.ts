@@ -58,9 +58,22 @@ export class Table extends ViewComponent<IJodit> {
 			selector && selectors.push(selector);
 		});
 
+		// Across cells, the browser's own text selection, which a drag makes
+		// as well, isn't shown
+		const hidden =
+			selectors.length > 1
+				? selectors
+						.map(
+							selector =>
+								`${selector}::selection,${selector} ::selection`
+						)
+						.join(',') + '{background:transparent}'
+				: '';
+
 		style.innerHTML = selectors.length
 			? selectors.join(',') +
-				`{${(this.jodit.options as any).table.selectionCellStyle}}`
+				`{${(this.jodit.options as any).table.selectionCellStyle}}` +
+				hidden
 			: '';
 	});
 

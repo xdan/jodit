@@ -19,7 +19,7 @@ Enables click-and-drag selection of table cells. This plugin allows users to sel
 - Nested table handling
 - Read-only mode support
 - Locks editor during selection
-- Firefox redraw hack for proper display
+- Hides the browser's own text selection in the cells while more than one is marked
 
 ## Configuration Options
 
@@ -186,8 +186,7 @@ Plugin intercepts these commands when cells are selected:
 6. **Editor Lock**: Locks editor during drag to prevent editing
 7. **Multiple Clicks**: Clicking new cell deselects previous
 8. **Touch Events**: Full touch support alongside mouse
-9. **Firefox Hack**: Temporary node added for proper redraw
-10. **Range Removal**: Removes text selection when multiple cells selected
+9. **Range Removal**: Removes text selection when multiple cells selected. While a drag marks more than one cell, the text selection the browser makes as well isn't shown in them, and the content isn't touched, so letting go doesn't count as a change
 
 ## Notes
 
@@ -201,7 +200,6 @@ Plugin intercepts these commands when cells are selected:
 - Selection stored via `addSelection()` and `removeSelection()`
 - Formal matrix handles colspan/rowspan calculations
 - Popup position calculated from cell positions
-- Firefox hack adds/removes temporary transparent div
 - The `getAllSelectedCells()` returns currently selected cells
 - Selection bounds use `getSelectedBound()` from Table module
 - Nested table check prevents selecting across table boundaries
