@@ -830,6 +830,462 @@ describe('Test Resize Cells', function () {
 				});
 			});
 		});
+
+		describe('While the handle is dragged', () => {
+			const TABLE =
+				'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+				'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+				'</tbody></table>';
+
+			const grab = editor => {
+				const td = editor.editor.querySelector('td');
+				const box = td.getBoundingClientRect();
+
+				simulateEvent('mousemove', td, options => {
+					options.offsetX = box.width - 2;
+					options.clientX = box.right - 2;
+					options.clientY = box.top + 5;
+				});
+				simulateEvent(
+					'mousedown',
+					editor.container.querySelector('.jodit-table-resizer'),
+					options => {
+						options.clientX = box.right;
+					}
+				);
+
+				return { td, box };
+			};
+
+			it('should resize the column as the handle moves', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+
+				const { td, box } = grab(editor);
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientX = box.right + 30;
+				});
+
+				expect(
+					Math.abs(
+						td.getBoundingClientRect().right - (box.right + 30)
+					)
+				).is.below(2);
+
+				const resizer = editor.container
+					.querySelector('.jodit-table-resizer')
+					.getBoundingClientRect();
+				expect(
+					Math.abs(
+						resizer.left + resizer.width / 2 - (box.right + 30)
+					)
+				).is.below(3);
+
+				simulateEvent('mouseup', editor.ew, options => {
+					options.clientX = box.right + 30;
+				});
+
+				expect(
+					Math.abs(
+						td.getBoundingClientRect().right - (box.right + 30)
+					)
+				).is.below(2);
+			});
+
+			it('should leave the cells as they were after a drag back to where it started', () => {
+				const editor = getJodit();
+				editor.value = TABLE;
+				const value = editor.value;
+
+				const { box } = grab(editor);
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientX = box.right + 30;
+				});
+				simulateEvent(['mousemove', 'mouseup'], editor.ew, options => {
+					options.clientX = box.right;
+				});
+
+				expect(editor.value).equals(value);
+			});
+		});
+	});
+
+	// https://github.com/xdan/jodit/issues/952
+	describe('Resize row (#952)', function () {
+		const TABLE =
+			'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+			'<tr><td>1</td><td>2</td></tr>' +
+			'<tr><td>3</td><td>4</td></tr>' +
+			'</tbody></table>';
+
+		const handle = editor =>
+			editor.container.querySelector('.jodit-table-resizer');
+
+		// Away from the cell's sides, at `clientY`
+		const hover = (cell, clientY) =>
+			simulateEvent('mousemove', cell, options => {
+				options.offsetX = 20;
+				options.clientX = cell.getBoundingClientRect().left + 20;
+				options.clientY = clientY;
+			});
+
+		const drag = (editor, fromY, toY) => {
+			simulateEvent('mousedown', handle(editor), options => {
+				options.clientY = fromY;
+			});
+			simulateEvent(['mousemove', 'mouseup'], editor.ew, options => {
+				options.clientY = toY;
+			});
+		};
+
+		it('should show a handle across the table on the border below a row', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelector('td');
+			const box = td.getBoundingClientRect();
+			hover(td, box.bottom - 2);
+
+			const resizer = handle(editor);
+			expect(resizer).is.not.null;
+			expect(resizer.classList.contains('jodit-table-resizer_row')).is
+				.true;
+
+			const resizerBox = resizer.getBoundingClientRect();
+			const tableBox = editor.editor
+				.querySelector('table')
+				.getBoundingClientRect();
+
+			expect(
+				Math.abs(resizerBox.top + resizerBox.height / 2 - box.bottom)
+			).is.below(3);
+			expect(Math.abs(resizerBox.left - tableBox.left)).is.below(3);
+			expect(Math.abs(resizerBox.width - tableBox.width)).is.below(3);
+		});
+
+		it("should set the row's height in pixels in its style, as one history step", () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = TABLE;
+			const steps = editor.history.length;
+
+			const [first, second] = editor.editor.querySelectorAll('tr');
+			const td = first.cells[0];
+			const box = td.getBoundingClientRect();
+			const height = first.offsetHeight;
+
+			hover(td, box.bottom - 2);
+			drag(editor, box.bottom, box.bottom + 30);
+
+			expect(first.style.height).equals(height + 30 + 'px');
+			expect(second.hasAttribute('style')).is.false;
+			expect(td.hasAttribute('style')).is.false;
+			expect(editor.history.length).equals(steps + 1);
+
+			editor.execCommand('undo');
+
+			expect(editor.editor.querySelector('tr').hasAttribute('style')).is
+				.false;
+		});
+
+		it('should resize the row while the handle is dragged', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const first = editor.editor.querySelector('tr');
+			const td = first.cells[0];
+			const box = td.getBoundingClientRect();
+			const height = first.offsetHeight;
+
+			hover(td, box.bottom - 2);
+			simulateEvent('mousedown', handle(editor), options => {
+				options.clientY = box.bottom;
+			});
+			simulateEvent('mousemove', editor.ew, options => {
+				options.clientY = box.bottom + 30;
+			});
+
+			expect(first.offsetHeight).equals(height + 30);
+
+			const resizerBox = handle(editor).getBoundingClientRect();
+			expect(
+				Math.abs(
+					resizerBox.top +
+						resizerBox.height / 2 -
+						td.getBoundingClientRect().bottom
+				)
+			).is.below(3);
+
+			simulateEvent('mouseup', editor.ew);
+		});
+
+		it('should leave the row as it was after a drag back to where it started', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const first = editor.editor.querySelector('tr');
+			const td = first.cells[0];
+			const box = td.getBoundingClientRect();
+
+			hover(td, box.bottom - 2);
+			simulateEvent('mousedown', handle(editor), options => {
+				options.clientY = box.bottom;
+			});
+			simulateEvent('mousemove', editor.ew, options => {
+				options.clientY = box.bottom + 30;
+			});
+			simulateEvent(['mousemove', 'mouseup'], editor.ew, options => {
+				options.clientY = box.bottom;
+			});
+
+			expect(first.hasAttribute('style')).is.false;
+		});
+
+		it('should keep the handle while a drag leaves the table', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelector('td');
+			const box = td.getBoundingClientRect();
+
+			hover(td, box.bottom - 2);
+			simulateEvent('mousedown', handle(editor), options => {
+				options.clientY = box.bottom;
+			});
+			simulateEvent('mouseleave', editor.editor.querySelector('table'));
+
+			expect(handle(editor)).is.not.null;
+
+			simulateEvent('mouseup', editor.ew);
+		});
+
+		it('should not make a row shorter than its content', () => {
+			const editor = getJodit();
+			editor.value = TABLE.replace('<tr>', '<tr style="height: 100px;">');
+
+			const first = editor.editor.querySelector('tr');
+			const td = first.cells[0];
+			const box = td.getBoundingClientRect();
+
+			hover(td, box.bottom - 2);
+			drag(editor, box.bottom, box.bottom - 200);
+
+			expect(parseInt(first.style.height, 10)).is.below(100);
+			expect(first.style.height).equals(first.offsetHeight + 'px');
+		});
+
+		describe('In an editor scrolled down', () => {
+			const scrolledDown = options => {
+				const editor = getJodit({ height: 300, ...options });
+				editor.value =
+					TABLE.replace('<tr>', '<tr style="height: 400px;">') +
+					'<p>line</p>'.repeat(8);
+
+				const scroller = editor.o.iframe
+					? editor.ed.scrollingElement
+					: editor.editor;
+				scroller.scrollTop = 400 - scroller.clientHeight / 2;
+
+				const td = editor.editor.querySelector('td');
+				hover(td, td.getBoundingClientRect().bottom - 2);
+
+				return { editor, scroller, td };
+			};
+
+			it('should size the row to where the pointer is let go', () => {
+				const { editor, scroller, td } = scrolledDown();
+				const { scrollTop } = scroller;
+				const { bottom } = td.getBoundingClientRect();
+				expect(scrollTop).is.above(0);
+
+				drag(editor, bottom, bottom - 50);
+
+				expect(td.parentElement.style.height).equals('350px');
+				expect(scroller.scrollTop).equals(scrollTop);
+				expect(
+					Math.abs(td.getBoundingClientRect().bottom - (bottom - 50))
+				).is.below(2);
+			});
+
+			it('should scroll up along with a drag past the top, as far as the row can shrink', async () => {
+				const { editor, scroller, td } = scrolledDown();
+				const { scrollTop } = scroller;
+				const { bottom } = td.getBoundingClientRect();
+				const top =
+					scroller.getBoundingClientRect().top + scroller.clientTop;
+
+				simulateEvent('mousedown', handle(editor), options => {
+					options.clientY = bottom;
+				});
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientY = top - 40;
+				});
+				await delay(1000);
+				simulateEvent('mouseup', editor.ew);
+
+				const row = td.parentElement;
+				expect(scroller.scrollTop).is.below(scrollTop);
+				expect(row.offsetHeight).is.below(400 - (bottom - top));
+				expect(row.style.height).equals(row.offsetHeight + 'px');
+				expect(
+					Math.abs(td.getBoundingClientRect().bottom - top)
+				).is.below(2);
+			});
+
+			it('should scroll down along with a drag past the bottom, growing the row', async () => {
+				const { editor, scroller, td } = scrolledDown();
+				const { scrollTop } = scroller;
+				const { bottom } = td.getBoundingClientRect();
+				const end =
+					scroller.getBoundingClientRect().top +
+					scroller.clientTop +
+					scroller.clientHeight;
+
+				simulateEvent('mousedown', handle(editor), options => {
+					options.clientY = bottom;
+				});
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientY = end + 40;
+				});
+				await delay(300);
+				simulateEvent('mouseup', editor.ew);
+
+				const scrolled = scroller.scrollTop - scrollTop;
+				expect(scrolled).is.above(0);
+				expect(
+					Math.abs(
+						td.parentElement.offsetHeight -
+							(400 + end - bottom + scrolled)
+					)
+				).is.below(2);
+				expect(
+					Math.abs(td.getBoundingClientRect().bottom - end)
+				).is.below(2);
+
+				const resizer = handle(editor).getBoundingClientRect();
+				expect(
+					Math.abs(resizer.top + resizer.height / 2 - end)
+				).is.below(3);
+			});
+
+			it('should scroll an iframe down along with a drag near its bottom', async () => {
+				const { editor, scroller } = scrolledDown({ iframe: true });
+				const { scrollTop } = scroller;
+				const styles = () =>
+					[editor.ed.documentElement, editor.ed.body].map(elm =>
+						elm.getAttribute('style')
+					);
+				const before = styles();
+
+				simulateEvent('mousedown', handle(editor));
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientY = editor.ew.innerHeight - 5;
+				});
+				await delay(300);
+				simulateEvent('mouseup', editor.ow);
+
+				expect(scroller.scrollTop).is.above(scrollTop);
+				expect(styles()).deep.equals(before);
+			});
+
+			it('should keep the scroll of an iframe as a drag starts', () => {
+				const { editor, scroller } = scrolledDown({ iframe: true });
+				const { scrollTop } = scroller;
+				expect(scrollTop).is.above(0);
+
+				simulateEvent('mousedown', handle(editor));
+
+				expect(scroller.scrollTop).equals(scrollTop);
+				simulateEvent('mouseup', editor.ow);
+			});
+		});
+
+		it("should resize the last row from the table's bottom edge", () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const last = editor.editor.querySelectorAll('tr')[1];
+			const td = last.cells[1];
+			const box = td.getBoundingClientRect();
+			const height = last.offsetHeight;
+
+			hover(td, box.bottom - 2);
+			drag(editor, box.bottom, box.bottom + 20);
+
+			expect(last.style.height).equals(height + 20 + 'px');
+		});
+
+		it('should resize the row above a border reached from the cell below it', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const [first, second] = editor.editor.querySelectorAll('tr');
+			const box = second.cells[0].getBoundingClientRect();
+			const height = first.offsetHeight;
+
+			hover(second.cells[0], box.top + 2);
+			drag(editor, box.top, box.top + 20);
+
+			expect(first.style.height).equals(height + 20 + 'px');
+			expect(second.hasAttribute('style')).is.false;
+		});
+
+		it('should resize the row a cell spanning two rows ends in', () => {
+			const editor = getJodit();
+			editor.value =
+				'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+				'<tr><td rowspan="2">A</td><td>1</td></tr>' +
+				'<tr><td>2</td></tr>' +
+				'<tr><td>3</td><td>4</td></tr>' +
+				'</tbody></table>';
+
+			const [first, second] = editor.editor.querySelectorAll('tr');
+			const td = first.cells[0];
+			const box = td.getBoundingClientRect();
+			const height = second.offsetHeight;
+
+			hover(td, box.bottom - 2);
+			drag(editor, box.bottom, box.bottom + 20);
+
+			expect(second.style.height).equals(height + 20 + 'px');
+			expect(first.hasAttribute('style')).is.false;
+		});
+
+		it("should not show a row handle on the table's top edge", () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelector('td');
+			hover(td, td.getBoundingClientRect().top + 2);
+
+			expect(handle(editor)).is.null;
+		});
+
+		it("should show the column's handle at a corner", () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelectorAll('td')[1];
+			const box = td.getBoundingClientRect();
+			simulateEvent('mousemove', td, options => {
+				options.offsetX = 2;
+				options.clientX = box.left + 2;
+				options.clientY = box.bottom - 2;
+			});
+
+			expect(handle(editor)).is.not.null;
+			expect(handle(editor).classList.contains('jodit-table-resizer_row'))
+				.is.false;
+		});
+
+		it('should not show a handle with tableAllowCellResize off', () => {
+			const editor = getJodit({ tableAllowCellResize: false });
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelector('td');
+			hover(td, td.getBoundingClientRect().bottom - 2);
+
+			expect(handle(editor)).is.null;
+		});
 	});
 
 	describe('Resize table', function () {
