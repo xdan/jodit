@@ -12,25 +12,39 @@
 
 import type { IDictionary, IJodit, IUIForm, Nullable } from 'jodit/types';
 import type { UIForm } from 'jodit/core/ui/form/form';
-import { KEY_BACKSPACE, KEY_TAB } from 'jodit/core/constants';
+import {
+	KEY_BACKSPACE,
+	KEY_DOWN,
+	KEY_ESC,
+	KEY_TAB,
+	KEY_UP
+} from 'jodit/core/constants';
 import { autobind } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom';
-import { pluginSystem } from 'jodit/core/global';
+import { pluginSystem, uniqueUid } from 'jodit/core/global';
 import {
 	attr,
 	call,
 	convertMediaUrlToVideoEmbed,
+	getAnchorName,
+	getAnchors,
 	isString,
 	isURL,
+	position,
 	prepareEmbedCode,
 	refs,
 	stripTags
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
+import { UIElement } from 'jodit/core/ui/element';
+import { Icon } from 'jodit/core/ui/icon';
+import { Popup } from 'jodit/core/ui/popup/popup';
 
 import './config';
 
 import { EMAIL, findTypedLink } from './typed-link';
+
+import './link.less';
 
 /**
  * Process link. Insert, dblclick or remove format
@@ -277,6 +291,8 @@ export class link extends Plugin {
 				target_checkbox.checked = openInNewTabCheckboxDefaultChecked;
 			}
 		}
+
+		addAnchorList(jodit, url_input, content_input, isImageContent);
 
 		jodit.editor.normalize();
 		const snapshot = jodit.history.snapshot.make();
@@ -599,6 +615,177 @@ const NO_TYPED_LINKS = new Set(['a', 'pre', 'code'] as const);
 const MODIFIER_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock']);
 
 pluginSystem.add('link', link);
+
+/**
+ * A dropdown arrow in the URL field that lists the document's anchors by the
+ * words after them, and fills in the one picked. The list opens in a popup of
+ * its own, from the arrow or the down arrow key, and closes once an address is
+ * typed
+ */
+function addAnchorList(
+	jodit: IJodit,
+	url: HTMLInputElement,
+	content: HTMLInputElement,
+	isImage: boolean
+): void {
+	const anchors = getAnchors(jodit.editor);
+
+	if (!url || !anchors.length) {
+		return;
+	}
+
+	const { c } = jodit;
+	const label = jodit.i18n('Link to an anchor');
+	const toggle = c.element('button', {
+		type: 'button',
+		class: 'jodit-link-anchors__toggle',
+		title: label,
+		'aria-label': label
+	});
+	const heading = c.div('jodit-link-anchors__heading', {
+		id: 'jodit-link-anchors-' + uniqueUid()
+	});
+	const list = c.div('jodit-link-anchors', {
+		role: 'group',
+		'aria-labelledby': heading.id
+	});
+	const icon = (name: string): Node =>
+		Icon.makeIcon(jodit, {
+			name,
+			iconURL: '',
+			fill: '',
+			scale: undefined
+		}) ?? c.span();
+
+	const field = url.closest<HTMLElement>('.jodit-ui-input__wrapper') ?? url;
+	const dropdown = new Popup(jodit).setMod('padding', false);
+	const items: HTMLElement[] = [];
+	let filled = '';
+
+	const open = (): void => {
+		if (dropdown.isOpened) {
+			return;
+		}
+
+		// Clicks in the list then count as the form's, which stays open
+		dropdown.parentElement ||= UIElement.closestElement(field, UIElement);
+		list.style.minWidth = field.offsetWidth + 'px';
+		dropdown.open(() => position(field));
+		attr(toggle, 'aria-expanded', true);
+		items.forEach((item, index) =>
+			attr(
+				item,
+				'aria-current',
+				url.value === '#' + getAnchorName(anchors[index])
+			)
+		);
+		list.querySelector<HTMLElement>('[aria-current=true]')?.scrollIntoView({
+			block: 'nearest'
+		});
+	};
+
+	toggle.append(icon('chevron'));
+	attr(toggle, 'aria-expanded', false);
+	heading.textContent = jodit.i18n('On this page');
+	list.appendChild(heading);
+	dropdown.setContent(list);
+
+	anchors.forEach(anchor => {
+		const name = getAnchorName(anchor);
+		const text = textAfter(jodit, anchor) || name;
+		const item = c.element('button', {
+			type: 'button',
+			tabindex: -1,
+			class: 'jodit-link-anchors__item'
+		});
+		items.push(item);
+
+		const textBox = c.span('jodit-link-anchors__text');
+		textBox.textContent = text;
+
+		const nameBox = c.span('jodit-link-anchors__name');
+		nameBox.textContent = '#' + name;
+
+		item.append(icon('anchor'), textBox, nameBox);
+		list.appendChild(item);
+
+		jodit.e.on(item, 'click', () => {
+			dropdown.close();
+			url.value = '#' + name;
+
+			if (
+				!isImage &&
+				(!content.value.trim() || content.value === filled)
+			) {
+				content.value = filled = text;
+			}
+
+			url.focus();
+		});
+	});
+
+	// A press on the arrow closes the open list before the click
+	let wasOpen = false;
+
+	jodit.e
+		.on(dropdown, 'beforeClose', () => attr(toggle, 'aria-expanded', false))
+		.on(toggle, 'mousedown', () => (wasOpen = dropdown.isOpened))
+		.on(toggle, 'click', () => {
+			wasOpen || dropdown.isOpened ? dropdown.close() : open();
+			wasOpen = false;
+		})
+		.on(url, 'input', () => {
+			if (url.value && !url.value.startsWith('#')) {
+				dropdown.close();
+			}
+		})
+		.on(url, 'keydown', (e: KeyboardEvent) => {
+			if (e.key === KEY_DOWN) {
+				e.preventDefault();
+				open();
+				items[0].focus();
+			}
+
+			if (e.key === KEY_ESC && dropdown.isOpened) {
+				e.stopPropagation();
+				dropdown.close();
+			}
+		})
+		.on(list, 'keydown', (e: KeyboardEvent) => {
+			const index = items.indexOf(e.target as HTMLElement);
+
+			if (e.key === KEY_DOWN || e.key === KEY_UP) {
+				e.preventDefault();
+				items[index + (e.key === KEY_DOWN ? 1 : -1)]?.focus();
+			}
+
+			if (e.key === KEY_ESC) {
+				e.stopPropagation();
+				dropdown.close();
+				url.focus();
+			}
+		});
+
+	Dom.after(url, toggle);
+}
+
+/**
+ * The words after an anchor in its block, which say where it is
+ */
+function textAfter(jodit: IJodit, anchor: HTMLAnchorElement): string {
+	const range = jodit.ed.createRange();
+
+	range.selectNodeContents(
+		Dom.up(anchor, Dom.isBlock, jodit.editor) ?? jodit.editor
+	);
+	range.setStartAfter(anchor);
+
+	const text = range.toString().replace(/\s+/g, ' ').trim();
+
+	return text.length > 50
+		? text.slice(0, 50).replace(/\s+\S*$/, '') + '…'
+		: text;
+}
 
 /**
  * Guess a usable `href` from the selected text for the link dialog.

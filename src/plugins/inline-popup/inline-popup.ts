@@ -15,7 +15,6 @@ import type {
 	HTMLTagNames,
 	IBound,
 	IJodit,
-	IPopup,
 	IToolbarCollection,
 	IViewComponent,
 	Nullable
@@ -55,7 +54,7 @@ export class inlinePopup extends Plugin {
 	private type: Nullable<string> = null;
 
 	@cache
-	private get popup(): IPopup {
+	private get popup(): Popup {
 		return new Popup(this.jodit, false);
 	}
 
@@ -139,10 +138,15 @@ export class inlinePopup extends Plugin {
 			return false;
 		}
 
-		if (this.type !== type || target !== this.previousTarget) {
-			this.previousTarget = target;
+		const data = this.j.o.popup[type];
 
-			const data = this.j.o.popup[type];
+		// A function's popup is made afresh, so it shows its target as it is now
+		if (
+			isFunction(data) ||
+			this.type !== type ||
+			target !== this.previousTarget
+		) {
+			this.previousTarget = target;
 
 			let content;
 
@@ -167,6 +171,10 @@ export class inlinePopup extends Plugin {
 				this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
 				content = this.toolbar.container;
 			}
+
+			// Whatever it showed goes, including a form, which is its child
+			this.popup.clear();
+			Dom.detach(this.popup.getElm('content'));
 			this.popup.setContent(content);
 
 			this.type = type;

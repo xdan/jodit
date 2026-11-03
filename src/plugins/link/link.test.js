@@ -5,6 +5,253 @@
  */
 
 describe('Link plugin', () => {
+	// https://github.com/xdan/jodit/issues/1715
+	describe('Anchors in the document (#1715)', () => {
+		const ANCHORS =
+			'<h2><a id="fees"></a>School fees</h2>' +
+			'<p>Uniform<a name="uniform"></a> is sold on Thursdays.</p>';
+
+		const openLinkFor = value => {
+			const editor = getJodit();
+			editor.value = value;
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			return { editor, popup: getOpenedPopup(editor) };
+		};
+
+		// The list opens in a popup of its own, outside the form
+		const list = () => document.querySelector('.jodit-link-anchors');
+		const toggle = popup =>
+			popup.querySelector('.jodit-link-anchors__toggle');
+		const openList = popup => {
+			simulateEvent('click', toggle(popup));
+			return list();
+		};
+		const items = () =>
+			Array.from(list().querySelectorAll('.jodit-link-anchors__item'));
+		const texts = part =>
+			items().map(
+				item =>
+					item.querySelector('.jodit-link-anchors__' + part)
+						.textContent
+			);
+		const isOpen = popup =>
+			Boolean(popup.isConnected && popup.getClientRects().length);
+
+		it("should list the document's anchors by the text after them, under a heading, from its arrow", () => {
+			const { popup } = openLinkFor('<p>|See the fees|</p>' + ANCHORS);
+
+			expect(list()).is.null;
+			expect(toggle(popup).getAttribute('aria-expanded')).equals('false');
+
+			const heading = openList(popup).querySelector(
+				'.jodit-link-anchors__heading'
+			);
+
+			expect(toggle(popup).getAttribute('aria-expanded')).equals('true');
+			expect(heading.textContent).equals('On this page');
+			expect(list().getAttribute('role')).equals('group');
+			expect(list().getAttribute('aria-labelledby')).equals(heading.id);
+			expect(texts('text')).deep.equals([
+				'School fees',
+				'is sold on Thursdays.'
+			]);
+			expect(texts('name')).deep.equals(['#fees', '#uniform']);
+		});
+
+		it('should fill in the anchor picked, leaving the form open to insert the link', () => {
+			const { editor, popup } = openLinkFor(
+				'<p>|See the fees|</p>' + ANCHORS
+			);
+
+			openList(popup);
+			simulateEvent('click', items()[0]);
+
+			expect(popup.querySelector('[ref=url_input]').value).equals(
+				'#fees'
+			);
+			expect(popup.querySelector('[ref=content_input]').value).equals(
+				'See the fees'
+			);
+			expect(list()).is.null;
+			expect(isOpen(popup)).is.true;
+			expect(editor.value).equals('<p>See the fees</p>' + ANCHORS);
+
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(
+				'<p><a href="#fees">See the fees</a></p>' + ANCHORS
+			);
+		});
+
+		it('should give a link with no text the text after the anchor', () => {
+			const { editor, popup } = openLinkFor('<p>See |</p>' + ANCHORS);
+
+			openList(popup);
+			simulateEvent('click', items()[1]);
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(
+				'<p>See <a href="#uniform">is sold on Thursdays.</a></p>' +
+					ANCHORS
+			);
+		});
+
+		it('should change the text it filled in when another anchor is picked, but not text typed', () => {
+			const { popup } = openLinkFor('<p>See |</p>' + ANCHORS);
+			const content = popup.querySelector('[ref=content_input]');
+
+			openList(popup);
+			simulateEvent('click', items()[1]);
+			openList(popup);
+			simulateEvent('click', items()[0]);
+
+			expect(content.value).equals('School fees');
+
+			content.value = 'Fees';
+			openList(popup);
+			simulateEvent('click', items()[1]);
+
+			expect(content.value).equals('Fees');
+		});
+
+		it('should start closed for a link to an anchor too, and mark the anchor in the URL', () => {
+			const { popup } = openLinkFor(
+				'<p><a href="#uniform">See |the| uniform</a></p>' + ANCHORS
+			);
+
+			expect(list()).is.null;
+
+			openList(popup);
+
+			expect(
+				items().map(item => item.getAttribute('aria-current'))
+			).deep.equals(['false', 'true']);
+
+			simulateEvent('click', items()[0]);
+			openList(popup);
+
+			expect(
+				items().map(item => item.getAttribute('aria-current'))
+			).deep.equals(['true', 'false']);
+		});
+
+		it('should keep room for the text beside a long anchor name', () => {
+			const { popup } = openLinkFor(
+				'<p>|See the fees|</p>' +
+					'<h2><a id="fees-for-2027-including-donations-and-camps"></a>Fees for 2027, including donations and camps</h2>' +
+					'<h2><a id="uniform"></a>Uniform, hats and shoes, and where to buy them second hand</h2>' +
+					'<h2><a id="enrolment-zone-map-and-out-of-zone-ballot"></a>Zone</h2>'
+			);
+
+			openList(popup);
+
+			const [long, short, wide] = items().map(item => {
+				const part = name =>
+					item.querySelector('.jodit-link-anchors__' + name);
+				const width = name =>
+					part(name).getBoundingClientRect().width / item.clientWidth;
+
+				const cut = name =>
+					part(name).scrollWidth > part(name).clientWidth;
+
+				return {
+					text: width('text'),
+					name: width('name'),
+					textCut: cut('text'),
+					nameCut: cut('name')
+				};
+			});
+
+			expect(long.text).is.above(0.5);
+			expect(long.name).is.above(0.25).and.at.most(0.35);
+			expect(long.nameCut).is.true;
+			expect(short.text).is.above(0.5);
+			expect(short.nameCut).is.false;
+			expect(wide.textCut).is.false;
+		});
+
+		it('should close the list from its arrow, keeping the form open', () => {
+			const { popup } = openLinkFor('<p>|See the fees|</p>' + ANCHORS);
+
+			openList(popup);
+			simulateEvent('mousedown', toggle(popup));
+			simulateEvent('click', toggle(popup));
+
+			expect(list()).is.null;
+			expect(toggle(popup).getAttribute('aria-expanded')).equals('false');
+			expect(isOpen(popup)).is.true;
+		});
+
+		it('should keep both open on a click in the list, and close the list on a click in the form', () => {
+			const { popup } = openLinkFor('<p>|See the fees|</p>' + ANCHORS);
+
+			openList(popup);
+			simulateEvent(
+				'mousedown',
+				list().querySelector('.jodit-link-anchors__heading')
+			);
+
+			expect(list()).is.not.null;
+			expect(isOpen(popup)).is.true;
+
+			simulateEvent(
+				'mousedown',
+				popup.querySelector('[ref=content_input]')
+			);
+
+			expect(list()).is.null;
+			expect(isOpen(popup)).is.true;
+		});
+
+		it('should close the list once an address is typed', () => {
+			const { popup } = openLinkFor('<p>|See the fees|</p>' + ANCHORS);
+			const url = popup.querySelector('[ref=url_input]');
+
+			openList(popup);
+			url.value = 'https://example.com';
+			simulateEvent('input', url);
+
+			expect(list()).is.null;
+		});
+
+		it('should go into the list with the down arrow, and back with Escape', () => {
+			const { popup } = openLinkFor('<p>|See the fees|</p>' + ANCHORS);
+			const url = popup.querySelector('[ref=url_input]');
+			const press = (key, target) =>
+				simulateEvent('keydown', target, options => {
+					options.key = key;
+				});
+
+			press('ArrowDown', url);
+			expect(document.activeElement).equals(items()[0]);
+
+			press('ArrowDown', items()[0]);
+			expect(document.activeElement).equals(items()[1]);
+
+			press('ArrowUp', items()[1]);
+			expect(document.activeElement).equals(items()[0]);
+
+			press('Escape', items()[0]);
+			expect(list()).is.null;
+			expect(document.activeElement).equals(url);
+			expect(isOpen(popup)).is.true;
+
+			press('ArrowDown', url);
+			press('Escape', url);
+			expect(list()).is.null;
+			expect(isOpen(popup)).is.true;
+		});
+
+		it('should leave the list out of a document with no anchors', () => {
+			const { popup } = openLinkFor('<p>|See the fees|</p>');
+
+			expect(toggle(popup)).is.null;
+			expect(list()).is.null;
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1204
 	describe('Aria label input (#1204)', () => {
 		it('Should not show the aria-label input by default', () => {
