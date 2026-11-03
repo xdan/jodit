@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.3
+
+#### :house: Internal
+
+- 4.19.2 was tagged with a formatting error in a test and did not publish; this is the same change.
+
 ## 4.19.2
 
 #### :house: Internal
