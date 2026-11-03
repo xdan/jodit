@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.1
+
+#### :house: Internal
+
+- The image caption test that opens the popup after a click waits for the popup instead of a fixed delay, which the CI Firefox jobs of the PRO release missed.
+
 ## 4.19.0
 
 #### :rocket: New Feature

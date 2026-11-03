@@ -973,7 +973,8 @@ describe('Image caption plugin', () => {
 				expect(caption(editor)).is.not.null;
 
 				simulateEvent(['mouseup', 'click'], img);
-				await delay(10);
+				// The popup opens on the click's own timer, slow in CI Firefox
+				await waitForCondition(() => getOpenedPopup(editor), 2000);
 
 				expect(markup(editor)).equals(
 					sortAttributes(`<p>${image}</p>`)
