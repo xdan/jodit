@@ -107,6 +107,26 @@ Process negative situation. For example file wasn't uploaded because of file per
 
 Default success result processor. In first param it get `uploader.process` result
 
+When images are read as base64 (`insertImageAsBase64URI`), `files` holds the data URIs and `fileNames` the names the files had on the user's device:
+
+```js
+Jodit.make('#editor', {
+	uploader: {
+		insertImageAsBase64URI: true,
+		defaultHandlerSuccess(data) {
+			const j = this.j || this;
+
+			data.files.forEach((src, i) => {
+				const img = j.createInside.element('img');
+				img.src = src;
+				img.dataset.filename = data.fileNames[i];
+				j.s.insertImage(img, null, j.o.imageDefaultWidth);
+			});
+		}
+	}
+});
+```
+
 ### uploader.defaultHandlerError
 
 - Type: `function`

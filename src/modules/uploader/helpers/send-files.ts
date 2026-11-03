@@ -179,6 +179,7 @@ function readImagesWithReader(
 			}
 
 			const reader = new FileReader();
+			const { name } = file;
 
 			const readerPromise = uploader.j.async.promise<IUploaderData>(
 				(resolve, reject) => {
@@ -187,7 +188,8 @@ function readImagesWithReader(
 						const resp = {
 							baseurl: '',
 							files: [reader.result],
-							isImages: [true]
+							isImages: [true],
+							fileNames: [name]
 						} as IUploaderData;
 
 						const handler = isFunction(handlerSuccess)
