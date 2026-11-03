@@ -113,6 +113,7 @@ module.exports = {
 	'Insert column after': 'Kolom invoegen (na)',
 	'Insert row above': 'Rij invoegen (boven)',
 	'Insert row below': 'Rij invoegen (onder)',
+	'Header row': 'Koprij',
 	'Delete table': 'Tabel verwijderen',
 	'Delete row': 'Rij verwijderen',
 	'Delete column': 'Kolom verwijderen',

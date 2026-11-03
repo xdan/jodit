@@ -118,7 +118,7 @@ Jodit.make('#editor', {
 
 - **`a`** (links): Link editing and unlinking tools
 - **`img`** (images): Image manipulation tools: Delete, Edit (the image properties dialog), Caption (see the `imageCaption` plugin), Vertical align and Align. For a captioned image, Delete and Align act on the element holding the image and its caption, Vertical align is disabled, and the popup opens below the caption
-- **`cells`** (table cells): Table modification tools
+- **`cells`** (table cells): Table modification tools, and a Header row toggle (`headerrow`), which leaves the popup open to show its new state
 - **`selection`**: Bold, italic, underline, lists, alignment, etc.
 - **`toolbar`**: General inline toolbar
 - **`iframe`/`jodit-media`**: Media element tools: Replace (the video popup's tabs), Delete, Edit (the video properties dialog) and Align

@@ -962,6 +962,69 @@ describe('Text Inline Popup plugin', () => {
 			});
 		});
 
+		describe('Header row button (#1713)', () => {
+			// In the middle, as the column resizer can sit on the cell's edge
+			const clickFirstCell = editor => {
+				const cell = editor.editor.querySelector('td, th'),
+					pos = Jodit.modules.Helpers.position(cell);
+
+				simulateEvent(['mousedown', 'mouseup', 'click'], cell, e => {
+					Object.assign(e, {
+						clientX: pos.left + pos.width / 2,
+						clientY: pos.top + pos.height / 2
+					});
+				});
+
+				return getOpenedPopup(editor);
+			};
+
+			it('Should turn the first row into a header row and back, staying open to show which it is', () => {
+				const editor = getJodit();
+				editor.value =
+					'<table><tbody><tr><td>1</td></tr><tr><td>2</td></tr></tbody></table>';
+
+				const popup = clickFirstCell(editor);
+				const pressed = () =>
+					getButton('headerrow', popup).getAttribute('aria-pressed');
+
+				expect(pressed()).does.not.equal('true');
+
+				clickButton('headerrow', popup);
+				expect(editor.value).equals(
+					'<table>' +
+						'<thead><tr><th scope="col">1</th></tr></thead>' +
+						'<tbody><tr><td>2</td></tr></tbody>' +
+						'</table>'
+				);
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(pressed()).equals('true');
+				expect(
+					editor.getInstance('Table', editor.o).getAllSelectedCells()
+				).deep.equals([editor.editor.querySelector('th')]);
+
+				clickButton('headerrow', popup);
+				expect(editor.value).equals(
+					'<table><tbody><tr><td>1</td></tr><tr><td>2</td></tr></tbody></table>'
+				);
+				expect(getOpenedPopup(editor)).equals(popup);
+				expect(pressed()).does.not.equal('true');
+			});
+
+			it('Should be disabled while a cell in the first row spans into the next', () => {
+				const editor = getJodit();
+				editor.value =
+					'<table><tbody>' +
+					'<tr><td rowspan="2">1</td><td>2</td></tr><tr><td>3</td></tr>' +
+					'</tbody></table>';
+
+				expect(
+					getButton('headerrow', clickFirstCell(editor)).hasAttribute(
+						'disabled'
+					)
+				).is.true;
+			});
+		});
+
 		describe('Starting to change text', () => {
 			it('Should hide inline popup', () => {
 				const editor = getJodit();

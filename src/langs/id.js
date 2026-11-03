@@ -112,6 +112,7 @@ module.exports = {
 	'Insert column after': 'Sisipkan kolom setelahnya',
 	'Insert row above': 'Sisipkan baris di atasnya',
 	'Insert row below': 'Sisipkan baris di bawahnya',
+	'Header row': 'Baris header',
 	'Delete table': 'Hapus tabel',
 	'Delete row': 'Hapus baris',
 	'Delete column': 'Hapus kolom',
