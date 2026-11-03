@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.4
+
+#### :house: Internal
+
+- 4.19.1 to 4.19.3 did not publish: the Firefox skip of the image caption click test matched on a user agent the test harness fakes; it now uses a feature check.
+
 ## 4.19.3
 
 #### :house: Internal
