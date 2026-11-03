@@ -118,11 +118,28 @@ export class resizeCells extends Plugin {
 
 	/**
 	 * The table's and its cells' styles as a column drag started, put back
-	 * before each new width
+	 * as it ends, before the final widths
 	 */
 	private startStyles: Array<[HTMLElement, Nullable<string>]> = [];
 	private startLeft: number = 0;
 	private startEdge: number = 0;
+
+	/**
+	 * For each of the two columns a drag resizes, the cell whose width
+	 * `setColumnWidthByDelta` sets, with its width as the drag started, and
+	 * the cells below it, whose widths it clears
+	 */
+	private startWidths: Array<
+		[HTMLTableCellElement | undefined, number, HTMLTableCellElement[]]
+	> = [];
+
+	/**
+	 * The table's width as the drag started, and for a drag of its edge, the
+	 * width inside what holds it and its margin on that side
+	 */
+	private startTableWidth: number = 0;
+	private startParentWidth: number = 0;
+	private startMargin: number = 0;
 
 	/**
 	 * The row whose height the handle sets, or null while it sets a width
@@ -190,14 +207,22 @@ export class resizeCells extends Plugin {
 
 		this.minX = 0;
 		this.maxX = 1000000;
+		this.startTableWidth = this.workTable.offsetWidth;
 
 		if (this.wholeTable != null) {
-			const tableBox = (
-				this.workTable.parentNode as HTMLElement
-			).getBoundingClientRect();
+			const parent = this.workTable.parentNode as HTMLElement;
+			const tableBox = parent.getBoundingClientRect();
 
 			this.minX = tableBox.left;
 			this.maxX = this.minX + tableBox.width;
+
+			const side = this.isRTL ? 'marginRight' : 'marginLeft';
+
+			this.startParentWidth = getContentWidth(parent, this.j.ew);
+			this.startMargin = parseInt(
+				this.j.ew.getComputedStyle(this.workTable)[side] || '0',
+				10
+			);
 		} else {
 			// find maximum columns
 			const coordinate = this.module.formalCoordinate(
@@ -224,6 +249,22 @@ export class resizeCells extends Plugin {
 						this.maxX
 					);
 				}
+			});
+
+			const matrix = this.module.formalMatrix(this.workTable);
+
+			this.startWidths = this.resizedColumns().map(column => {
+				const cells = matrix.map(row => row[column]);
+				const index = cells.findIndex(
+					td => td.colSpan === 1 || cells.length === 1
+				);
+				const cell = cells[index];
+
+				return [
+					cell,
+					cell ? cell.offsetWidth : 0,
+					cells.slice(Math.max(index, 0) + 1)
+				];
 			});
 		}
 
@@ -275,8 +316,11 @@ export class resizeCells extends Plugin {
 		this.resizeDelta =
 			x - this.startX + (!this.j.o.iframe ? 0 : workplacePosition.left);
 
-		this.restoreStyles();
-		this.resizeColumnsOrTable();
+		if (this.wholeTable == null) {
+			this.setColumnWidths();
+		} else {
+			this.resizeTable();
+		}
 
 		const tableBox: IBound = offset(this.workTable, this.j, this.j.ed);
 
@@ -446,6 +490,28 @@ export class resizeCells extends Plugin {
 	}
 
 	/**
+	 * The two columns a column drag resizes: the work cell's last, and the
+	 * next cell's first
+	 */
+	private resizedColumns(): number[] {
+		const nextTD = call(
+			this.isRTL ? Dom.prev : Dom.next,
+			this.workCell,
+			Dom.isCell,
+			this.workCell.parentNode as HTMLElement
+		) as HTMLTableCellElement;
+
+		return [
+			this.module.formalCoordinate(
+				this.workTable,
+				this.workCell,
+				true
+			)[1],
+			this.module.formalCoordinate(this.workTable, nextTD)[1]
+		];
+	}
+
+	/**
 	 * Resize only one column
 	 */
 	private resizeColumns(): void {
@@ -454,33 +520,52 @@ export class resizeCells extends Plugin {
 		const marked: HTMLTableCellElement[] = [];
 
 		const tableModule = this.module;
+		const [column, nextColumn] = this.resizedColumns();
 
 		tableModule.setColumnWidthByDelta(
 			this.workTable,
-			tableModule.formalCoordinate(
-				this.workTable,
-				this.workCell,
-				true
-			)[1],
+			column,
 			delta,
 			true,
 			marked
 		);
 
-		const nextTD = call(
-			this.isRTL ? Dom.prev : Dom.next,
-			this.workCell,
-			Dom.isCell,
-			this.workCell.parentNode as HTMLElement
-		) as HTMLTableCellElement;
-
 		tableModule.setColumnWidthByDelta(
 			this.workTable,
-			tableModule.formalCoordinate(this.workTable, nextTD)[1],
+			nextColumn,
 			-delta,
 			false,
 			marked
 		);
+	}
+
+	/**
+	 * Sets the widths `resizeColumns` would while the handle is dragged, from
+	 * the widths the drag started with, so that a move doesn't put back every
+	 * cell's style and lay the table out again to measure them
+	 */
+	private setColumnWidths(): void {
+		this.startWidths.forEach(([cell, width, below], index) => {
+			const delta = index ? -this.resizeDelta : this.resizeDelta;
+
+			if (cell) {
+				css(
+					cell,
+					'width',
+					(((width + delta) / this.startTableWidth) * 100).toFixed(
+						consts.ACCURACY
+					) + '%'
+				);
+			}
+
+			below.forEach(td => {
+				td.style.removeProperty('width');
+
+				if (!attr(td, 'style')) {
+					attr(td, 'style', null);
+				}
+			});
+		});
 	}
 
 	/**
@@ -489,11 +574,8 @@ export class resizeCells extends Plugin {
 	private resizeTable(): void {
 		const delta = this.resizeDelta * (this.isRTL ? -1 : 1);
 
-		const width = this.workTable.offsetWidth,
-			parentWidth = getContentWidth(
-				this.workTable.parentNode as HTMLElement,
-				this.j.ew
-			);
+		const width = this.startTableWidth,
+			parentWidth = this.startParentWidth;
 
 		// for RTL use mirror logic
 		const rightSide = !this.wholeTable;
@@ -509,14 +591,9 @@ export class resizeCells extends Plugin {
 		} else {
 			const side = this.isRTL ? 'marginRight' : 'marginLeft';
 
-			const margin = parseInt(
-				this.j.ew.getComputedStyle(this.workTable)[side] || '0',
-				10
-			);
-
 			css(this.workTable, {
 				width: ((width - delta) / parentWidth) * 100 + '%',
-				[side]: ((margin + delta) / parentWidth) * 100 + '%'
+				[side]: ((this.startMargin + delta) / parentWidth) * 100 + '%'
 			});
 		}
 	}
