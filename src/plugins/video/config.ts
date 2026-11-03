@@ -19,6 +19,7 @@ import { Button } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput, UITextArea } from 'jodit/core/ui/form';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
+import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { type TabOption, TabsWidget, UploadTab } from 'jodit/modules/widget';
 
 import videoIcon from './video.svg';
@@ -63,7 +64,7 @@ declare module 'jodit/config' {
 			 * Jodit.make('#editor', {
 			 * 		video: {
 			 * 			defaultHandlerSuccess(data) {
-			 * 				data.files.forEach(file => {
+			 * 				data.items.forEach(({ file }) => {
 			 * 					this.s.insertHTML(`<video controls preload="metadata" src="${data.baseurl + file}"></video>`);
 			 * 				});
 			 * 			}
@@ -77,13 +78,15 @@ declare module 'jodit/config' {
 }
 
 function insertVideos(this: IJodit, data: IUploaderData): void {
-	data.files?.forEach(file => {
+	const { baseurl, items } = normalizeUploaderData(data);
+
+	items.forEach(({ file }) => {
 		this.s.insertNode(
 			prepareMedia(
 				this,
 				this.createInside.element('video', {
 					controls: '',
-					src: data.baseurl + file
+					src: baseurl + file
 				})
 			)
 		);

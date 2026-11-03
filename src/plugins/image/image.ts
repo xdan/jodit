@@ -50,14 +50,13 @@ Config.prototype.controls.image = {
 				filebrowser: (data: IFileBrowserCallBackData) => {
 					editor.s.restore();
 
-					data.files &&
-						data.files.forEach(file =>
-							editor.s.insertImage(
-								data.baseurl + file,
-								null,
-								editor.o.imageDefaultWidth
-							)
-						);
+					data.items?.forEach(({ file }) =>
+						editor.s.insertImage(
+							data.baseurl + file,
+							null,
+							editor.o.imageDefaultWidth
+						)
+					);
 
 					close();
 				},

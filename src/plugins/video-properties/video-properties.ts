@@ -173,17 +173,17 @@ export class videoProperties extends Plugin {
 					j,
 					{
 						upload: (data: IFileBrowserCallBackData) => {
-							if (data.files && data.files.length) {
+							if (data.items?.length) {
 								state.values.poster =
-									data.baseurl + data.files[0];
+									data.baseurl + data.items[0].file;
 							}
 
 							close();
 						},
 
 						filebrowser: (data: IFileBrowserCallBackData) => {
-							if (isArray(data.files) && data.files.length) {
-								state.values.poster = data.files[0];
+							if (isArray(data.items) && data.items.length) {
+								state.values.poster = data.items[0].file;
 								close();
 							}
 						}

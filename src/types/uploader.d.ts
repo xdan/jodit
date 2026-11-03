@@ -12,10 +12,38 @@ import type { CanPromise, IDictionary, IViewComponent } from './types';
 import type { IViewBased } from './view';
 import type { IAjax } from './ajax';
 
+/**
+ * One file in the data passed to upload and file browser handlers
+ */
+export interface IUploadedFile {
+	/**
+	 * Relative to `baseurl`, or a data URI for an image read as base64
+	 */
+	file: string;
+	isImage: boolean;
+
+	/**
+	 * The name the file had on the user's device. Jodit sets it for images
+	 * read as base64 (`insertImageAsBase64URI`).
+	 */
+	name?: string;
+}
+
 interface IUploaderData {
 	code?: number;
 	messages?: string[];
+
+	/**
+	 * One object per file. Handlers always get it: Jodit builds it from
+	 * `files`, `isImages` and `fileNames` when the server or
+	 * `uploader.process` gives only those, and rebuilds those arrays from
+	 * it when it's given.
+	 */
+	items?: IUploadedFile[];
+
+	/** @deprecated Use `items` instead */
 	files: string[];
+	/** @deprecated Use `items` instead */
 	isImages?: boolean[];
 	path?: string;
 	baseurl: string;
@@ -25,6 +53,7 @@ interface IUploaderData {
 	 * The names the files had on the user's device. Only set when the
 	 * images were read as base64 (`insertImageAsBase64URI`), where `files`
 	 * holds data URIs.
+	 * @deprecated Use `items` instead
 	 */
 	fileNames?: string[];
 }

@@ -95,6 +95,8 @@ const process = resp => ({
 });
 ```
 
+It can return `items`, one object per file (see `uploader.defaultHandlerSuccess`), instead of `files` and `isImages`.
+
 ### uploader.error
 
 - Type: `function`
@@ -107,7 +109,13 @@ Process negative situation. For example file wasn't uploaded because of file per
 
 Default success result processor. In first param it get `uploader.process` result
 
-When images are read as base64 (`insertImageAsBase64URI`), `files` holds the data URIs and `fileNames` the names the files had on the user's device:
+Its `items` has one object per file:
+
+- `file`: the path relative to `baseurl`, or the data URI of an image read as base64
+- `isImage`: whether the file is an image
+- `name`: the name the file had on the user's device, which Jodit sets for images read as base64 (`insertImageAsBase64URI`)
+
+Jodit builds `items` from the `files` and `isImages` the server answers with, so servers don't need to change. The same goes for the data passed to `uploader.bind()` handlers, `file.defaultHandlerSuccess`, `video.defaultHandlerSuccess` and `filebrowser.defaultCallback`, and the data `uploader.upload()` resolves with.
 
 ```js
 Jodit.make('#editor', {
@@ -116,16 +124,20 @@ Jodit.make('#editor', {
 		defaultHandlerSuccess(data) {
 			const j = this.j || this;
 
-			data.files.forEach((src, i) => {
+			data.items.forEach(({ file, name }) => {
 				const img = j.createInside.element('img');
-				img.src = src;
-				img.dataset.filename = data.fileNames[i];
+				img.src = file;
+				img.dataset.filename = name;
 				j.s.insertImage(img, null, j.o.imageDefaultWidth);
 			});
 		}
 	}
 });
 ```
+
+#### `files`, `isImages` and `fileNames` (deprecated)
+
+Use `items`. The data still has these parallel arrays, with the same details, and when the server or `uploader.process` gives only `items`, Jodit fills them in from it. They will be removed in 5.0.
 
 ### uploader.defaultHandlerError
 
@@ -204,14 +216,10 @@ var editor = Jodit.make('#editor', {
 				msg: resp.msg
 			};
 		},
-		defaultHandlerSuccess: function (data, resp) {
-			var i,
-				field = 'files';
-			if (data[field] && data[field].length) {
-				for (i = 0; i < data[field].length; i += 1) {
-					this.s.insertImage(data.baseurl + data[field][i]);
-				}
-			}
+		defaultHandlerSuccess: function (data) {
+			data.items.forEach(function (item) {
+				this.s.insertImage(data.baseurl + item.file);
+			}, this);
 		},
 		error: function (e) {
 			this.message.message(e.getMessage(), 'error', 4000);

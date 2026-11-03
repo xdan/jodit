@@ -798,4 +798,91 @@ describe('Test uploader module', function () {
 			});
 		});
 	});
+
+	describe('One object per file (#1752)', function () {
+		const url =
+			'https://xdsoft.net/jodit/connector/index.php?action=fileUpload';
+
+		it('Should build items from the files and isImages the server answers with', async function () {
+			const editor = getJodit({ uploader: { url } });
+
+			const data = await editor.uploader.upload([new FileImage()]);
+
+			expect(data.items).deep.equals([
+				{ file: 'logo.gif', isImage: true }
+			]);
+			expect(data.files).deep.equals(['logo.gif']);
+			expect(data.isImages).deep.equals([true]);
+		});
+
+		it('Should give each image read as base64 its name', async function () {
+			const file = new FileImage(),
+				editor = getJodit({
+					uploader: { insertImageAsBase64URI: true }
+				});
+
+			const data = await editor.uploader.upload([file]);
+
+			expect(data.items).deep.equals([
+				{ file: file.dataURI, isImage: true, name: 'logo.gif' }
+			]);
+			expect(data.files).deep.equals([file.dataURI]);
+			expect(data.isImages).deep.equals([true]);
+			expect(data.fileNames).deep.equals(['logo.gif']);
+		});
+
+		it('Should fill in the arrays when uploader.process gives only items', async function () {
+			const editor = getJodit({
+				uploader: {
+					url,
+					process: resp => ({
+						baseurl: resp.data.baseurl,
+						items: [
+							{ file: 'report.pdf', isImage: false },
+							{ file: 'logo.gif', isImage: true }
+						]
+					})
+				}
+			});
+
+			const data = await editor.uploader.upload([new FileImage()]);
+
+			expect(data.files).deep.equals(['report.pdf', 'logo.gif']);
+			expect(data.isImages).deep.equals([false, true]);
+			expect(data.fileNames).is.undefined;
+		});
+
+		it('Should insert the items the default handler is given', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			editor.o.uploader.defaultHandlerSuccess.call(editor.uploader, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				items: [{ file: 'file.xls', isImage: false }]
+			});
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
+		});
+
+		it('Should still insert the files the default handler is given as arrays', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			editor.o.uploader.defaultHandlerSuccess.call(editor.uploader, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				files: ['file.xls'],
+				isImages: [false]
+			});
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
+		});
+	});
 });
