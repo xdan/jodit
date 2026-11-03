@@ -301,12 +301,12 @@ describe('Image caption plugin', () => {
 			simulateEvent('click', editor.editor.querySelector('img'));
 			await editor.async.requestIdlePromise();
 			clickButton('caption', getOpenedPopup(editor));
-			await editor.async.requestIdlePromise();
+			// The button closes the popup, which opens again on a timer
+			await waitForCondition(() => getOpenedPopup(editor));
 
 			expect(sortAttributes(editor.value)).equals(
 				'<p><img alt="" src="tests/artio.jpg" style="width:300px"></p>'
 			);
-			expect(getOpenedPopup(editor)).is.not.null;
 			expect(
 				getButton('caption', getOpenedPopup(editor)).getAttribute(
 					'aria-pressed'
@@ -976,8 +976,12 @@ describe('Image caption plugin', () => {
 				expect(caption(editor)).is.not.null;
 
 				simulateEvent(['mouseup', 'click'], img);
-				// The popup opens on the click's own timer, slow in CI Firefox
-				await waitForCondition(() => getOpenedPopup(editor), 2000);
+				// The click opens the popup below the caption, and it opens again
+				// below the image once the blank caption has gone
+				await waitForCondition(
+					() => !caption(editor) && getOpenedPopup(editor),
+					2000
+				);
 
 				expect(markup(editor)).equals(
 					sortAttributes(`<p>${image}</p>`)
