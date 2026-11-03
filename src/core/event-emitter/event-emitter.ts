@@ -165,6 +165,7 @@ export class EventEmitter implements IEventEmitter {
 				'screenY',
 				'clientX',
 				'clientY',
+				'view',
 				'target',
 				'srcElement',
 				'currentTarget',

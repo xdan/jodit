@@ -70,6 +70,26 @@ describe('Resize plugin', () => {
 
 				expect(img.offsetWidth).equals(110);
 			});
+
+			// https://github.com/xdan/jodit/issues/1747
+			it('Should shift the coordinates of a mousemove in the iframe, which the iframe passes on to the main window', () => {
+				const { editor, img, pos } = makeEditorWithImage();
+
+				const workplace = offset(editor.workplace);
+
+				editor.ed.body.dispatchEvent(
+					new editor.ew.MouseEvent('mousemove', {
+						bubbles: true,
+						view: editor.ew,
+						clientX: pos.left + 10 - workplace.left,
+						clientY: pos.top + 10 - workplace.top
+					})
+				);
+
+				simulateEvent('mouseup', editor.ow);
+
+				expect(img.offsetWidth).equals(110);
+			});
 		});
 
 		// https://github.com/xdan/jodit/issues/1266
