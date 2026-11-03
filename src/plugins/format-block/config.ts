@@ -26,7 +26,7 @@ declare module 'jodit/config' {
 			 * The CSS properties each preview in the Paragraph list copies from
 			 * how the content shows its tag, so the list looks like the content.
 			 * Lengths become `em`, and size and line height stay with the list.
-			 * An empty list keeps the toolbar's styles.
+			 * An empty list, the default, keeps the toolbar's styles.
 			 */
 			previewProperties: string[];
 		};
@@ -34,21 +34,9 @@ declare module 'jodit/config' {
 }
 
 Config.prototype.formatBlock = {
-	previewProperties: [
-		'font-family',
-		'font-style',
-		'font-weight',
-		'font-variant',
-		'font-stretch',
-		'color',
-		'letter-spacing',
-		'word-spacing',
-		'text-transform',
-		'text-decoration',
-		'text-shadow',
-		'-webkit-font-smoothing',
-		'-moz-osx-font-smoothing'
-	]
+	// Opt in: previews keep the toolbar's styles unless the integrator lists
+	// the properties to copy, e.g. ['font-family', 'font-weight', 'color']
+	previewProperties: []
 };
 
 /**

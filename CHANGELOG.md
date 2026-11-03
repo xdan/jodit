@@ -9,6 +9,28 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.0
+
+#### :rocket: New Feature
+
+- [#1714](https://github.com/xdan/jodit/issues/1714) Image captions: a Caption button in the image popup and a checkbox in the image properties dialog wrap the image in `<figure>` with an editable `<figcaption>`. The tags are configurable with `imageCaption.wrapper`, `inner` and `caption`. Thanks [@brendon](https://github.com/brendon).
+- [#1713](https://github.com/xdan/jodit/issues/1713) A Header row toggle in the table cell popup moves the first row into `<thead>` as `<th scope="col">` cells, and back. Thanks [@brendon](https://github.com/brendon).
+- [#952](https://github.com/xdan/jodit/issues/952) Table rows can be resized by dragging the border between them, with the height kept on the `<tr>`, and rows and columns now resize live while dragging. Thanks [@brendon](https://github.com/brendon).
+- [#1728](https://github.com/xdan/jodit/issues/1728) `tab.spaces` (off by default) makes Tab outside lists and tables insert that many spaces at the caret, Shift+Tab remove them, and a selection indent or outdent; Escape then Tab leaves the editor. Thanks [@brendon](https://github.com/brendon).
+- [#1710](https://github.com/xdan/jodit/issues/1710) `formatBlock.previewProperties` (empty by default) lists the CSS properties each entry of the Paragraph list copies from the content's own styles, so a theme's heading fonts and colours show in the list. Thanks [@brendon](https://github.com/brendon).
+- [#1089](https://github.com/xdan/jodit/issues/1089) Images read as base64 (`insertImageAsBase64URI`) pass their file names to the upload success handler as `fileNames`. Thanks [@brendon](https://github.com/brendon).
+
+#### :bug: Bug Fix
+
+- [#1735](https://github.com/xdan/jodit/issues/1735) The eraser with just a caret inside a word clears the whole word, as Word does, instead of splitting the format and leaving what is typed next formatted; a line break or an image ends a word. Thanks [@brendon](https://github.com/brendon).
+- [#1742](https://github.com/xdan/jodit/issues/1742) Dragging across table cells no longer loses the marked cells on release. Thanks [@brendon](https://github.com/brendon).
+- [#1747](https://github.com/xdan/jodit/issues/1747) In iframe mode, dragging an image's resize handle follows the pointer instead of being offset by the iframe. Thanks [@brendon](https://github.com/brendon).
+- [#1749](https://github.com/xdan/jodit/issues/1749) Opening the Link, Image, File or Video popup puts the caret in its first field, so typing fills in the URL instead of replacing the selected text. Thanks [@brendon](https://github.com/brendon).
+
+#### :house: Internal
+
+- `glob` 14 in the test tooling.
+
 ## 4.18.12
 
 #### :bug: Bug Fix

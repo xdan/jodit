@@ -606,7 +606,16 @@ describe('Clean html plugin', function () {
 					'<p><strong>Some </strong>boXld<strong> text</strong></p>'
 				],
 				['<p><strong><em>te|st</em></strong></p>', '<p>teXst</p>'],
-				['<p><span style="color: red;">Re|d</span></p>', '<p>ReXd</p>']
+				['<p><span style="color: red;">Re|d</span></p>', '<p>ReXd</p>'],
+				// A line break or an image ends a word
+				[
+					'<p><strong>foo<br>b|ar</strong></p>',
+					'<p><strong>foo<br></strong>bXar</p>'
+				],
+				[
+					'<p><strong>foo<img src="a.png">b|ar</strong></p>',
+					'<p><strong>foo<img src="a.png"></strong>bXar</p>'
+				]
 			].forEach(([source, result]) => {
 				it(`Should clear the word: ${source}`, function () {
 					const editor = getJodit();

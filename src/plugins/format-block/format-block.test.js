@@ -6,6 +6,27 @@
 
 describe('Format block plugin', () => {
 	describe('Previews in the list take the content styles (#1710)', () => {
+		// The previews are opt in: the full list of properties they can copy
+		const full = {
+			formatBlock: {
+				previewProperties: Jodit.atom([
+					'font-family',
+					'font-style',
+					'font-weight',
+					'font-variant',
+					'font-stretch',
+					'color',
+					'letter-spacing',
+					'word-spacing',
+					'text-transform',
+					'text-decoration',
+					'text-shadow',
+					'-webkit-font-smoothing',
+					'-moz-osx-font-smoothing'
+				])
+			}
+		};
+
 		const previewStyle = (editor, tag) => {
 			clickTrigger('paragraph', editor);
 			return window.getComputedStyle(
@@ -16,6 +37,7 @@ describe('Format block plugin', () => {
 		describe('In iframe mode', () => {
 			it("Should take the font, colour, capitals, spacing and smoothing of the content's heading, but not its size or margins", () => {
 				const editor = getJodit({
+					...full,
 					iframe: true,
 					iframeStyle:
 						'h2 { font-family: Georgia, serif; font-style: italic; font-weight: 300; color: rgb(200, 0, 0); text-transform: uppercase; letter-spacing: 0.1em; text-decoration: underline; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; font-size: 80px; margin: 50px; }'
@@ -66,7 +88,7 @@ describe('Format block plugin', () => {
 			});
 
 			it("Should take the area's styles for the heading", () => {
-				const editor = getJodit();
+				const editor = getJodit(full);
 				editor.value = '<p>text</p>';
 
 				const style = previewStyle(editor, 'h3');
@@ -150,6 +172,7 @@ describe('Format block plugin', () => {
 
 			it('Should be added to the page under a name only the editor uses, with absolute URLs, and taken out with the editor', async () => {
 				const editor = getJodit({
+					...full,
 					iframe: true,
 					iframeStyle: fontFace + heading
 				});
@@ -179,6 +202,7 @@ describe('Format block plugin', () => {
 
 			it("Should leave the names of fonts the content doesn't load alone", () => {
 				const editor = getJodit({
+					...full,
 					iframe: true,
 					iframeStyle:
 						fontFace + 'h2 { font-family: Georgia, serif; }'
@@ -191,7 +215,11 @@ describe('Format block plugin', () => {
 			});
 
 			it('Should add fonts that arrive after the list first opened, the next time it opens', async () => {
-				const editor = getJodit({ iframe: true, iframeStyle: heading });
+				const editor = getJodit({
+					...full,
+					iframe: true,
+					iframeStyle: heading
+				});
 				editor.value = '<p>text</p>';
 
 				previewStyle(editor, 'h2');
@@ -223,7 +251,7 @@ describe('Format block plugin', () => {
 				});
 
 				it('Should leave the page alone, as it has them already', async () => {
-					const editor = getJodit();
+					const editor = getJodit(full);
 					editor.value = '<p>text</p>';
 
 					const style = previewStyle(editor, 'h2');

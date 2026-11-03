@@ -8,8 +8,8 @@
  * @module plugins/clean-html
  */
 
-import type { IJodit } from 'jodit/types';
-import { INVISIBLE_SPACE } from 'jodit/core/constants';
+import type { IJodit, Nullable } from 'jodit/types';
+import { INSEPARABLE_TAGS, INVISIBLE_SPACE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 
 import { removeFormatForSelection } from './remove-format-for-selection';
@@ -29,7 +29,9 @@ export function removeFormatForWord(jodit: IJodit): void {
 	}
 
 	const texts = textsOf(block);
-	const text = texts.map(node => node.nodeValue).join('');
+	const text = texts
+		.map(node => (Dom.isText(node) ? node.nodeValue : ' '))
+		.join('');
 	const at = textOffset(texts, range);
 
 	if (!isWordChar(text[at - 1]) || !isWordChar(text[at])) {
@@ -64,14 +66,22 @@ function isWordChar(char: string | undefined): boolean {
 	return Boolean(char && char !== INVISIBLE_SPACE && /\S/.test(char));
 }
 
+type Piece = Text | Element;
+
 /**
- * The block's own text nodes, in order, leaving out those of blocks inside it
+ * The block's own text nodes, in order, leaving out those of blocks inside
+ * it. A line break, an image or another inseparable element ends a word, so
+ * it is kept as a one-character piece
  */
-function textsOf(block: HTMLElement): Text[] {
-	const texts: Text[] = [];
+function textsOf(block: HTMLElement): Piece[] {
+	const texts: Piece[] = [];
 
 	Dom.each(block, node => {
-		if (Dom.isText(node) && !Dom.closest(node, Dom.isBlock, block)) {
+		if (Dom.closest(node, Dom.isBlock, block)) {
+			return;
+		}
+
+		if (Dom.isText(node) || Dom.isTag(node, INSEPARABLE_TAGS)) {
 			texts.push(node);
 		}
 	});
@@ -79,22 +89,26 @@ function textsOf(block: HTMLElement): Text[] {
 	return texts;
 }
 
+function lengthOf(piece: Piece): number {
+	return Dom.isText(piece) ? (piece.nodeValue?.length ?? 0) : 1;
+}
+
 /**
  * How many characters of `texts` come before the caret, which can be in a
  * text node or between nodes
  */
-function textOffset(texts: Text[], caret: Range): number {
+function textOffset(texts: Piece[], caret: Range): number {
 	let at = 0;
 
-	for (const text of texts) {
-		if (text === caret.startContainer) {
+	for (const piece of texts) {
+		if (piece === caret.startContainer) {
 			return at + caret.startOffset;
 		}
 
-		const length = text.nodeValue?.length ?? 0;
+		const length = lengthOf(piece);
 
-		// This text ends after the caret, so the caret is before it
-		if (caret.comparePoint(text, length) > 0) {
+		// This piece ends after the caret, so the caret is before it
+		if (caret.comparePoint(piece, Dom.isText(piece) ? length : 0) > 0) {
 			return at;
 		}
 
@@ -108,19 +122,30 @@ function textOffset(texts: Text[], caret: Range): number {
  * The text node and offset of the `at`th character. Where two text nodes
  * meet, `later` picks the start of the second over the end of the first
  */
-function positionAt(texts: Text[], at: number, later: boolean): [Text, number] {
+function positionAt(
+	texts: Piece[],
+	at: number,
+	later: boolean
+): [Text, number] {
 	let before = 0;
+	let last: Nullable<Text> = null;
 
-	for (const text of texts) {
-		const length = text.nodeValue?.length ?? 0;
+	for (const piece of texts) {
+		const length = lengthOf(piece);
 
-		if (at < before + length || (!later && at === before + length)) {
-			return [text, at - before];
+		if (
+			Dom.isText(piece) &&
+			(at < before + length || (!later && at === before + length))
+		) {
+			return [piece, at - before];
+		}
+
+		if (Dom.isText(piece)) {
+			last = piece;
 		}
 
 		before += length;
 	}
 
-	const last = texts[texts.length - 1];
-	return [last, last.nodeValue?.length ?? 0];
+	return [last as Text, last?.nodeValue?.length ?? 0];
 }

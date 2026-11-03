@@ -48,7 +48,7 @@ The `paragraph` control can be customized through the `controls` configuration:
 
 The list sits outside the editing area, and in iframe mode outside its document, so on its own each preview would take the toolbar's styles. Each preview copies these CSS properties from how the content shows its tag, so a theme's heading fonts and colours show in the list. Lengths become `em`, so they scale with the preview, and size, line height and margins stay with the list.
 
-**Default:**
+**Default:** `[]`, so the previews keep the toolbar's styles until you list the properties to copy. The full list the previews can take:
 ```typescript
 [
     'font-family',
