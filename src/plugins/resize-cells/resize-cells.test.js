@@ -1288,6 +1288,34 @@ describe('Test Resize Cells', function () {
 		});
 	});
 
+	// https://github.com/xdan/jodit/issues/1757
+	describe('A table in the starting value (#1757)', () => {
+		[false, true].forEach(iframe => {
+			it(`should show the column's handle before anything is edited${iframe ? ', in an iframe' : ''}`, async () => {
+				const area = appendTestArea();
+				area.value =
+					'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+					'<tr><td>1</td><td>2</td></tr>' +
+					'<tr><td>3</td><td>4</td></tr>' +
+					'</tbody></table>';
+
+				const editor = getJodit({ iframe }, area);
+				await editor.waitForReady();
+
+				const td = editor.editor.querySelector('td');
+				const box = td.getBoundingClientRect();
+				simulateEvent('mousemove', td, options => {
+					options.offsetX = box.width - 2;
+					options.clientX = box.right - 2;
+					options.clientY = box.top + 5;
+				});
+
+				expect(editor.container.querySelector('.jodit-table-resizer'))
+					.is.not.null;
+			});
+		});
+	});
+
 	describe('Resize table', function () {
 		describe('Image in cell', function () {
 			describe('Mouse down on the Image', function () {
