@@ -8,7 +8,12 @@
  * @module plugins/inline-popup
  */
 
-import type { IControlType, IDictionary, IJodit } from 'jodit/types';
+import type {
+	IControlType,
+	IDictionary,
+	IJodit,
+	IUIElement
+} from 'jodit/types';
 import { isString } from 'jodit/core/helpers/checker';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
@@ -41,7 +46,11 @@ declare module 'jodit/config' {
 					editor: IJodit,
 					target: HTMLElement | undefined,
 					close: () => void
-			  ) => Array<IControlType | string> | HTMLElement | string)
+			  ) =>
+					| Array<IControlType | string>
+					| HTMLElement
+					| IUIElement
+					| string)
 		>;
 
 		/**

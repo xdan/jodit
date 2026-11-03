@@ -43,6 +43,7 @@ import 'jodit/plugins/key-arrow-outside/key-arrow-outside';
 import 'jodit/plugins/limit/limit';
 import 'jodit/plugins/line-height/line-height';
 import 'jodit/plugins/link/link';
+import 'jodit/plugins/anchor/anchor';
 import 'jodit/plugins/media/media';
 import 'jodit/plugins/mobile/mobile';
 import 'jodit/plugins/ordered-list/ordered-list';
