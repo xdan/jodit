@@ -16,6 +16,7 @@ A utility plugin that normalizes selection behavior and provides event proxying 
 - Triple-click selection normalization
 - Select all command handling
 - Outside click detection
+- A click to the right of a table row sends typing into the next row, as Word does
 - Event bubbling through DOM hierarchy
 - Support for touch events
 - Custom event naming with camelCase
@@ -250,6 +251,12 @@ The plugin fires `outsideClick` event when:
 - Click target is not inside a Popup UI element
 
 This allows other plugins to respond to focus loss.
+
+### Clicks to the Right of a Table
+
+A click in the empty space to the right of a table makes Chrome and Safari put the caret after the table, whichever row was clicked, so typing starts a new line below it. As in Word, the caret goes where typing from beside that row goes instead, as the mouse goes down: the start of the next row's first cell, or for the last row the start of the line after the table, or just after the table when nothing that takes text follows it. A double click counts as a click.
+
+The browser's own press is stopped there, as its drag would start after the table and take in the rows below first. A drag from beside a row selects from the end of the row to the mouse instead, and back beside the row it's the caret again.
 
 ### Before Cut Normalization
 

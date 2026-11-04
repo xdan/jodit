@@ -15,6 +15,7 @@ import { IS_INLINE, LIST_TAGS } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
+import { toArray } from 'jodit/core/helpers/array/to-array';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
 import { Plugin } from 'jodit/core/plugin';
 import { Popup, UIElement } from 'jodit/core/ui';
@@ -45,12 +46,17 @@ export class select extends Plugin {
 		this.proxyEventsList.forEach(eventName => {
 			jodit.e.on(eventName + '.select', this.onStartSelection);
 		});
+
+		jodit.e.on('dblclick', this.__onDblClickBesideRow, { top: true });
 	}
 
 	protected override beforeDestruct(jodit: IJodit): void {
 		this.proxyEventsList.forEach(eventName => {
 			jodit.e.on(eventName + '.select', this.onStartSelection);
 		});
+
+		this.__endPressBesideRow();
+		jodit.e.off('dblclick', this.__onDblClickBesideRow);
 	}
 
 	@autobind
@@ -173,6 +179,198 @@ export class select extends Plugin {
 		// Only when the click happened to the right of the text.
 		if (e.clientX > rect.right) {
 			s.setCursorAfter(text);
+		}
+	}
+
+	/**
+	 * The row a press to its right was beside, and the caret it put there,
+	 * while the button is down
+	 */
+	private __pressBesideRow: Nullable<{
+		row: HTMLTableRowElement;
+		caret: Range;
+	}> = null;
+
+	/**
+	 * The table row the mouse is to the right of
+	 */
+	private __rowBeside(e: MouseEvent): Nullable<{
+		table: HTMLTableElement;
+		row: HTMLTableRowElement;
+	}> {
+		const { j } = this;
+		const target = e.target;
+
+		if (
+			j.o.readonly ||
+			e.button !== 0 ||
+			e.detail > 2 ||
+			!Dom.isHTMLElement(target) ||
+			Dom.closest(target, Dom.isCell, j.editor)
+		) {
+			return null;
+		}
+
+		const table = toArray(target.children).find(
+			(elm): elm is HTMLTableElement => {
+				if (!Dom.isTag(elm, 'table')) {
+					return false;
+				}
+
+				const box = elm.getBoundingClientRect();
+				return (
+					e.clientX >= box.right &&
+					e.clientY >= box.top &&
+					e.clientY < box.bottom
+				);
+			}
+		);
+
+		const rows = table
+			? toArray(table.rows).filter(row => row.cells.length)
+			: [];
+
+		if (!table || !rows.length) {
+			return null;
+		}
+
+		const row =
+			rows.find(row => e.clientY < row.getBoundingClientRect().bottom) ??
+			rows[rows.length - 1];
+
+		return { table, row };
+	}
+
+	/**
+	 * A press to the right of a table row puts the caret where Word's typing
+	 * goes from there: the start of the next row's first cell, or of the block
+	 * after the table for the last row (#1770). The browsers put it after the
+	 * table, whichever row it's beside, so typing starts a new line below it.
+	 * Their own press is stopped, as its drag would start after the table and
+	 * take in the rows below first
+	 */
+	@watch(':mousedown')
+	protected onMouseDownBesideTableRow(e: MouseEvent): void {
+		const { j } = this;
+		const beside = this.__rowBeside(e);
+
+		if (!beside) {
+			return;
+		}
+
+		e.preventDefault();
+		this.__putCaretBesideRow(beside.table, beside.row);
+		this.__pressBesideRow = {
+			row: beside.row,
+			caret: j.s.range.cloneRange()
+		};
+
+		j.e.on(j.ew, 'mousemove', this.__onDragFromRow);
+		new Set([j.ew, j.ow]).forEach(win =>
+			j.e.on(win, 'mouseup', this.__onReleaseFromRow)
+		);
+	}
+
+	/**
+	 * A drag from beside a row selects from the end of the row to the mouse,
+	 * and back beside the row it's the caret again
+	 */
+	@autobind
+	private __onDragFromRow(e: MouseEvent): void {
+		const { s } = this.j;
+		const press = this.__pressBesideRow;
+
+		if (!press || !(e.buttons & 1)) {
+			this.__endPressBesideRow();
+			return;
+		}
+
+		if (this.__rowBeside(e)?.row === press.row) {
+			if (!s.isCollapsed()) {
+				s.selectRange(press.caret.cloneRange());
+			}
+
+			return;
+		}
+
+		const { cells } = press.row;
+		const last = cells[cells.length - 1];
+
+		if (s.insertCursorAtPoint(e.clientX, e.clientY)) {
+			const { startContainer, startOffset } = s.range;
+
+			s.sel?.setBaseAndExtent(
+				last,
+				last.childNodes.length,
+				startContainer,
+				startOffset
+			);
+		}
+	}
+
+	/**
+	 * In iframe mode, a press in an editor without the focus puts the caret at
+	 * its end, so a release that selected nothing puts it back
+	 */
+	@autobind
+	private __onReleaseFromRow(): void {
+		const press = this.__pressBesideRow;
+
+		this.__endPressBesideRow();
+
+		if (press && this.j.s.isCollapsed()) {
+			this.j.s.selectRange(press.caret);
+		}
+	}
+
+	private __endPressBesideRow(): void {
+		const { j } = this;
+
+		this.__pressBesideRow = null;
+		j.e.off(j.ew, 'mousemove', this.__onDragFromRow);
+		new Set([j.ew, j.ow]).forEach(win =>
+			j.e.off(win, 'mouseup', this.__onReleaseFromRow)
+		);
+	}
+
+	/**
+	 * A double click beside a row is two clicks there, so add-new-line,
+	 * which adds a line on a double click with a caret, doesn't see it
+	 */
+	@autobind
+	private __onDblClickBesideRow(e: MouseEvent): void | false {
+		if (this.__rowBeside(e)) {
+			this.j.e.stopPropagation('dblclick');
+			return false;
+		}
+	}
+
+	private __putCaretBesideRow(
+		table: HTMLTableElement,
+		row: HTMLTableRowElement
+	): void {
+		const { j } = this;
+		const rows = toArray(table.rows);
+		const next = rows
+			.slice(rows.indexOf(row) + 1)
+			.find(row => row.cells.length);
+
+		let after = table.nextSibling;
+
+		while (after && Dom.isEmptyTextNode(after)) {
+			after = after.nextSibling;
+		}
+
+		if (next) {
+			j.s.setCursorIn(next.cells[0], true);
+		} else if (
+			Dom.isBlock(after) &&
+			!Dom.isTag(after, 'table') &&
+			Dom.isContentEditable(after, j.editor)
+		) {
+			j.s.setCursorIn(after, true);
+		} else {
+			j.s.setCursorAfter(table);
 		}
 	}
 
