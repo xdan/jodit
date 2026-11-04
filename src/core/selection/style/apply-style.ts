@@ -8,15 +8,56 @@
  * @module selection
  */
 
-import type { CommitMode, ICommitStyle, IJodit } from 'jodit/types';
+import type {
+	CommitMode,
+	HTMLTagNames,
+	ICommitStyle,
+	IJodit
+} from 'jodit/types';
+import { Dom } from 'jodit/core/dom/dom';
+import { $$ } from 'jodit/core/helpers/utils/selector';
 
-import { FiniteStateMachine } from './api';
+import { extractSelectedPart, FiniteStateMachine } from './api';
 import { INITIAL } from './constants';
 import {
 	type IStyleTransactionValue,
 	states,
 	transactions
 } from './transactions';
+
+/**
+ * Take a selected fragment out of the elements its style takes the place
+ * of: one around it is split, so the fragment leaves it, and one in it is
+ * unwrapped
+ */
+function takeOutOf(
+	jodit: IJodit,
+	font: HTMLElement,
+	tags: HTMLTagNames[]
+): void {
+	const range = jodit.s.createRange();
+	let outer = Dom.closest(font.parentNode, tags, jodit.editor);
+
+	while (outer) {
+		range.selectNodeContents(outer);
+		range.setEndBefore(font);
+		const before = range.cloneContents();
+
+		range.selectNodeContents(outer);
+		range.setStartAfter(font);
+
+		// Split only when there's more in it, as a split leaves empty copies
+		// of the elements between
+		if (!Dom.isEmpty(before) || !Dom.isEmpty(range.cloneContents())) {
+			extractSelectedPart(outer, font, jodit);
+		}
+
+		Dom.unwrap(outer);
+		outer = Dom.closest(font.parentNode, tags, jodit.editor);
+	}
+
+	$$(tags.join(','), font).forEach(inner => Dom.unwrap(inner));
+}
 
 /** @internal */
 export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {
@@ -32,6 +73,10 @@ export function ApplyStyle(jodit: IJodit, cs: ICommitStyle): void {
 		// for...of closes the generator on an exception, releasing every
 		// temporary wrapper before the selection is restored in finally.
 		for (const font of sel.wrapInTagGen(fakes)) {
+			if (cs.options.exclude?.length) {
+				takeOutOf(jodit, font, cs.options.exclude);
+			}
+
 			let state: IStyleTransactionValue = {
 				collapsed,
 				mode,

@@ -58,8 +58,13 @@ export function bold(editor: IJodit): void {
 				: cssOptions[key];
 		});
 
+		const element = control.tags ? control.tags[0] : undefined;
+
 		editor.s.commitStyle({
-			element: control.tags ? control.tags[0] : undefined
+			element,
+			// As in the browsers and Word, each takes the other's place
+			exclude:
+				element === 'sub' ? ['sup'] : element === 'sup' ? ['sub'] : []
 		});
 
 		editor.synchronizeValues();
