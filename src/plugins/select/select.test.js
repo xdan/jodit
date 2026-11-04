@@ -336,4 +336,368 @@ describe('Test select plugin', () => {
 			);
 		});
 	});
+
+	describe('Double click past the end of a line (#1768)', () => {
+		// What Chrome and Safari select: from the end of the line's text to
+		// the start of whatever follows, which shows nothing
+		const selectLineBreak = (editor, text, end, endOffset = 0) => {
+			const range = editor.s.createRange();
+			range.setStart(text, text.nodeValue.length);
+			range.setEnd(end, endOffset);
+			editor.s.selectRange(range);
+		};
+
+		const caret = editor => {
+			const range = editor.s.range;
+
+			return {
+				collapsed: range.collapsed,
+				node: range.startContainer.nodeValue,
+				offset: range.startOffset
+			};
+		};
+
+		it('should put the caret at the end of the line, so typing stays on it', () => {
+			const editor = getJodit();
+			editor.value = '<p>The term dates:</p><p>Second paragraph.</p>';
+
+			const [first, second] = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, first.firstChild, second);
+			simulateEvent('dblclick', first);
+
+			expect(caret(editor)).deep.equals({
+				collapsed: true,
+				node: 'The term dates:',
+				offset: 15
+			});
+
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>The term dates:X</p><p>Second paragraph.</p>'
+			);
+		});
+
+		it('should keep a video on the line below', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Our camp is in March.</p>' +
+				'<p><span contenteditable="false"><video width="320" height="180"></video></span></p>' +
+				'<p>Find out more.</p>';
+
+			const paragraphs = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, paragraphs[0].firstChild, paragraphs[2]);
+			simulateEvent('dblclick', paragraphs[0]);
+
+			expect(caret(editor).collapsed).is.true;
+
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in March.X</p>' +
+					'<p><span contenteditable="false"><video width="320" height="180"></video></span></p>' +
+					'<p>Find out more.</p>'
+			);
+		});
+
+		it('should put the caret at the end of the line before a table, and of a list item', () => {
+			const editor = getJodit();
+			editor.value =
+				'<p>Before the table</p><table><tbody><tr><td>One</td></tr></tbody></table>' +
+				'<ul><li>A list item</li><li>Another item</li></ul>';
+
+			const p = editor.editor.querySelector('p');
+			selectLineBreak(editor, p.firstChild, editor.editor, 1);
+			simulateEvent('dblclick', p);
+			editor.s.insertHTML('X');
+
+			const [item, next] = editor.editor.querySelectorAll('li');
+			selectLineBreak(editor, item.firstChild, next);
+			simulateEvent('dblclick', item);
+			editor.s.insertHTML('Y');
+
+			expect(editor.value).equals(
+				'<p>Before the tableX</p><table><tbody><tr><td>One</td></tr></tbody></table>' +
+					'<ul><li>A list itemY</li><li>Another item</li></ul>'
+			);
+		});
+
+		it('should work in iframe mode', () => {
+			const editor = getJodit({ iframe: true });
+			editor.value = '<p>The term dates:</p><p>Second paragraph.</p>';
+
+			const [first, second] = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, first.firstChild, second);
+			simulateEvent('dblclick', first);
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>The term dates:X</p><p>Second paragraph.</p>'
+			);
+		});
+
+		it('should leave a double click on a word or a space as it is', () => {
+			const editor = getJodit();
+			editor.value = '<p>Second paragraph.</p>';
+
+			const text = editor.editor.querySelector('p').firstChild;
+
+			[
+				[0, 6],
+				[6, 7]
+			].forEach(([start, end]) => {
+				const range = editor.s.createRange();
+				range.setStart(text, start);
+				range.setEnd(text, end);
+				editor.s.selectRange(range);
+				simulateEvent('dblclick', text.parentNode);
+
+				expect(editor.s.range.toString()).equals(
+					text.nodeValue.slice(start, end)
+				);
+			});
+		});
+
+		it('should leave a selected image as it is', () => {
+			const editor = getJodit({ image: { openOnDblClick: false } });
+			editor.value =
+				'<p>A <img src="tests/artio.jpg" alt=""> picture</p>';
+
+			const img = editor.editor.querySelector('img');
+			const range = editor.s.createRange();
+			range.selectNode(img);
+			editor.s.selectRange(range);
+			simulateEvent('dblclick', img);
+
+			expect(editor.s.range.collapsed).is.false;
+			expect(editor.s.current()).equals(img);
+		});
+
+		it('should leave the same selection made without a double click, as Shift+Right makes it', () => {
+			const editor = getJodit();
+			editor.value = '<p>The term dates:</p><p>Second paragraph.</p>';
+
+			const [first, second] = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, first.firstChild, second);
+			simulateEvent(['mouseup', 'click'], first);
+
+			expect(editor.s.range.collapsed).is.false;
+		});
+
+		it('should not add a line when the double click lands on the editing area itself', () => {
+			const editor = getJodit();
+			editor.value = '<p>The term dates:</p><p>Second paragraph.</p>';
+
+			const [first, second] = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, first.firstChild, second);
+			simulateEvent('dblclick', editor.editor);
+
+			expect(editor.s.range.collapsed).is.true;
+			expect(editor.value).equals(
+				'<p>The term dates:</p><p>Second paragraph.</p>'
+			);
+		});
+	});
+
+	describe('Drag onto the line of a video (#1768)', () => {
+		const VIDEO =
+			'<p><span contenteditable="false"><video width="320" height="180"></video></span></p>';
+
+		const make = options => {
+			const editor = getJodit(options);
+			editor.value =
+				'<p>Our camp is in March.</p>' +
+				VIDEO +
+				'<p>Find out more.</p>';
+
+			const [above, line, below] = editor.editor.querySelectorAll('p');
+
+			return {
+				editor,
+				above: above.firstChild,
+				below: below.firstChild,
+				video: line.querySelector('span'),
+				line
+			};
+		};
+
+		// What Chrome and Safari select: past the video, as there's no caret
+		// position beside it
+		const drag = (editor, [anchor, anchorOffset], [focus, focusOffset]) =>
+			editor.s.sel.setBaseAndExtent(
+				anchor,
+				anchorOffset,
+				focus,
+				focusOffset
+			);
+
+		const release = (editor, target, clientY) =>
+			simulateEvent('mouseup', target, e => {
+				Object.assign(e, {
+					clientX: target.getBoundingClientRect().left,
+					clientY
+				});
+			});
+
+		it('should stop a drag down before a video the pointer is still on', () => {
+			const { editor, above, below, video, line } = make();
+
+			drag(editor, [above, above.nodeValue.length], [below, 0]);
+			release(editor, line, video.getBoundingClientRect().top + 8);
+
+			expect(editor.s.range.collapsed).is.true;
+
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in March.X</p>' +
+					VIDEO +
+					'<p>Find out more.</p>'
+			);
+		});
+
+		it('should keep the text a drag took before the video', () => {
+			const { editor, above, below, video, line } = make();
+
+			drag(editor, [above, 15], [below, 0]);
+			release(editor, line, video.getBoundingClientRect().top + 8);
+
+			expect(editor.s.range.toString()).equals('March.');
+
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in X</p>' + VIDEO + '<p>Find out more.</p>'
+			);
+		});
+
+		it('should stop a drag up after a video the pointer is still on', () => {
+			const { editor, above, below, video, line } = make();
+
+			drag(editor, [below, 0], [above, above.nodeValue.length]);
+			release(editor, line, video.getBoundingClientRect().bottom - 8);
+
+			expect(editor.s.range.collapsed).is.true;
+
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in March.</p>' +
+					VIDEO +
+					'<p>XFind out more.</p>'
+			);
+		});
+
+		it('should take in the video once the pointer has passed it', () => {
+			const { editor, above, below, video } = make();
+
+			drag(editor, [above, above.nodeValue.length], [below, 0]);
+			release(
+				editor,
+				below.parentNode,
+				video.getBoundingClientRect().bottom + 5
+			);
+
+			expect(editor.s.range.collapsed).is.false;
+			expect(editor.s.range.intersectsNode(video)).is.true;
+		});
+
+		it('should work in iframe mode', () => {
+			const { editor, above, below, video, line } = make({
+				iframe: true
+			});
+
+			drag(editor, [above, above.nodeValue.length], [below, 0]);
+			release(editor, line, video.getBoundingClientRect().top + 8);
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in March.X</p>' +
+					VIDEO +
+					'<p>Find out more.</p>'
+			);
+		});
+	});
+
+	describe('A video in the selection (#1768)', () => {
+		const VALUE =
+			'<p>Our camp is in March.</p>' +
+			'<p><span contenteditable="false"><video width="320" height="180"></video></span></p>' +
+			'<p>Find out more.</p>';
+
+		const select = (editor, start, startOffset, end, endOffset) => {
+			const range = editor.s.createRange();
+			range.setStart(start, startOffset);
+			range.setEnd(end, endOffset);
+			editor.s.selectRange(range);
+			simulateEvent('selectionchange', editor.ed);
+		};
+
+		const tint = editor =>
+			editor.ew.getComputedStyle(
+				editor.editor.querySelector('span'),
+				'::after'
+			).backgroundColor;
+
+		const tintSize = editor => {
+			const after = editor.ew.getComputedStyle(
+				editor.editor.querySelector('span'),
+				'::after'
+			);
+
+			return [after.width, after.height];
+		};
+
+		const TINT = 'rgb(181, 214, 253)';
+
+		it('should be tinted as an image is, in the editing area only', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const [above, , below] = editor.editor.querySelectorAll('p');
+			select(editor, above.firstChild, 0, below.firstChild, 4);
+
+			expect(tint(editor)).equals(TINT);
+			expect(editor.value).equals(VALUE);
+		});
+
+		it('should tint the video alone, not the line it is on', () => {
+			const editor = getJodit();
+			editor.value = VALUE.replace(
+				'<span contenteditable="false">',
+				'<span contenteditable="false" style="display: block">'
+			);
+
+			const [above, , below] = editor.editor.querySelectorAll('p');
+			select(editor, above.firstChild, 0, below.firstChild, 4);
+
+			expect(tintSize(editor)).deep.equals(['320px', '180px']);
+		});
+
+		it('should lose the tint once the selection leaves it', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const [above, , below] = editor.editor.querySelectorAll('p');
+			select(editor, above.firstChild, 0, below.firstChild, 4);
+			select(editor, above.firstChild, 0, above.firstChild, 4);
+
+			expect(tint(editor)).not.equals(TINT);
+
+			editor.s.setCursorIn(below);
+			simulateEvent('selectionchange', editor.ed);
+
+			expect(tint(editor)).not.equals(TINT);
+		});
+
+		it('should be tinted in iframe mode', () => {
+			const editor = getJodit({ iframe: true });
+			editor.value = VALUE;
+
+			const [above, , below] = editor.editor.querySelectorAll('p');
+			select(editor, above.firstChild, 0, below.firstChild, 4);
+
+			expect(tint(editor)).equals(TINT);
+		});
+	});
 });

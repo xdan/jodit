@@ -14,6 +14,8 @@ A utility plugin that normalizes selection behavior and provides event proxying 
 - Element-specific event firing (e.g., `clickImg`, `mousedownTable`)
 - Selection normalization before copy/cut
 - Triple-click selection normalization
+- A double click past the end of a line puts the caret there, and a drag onto a video's line stops before the video
+- A video or embed in the selection is tinted, as the browsers tint an image
 - Select all command handling
 - Outside click detection
 - A click to the right of a table row sends typing into the next row, as Word does
@@ -233,6 +235,14 @@ When `normalizeTripleClick` is enabled and user triple-clicks:
 4. **Result**: Entire block selected instead of line
 
 This provides more intuitive selection behavior matching user expectations.
+
+### Selections Past the End of a Line
+
+A double click in the empty space after a line's text makes Chrome and Safari select only the line break, from the end of the text to the start of what follows. Nothing shows, as there's no caret, and typing replaces the break, joining the lines, along with any embed between them. On `dblclick`, a selection in the editor that holds no characters and isn't one selected element, such as an image, becomes a caret at its start, the end of the line. A double click on a word or a space, and the same selection made with Shift+Right or a drag, stay as they are.
+
+The browsers have no caret position beside an uneditable block alone on its line, such as a video in its wrapper, so a drag that ends on that line runs on past the block, and typing deletes it. On `mouseup`, a selection that takes in such a block the pointer hasn't passed (it's still above the block's bottom, or below its top for a drag upwards) stops at the text before the block, or starts at the text after it. A video Jodit selected itself on the press is left alone.
+
+The browsers tint an image in the selection, but not a video or an embed in an uneditable wrapper, so a selection that took one in didn't show it. On `selectionchange`, each `video`, `iframe`, `audio`, `object` or `embed` whose uneditable wrapper the selection holds whole gets a translucent tint in the selection's colour over the media alone, in place of any tint of the browser's own. It's a style in the editing document, written with the elements' CSS paths as the table module's cell selection is, so the value doesn't change.
 
 ### Select All Command
 

@@ -14,13 +14,17 @@ import type { IJodit, Nullable } from 'jodit/types';
 import { IS_INLINE, LIST_TAGS } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
-import { pluginSystem } from 'jodit/core/global';
+import { getContainer, pluginSystem } from 'jodit/core/global';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
+import { trim } from 'jodit/core/helpers/string/trim';
+import { cssPath } from 'jodit/core/helpers/utils/selector';
 import { Plugin } from 'jodit/core/plugin';
 import { Popup, UIElement } from 'jodit/core/ui';
 
 import './config';
+
+const MEDIA = 'video, iframe, audio, object, embed';
 
 /**
  * A utility plugin that allows you to subscribe to a click/mousedown/touchstart/mouseup on an element in DOM order
@@ -48,6 +52,7 @@ export class select extends Plugin {
 		});
 
 		jodit.e.on('dblclick', this.__onDblClickBesideRow, { top: true });
+		jodit.e.on(jodit.ed, 'selectionchange', this.__tintMedia);
 	}
 
 	protected override beforeDestruct(jodit: IJodit): void {
@@ -57,6 +62,54 @@ export class select extends Plugin {
 
 		this.__endPressBesideRow();
 		jodit.e.off('dblclick', this.__onDblClickBesideRow);
+		jodit.e.off(jodit.ed, 'selectionchange', this.__tintMedia);
+	}
+
+	private __tint = '';
+
+	/**
+	 * The browsers tint an image in the selection, but not a video or an
+	 * embed in an uneditable wrapper, so a selection that took one in didn't
+	 * show it, and typing deleted it unseen (#1768). It gets the tint over
+	 * the media alone, in place of any of the browser's own, from a style in
+	 * the editing document, so the value doesn't change
+	 */
+	@autobind
+	private __tintMedia(): void {
+		const { s, editor } = this.j;
+		const range = s.sel?.rangeCount ? s.sel.getRangeAt(0) : null;
+		const rules: string[] = [];
+
+		if (range && !range.collapsed) {
+			uneditableIn(range, editor).forEach(elm => {
+				const media = elm.querySelector(MEDIA);
+				const path = media && cssPath(elm);
+
+				if (!media || !path) {
+					return;
+				}
+
+				const box = elm.getBoundingClientRect(),
+					own = media.getBoundingClientRect();
+
+				rules.push(
+					`${path}{position:relative}` +
+						`${path}::selection,${path} ::selection{background:transparent}` +
+						`${path}::after{position:absolute;z-index:1;` +
+						`left:${own.left - box.left - elm.clientLeft}px;` +
+						`top:${own.top - box.top - elm.clientTop}px;` +
+						`width:${own.width}px;height:${own.height}px;` +
+						'background:#b5d6fd;opacity:.5;pointer-events:none;content:""}'
+				);
+			});
+		}
+
+		const tint = rules.join('');
+
+		if (tint !== this.__tint) {
+			this.__tint = tint;
+			getContainer(this.j, select, 'style', true).textContent = tint;
+		}
 	}
 
 	@autobind
@@ -442,6 +495,94 @@ export class select extends Plugin {
 		}
 	}
 
+	/**
+	 * A double click past the end of a line selects only its line break, up
+	 * to the start of what follows. The browsers show no caret for it, and
+	 * typing replaces the break, joining the lines and taking any embed in
+	 * between with it (#1768). Put the caret at the end of the line instead
+	 */
+	@watch([':dblclick'])
+	protected onDblClickPastLineEnd(): void {
+		const { s, editor } = this.j;
+		const range = s.range;
+
+		if (
+			range.collapsed ||
+			range.toString() !== '' ||
+			!Dom.isOrContains(editor, range.commonAncestorContainer) ||
+			isElementSelection(range)
+		) {
+			return;
+		}
+
+		range.collapse(true);
+		s.selectRange(range);
+	}
+
+	/**
+	 * The browsers have no caret position beside an uneditable block alone
+	 * on its line, such as a video, so a drag that ends on its line runs on
+	 * past it, and typing deletes it (#1768). The selection stops at the
+	 * text before the block until the pointer has passed it, or after it
+	 * for a drag upwards
+	 */
+	@watch([':mouseup'])
+	protected onMouseUpOnUneditableLine(e: MouseEvent): void {
+		const { s, editor } = this.j;
+		const { sel } = s;
+
+		if (!sel?.rangeCount || sel.isCollapsed) {
+			return;
+		}
+
+		const range = sel.getRangeAt(0);
+
+		// A video or image Jodit selected itself on the press
+		if (isElementSelection(range)) {
+			return;
+		}
+
+		const forward =
+			sel.anchorNode === range.startContainer &&
+			sel.anchorOffset === range.startOffset;
+
+		const lines = uneditableIn(range, editor)
+			.map(elm => Dom.closest(elm, Dom.isBlock, editor) ?? elm)
+			.filter(line => !trim(line.textContent ?? ''));
+
+		const isAhead = (line: HTMLElement): boolean => {
+			const box = line.getBoundingClientRect();
+			return forward ? e.clientY < box.bottom : e.clientY > box.top;
+		};
+
+		const line = forward
+			? lines.find(isAhead)
+			: lines.reverse().find(isAhead);
+
+		if (!line) {
+			return;
+		}
+
+		const isText = (node: Nullable<Node>): boolean =>
+			Dom.isText(node) && !Dom.isEmptyTextNode(node);
+
+		const text = forward
+			? Dom.prev<Text>(line, isText, editor)
+			: Dom.next<Text>(line, isText, editor);
+
+		if (!text) {
+			return;
+		}
+
+		if (forward) {
+			range.setEnd(text, text.nodeValue?.length ?? 0);
+		} else {
+			range.setStart(text, 0);
+		}
+
+		s.selectRange(range);
+	}
+
 	@watch([':copy', ':cut'])
 	protected onCopyNormalizeSelectionBound(e?: ClipboardEvent): void {
 		const { s, editor, o } = this.j;
@@ -461,6 +602,41 @@ export class select extends Plugin {
 
 		this.jodit.s.expandSelection();
 	}
+}
+
+/**
+ * The uneditable elements the range holds whole, without those inside
+ * another
+ */
+function uneditableIn(range: Range, root: HTMLElement): HTMLElement[] {
+	const isUneditable = (node: Nullable<Node>): boolean =>
+		Dom.isElement(node) && node.getAttribute('contenteditable') === 'false';
+
+	return toArray(
+		root.querySelectorAll<HTMLElement>('[contenteditable="false"]')
+	).filter(elm => {
+		const own = elm.ownerDocument.createRange();
+		own.selectNode(elm);
+
+		return (
+			range.compareBoundaryPoints(Range.START_TO_START, own) <= 0 &&
+			range.compareBoundaryPoints(Range.END_TO_END, own) >= 0 &&
+			!Dom.closest(elm.parentNode, isUneditable, root)
+		);
+	});
+}
+
+/**
+ * The range holds one element and nothing else, as a selected image does
+ */
+function isElementSelection(range: Range): boolean {
+	const { startContainer, startOffset, endContainer, endOffset } = range;
+
+	return (
+		startContainer === endContainer &&
+		endOffset - startOffset === 1 &&
+		Dom.isElement(startContainer.childNodes[startOffset])
+	);
 }
 
 pluginSystem.add('select', select);
