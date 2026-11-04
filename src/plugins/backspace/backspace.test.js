@@ -498,6 +498,44 @@ describe('After a join the caret is where typing goes (#1726)', () => {
 	});
 });
 
+describe('Delete in an empty line puts the caret at the start of the next one (#1775)', () => {
+	[
+		['<p>One</p><p>|<br></p><p>Two</p>', '<p>One</p><p>XTwo</p>'],
+		['<p>|<br></p><p>Two</p>', '<p>XTwo</p>'],
+		['<p>One</p><p>|<br></p><h2>Two</h2>', '<p>One</p><h2>XTwo</h2>'],
+		[
+			'<p>One</p><p>|<br></p><ul><li>Two</li></ul>',
+			'<p>One</p><ul><li>XTwo</li></ul>'
+		],
+		[
+			'<p>One</p><p>|<br></p><p><strong>Two</strong></p>',
+			'<p>One</p><p><strong>XTwo</strong></p>'
+		]
+	].forEach(([source, result]) => {
+		it(`Should insert there: Delete in ${source}, then X => ${result}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent('keydown', Jodit.KEY_DELETE, editor.editor);
+			editor.s.insertHTML('X');
+
+			expect(sortAttributes(editor.value)).equals(result);
+		});
+	});
+
+	it('Should still go to the end of the line before with Backspace', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<p>One</p><p>|<br></p><p>Two</p>';
+		setCursorToChar(editor);
+
+		simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+		editor.s.insertHTML('X');
+
+		expect(editor.value).equals('<p>OneX</p><p>Two</p>');
+	});
+});
+
 // moveNodeInsideStart puts the caret into the element first, but not past
 // a non-breaking space, which is text
 describe('Backspace and Delete beside an inline element', () => {
