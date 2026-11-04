@@ -431,14 +431,17 @@ export class link extends Plugin {
 
 	@autobind
 	private __onTypedSpace(event: InputEvent): void {
+		if (
+			event.inputType !== 'insertText' ||
+			!event.data ||
+			/\S/.test(event.data)
+		) {
+			return;
+		}
+
 		const { range } = this.j.s;
 
-		if (
-			event.inputType === 'insertText' &&
-			event.data &&
-			!/\S/.test(event.data) &&
-			range.collapsed
-		) {
+		if (range.collapsed) {
 			this.__linkTyped(
 				range.startContainer,
 				range.startOffset - event.data.length
@@ -486,6 +489,11 @@ export class link extends Plugin {
 	@autobind
 	private __onKeyDown(event: KeyboardEvent): false | void {
 		const { jodit } = this;
+
+		if (jodit.o.readonly) {
+			return;
+		}
+
 		const link = this.__justLinked;
 		const modified = event.ctrlKey || event.metaKey || event.altKey;
 

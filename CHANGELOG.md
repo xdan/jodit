@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.6
+
+#### :rocket: New Feature
+
+- [#1712](https://github.com/xdan/jodit/issues/1712) `link.processTypedLink` (off by default) makes a link out of an address as it is typed, once Space, Enter or Tab follows it: a URL with a scheme, `www.`, an email address (`mailto:`) and a bare domain whose ending is a two-letter one, a common generic one or one listed in `link.typedLinkTlds`; endings in `link.typedLinkFileEndings` (`md`, `zip`, ...) stay text. The link is its own history step, so Undo or Backspace straight after takes it off and keeps the text. Thanks to Brendon Muir.
+
+#### :bug: Bug Fix
+
+- Backspace right after a link, bold text or any inline element followed by a non-breaking space at the end of a line removed the element's last letter instead of the space; Delete before one did the same.
+
 ## 4.19.5
 
 #### :bug: Bug Fix
