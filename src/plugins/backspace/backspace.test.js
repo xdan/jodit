@@ -2329,3 +2329,53 @@ describe('Non-editable neighbours, follow-ups to #1708', function () {
 		});
 	});
 });
+
+// https://github.com/xdan/jodit/issues/1006
+describe('Backspace and Delete that an input method (IME) uses', () => {
+	const keyDown = (editor, key, keyCode) => {
+		const event = new editor.ew.KeyboardEvent('keydown', {
+			key,
+			keyCode,
+			bubbles: true,
+			cancelable: true
+		});
+
+		editor.editor.dispatchEvent(event);
+		return event;
+	};
+
+	[
+		// Safari: the Backspace that removes the last composed character comes after compositionend
+		['<p>abc|</p>', Jodit.KEY_BACKSPACE, true],
+		['<p>abc</p><p>|<br></p>', Jodit.KEY_BACKSPACE, true],
+		// Safari: a Korean syllable losing a letter, with no composition
+		['<p>abc하|</p>', Jodit.KEY_BACKSPACE, false],
+		['<p>|abc</p>', Jodit.KEY_DELETE, true]
+	].forEach(([source, key, composition]) => {
+		it(`Should leave ${key} in ${source} to the input method`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			composition && simulateEvent('compositionend', editor.editor);
+			const event = keyDown(editor, key, 229);
+			replaceCursorToChar(editor);
+
+			expect(event.defaultPrevented).is.false;
+			expect(editor.value).equals(source);
+		});
+	});
+
+	it('Should delete a character on the next Backspace', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<p>abc|</p>';
+		setCursorToChar(editor);
+
+		simulateEvent('compositionend', editor.editor);
+		keyDown(editor, Jodit.KEY_BACKSPACE, 229);
+		keyDown(editor, Jodit.KEY_BACKSPACE, 8);
+		replaceCursorToChar(editor);
+
+		expect(editor.value).equals('<p>ab|</p>');
+	});
+});

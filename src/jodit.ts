@@ -35,7 +35,14 @@ import type {
 } from 'jodit/types';
 import type * as Modules from 'jodit/modules';
 import * as constants from 'jodit/core/constants';
-import { FAT_MODE, IS_PROD, lang } from 'jodit/core/constants';
+import {
+	FAT_MODE,
+	IS_PROD,
+	KEY_BACKSPACE,
+	KEY_DELETE,
+	KEY_ENTER,
+	lang
+} from 'jodit/core/constants';
 import {
 	autobind,
 	cache,
@@ -87,6 +94,22 @@ import {
 } from 'jodit/modules';
 
 const FOCUS_EVENTS = new Set(['focus', 'blur', 'focusin', 'focusout']);
+
+const EDITING_KEYS = new Set([KEY_ENTER, KEY_BACKSPACE, KEY_DELETE]);
+
+/**
+ * Whether the input method (IME) is using the key. Safari fires the keydown
+ * that ends a composition, as the Enter that confirms Japanese text, after
+ * `compositionend`, and types Korean without one, so `isComposing` is false and
+ * only keyCode 229 tells. Only the keys the editor turns into edits are held
+ * back: the handlers that follow typing still see the rest.
+ */
+function isInputMethodKey(event: KeyboardEvent): boolean {
+	return (
+		event.isComposing ||
+		(event.keyCode === 229 && EDITING_KEYS.has(event.key))
+	);
+}
 
 const __defaultStyleDisplayKey = 'data-jodit-default-style-display';
 const __defaultClassesKey = 'data-jodit-default-classes';
@@ -1764,7 +1787,7 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 					const w = this.ew;
 					if (
 						event instanceof (w as any).KeyboardEvent &&
-						(event as KeyboardEvent).isComposing
+						isInputMethodKey(event as KeyboardEvent)
 					) {
 						return;
 					}
