@@ -221,6 +221,51 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('Space left at an edge of the deleted selection', () => {
+		// https://github.com/xdan/jodit/issues/1522
+		[
+			['<p>ab |c|</p>', '<p>ab&nbsp;|</p>'],
+			['<p>ab |c|</p>', '<p>ab&nbsp;|</p>', Jodit.KEY_DELETE],
+			['<p>|a| b</p>', '<p>|&nbsp;b</p>'],
+			['<p>a |b| c</p>', '<p>a&nbsp;| c</p>'],
+			['<p>a |b|<br>c</p>', '<p>a&nbsp;|<br>c</p>'],
+			['<p>ab <strong>|c|</strong></p>', '<p>ab&nbsp;|</p>'],
+			['<p>a |b</p><p>c| d</p>', '<p>a&nbsp;| d</p>']
+		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should make the space non-breaking: ${input} => ${result} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', key, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(editor.value).equals(result);
+			});
+		});
+
+		[
+			['<p>a |b|c</p>', '<p>a |c</p>'],
+			['<p>a&nbsp;|b| c</p>', '<p>a&nbsp;| c</p>'],
+			['<pre>a |b|</pre>', '<pre>a |</pre>'],
+			[
+				'<p>a |b|<img src="tests/artio.jpg"></p>',
+				'<p>a |<img src="tests/artio.jpg"></p>'
+			]
+		].forEach(([input, result]) => {
+			it(`Should keep a space that stays visible: ${input} => ${result}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', Jodit.KEY_BACKSPACE, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(editor.value).equals(result);
+			});
+		});
+	});
+
 	describe('Remove selected image by keyboard', () => {
 		// https://github.com/jodit/jodit-react/issues/226
 		[Jodit.KEY_DELETE, Jodit.KEY_BACKSPACE].forEach(key => {
