@@ -88,6 +88,8 @@ editor.e.on('showPopup', (table, getPosition, type) => {
 8. **Release**: User releases mouse (mouseup/touchend)
 9. **Show Popup**: Displays toolbar for selected cells
 
+A drag let go outside the table ends there too, with the cells marked as they were and their popup open, and the click that follows it doesn't unmark them. One let go outside the editor is a click outside it, which unmarks them, as before. Either way the editor is unlocked, and moving the mouse over the table afterwards marks nothing.
+
 ### Selection Bounds
 
 Uses formal matrix to calculate rectangular selection:

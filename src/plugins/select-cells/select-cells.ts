@@ -44,6 +44,7 @@ export class selectCells extends Plugin {
 			// Handlers without a namespace run first, ahead of those that
 			// move the caret, as table-keyboard-navigation's do
 			.on('keydown', this.__onKeyDown, { top: true })
+			.on('clickEditor', this.__onClickAfterDrag, { top: true })
 			.on('keydown.select-cells', (event: KeyboardEvent) => {
 				if (event.key === KEY_TAB) {
 					this.unselectCells();
@@ -191,6 +192,12 @@ export class selectCells extends Plugin {
 	private __isSelectionMode: boolean = false;
 
 	/**
+	 * A drag let go outside the table ends in a click on the editor, which
+	 * would unmark its cells
+	 */
+	private __keepMarks: boolean = false;
+
+	/**
 	 * Mouse click inside the table
 	 */
 	@autobind
@@ -278,6 +285,14 @@ export class selectCells extends Plugin {
 				this.__onStopSelection.bind(this, table)
 			);
 
+		new Set([this.j.ew, this.j.ow]).forEach(win =>
+			this.j.e.on(
+				win,
+				'mouseup.select-cells touchend.select-cells',
+				this.__onRelease.bind(this, table)
+			)
+		);
+
 		return false;
 	}
 
@@ -285,6 +300,27 @@ export class selectCells extends Plugin {
 	protected onOutsideClick(): void {
 		this.__selectedCell = null;
 		this.__onRemoveSelection();
+	}
+
+	@watch(':mousedown')
+	protected onMouseDown(): void {
+		this.__keepMarks = false;
+	}
+
+	/**
+	 * The click that ends a drag let go outside the table, and inside the
+	 * editor, lands on the editor. Taken on, it would unmark the cells and
+	 * close their popup. As for the click on a row after a drag over the
+	 * cells, the browser's own selection from the drag goes
+	 */
+	@autobind
+	private __onClickAfterDrag(): void | false {
+		if (this.__keepMarks) {
+			this.__keepMarks = false;
+			this.j.s.sel?.removeAllRanges();
+			this.j.e.stopPropagation('clickEditor');
+			return false;
+		}
 	}
 
 	@watch(':change')
@@ -407,10 +443,42 @@ export class selectCells extends Plugin {
 			return; // Nested tables
 		}
 
-		const bound = this.__tableModule.getSelectedBound(table, [
-				cell,
-				this.__selectedCell
-			]),
+		this.__showCellsPopup(table, [cell, this.__selectedCell]);
+		this.__stopListening();
+	}
+
+	/**
+	 * A drag let go outside the table doesn't reach the table's `mouseup`, so
+	 * the window's ends it, leaving the cells marked as they were (#1774)
+	 */
+	private __onRelease(table: HTMLTableElement, e: MouseEvent): void {
+		if (this.__isSelectionMode) {
+			this.__isSelectionMode = false;
+
+			if (!this.j.isLockedNotBy(key)) {
+				this.j.unlock();
+			}
+
+			const cells = this.__tableModule.getAllSelectedCells();
+
+			// One let go outside the editor clicks outside it, which unmarks them
+			if (
+				cells.length > 1 &&
+				Dom.isOrContains(this.j.editor, e.target as Node)
+			) {
+				this.__keepMarks = true;
+				this.__showCellsPopup(table, cells);
+			}
+		}
+
+		this.__stopListening();
+	}
+
+	private __showCellsPopup(
+		table: HTMLTableElement,
+		cells: HTMLTableCellElement[]
+	): void {
+		const bound = this.__tableModule.getSelectedBound(table, cells),
 			box = this.__tableModule.formalMatrix(table);
 
 		const max = box[bound[1][0]]?.[bound[1][1]],
@@ -444,13 +512,19 @@ export class selectCells extends Plugin {
 			},
 			'cells'
 		);
+	}
 
+	private __stopListening(): void {
 		$$('table', this.j.editor).forEach(table => {
 			this.j.e.off(
 				table,
 				'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells'
 			);
 		});
+
+		new Set([this.j.ew, this.j.ow]).forEach(win =>
+			this.j.e.off(win, 'mouseup.select-cells touchend.select-cells')
+		);
 
 		this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
 	}
@@ -735,8 +809,12 @@ export class selectCells extends Plugin {
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
 		this.__onRemoveSelection();
+		this.__stopListening();
 
-		jodit.e.off('.select-cells').off('keydown', this.__onKeyDown);
+		jodit.e
+			.off('.select-cells')
+			.off('keydown', this.__onKeyDown)
+			.off('clickEditor', this.__onClickAfterDrag);
 	}
 }
 
