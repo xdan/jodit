@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.5
+
+#### :bug: Bug Fix
+
+- Insert file with text selected now makes the selected text the link, as the Link button does, instead of replacing it with the file's name or URL; this covers the popup's URL tab, the file browser and uploads. With nothing selected the name or the URL is the text, as before.
+
 ## 4.19.4
 
 #### :house: Internal

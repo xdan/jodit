@@ -46,11 +46,46 @@ declare module 'jodit/config' {
 	}
 }
 
+/**
+ * Selected text becomes the link's text, as the Link button does, instead
+ * of being replaced by the file's name. Returns false with nothing selected
+ */
+function wrapSelectionInLink(
+	editor: IJodit,
+	href: string,
+	title: string = ''
+): boolean {
+	if (editor.s.isCollapsed()) {
+		return false;
+	}
+
+	const links = editor.s.wrapInTag('a') as HTMLAnchorElement[];
+
+	if (!links.length) {
+		return false;
+	}
+
+	links.forEach(link => {
+		attr(link, 'href', href);
+
+		if (title) {
+			attr(link, 'title', title);
+		}
+	});
+
+	editor.s.setCursorAfter(links[links.length - 1]);
+	return true;
+}
+
 function insertLinks(this: IJodit, data: IUploaderData): void {
 	data.files?.forEach(file => {
-		const link = this.createInside.element('a', {
-			href: data.baseurl + file
-		});
+		const href = data.baseurl + file;
+
+		if (wrapSelectionInLink(this, href)) {
+			return;
+		}
+
+		const link = this.createInside.element('a', { href });
 
 		link.textContent = this.o.uploader.getDisplayName.call(
 			this.uploader,
@@ -68,7 +103,23 @@ Config.prototype.file = {
 
 Config.prototype.controls.file = {
 	popup: (editor: IJodit, current: Node | false, close) => {
+		// The popup's first field takes the focus, so the selection the
+		// popup was opened for is kept and put back before the link goes in
+		const selected = editor.s.isCollapsed() ? null : editor.s.range;
+
+		const restoreSelection = (): void => {
+			if (selected) {
+				editor.s.selectRange(selected);
+			}
+		};
+
 		const insert = (url: string, title: string = ''): void => {
+			restoreSelection();
+
+			if (wrapSelectionInLink(editor, url, title)) {
+				return;
+			}
+
 			editor.s.insertNode(
 				editor.createInside.fromHTML(
 					`<a href="${url}" title="${title}">${title || url}</a>`
@@ -102,6 +153,7 @@ Config.prototype.controls.file = {
 					close();
 				},
 				upload: (data: IUploaderData) => {
+					restoreSelection();
 					(editor.o.file?.defaultHandlerSuccess ?? insertLinks).call(
 						editor,
 						data
