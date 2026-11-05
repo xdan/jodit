@@ -852,6 +852,61 @@ describe('Test uploader module', function () {
 			expect(data.fileNames).is.undefined;
 		});
 
+		it('Should build items from the arrays when uploader.process gives both', async function () {
+			const editor = getJodit({
+				uploader: {
+					url,
+					process: resp => ({
+						baseurl: resp.data.baseurl,
+						files: ['report.pdf'],
+						isImages: [false],
+						items: [{ file: 'logo.gif', isImage: true }]
+					})
+				}
+			});
+
+			const data = await editor.uploader.upload([new FileImage()]);
+
+			expect(data.items).deep.equals([
+				{ file: 'report.pdf', isImage: false }
+			]);
+		});
+
+		it('Should insert the files a handler edits before passing the data on to the default', async function () {
+			const editor = getJodit({
+				uploader: {
+					url,
+					defaultHandlerSuccess(data) {
+						data.files = ['report.pdf'];
+						data.isImages = [false];
+
+						Jodit.defaultOptions.uploader.defaultHandlerSuccess.call(
+							this,
+							data
+						);
+					}
+				}
+			});
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('drop', editor.editor, function (data) {
+				fillXY(data, editor);
+				Object.defineProperty(data, 'dataTransfer', {
+					value: {
+						files: [new FileImage()]
+					}
+				});
+			});
+
+			await waitForCondition(() => editor.value.includes('<a '), 3000);
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/report.pdf">https://xdsoft.net/jodit/files/report.pdf</a></p>'
+			);
+		});
+
 		it('Should insert the items the default handler is given', function () {
 			const editor = getJodit();
 

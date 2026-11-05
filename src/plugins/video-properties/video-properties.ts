@@ -19,12 +19,12 @@ import type {
 import { cache, cached, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { position } from 'jodit/core/helpers/size/position';
 import { markOwner } from 'jodit/core/helpers/utils/utils';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { Button } from 'jodit/core/ui/button';
 import { Popup } from 'jodit/core/ui/popup/popup';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { FileSelectorWidget } from 'jodit/modules/widget/file-selector/file-selector';
 
 import type { VideoPropertiesState } from './interface';
@@ -173,17 +173,20 @@ export class videoProperties extends Plugin {
 					j,
 					{
 						upload: (data: IFileBrowserCallBackData) => {
-							if (data.items?.length) {
-								state.values.poster =
-									data.baseurl + data.items[0].file;
+							const [item] = getItems(data);
+
+							if (item) {
+								state.values.poster = data.baseurl + item.file;
 							}
 
 							close();
 						},
 
 						filebrowser: (data: IFileBrowserCallBackData) => {
-							if (isArray(data.items) && data.items.length) {
-								state.values.poster = data.items[0].file;
+							const [item] = getItems(data);
+
+							if (item) {
+								state.values.poster = item.file;
 								close();
 							}
 						}

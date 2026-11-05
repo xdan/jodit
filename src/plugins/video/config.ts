@@ -19,7 +19,7 @@ import { Button } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput, UITextArea } from 'jodit/core/ui/form';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
-import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { type TabOption, TabsWidget, UploadTab } from 'jodit/modules/widget';
 
 import videoIcon from './video.svg';
@@ -78,9 +78,9 @@ declare module 'jodit/config' {
 }
 
 function insertVideos(this: IJodit, data: IUploaderData): void {
-	const { baseurl, items } = normalizeUploaderData(data);
+	const { baseurl } = data;
 
-	items.forEach(({ file }) => {
+	getItems(data).forEach(({ file }) => {
 		this.s.insertNode(
 			prepareMedia(
 				this,

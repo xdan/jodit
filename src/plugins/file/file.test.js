@@ -164,4 +164,36 @@ describe('File plugin', function () {
 			);
 		});
 	});
+
+	describe('Browse tab', function () {
+		// Jodit PRO's file browser calls back with only the arrays
+		it('Should insert links to the files a file browser passes as arrays (#1752)', function () {
+			const editor = getJodit({
+				filebrowser: {
+					ajax: {
+						url: 'https://example.com/filebrowser'
+					}
+				}
+			});
+
+			Object.defineProperty(editor.filebrowser, 'open', {
+				value: callback =>
+					callback({
+						baseurl: 'https://xdsoft.net/jodit/files/',
+						files: ['file.xls'],
+						isImages: [false]
+					})
+			});
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			clickButton('file', editor);
+			clickButton('Browse', getOpenedPopup(editor), 'tab');
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls" title="">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
+		});
+	});
 });

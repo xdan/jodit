@@ -9,9 +9,9 @@
  */
 
 import type { IDialog, IFileBrowserCallBackData, IJodit } from 'jodit/types';
-import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { position } from 'jodit/core/helpers/size/position';
 import { Popup } from 'jodit/core/ui/popup/popup';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { FileSelectorWidget } from 'jodit/modules/widget/file-selector/file-selector';
 
 import type { ImagePropertiesState } from '../interface';
@@ -36,17 +36,20 @@ export function openImagePopup(
 				j,
 				{
 					upload: (data: IFileBrowserCallBackData) => {
-						if (data.items?.length) {
-							state.values.imageSrc =
-								data.baseurl + data.items[0].file;
+						const [item] = getItems(data);
+
+						if (item) {
+							state.values.imageSrc = data.baseurl + item.file;
 						}
 
 						closePopup();
 					},
 
 					filebrowser: async (data: IFileBrowserCallBackData) => {
-						if (data && isArray(data.items) && data.items.length) {
-							state.values.imageSrc = data.items[0].file;
+						const [item] = data ? getItems(data) : [];
+
+						if (item) {
+							state.values.imageSrc = item.file;
 							closePopup();
 						}
 					}

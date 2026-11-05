@@ -36,8 +36,10 @@ interface IUploaderData {
 	/**
 	 * One object per file. Handlers always get it: Jodit builds it from
 	 * `files`, `isImages` and `fileNames` when the server or
-	 * `uploader.process` gives only those, and rebuilds those arrays from
-	 * it when it's given.
+	 * `uploader.process` gives those, and fills those arrays in from it when
+	 * it's given alone. While `files` is set, the arrays win: the default
+	 * handlers read them, so a handler that edits them and passes the data
+	 * on to a default still gets its edits inserted.
 	 */
 	items?: IUploadedFile[];
 
