@@ -43,6 +43,18 @@ function joinNeighbors(
 		return true;
 	}
 
+	// Old content can have an inline element round blocks beside the text:
+	// moved inside them, the line joins the block as it would bare text
+	// (#1781)
+	const inline = Dom.findNotEmptySibling(fakeNode, backspace);
+
+	if (
+		joinsBareText(jodit, edgeBlock(inline, backspace)) &&
+		moveInlineInside(inline, jodit.editor)
+	) {
+		return joinNeighbors(jodit, fakeNode, backspace, moved);
+	}
+
 	let nextBox: Nullable<Node> = fakeNode,
 		mainClosestBox: Nullable<Node> = nextBox;
 
@@ -530,15 +542,7 @@ function checkJoinBareText(
 ): boolean {
 	const block = Dom.findNotEmptySibling(fakeNode, backspace);
 
-	if (
-		!Dom.isElement(block) ||
-		!Dom.isBlock(block) ||
-		Dom.isList(block) ||
-		Dom.isTag(block, 'table') ||
-		Dom.isCell(block) ||
-		!Dom.isContentEditable(block, jodit.editor) ||
-		Array.from(block.childNodes).some(node => Dom.isBlock(node))
-	) {
+	if (!joinsBareText(jodit, block)) {
 		return false;
 	}
 
@@ -571,6 +575,41 @@ function checkJoinBareText(
 
 	jodit.s.setCursorBefore(fakeNode);
 	return true;
+}
+
+/**
+ * Whether a block joins the bare text beside it: not a list, a table or a
+ * cell, and holding no block of its own
+ */
+function joinsBareText(jodit: IJodit, block: Nullable<Node>): block is Element {
+	return (
+		Dom.isElement(block) &&
+		Dom.isBlock(block) &&
+		!Dom.isList(block) &&
+		!Dom.isTag(block, 'table') &&
+		!Dom.isCell(block) &&
+		Dom.isContentEditable(block, jodit.editor) &&
+		!Array.from(block.childNodes).some(node => Dom.isBlock(node))
+	);
+}
+
+/**
+ * The block an inline element holds on its side facing the caret, through
+ * the inline elements in it: the `<p>` of `<span><strong><p>…</p></strong></span>`
+ */
+function edgeBlock(node: Nullable<Node>, backspace: boolean): Nullable<Node> {
+	let edge = node;
+
+	while (Dom.isElement(edge) && !Dom.isBlock(edge)) {
+		const children = Array.from(edge.childNodes).filter(
+			child => !Dom.isEmptyTextNode(child)
+		);
+
+		edge =
+			(backspace ? children[children.length - 1] : children[0]) ?? null;
+	}
+
+	return edge === node ? null : edge;
 }
 
 function checkMoveListContent(
