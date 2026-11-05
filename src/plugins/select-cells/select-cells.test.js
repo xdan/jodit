@@ -524,4 +524,137 @@ describe('Select cells plugin', () => {
 			expect(marked(editor)).deep.equals([two, four, six]);
 		});
 	});
+
+	describe('A drag let go outside the table (#1774)', () => {
+		const VALUE =
+			'<table style="width: 300px"><tbody>' +
+			'<tr><td>One</td><td>Two</td></tr>' +
+			'<tr><td>Three</td><td>Four</td></tr>' +
+			'</tbody></table>' +
+			'<p>After the table, with <a href="https://example.com/">a link</a>.</p>';
+
+		const over = element => e => {
+			const box = element.getBoundingClientRect();
+
+			Object.assign(e, {
+				clientX: box.left + Math.min(box.width / 2, 20),
+				clientY: (box.top + box.bottom) / 2
+			});
+		};
+
+		const marked = editor =>
+			editor
+				.getInstance(Jodit.modules.Table, editor.o)
+				.getAllSelectedCells();
+
+		// A press in "Four", over "Three" or not, let go on the line after
+		const dragOut = (editor, across = true) => {
+			const [three, four] =
+				editor.editor.querySelector('table').rows[1].cells;
+			const p = editor.editor.querySelector('p');
+
+			simulateEvent('mousedown', four, over(four));
+
+			if (across) {
+				simulateEvent('mousemove', three, over(three));
+			}
+
+			simulateEvent('mouseup', p, over(p));
+			// The press and the release were in different elements, so the
+			// browsers click their common ancestor
+			simulateEvent('click', editor.editor, over(p));
+
+			return [three, four];
+		};
+
+		const hoverOne = editor => {
+			const one = editor.editor.querySelector('td');
+			simulateEvent('mousemove', one, over(one));
+		};
+
+		it('should keep the cells marked, open their popup and unlock the editor', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const cells = dragOut(editor);
+
+			expect(marked(editor)).deep.equals(cells);
+			expect(getOpenedPopup(editor)).is.not.null;
+			expect(editor.isLocked).is.false;
+		});
+
+		it("should take away the browser's own selection from the drag, as a release over a cell does", () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const [three, four] =
+				editor.editor.querySelector('table').rows[1].cells;
+			const p = editor.editor.querySelector('p');
+
+			simulateEvent('mousedown', four, over(four));
+			simulateEvent('mousemove', three, over(three));
+			simulateEvent('mouseup', p, over(p));
+
+			// The browsers go on stretching their selection from the press once
+			// the mouse leaves the table, where select-cells takes it away
+			const range = editor.s.createRange();
+			range.setStart(four.firstChild, 1);
+			range.setEnd(p.firstChild, 3);
+			editor.s.selectRange(range);
+
+			simulateEvent('click', editor.editor, over(p));
+
+			expect(editor.s.sel.rangeCount).equals(0);
+			expect(marked(editor)).deep.equals([three, four]);
+		});
+
+		it('should leave the marks as they are when the mouse goes over the table afterwards', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const cells = dragOut(editor);
+			hoverOne(editor);
+
+			expect(marked(editor)).deep.equals(cells);
+			expect(editor.isLocked).is.false;
+		});
+
+		it('should mark nothing when the mouse goes over the table after a drag from one cell out of it', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			dragOut(editor, false);
+			hoverOne(editor);
+
+			expect(marked(editor)).deep.equals([]);
+			expect(editor.isLocked).is.false;
+		});
+
+		it('should drop the marks and unlock the editor when let go outside the editor, as a click outside does', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const [three, four] =
+				editor.editor.querySelector('table').rows[1].cells;
+
+			simulateEvent('mousedown', four, over(four));
+			simulateEvent('mousemove', three, over(three));
+			simulateEvent(['mouseup', 'click'], document.body);
+			hoverOne(editor);
+
+			expect(marked(editor)).deep.equals([]);
+			expect(editor.isLocked).is.false;
+		});
+
+		it('should work in iframe mode', () => {
+			const editor = getJodit({ iframe: true });
+			editor.value = VALUE;
+
+			const cells = dragOut(editor);
+			hoverOne(editor);
+
+			expect(marked(editor)).deep.equals(cells);
+			expect(editor.isLocked).is.false;
+		});
+	});
 });

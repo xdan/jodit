@@ -90,6 +90,8 @@ editor.e.on('showPopup', (table, getPosition, type) => {
 
 The marks change as soon as the mouse goes into another cell, without a throttle, as until they do the browser's own selection from the drag shows in the cells between. Moves within a cell don't redo the marks.
 
+A drag let go outside the table ends there too, with the cells marked as they were and their popup open, and the click that follows it doesn't unmark them. One let go outside the editor is a click outside it, which unmarks them, as before. Either way the editor is unlocked, and moving the mouse over the table afterwards marks nothing.
+
 ### Selection Bounds
 
 Uses formal matrix to calculate rectangular selection:
