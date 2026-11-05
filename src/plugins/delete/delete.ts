@@ -11,9 +11,10 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
+import { NBSP_SPACE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
-import { toArray } from 'jodit/core/helpers';
+import { call, toArray, trimInv } from 'jodit/core/helpers';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { Plugin } from 'jodit/core/plugin';
 
@@ -26,6 +27,21 @@ const NOT_EMPTY_CONTENT_TAGS = new Set([
 	'iframe',
 	'hr'
 ] as const);
+
+const KEEPS_SPACES = new Set(['pre', 'pre-wrap', 'break-spaces']);
+
+/**
+ * A plain space beside this neighbor isn't shown: there is none, or it's a
+ * line break, a block or text starting (or ending) with a plain space
+ */
+function hidesSpace(neighbor: Nullable<Node>, edge: RegExp): boolean {
+	return (
+		!neighbor ||
+		Dom.isTag(neighbor, 'br') ||
+		Dom.isBlock(neighbor) ||
+		(Dom.isText(neighbor) && edge.test(neighbor.nodeValue ?? ''))
+	);
+}
 
 export class deleteCommand extends Plugin {
 	static override requires = ['backspace'];
@@ -105,6 +121,7 @@ export class deleteCommand extends Plugin {
 		const rightSibling = Dom.findSibling(fake, false);
 
 		this.__moveContentInLeftSibling(fake, leftSibling, rightSibling);
+		this.__keepSpacesVisible(fake);
 
 		range.setStartBefore(fake);
 		range.collapse(true);
@@ -243,6 +260,58 @@ export class deleteCommand extends Plugin {
 				Dom.safeRemove(rightSibling);
 			}
 		}
+	}
+
+	/**
+	 * A plain space the deletion leaves at an edge of the block, before a line
+	 * break or next to another space isn't shown, and the browser drops it when
+	 * the next char is typed. It becomes non-breaking, as in the browsers' own
+	 * delete and in Backspace without a selection (#1522)
+	 */
+	private __keepSpacesVisible(fake: Text): void {
+		const { jodit } = this;
+		const block =
+			Dom.closest(fake, Dom.isBlock, jodit.editor) ?? jodit.editor;
+
+		if (KEEPS_SPACES.has(jodit.ew.getComputedStyle(block).whiteSpace)) {
+			return;
+		}
+
+		const before = this.__findNeighbor(fake, true, block);
+		const after = this.__findNeighbor(fake, false, block);
+
+		if (Dom.isText(before) && hidesSpace(after, /^ /)) {
+			before.nodeValue = before.nodeValue!.replace(/ +$/, spaces =>
+				NBSP_SPACE.repeat(spaces.length)
+			);
+		}
+
+		if (Dom.isText(after) && hidesSpace(before, / $/)) {
+			after.nodeValue = after.nodeValue!.replace(/^ +/, spaces =>
+				NBSP_SPACE.repeat(spaces.length)
+			);
+		}
+	}
+
+	/**
+	 * The text, line break or other element next to the caret in its block,
+	 * looking inside inline elements
+	 */
+	private __findNeighbor(
+		fake: Text,
+		left: boolean,
+		block: HTMLElement
+	): Nullable<Node> {
+		return call(
+			left ? Dom.prev : Dom.next,
+			fake,
+			(node: Nullable<Node>) =>
+				Dom.isText(node)
+					? trimInv(node.nodeValue ?? '').length > 0
+					: !Dom.isComment(node) &&
+						!(Dom.isInlineBlock(node) && node.firstChild),
+			block
+		);
 	}
 
 	/**
