@@ -752,14 +752,16 @@ export class resizeCells extends Plugin {
 			return;
 		}
 
+		const observeTables = (): void => {
+			$$('table', editor.editor).forEach(this.observe);
+		};
+
 		editor.e
 			.off(this.j.ow, '.resize-cells')
 			.off('.resize-cells')
 			.on(
 				'change.resize-cells afterCommand.resize-cells afterSetMode.resize-cells',
-				() => {
-					$$('table', editor.editor).forEach(this.observe);
-				}
+				observeTables
 			)
 			.on(this.j.ow, 'scroll.resize-cells', () => {
 				if (!this.drag || this.workRow) {
@@ -790,6 +792,9 @@ export class resizeCells extends Plugin {
 					);
 				});
 			});
+
+		// None of those events comes with the editor's starting value
+		observeTables();
 	}
 
 	/**
