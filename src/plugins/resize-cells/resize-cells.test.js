@@ -907,6 +907,141 @@ describe('Test Resize Cells', function () {
 
 				expect(editor.value).equals(value);
 			});
+
+			[
+				[
+					'widths on every cell',
+					'<tr><td style="width: 30%;">1</td><td style="width: 30%;">2</td><td style="width: 40%;">3</td></tr>'.repeat(
+						3
+					)
+				],
+				[
+					'a cell below spanning both columns',
+					'<tr><td>1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td colspan="2" style="width: 60%;">4</td><td>5</td></tr>' +
+						'<tr><td style="width: 20%;">6</td><td>7</td><td>8</td></tr>'
+				],
+				[
+					'the next cell spanning two columns',
+					'<tr><td>1</td><td colspan="2">2</td></tr>' +
+						'<tr><td>3</td><td style="width: 30%;">4</td><td>5</td></tr>'
+				],
+				[
+					'a cell spanning two rows',
+					'<tr><td rowspan="2" style="width: 30%;">1</td><td>2</td><td>3</td></tr>' +
+						'<tr><td style="width: 30%;">4</td><td>5</td></tr>'
+				]
+			].forEach(([name, rows]) => {
+				it(`should leave on release the widths it set while dragged, with ${name}`, () => {
+					const editor = getJodit();
+					editor.value =
+						'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+						rows +
+						'</tbody></table>';
+					const start = editor.editor.innerHTML;
+
+					const { box } = grab(editor);
+					simulateEvent('mousemove', editor.ew, options => {
+						options.clientX = box.right + 30;
+					});
+
+					const dragged = editor.editor.innerHTML;
+					expect(dragged).not.equals(start);
+
+					simulateEvent('mouseup', editor.ew, options => {
+						options.clientX = box.right + 30;
+					});
+
+					expect(editor.editor.innerHTML).equals(dragged);
+				});
+			});
+
+			// Changes to the table's attributes while the handle moves on from `from` to `to`
+			const changedOnMove = (editor, from, to) => {
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientX = from;
+				});
+
+				const observer = new MutationObserver(() => {});
+				observer.observe(editor.editor.querySelector('table'), {
+					attributes: true,
+					subtree: true
+				});
+
+				simulateEvent('mousemove', editor.ew, options => {
+					options.clientX = to;
+				});
+
+				const changed = new Set(
+					observer.takeRecords().map(record => record.target)
+				);
+				observer.disconnect();
+
+				simulateEvent('mouseup', editor.ew, options => {
+					options.clientX = to;
+				});
+
+				return [...changed];
+			};
+
+			it('should change only the two widths it sets as the handle moves on', () => {
+				const editor = getJodit();
+				editor.value =
+					'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+					'<tr><td style="width: 30%;">1</td><td style="width: 30%;">2</td><td style="width: 40%;">3</td></tr>'.repeat(
+						3
+					) +
+					'</tbody></table>';
+
+				const { td, box } = grab(editor);
+				const changed = changedOnMove(
+					editor,
+					box.right + 20,
+					box.right + 30
+				);
+
+				expect(changed).to.have.members([td, td.nextElementSibling]);
+			});
+
+			it("should change only the table's style as its edge moves on", () => {
+				const editor = getJodit();
+				editor.value =
+					'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+					'<tr><td style="width: 30%;">1</td><td style="width: 30%;">2</td><td style="width: 40%;">3</td></tr>'.repeat(
+						3
+					) +
+					'</tbody></table>';
+
+				const table = editor.editor.querySelector('table');
+				const td = table.rows[0].cells[2];
+				const box = td.getBoundingClientRect();
+
+				simulateEvent('mousemove', td, options => {
+					options.offsetX = box.width - 2;
+					options.clientX = box.right - 2;
+					options.clientY = box.top + 5;
+				});
+				simulateEvent(
+					'mousedown',
+					editor.container.querySelector('.jodit-table-resizer'),
+					options => {
+						options.clientX = box.right;
+					}
+				);
+
+				const changed = changedOnMove(
+					editor,
+					box.right - 20,
+					box.right - 30
+				);
+
+				expect(changed).to.have.members([table]);
+				expect(
+					Math.abs(
+						table.getBoundingClientRect().right - (box.right - 30)
+					)
+				).is.below(2);
+			});
 		});
 	});
 

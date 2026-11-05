@@ -156,10 +156,10 @@ When dragging resize handle:
 2. **Track Position**: Records `startX` (`startY` for a row) and calculates `resizeDelta`
 3. **Constrain Movement**: Enforces `minX` and `maxX` boundaries
 4. **Visual Feedback**: Adds `jodit-table-resizer_moved` class
-5. **Resize Live**: Sets the new widths, or the row's height, as the pointer moves, and keeps the handle on the border. Before each new width, the table's and its cells' styles are put back as the drag found them, so every width is worked out from the same start
+5. **Resize Live**: Sets the new widths, or the row's height, as the pointer moves, and keeps the handle on the border. Every width is worked out from the widths measured as the drag started, and a move writes only the widths it sets, so it lays the table out once, however large the table is
 6. **Scroll Along**: For a row, when the pointer is within 20px of the top or bottom of what scrolls it, or past them, that scrolls on, and the border stays in view at the pointer or the edge. Scroll anchoring is off around the row during the drag
 7. **Clear Selection**: Removes text selection during drag
-8. **Release**: A drag that ends where it started leaves the table as it was
+8. **Release**: The table's and its cells' styles are put back as the drag found them, and the final widths set once more through `setColumnWidthByDelta`. A drag that ends where it started leaves the table as it was
 
 ### Column Resizing
 
