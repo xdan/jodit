@@ -766,11 +766,13 @@ describe('Google Fonts', () => {
 		make('<p>a</p>');
 
 		const popup = open();
-		await delay(200);
 
 		const abeezee = Array.from(
 			popup.querySelectorAll('.jodit-ui-font-picker__item')
 		).find(item => item.textContent === 'ABeeZee');
+
+		// The preview font is applied when the observer sees the item, later on a busy runner
+		await waitForCondition(() => abeezee.style.fontFamily, 3000);
 
 		expect(abeezee.style.fontFamily.replace(/["']/g, '')).equals(
 			'ABeeZee, sans-serif'
