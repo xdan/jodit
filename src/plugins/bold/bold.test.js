@@ -98,4 +98,44 @@ describe('Bold plugin', () => {
 			expect(jodit.value).eq('<p><sup>|</sup></p>');
 		});
 	});
+
+	describe('Subscript and superscript exclude each other, as in the browsers and Word (#1772)', () => {
+		[
+			['<p>x<sup>|2|</sup></p>', 'subscript', '<p>x<sub>2</sub></p>'],
+			['<p>x<sub>|2|</sub></p>', 'superscript', '<p>x<sup>2</sup></p>'],
+			[
+				'<p>x<sup>|2|3</sup></p>',
+				'subscript',
+				'<p>x<sub>2</sub><sup>3</sup></p>'
+			],
+			[
+				'<p>|ab<sup>2</sup>cd|</p>',
+				'subscript',
+				'<p><sub>ab2cd</sub></p>'
+			],
+			[
+				'<p>x<sup><strong>|2|</strong></sup></p>',
+				'subscript',
+				'<p>x<strong><sub>2</sub></strong></p>'
+			],
+			['<p>x<sup>|2|</sup></p>', 'superscript', '<p>x2</p>']
+		].forEach(([value, command, expected]) => {
+			it(`${command} on ${value} should give ${expected}`, () => {
+				jodit.value = value;
+				setCursorToChar(jodit);
+				jodit.execCommand(command);
+
+				expect(sortAttributes(jodit.value)).eq(expected);
+			});
+		});
+
+		it('should type a subscript after a superscript when the caret is at its end', () => {
+			jodit.value = '<p>x<sup>2|</sup></p>';
+			setCursorToChar(jodit);
+			jodit.execCommand('subscript');
+			jodit.s.insertHTML('y');
+
+			expect(jodit.value).eq('<p>x<sup>2</sup><sub>y</sub></p>');
+		});
+	});
 });

@@ -22,6 +22,11 @@ export interface IStyleOptions {
 	element?: HTMLTagNames;
 	attributes?: IAttributes;
 	defaultTag?: HTMLTagNames;
+	/**
+	 * Tags the element takes the place of: the selection is taken out of
+	 * them first, as subscript and superscript take each other's place
+	 */
+	exclude?: HTMLTagNames[];
 	hooks?: {
 		beforeWrapList?(
 			mode: CommitMode,

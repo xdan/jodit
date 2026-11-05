@@ -24,6 +24,7 @@ This plugin adds 6 toolbar buttons and corresponding commands for common text fo
 - **Keyboard Shortcuts**: Ctrl+B (bold), Ctrl+I (italic), Ctrl+U (underline)
 - **Smart Detection**: Recognizes both HTML tags and CSS styles
 - **Toggle Behavior**: Click again to remove formatting
+- **Subscript or Superscript**: Each takes the other's place, as in the browsers and Word, so Subscript on superscript text gives `<sub>`, not `<sup><sub>`
 
 ## Button Groups
 
@@ -106,7 +107,7 @@ Each button is configured in `Jodit.defaultOptions.controls`:
 
 ## Notes
 
-- The plugin uses `commitStyle` method for applying formatting
+- The plugin uses `commitStyle` method for applying formatting. Subscript and superscript pass the other's tag as its `exclude` option, which takes the selection out of that tag first
 - Supports both HTML tag-based and CSS-based formatting detection
 - Works with text selection or at cursor position
 - Automatically calls `synchronizeValues()` after formatting changes
