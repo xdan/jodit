@@ -18,7 +18,7 @@ import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Config } from 'jodit/config';
-import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -112,9 +112,9 @@ Config.prototype.uploader = {
 			return;
 		}
 
-		const { baseurl, items } = normalizeUploaderData(resp);
+		const { baseurl } = resp;
 
-		items.forEach(({ file, isImage }) => {
+		getItems(resp).forEach(({ file, isImage }) => {
 			const [tagName, attrName]: string[] = isImage
 				? ['img', 'src']
 				: ['a', 'href'];

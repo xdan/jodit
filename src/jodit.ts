@@ -92,7 +92,7 @@ import {
 	STATUSES,
 	ViewWithToolbar
 } from 'jodit/modules';
-import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 
 const FOCUS_EVENTS = new Set(['focus', 'blur', 'focusin', 'focusout']);
 
@@ -479,9 +479,9 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				theme: jodit.o.theme,
 				shadowRoot: jodit.o.shadowRoot,
 				defaultCallback(data: IFileBrowserCallBackData): void {
-					const { baseurl, items } = normalizeUploaderData(data);
+					const { baseurl } = data;
 
-					items.forEach(({ file, isImage }) => {
+					getItems(data).forEach(({ file, isImage }) => {
 						const url = baseurl + file;
 
 						if (isImage) {

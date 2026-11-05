@@ -20,7 +20,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Config } from 'jodit/config';
-import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 
 declare module 'jodit/config' {
@@ -79,9 +79,9 @@ function wrapSelectionInLink(
 }
 
 function insertLinks(this: IJodit, data: IUploaderData): void {
-	const { baseurl, items } = normalizeUploaderData(data);
+	const { baseurl } = data;
 
-	items.forEach(({ file }) => {
+	getItems(data).forEach(({ file }) => {
 		const href = baseurl + file;
 
 		if (wrapSelectionInLink(this, href)) {
@@ -150,7 +150,7 @@ Config.prototype.controls.file = {
 			editor,
 			{
 				filebrowser: (data: IFileBrowserCallBackData) => {
-					data.items?.forEach(({ file }) =>
+					getItems(data).forEach(({ file }) =>
 						insert(data.baseurl + file)
 					);
 
