@@ -150,6 +150,65 @@ describe('Hotkeys', () => {
 
 				expect(editor.value).equals('<ul><li>one two three</li></ul>');
 			});
+
+			describe('With Ctrl and Shift on Windows, a digit key sends the symbol above it (#1790)', () => {
+				const press = (editor, which, key, modifier) =>
+					simulateEvent('keydown', which, editor.editor, data => {
+						data.key = key;
+						data.shiftKey = true;
+						data[modifier] = true;
+					});
+
+				const make = () => {
+					const editor = getJodit();
+
+					editor.value = '<p>one two three</p>';
+					editor.s.setCursorIn(editor.editor.firstChild);
+
+					return editor;
+				};
+
+				it('Should make a numbered list with ctrl+shift+7', () => {
+					const editor = make();
+
+					press(editor, 55, '&', 'ctrlKey');
+
+					expect(editor.value).equals(
+						'<ol><li>one two three</li></ol>'
+					);
+				});
+
+				it('Should make a bulleted list with ctrl+shift+8', () => {
+					const editor = make();
+
+					press(editor, 56, '*', 'ctrlKey');
+
+					expect(editor.value).equals(
+						'<ul><li>one two three</li></ul>'
+					);
+				});
+
+				it('Should still work where the key stays the digit, as with Cmd on a Mac', () => {
+					const editor = make();
+
+					press(editor, 55, '7', 'metaKey');
+
+					expect(editor.value).equals(
+						'<ol><li>one two three</li></ol>'
+					);
+				});
+
+				it('Should leave the symbol alone without Ctrl or Cmd', () => {
+					const editor = make();
+
+					simulateEvent('keydown', 55, editor.editor, data => {
+						data.key = '&';
+						data.shiftKey = true;
+					});
+
+					expect(editor.value).equals('<p>one two three</p>');
+				});
+			});
 		});
 	});
 
