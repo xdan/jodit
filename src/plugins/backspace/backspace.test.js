@@ -354,9 +354,62 @@ describe('Delete or Backspace beside an inline element round a block keeps the b
 				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
 				editor.editor
 			);
+
+			// The lines can join (#1781), but all the text stays
+			const text = html => html.replace(/<[^>]+>|\|/g, '');
+			expect(text(editor.value)).equals(text(source));
+		});
+	});
+});
+
+describe('Delete or Backspace beside an inline element round a block joins the lines, as the browsers do (#1781)', () => {
+	const span = '<span style="font-family:Tahoma">';
+
+	[
+		[
+			`<div>Intro|${span}<p>Welcome</p></span></div>`,
+			'Delete',
+			`<div>Intro|${span}Welcome</span></div>`
+		],
+		[
+			`<div>${span}<p>Welcome</p></span>|After</div>`,
+			'Backspace',
+			`<div><p>${span}Welcome|</span>After</p></div>`
+		],
+		[
+			'<div>Intro|<strong><p>Bold</p></strong></div>',
+			'Delete',
+			'<div>Intro|<strong>Bold</strong></div>'
+		],
+		[
+			`<div>Intro|${span}<strong><p>Welcome</p></strong></span></div>`,
+			'Delete',
+			`<div>Intro|${span}<strong>Welcome</strong></span></div>`
+		],
+		[
+			`<div>Intro|${span}<p>Welcome</p><p>Second</p></span></div>`,
+			'Delete',
+			`<div>Intro|${span}Welcome</span><p>${span}Second</span></p></div>`
+		],
+		[
+			`<div>Intro|${span}<ul><li>One</li></ul></span></div>`,
+			'Delete',
+			`<div>Intro|${span}<ul><li>One</li></ul></span></div>`
+		]
+	].forEach(([source, key, result]) => {
+		it(`Should give ${result}: ${key} in ${source}`, () => {
+			const editor = getJodit({ history: { timeout: 0 } });
+			editor.value = source;
+			setCursorToChar(editor);
+
+			simulateEvent(
+				'keydown',
+				key === 'Delete' ? Jodit.KEY_DELETE : Jodit.KEY_BACKSPACE,
+				editor.editor
+			);
 			replaceCursorToChar(editor);
 
-			expect(sortAttributes(editor.value)).equals(source);
+			expect(sortAttributes(editor.value)).equals(sortAttributes(result));
 		});
 	});
 });
