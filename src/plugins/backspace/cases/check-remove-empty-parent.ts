@@ -46,12 +46,6 @@ export function checkRemoveEmptyParent(
 		return false;
 	}
 
-	const neighbor = Dom.findNotEmptyNeighbor(
-		fakeNode,
-		backspace,
-		jodit.editor
-	);
-
 	do {
 		if (prn && Dom.isEmpty(prn) && !Dom.isCell(prn)) {
 			Dom.after(prn, fakeNode);
@@ -75,6 +69,14 @@ export function checkRemoveEmptyParent(
 	if (found && checkJoinTwoLists(jodit, fakeNode, backspace)) {
 		return true;
 	}
+
+	// Looked for once the empty elements have gone, as the one beside the
+	// caret can be in them: the `<br>` that Delete in `<p>|<br></p>` leaves
+	const neighbor = Dom.findNotEmptyNeighbor(
+		fakeNode,
+		backspace,
+		jodit.editor
+	);
 
 	if (
 		neighbor &&
