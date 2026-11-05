@@ -1396,3 +1396,87 @@ describe('Enter in a quote', () => {
 		});
 	});
 });
+
+// https://github.com/xdan/jodit/issues/1006
+describe('Enter that an input method (IME) uses', () => {
+	const keyDown = (editor, key, keyCode, isComposing = false) => {
+		const event = new editor.ew.KeyboardEvent('keydown', {
+			key,
+			keyCode,
+			isComposing,
+			bubbles: true,
+			cancelable: true
+		});
+
+		editor.editor.dispatchEvent(event);
+		return event;
+	};
+
+	it('Should leave the Enter that confirms the text to the input method in Safari', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<p>あいうえお|</p>';
+		setCursorToChar(editor);
+
+		// Safari ends the composition before the keydown, so only its keyCode tells
+		simulateEvent('compositionend', editor.editor);
+		const event = keyDown(editor, Jodit.KEY_ENTER, 229);
+
+		expect(event.defaultPrevented).is.false;
+		expect(editor.value).equals('<p>あいうえお</p>');
+	});
+
+	it('Should leave the Enter of a composition to the input method in other browsers', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<p>あいうえお|</p>';
+		setCursorToChar(editor);
+
+		const event = keyDown(editor, Jodit.KEY_ENTER, 229, true);
+		simulateEvent('compositionend', editor.editor);
+
+		expect(event.defaultPrevented).is.false;
+		expect(editor.value).equals('<p>あいうえお</p>');
+	});
+
+	it('Should start a paragraph on the next Enter', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		editor.value = '<p>あいうえお|</p>';
+		setCursorToChar(editor);
+
+		simulateEvent('compositionend', editor.editor);
+		keyDown(editor, Jodit.KEY_ENTER, 229);
+		const event = keyDown(editor, Jodit.KEY_ENTER, 13);
+		replaceCursorToChar(editor);
+
+		expect(event.defaultPrevented).is.true;
+		expect(editor.value).equals('<p>あいうえお</p><p>|<br></p>');
+	});
+
+	it('Should start a paragraph on an Enter the input method passes on', () => {
+		const editor = getJodit({ history: { timeout: 0 } });
+		// A Korean syllable is typed without a composition, and Enter keeps its keyCode
+		editor.value = '<p>한|</p>';
+		setCursorToChar(editor);
+
+		keyDown(editor, Jodit.KEY_ENTER, 13);
+		replaceCursorToChar(editor);
+
+		expect(editor.value).equals('<p>한</p><p>|<br></p>');
+	});
+
+	it('Should still pass the letters the input method uses to the keydown handlers', () => {
+		const editor = getJodit();
+		editor.value = '<p>|<br></p>';
+		setCursorToChar(editor);
+
+		const keys = [];
+		editor.e.on('keydown', e => {
+			keys.push(e.key);
+		});
+
+		// Chrome's keydown for the key that starts a composition, and a Korean letter in Safari
+		keyDown(editor, 'k', 229);
+		keyDown(editor, 'ㅎ', 229);
+
+		expect(keys).deep.equals(['k', 'ㅎ']);
+	});
+});
