@@ -122,6 +122,86 @@ describe('Font test', function () {
 		});
 	});
 
+	describe('font size select button label (#1788)', () => {
+		const btnText = editor =>
+			editor.container
+				.querySelector('[data-ref="fontsize"]')
+				.textContent.trim();
+
+		const make = (options = {}) =>
+			getJodit({
+				toolbarAdaptive: false,
+				buttons: 'fontsize',
+				controls: { fontsize: { component: 'select' } },
+				...options
+			});
+
+		it("Should show the editor's size before there is a selection", async () => {
+			const editor = make({ style: { fontSize: '17px' } });
+			editor.value = '<p>plain text</p>';
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(editor.s.current()).is.null;
+			expect(btnText(editor)).equals('17px');
+			editor.destruct();
+		});
+
+		it("Should show the iframe's size before there is a selection", async () => {
+			const editor = make({
+				iframe: true,
+				iframeStyle: 'body { font-size: 17px; }'
+			});
+			await editor.waitForReady();
+			editor.value = '<p>plain text</p>';
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(btnText(editor)).equals('17px');
+			editor.destruct();
+		});
+
+		it('Should keep the size of the last selection once it has gone', async () => {
+			const editor = make();
+			editor.value = '<p><span style="font-size: 24px">a</span></p>';
+			editor.s.focus();
+			editor.s.setCursorIn(
+				editor.editor.querySelector('span').firstChild
+			);
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(btnText(editor)).equals('24px');
+
+			editor.s.sel.removeAllRanges();
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(editor.s.current()).is.null;
+			expect(btnText(editor)).equals('24px');
+			editor.destruct();
+		});
+
+		it('Should leave the icon button unpressed before there is a selection', async () => {
+			const editor = getJodit({
+				toolbarAdaptive: false,
+				buttons: 'fontsize',
+				style: { fontSize: '16px' }
+			});
+			editor.value = '<p>plain text</p>';
+			editor.e.fire('updateToolbar');
+			await delay(80);
+
+			expect(editor.s.current()).is.null;
+			expect(
+				editor.container
+					.querySelector('.jodit-toolbar-button_fontsize button')
+					.getAttribute('aria-pressed')
+			).equals('false');
+			editor.destruct();
+		});
+	});
+
 	describe('FontName', function () {
 		describe('Open fontname list and select some element', function () {
 			it('Should apply this font to current selection elements', function () {
