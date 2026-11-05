@@ -9,6 +9,28 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.7
+
+#### :bug: Bug Fix
+
+- [#1774](https://github.com/xdan/jodit/issues/1774) A drag from a table cell let go outside the table ends there: the editor is unlocked, the cells stay marked with their popup open, and moving over the table afterwards marks nothing.
+- [#1778](https://github.com/xdan/jodit/issues/1778) A drag across table cells marks them as soon as the mouse enters another cell, and no resize handle shows during the drag.
+- [#1757](https://github.com/xdan/jodit/issues/1757) Tables in the editor's starting value get their resize handles at once, not after the first edit. Readonly editors show no handle.
+- [#1770](https://github.com/xdan/jodit/issues/1770) A click to the right of a table row puts the caret at the end of that row, as Word does, instead of after the table.
+- [#1772](https://github.com/xdan/jodit/issues/1772) Subscript on superscript text (and the reverse) replaces the one with the other instead of nesting them.
+- [#1775](https://github.com/xdan/jodit/issues/1775) Delete in an empty line puts the caret at the start of the next line.
+- [#1781](https://github.com/xdan/jodit/issues/1781) Delete or Backspace beside an inline element that holds a block joins the lines, as the browsers do.
+- [#1522](https://github.com/xdan/jodit/issues/1522) Deleting a selection that leaves a space at the edge of the text keeps the space visible, which also keeps the space a Vietnamese IME (EVKey) replaces a letter next to.
+- [#1006](https://github.com/xdan/jodit/issues/1006) Safari: the Enter or Backspace that ends an IME composition (Japanese, Chinese, Korean) is left to the input method instead of adding a paragraph or deleting a character.
+- The select plugin's listeners are removed on destruct (they were re-added by mistake).
+
+#### :house: Internal
+
+- Column and table edge resize writes only the changed widths while dragging.
+- The image caption popup test waits for the reopened popup instead of a fixed delay.
+
+Thanks to Brendon Muir for all of the above.
+
 ## 4.19.6
 
 #### :rocket: New Feature

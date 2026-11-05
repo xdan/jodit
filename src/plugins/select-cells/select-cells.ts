@@ -303,7 +303,7 @@ export class selectCells extends Plugin {
 		this.__onRemoveSelection();
 	}
 
-	@watch(':mousedown')
+	@watch([':mousedown', ':touchstart'])
 	protected onMouseDown(): void {
 		this.__keepMarks = false;
 	}
@@ -531,6 +531,8 @@ export class selectCells extends Plugin {
 		new Set([this.j.ew, this.j.ow]).forEach(win =>
 			this.j.e.off(win, 'mouseup.select-cells touchend.select-cells')
 		);
+
+		this.__movedTo = null;
 	}
 
 	/**

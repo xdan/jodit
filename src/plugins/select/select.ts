@@ -52,7 +52,7 @@ export class select extends Plugin {
 
 	protected override beforeDestruct(jodit: IJodit): void {
 		this.proxyEventsList.forEach(eventName => {
-			jodit.e.on(eventName + '.select', this.onStartSelection);
+			jodit.e.off(eventName + '.select', this.onStartSelection);
 		});
 
 		this.__endPressBesideRow();
@@ -258,6 +258,8 @@ export class select extends Plugin {
 			return;
 		}
 
+		// A press before the last one was let go must not stack its listeners
+		this.__endPressBesideRow();
 		e.preventDefault();
 		this.__putCaretBesideRow(beside.table, beside.row);
 		this.__pressBesideRow = {

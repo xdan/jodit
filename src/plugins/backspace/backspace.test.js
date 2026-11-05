@@ -395,6 +395,11 @@ describe('Delete or Backspace beside an inline element round a block joins the l
 			`<div>Intro|${span}<ul><li>One</li></ul></span></div>`,
 			'Delete',
 			`<div>Intro|${span}<ul><li>One</li></ul></span></div>`
+		],
+		[
+			`<table><tbody><tr><td>Intro|${span}<p>Welcome</p></span></td></tr></tbody></table>`,
+			'Delete',
+			`<table><tbody><tr><td>Intro|${span}<p>Welcome</p></span></td></tr></tbody></table>`
 		]
 	].forEach(([source, key, result]) => {
 		it(`Should give ${result}: ${key} in ${source}`, () => {

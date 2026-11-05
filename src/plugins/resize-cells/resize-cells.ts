@@ -165,7 +165,7 @@ export class resizeCells extends Plugin {
 	 */
 	@autobind
 	private onHandleMouseDown(event: MouseEvent): boolean | void {
-		if (this.j.isLocked) {
+		if (this.j.isLocked || this.j.o.readonly) {
 			return;
 		}
 
@@ -825,7 +825,11 @@ export class resizeCells extends Plugin {
 					(event: MouseEvent) => {
 						// A drag from a cell isn't a resize, and the handle on
 						// a border it passes would take its moves (#1778)
-						if (this.j.isLocked || event.buttons) {
+						if (
+							this.j.isLocked ||
+							this.j.o.readonly ||
+							event.buttons
+						) {
 							return;
 						}
 
