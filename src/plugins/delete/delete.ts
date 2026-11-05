@@ -122,6 +122,7 @@ export class deleteCommand extends Plugin {
 
 		this.__moveContentInLeftSibling(fake, leftSibling, rightSibling);
 		this.__keepSpacesVisible(fake);
+		this.__keepSpacesVisibleBesideTable(fake);
 
 		range.setStartBefore(fake);
 		range.collapse(true);
@@ -159,6 +160,10 @@ export class deleteCommand extends Plugin {
 
 		const caret = range.cloneRange();
 		caret.collapse(true);
+
+		// Where the selection ends, which follows the deletion in its cell
+		const end = range.cloneRange();
+		end.collapse(false);
 
 		const parts: Array<[HTMLTableCellElement, Range]> = [];
 
@@ -202,7 +207,31 @@ export class deleteCommand extends Plugin {
 			if (Dom.isEmpty(cell)) {
 				Dom.detach(cell);
 				Dom.append(cell, createInside.element('br'));
+				return;
 			}
+
+			// A space left at the cell's edge, where the selection started or
+			// ended in it, would be hidden, as at a block's (#1783). The caret
+			// goes beside the fake, as making the space non-breaking would
+			// move it to the start of its text
+			const edge = [caret, end].find(edge =>
+				Dom.isOrContains(cell, edge.startContainer)
+			);
+
+			if (!edge) {
+				return;
+			}
+
+			const fake = createInside.fake();
+			edge.insertNode(fake);
+			this.__keepSpacesVisible(fake);
+
+			if (edge === caret) {
+				caret.setStartBefore(fake);
+				caret.collapse(true);
+			}
+
+			Dom.safeRemove(fake);
 		});
 
 		return startTable ? caret : null;
@@ -291,6 +320,37 @@ export class deleteCommand extends Plugin {
 				NBSP_SPACE.repeat(spaces.length)
 			);
 		}
+	}
+
+	/**
+	 * A deletion that starts or ends in a table leaves the fake between the
+	 * table and the block it reached into, and a space at that block's edge
+	 * would be hidden as well (#1783)
+	 */
+	private __keepSpacesVisibleBesideTable(fake: Text): void {
+		const before = Dom.findNotEmptySibling(fake, true);
+		const after = Dom.findNotEmptySibling(fake, false);
+
+		const block = Dom.isTag(after, 'table')
+			? before
+			: Dom.isTag(before, 'table')
+				? after
+				: null;
+
+		if (!Dom.isBlock(block) || Dom.isTag(block, 'table')) {
+			return;
+		}
+
+		const edge = this.jodit.createInside.fake();
+
+		if (block === before) {
+			Dom.append(block, edge);
+		} else {
+			block.insertBefore(edge, block.firstChild);
+		}
+
+		this.__keepSpacesVisible(edge);
+		Dom.safeRemove(edge);
 	}
 
 	/**
