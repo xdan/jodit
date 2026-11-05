@@ -13,8 +13,9 @@
 
 #### :rocket: New Feature
 
-- `uploader.beforeUpload` may now return a promise, and may hand back the files to send instead of the dropped ones (renamed with `new File(...)`, or some left out) or a plan `{ files, data }` that also adds fields to the request, so the user can be asked before the upload goes out. Returning `false` still cancels. Base for the Finder dialog on a name that is already taken (`onExists` in the connectors).
-- A refused upload reaches the error handler as an `AnswerError`: `message` is the connector's text as before, plus `answer` (the whole answer) and `code` (`data.code`), so a handler can tell `409` "name already taken" from any other failure. The file browser's data provider throws the same error for its requests.
+- `uploader.promptOnExists` (on by default): when the connector answers `409`, an uploaded name is already taken (the `error` value of `saveSameFileNameStrategy`; jodit-nodejs 2.1.1, PHP 3.0.61, jodit-python), the uploader asks for another name in a prompt and sends the file again under it, before the error handler gets a say. `uploader.promptOnExistsSuggestName(name)` fills the prompt in (default: the same name), Cancel drops the file, a batch is sent again one file at a time so only the taken names ask. Requested by Kevin Sormann (li-life web+it).
+- A refused upload reaches the error handler as an `UploadError`: `message` is the connector's text as before, plus `answer`, `code` (`data.code`), the sent `files` and `retry(plan)` to send them again with other files or extra request fields such as `onExists: 'replace'`, without running `beforeUpload` twice. The file browser's data provider throws an `AnswerError` with `answer` and `code` for its requests.
+- `uploader.beforeUpload` may return a promise, and may hand back the files to send instead of the dropped ones (renamed, or some left out) or `{ files, data }` that also adds fields to the request. Returning `false` still cancels.
 
 #### :bug: Bug Fix
 

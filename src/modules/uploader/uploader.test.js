@@ -96,47 +96,187 @@ describe('Test uploader module', function () {
 		});
 	});
 
-	describe('Error answer', function () {
-		it('Should hand the handler an error that keeps the answer and its code', async function () {
-			const editor = getJodit({
+	describe('Name already taken (409)', function () {
+		let oldSend, requests;
+
+		// A connector with the `error` strategy: the names in `taken` answer 409, the rest are stored
+		function mockConnector(taken) {
+			requests = [];
+			oldSend = Jodit.modules.Ajax.prototype.send;
+
+			Jodit.modules.Ajax.prototype.send = function () {
+				const form = this.options.data;
+				const names = [];
+
+				for (let i = 0; form.getName('files[' + i + ']'); i += 1) {
+					names.push(form.getName('files[' + i + ']'));
+				}
+
+				requests.push({ names, onExists: form.get('onExists') });
+
+				const clash = names.find(
+					name =>
+						taken.includes(name) &&
+						form.get('onExists') !== 'replace'
+				);
+
+				return Promise.resolve({
+					json: () =>
+						Promise.resolve(
+							clash
+								? {
+										success: false,
+										data: {
+											code: 409,
+											messages: [
+												'File ' +
+													clash +
+													' already exists'
+											]
+										}
+									}
+								: {
+										success: true,
+										data: {
+											baseurl:
+												'https://xdsoft.net/jodit/files/',
+											files: names,
+											isImages: names.map(() => false),
+											code: 220
+										}
+									}
+						)
+				});
+			};
+		}
+
+		afterEach(function () {
+			Jodit.modules.Ajax.prototype.send = oldSend;
+		});
+
+		function makeEditor(uploader) {
+			return getJodit({
 				uploader: {
 					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
-					isSuccess: () => false,
-					getMessage: resp => resp.data.messages.join(' '),
-					process: resp => resp.data
+					...uploader
+				}
+			});
+		}
+
+		it('Should ask for another name and send the file again under it', async function () {
+			mockConnector(['file.xls']);
+			const editor = makeEditor({
+				promptOnExistsSuggestName: name => 'copy-' + name
+			});
+
+			const upload = editor.uploader.upload([FileXLS()]);
+			await delay(50);
+
+			const dialog = getOpenedDialog(editor);
+			expect(dialog).is.not.null;
+			expect(dialog.textContent).contains('File file.xls already exists');
+
+			const input = dialog.querySelector('input');
+			expect(input.value).equals('copy-file.xls');
+
+			clickButton('ok', dialog);
+			const resp = await upload;
+
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls'],
+				['copy-file.xls']
+			]);
+			expect(resp.files).deep.equals(['copy-file.xls']);
+		});
+
+		it('Should drop the file when the prompt is cancelled', async function () {
+			mockConnector(['file.xls']);
+			const editor = makeEditor({});
+
+			const upload = editor.uploader.upload([FileXLS()]);
+			await delay(50);
+
+			const dialog = getOpenedDialog(editor);
+			clickButton('cancel', dialog);
+			const resp = await upload;
+
+			expect(requests.length).equals(1);
+			expect(resp.files).deep.equals([]);
+			expect(getOpenedDialog(editor)).is.null;
+		});
+
+		it('Should send a batch again one file at a time, so only the taken name asks', async function () {
+			mockConnector(['file.xls']);
+			const editor = makeEditor({});
+
+			const upload = editor.uploader.upload([
+				FileXLS(),
+				{ name: 'free.xls', type: 'application/xls' }
+			]);
+			await delay(50);
+
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls', 'free.xls'],
+				['file.xls'],
+				['free.xls']
+			]);
+
+			const dialog = getOpenedDialog(editor);
+			dialog.querySelector('input').value = 'other.xls';
+			clickButton('ok', dialog);
+			await upload;
+
+			expect(requests[3].names).deep.equals(['other.xls']);
+		});
+
+		it('Should leave it to the error handler when promptOnExists is off, with the answer, the files and retry', async function () {
+			mockConnector(['file.xls']);
+			let caught = null;
+			const editor = makeEditor({
+				promptOnExists: false,
+				defaultHandlerError(e) {
+					caught = e;
+					e.retry({ data: { onExists: 'replace' } });
 				}
 			});
 
-			const oldSend = Jodit.modules.Ajax.prototype.send;
-			Jodit.modules.Ajax.prototype.send = function () {
-				return Promise.resolve({
-					json: () =>
-						Promise.resolve({
-							success: false,
-							data: {
-								code: 409,
-								messages: ['File file.xls already exists']
-							}
-						})
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('drop', editor.editor, function (data) {
+				Object.defineProperty(data, 'dataTransfer', {
+					value: { files: [FileXLS()] }
 				});
-			};
+			});
+			await delay(50);
 
-			let caught = null;
-
-			try {
-				try {
-					await editor.uploader.upload([FileXLS()]);
-				} catch (e) {
-					caught = e;
-				}
-			} finally {
-				Jodit.modules.Ajax.prototype.send = oldSend;
-			}
-
-			expect(caught).is.not.null;
-			expect(caught.message).equals('File file.xls already exists');
 			expect(caught.code).equals(409);
+			expect(caught.message).equals('File file.xls already exists');
 			expect(caught.answer.data.code).equals(409);
+			expect(caught.files.map(f => f.name)).deep.equals(['file.xls']);
+			expect(requests).deep.equals([
+				{ names: ['file.xls'], onExists: undefined },
+				{ names: ['file.xls'], onExists: 'replace' }
+			]);
+			expect(getOpenedDialog(editor)).is.null;
+		});
+
+		it('Should not run beforeUpload again on retry', async function () {
+			mockConnector(['file.xls']);
+			let calls = 0;
+			const editor = makeEditor({
+				beforeUpload: () => {
+					calls += 1;
+				}
+			});
+
+			const upload = editor.uploader.upload([FileXLS()]);
+			await delay(50);
+			clickButton('ok', getOpenedDialog(editor));
+			await upload;
+
+			expect(calls).equals(1);
+			expect(requests.length).equals(2);
 		});
 	});
 

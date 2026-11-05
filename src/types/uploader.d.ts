@@ -38,6 +38,17 @@ interface IUploaderAnswer {
 export type HandlerSuccess = (resp: IUploaderData) => void;
 
 /**
+ * Error the handler gets when the connector refused an upload: the answer,
+ * its `code`, the sent `files` and `retry` to send them again, changed
+ */
+export interface IUploadError extends Error {
+	code?: number;
+	answer: IUploaderAnswer;
+	files: File[];
+	retry(plan?: Partial<IUploadPlan>): Promise<unknown>;
+}
+
+/**
  * What `beforeUpload` decided: the files to send and extra fields of the request
  */
 export interface IUploadPlan {
@@ -165,35 +176,24 @@ export interface IUploaderOptions<T> {
 	 * });
 	 * ```
 	 *
-	 * Ask before overwriting, with the `onExists` parameter the connectors
-	 * understand (`addNumber`, `replace` or `error`; jodit-nodejs 2.1.1,
-	 * PHP 3.0.61, jodit-python):
+	 * Ask the user, say for a target folder the connector takes as a field:
 	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 * 	uploader: {
 	 * 		url: 'https://example.com/connector/?action=fileUpload',
-	 * 		async beforeUpload(files) {
-	 * 			const taken = await fetch('/api/taken-names', {
-	 * 				method: 'POST',
-	 * 				body: JSON.stringify(files.map(file => file.name))
-	 * 			}).then(resp => resp.json());
-	 *
-	 * 			if (!taken.length) {
-	 * 				return files;
-	 * 			}
-	 *
-	 * 			const replace = await new Promise(resolve =>
-	 * 				this.j.confirm(`${taken.join(', ')} already exist. Replace?`, resolve)
+	 * 		beforeUpload(files) {
+	 * 			return new Promise(resolve =>
+	 * 				this.j.prompt('Folder', 'Upload to', folder =>
+	 * 					resolve({ files, data: { path: folder } })
+	 * 				)
 	 * 			);
-	 *
-	 * 			return replace
-	 * 				? { files, data: { onExists: 'replace' } }
-	 * 				: { files: files.filter(file => !taken.includes(file.name)) };
 	 * 		}
 	 * 	}
 	 * });
 	 * ```
+	 *
+	 * A name that is already taken is not this hook's job: see `promptOnExists`.
 	 */
 	beforeUpload?: (
 		this: T,
@@ -219,19 +219,23 @@ export interface IUploaderOptions<T> {
 
 	/**
 	 * Shows a failed upload. When the connector refused it, the error is an
-	 * `AnswerError`: `message` is the connector's text (`getMessage`),
-	 * `answer` the whole answer and `code` its `data.code`, so one case can
-	 * be handled apart and the rest shown as they are. Connectors answer
-	 * `409` when an uploaded name is already taken and
-	 * `saveSameFileNameStrategy` is `error`.
+	 * {@link IUploadError}: `message` is the connector's text (`getMessage`),
+	 * `answer` the whole answer, `code` its `data.code`, `files` the files
+	 * that were sent and `retry(plan)` sends them again with other files or
+	 * extra request fields, without running `beforeUpload` a second time.
+	 *
+	 * Connectors answer `409` when an uploaded name is already taken and
+	 * `saveSameFileNameStrategy` is `error` (jodit-nodejs 2.1.1, PHP 3.0.61,
+	 * jodit-python). With `promptOnExists` off, ask the user here:
 	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 * 	uploader: {
 	 * 		url: 'https://example.com/connector/?action=fileUpload',
+	 * 		promptOnExists: false,
 	 * 		defaultHandlerError(e) {
 	 * 			if (e.code === 409) {
-	 * 				this.j.message.error('That name is taken, rename the file first');
+	 * 				this.j.confirm('Replace?', yes => yes && e.retry({ data: { onExists: 'replace' } }));
 	 * 				return;
 	 * 			}
 	 *
@@ -240,8 +244,41 @@ export interface IUploaderOptions<T> {
 	 * 	}
 	 * });
 	 * ```
+	 *
+	 * Or keep both files under another name:
+	 *
+	 * ```javascript
+	 * e.retry({
+	 * 	files: e.files.map(file => new File([file], 'copy-' + file.name, { type: file.type }))
+	 * });
+	 * ```
 	 */
 	defaultHandlerError: HandlerError;
+
+	/**
+	 * When the connector answers `409` (the name is already taken), ask the
+	 * user for another name in a prompt and send the file again under it,
+	 * before the error handler gets a say: this is part of the upload, not a
+	 * failure. The prompt comes with `promptOnExistsSuggestName(name)` filled
+	 * in; Cancel drops the file. Several files sent together are sent again
+	 * one by one, so only the taken names ask.
+	 *
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: 'https://example.com/connector/?action=fileUpload',
+	 * 		promptOnExists: true,
+	 * 		promptOnExistsSuggestName: name => name.replace(/(\.\w+)?$/, '-copy$1')
+	 * 	}
+	 * });
+	 * ```
+	 */
+	promptOnExists: boolean;
+
+	/**
+	 * The name the `promptOnExists` prompt offers for a taken name. Default: the same name
+	 */
+	promptOnExistsSuggestName: (this: T, name: string) => string;
 
 	contentType: (this: T, requestData: any) => string | false;
 

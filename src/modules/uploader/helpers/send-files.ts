@@ -12,9 +12,11 @@ import type {
 	HandlerError,
 	HandlerSuccess,
 	IDictionary,
+	IDlgs,
 	IUploader,
 	IUploaderData,
-	IUploadPlan
+	IUploadPlan,
+	IViewBased
 } from 'jodit/types';
 import {
 	error,
@@ -23,8 +25,10 @@ import {
 	isPlainObject,
 	toArray
 } from 'jodit/core/helpers';
-import { answer } from 'jodit/core/helpers/utils/error';
+import { Dlgs } from 'jodit/core/traits/dlgs';
+import { Prompt } from 'jodit/modules/dialog/prompt';
 import { send } from 'jodit/modules/uploader/helpers/send';
+import { UploadError } from 'jodit/modules/uploader/helpers/upload-error';
 
 /**
  * Send files to server
@@ -34,7 +38,9 @@ export async function sendFiles(
 	files: FileList | File[] | null,
 	handlerSuccess?: HandlerSuccess,
 	handlerError?: HandlerError,
-	process?: (form: FormData) => void
+	process?: (form: FormData) => void,
+	// Set when a refused upload is sent again: `beforeUpload` already had its say
+	retryOf?: Partial<IUploadPlan>
 ): Promise<any> {
 	if (!files) {
 		throw error('Need files');
@@ -48,11 +54,11 @@ export async function sendFiles(
 		throw error('Need files');
 	}
 
-	let extraData: IDictionary<string> | undefined;
+	let extraData: IDictionary<string> | undefined = retryOf?.data;
 
 	// Client-side validation hook — returning `false` aborts the upload, and it may hand back the files to send instead
 	// See https://github.com/xdan/jodit/issues/1329
-	if (isFunction(o.beforeUpload)) {
+	if (!retryOf && isFunction(o.beforeUpload)) {
 		let plan: boolean | void | File[] | IUploadPlan;
 
 		try {
@@ -172,18 +178,31 @@ export async function sendFiles(
 						return resp;
 					}
 
+					const err = new UploadError(
+						o.getMessage.call(uploader, resp),
+						resp,
+						fileList,
+						plan =>
+							sendFiles(
+								uploader,
+								plan?.files ?? fileList,
+								handlerSuccess,
+								handlerError,
+								process,
+								{ data: { ...extraData, ...plan?.data } }
+							)
+					);
+
+					// A taken name is part of the upload, not a failure: ask for another one first
+					if (err.code === 409 && o.promptOnExists) {
+						return askAnotherName(uploader, err);
+					}
+
 					const handler = isFunction(handlerError)
 						? handlerError
 						: o.defaultHandlerError;
 
-					handler.call(
-						uploader,
-						answer(
-							o.getMessage.call(uploader, resp),
-							resp,
-							resp.data?.code
-						)
-					);
+					handler.call(uploader, err);
 
 					return resp;
 				})
@@ -194,6 +213,54 @@ export async function sendFiles(
 	}
 
 	return Promise.all(promises);
+}
+
+function askAnotherName(
+	uploader: IUploader,
+	err: UploadError
+): Promise<unknown> {
+	const { files } = err;
+
+	// The answer names no file, so each goes alone and only the taken ones ask
+	if (files.length > 1) {
+		return Promise.all(files.map(file => err.retry({ files: [file] })));
+	}
+
+	const [file] = files;
+	const { j, o } = uploader;
+
+	return new Promise(resolve => {
+		let answered = false;
+
+		// Not `Dlgs.prompt`: it would run the connector's message through i18n
+		const dialog = Prompt.call(
+			Dlgs.prototype.dlg.call(j as IViewBased & IDlgs, {
+				closeOnClickOverlay: true
+			}),
+			`${err.message}. ${j.i18n('Enter new name')}`,
+			j.i18n('Rename'),
+			(newName: string): false | void => {
+				newName = newName.trim();
+
+				if (!newName) {
+					return false;
+				}
+
+				answered = true;
+				resolve(
+					err.retry({
+						files: [new File([file], newName, { type: file.type })]
+					})
+				);
+			},
+			j.i18n('type name'),
+			o.promptOnExistsSuggestName.call(uploader, file.name)
+		);
+
+		dialog.e.on(dialog, 'afterClose', () => {
+			!answered && resolve(undefined);
+		});
+	});
 }
 
 function readImagesWithReader(

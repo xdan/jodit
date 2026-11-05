@@ -147,6 +147,12 @@ Config.prototype.uploader = {
 		this.j.message.error(e.message);
 	},
 
+	promptOnExists: true,
+
+	promptOnExistsSuggestName(this: IUploader, name: string): string {
+		return name;
+	},
+
 	contentType(this: IUploader, requestData: any) {
 		return (this.ow as any).FormData !== undefined &&
 			typeof requestData !== 'string'
