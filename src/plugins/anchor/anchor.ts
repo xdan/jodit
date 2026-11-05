@@ -70,11 +70,11 @@ export class anchor extends Plugin {
 	 */
 	@autobind
 	private __onClickA(target: HTMLElement, e?: Event): void | false {
-		if (!isAnchor(target)) {
+		const { j } = this;
+
+		if (j.o.readonly || !isAnchor(target)) {
 			return;
 		}
-
-		const { j } = this;
 
 		j.e.stopPropagation(camelCase((e?.type ?? 'click') + '_a'));
 		j.e.fire('showPopup', target, () => position(target, j), 'anchor');
@@ -156,9 +156,12 @@ export class anchor extends Plugin {
 					variant: 'default',
 					text: 'Remove'
 				}).onAction(() => {
-					j.s.restore();
-					Dom.safeRemove(current);
-					j.synchronizeValues();
+					if (!j.o.readonly) {
+						j.s.restore();
+						Dom.safeRemove(current);
+						j.synchronizeValues();
+					}
+
 					close();
 				})
 			);
@@ -180,6 +183,12 @@ export class anchor extends Plugin {
 		}
 
 		form.onSubmit(() => {
+			// The editor can turn readonly while the form is open
+			if (j.o.readonly) {
+				close();
+				return false;
+			}
+
 			const name = input.value.trim().replace(/^#/, '');
 
 			const error = /\s/.test(name)

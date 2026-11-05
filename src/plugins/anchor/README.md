@@ -55,6 +55,7 @@ const editor = Jodit.make('#editor', {
 ### Click
 
 - A `clickA` handler, at the top, opens `popup.anchor` for an anchor through `showPopup`, and stops the link's toolbar opening for it. With the plugin off, an anchor gets the link's toolbar as before
+- In a readonly editor a click opens nothing, and a form still open when the editor turns readonly closes on Insert, Update or Remove without changing anything
 
 ## Notes
 

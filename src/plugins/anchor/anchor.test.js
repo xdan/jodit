@@ -312,4 +312,60 @@ describe('Anchor plugin', () => {
 			expect(editor.value).equals('<p>AB</p>');
 		});
 	});
+
+	describe('Readonly', () => {
+		const VALUE = '<p>A<a id="fees"></a>B</p>';
+		const isOpen = popup =>
+			Boolean(popup.isConnected && popup.getClientRects().length);
+
+		it('should not open its popup on a click on an anchor', () => {
+			const editor = getJodit({ readonly: true });
+			editor.value = VALUE;
+
+			const asked = [];
+			editor.e.on('showPopup', (elm, bound, type) => asked.push(type));
+
+			// A readonly editor passes no clicks on, so this stands in for one
+			editor.e.fire('clickA', editor.editor.querySelector('a'));
+
+			expect(asked).deep.equals([]);
+			expect(getOpenedPopup(editor)).is.null;
+		});
+
+		it('should not insert an anchor from a form left open, closing it', () => {
+			const editor = getJodit();
+			editor.value = '<p>A<a id="fees"></a>B|</p>';
+			setCursorToChar(editor);
+
+			clickButton('anchor', editor);
+			const popup = getOpenedPopup(editor);
+			editor.setReadOnly(true);
+			popup.querySelector('[ref=name_input]').value = 'uniform';
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(VALUE);
+			expect(isOpen(popup)).is.false;
+		});
+
+		it('should not rename or remove an anchor from its form left open, closing it', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			let popup = openAnchor(editor);
+			editor.setReadOnly(true);
+			popup.querySelector('[ref=name_input]').value = 'uniform';
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(VALUE);
+			expect(isOpen(popup)).is.false;
+
+			editor.setReadOnly(false);
+			popup = openAnchor(editor);
+			editor.setReadOnly(true);
+			clickButton('remove', popup);
+
+			expect(editor.value).equals(VALUE);
+			expect(isOpen(popup)).is.false;
+		});
+	});
 });

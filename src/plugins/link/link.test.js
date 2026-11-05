@@ -250,6 +250,33 @@ describe('Link plugin', () => {
 			expect(toggle(popup)).is.null;
 			expect(list()).is.null;
 		});
+
+		it('should destruct the list with the form, whether it opened or not', () => {
+			const { editor, popup } = openLinkFor(
+				'<p>|See the fees|</p>' + ANCHORS
+			);
+			const lists = () =>
+				Array.from(editor.components).filter(
+					component =>
+						component instanceof Jodit.modules.Popup &&
+						component.container.querySelector('.jodit-link-anchors')
+				);
+
+			expect(lists().length).equals(1);
+
+			editor.e.fire('closeAllPopups');
+			expect(isOpen(popup)).is.false;
+			expect(lists().length).equals(0);
+
+			clickButton('link', editor);
+			openList(getOpenedPopup(editor));
+			const [dropdown] = lists();
+
+			editor.e.fire('closeAllPopups');
+			expect(list()).is.null;
+			expect(lists().length).equals(0);
+			expect(dropdown.isDestructed).is.true;
+		});
 	});
 
 	// https://github.com/xdan/jodit/issues/1204
