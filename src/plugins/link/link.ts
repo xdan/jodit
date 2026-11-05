@@ -629,8 +629,10 @@ function addAnchorList(
 	isImage: boolean
 ): void {
 	const anchors = getAnchors(jodit.editor);
+	const field = url?.closest<HTMLElement>('.jodit-ui-input__wrapper');
+	const input = field && UIElement.closestElement(field, UIElement);
 
-	if (!url || !anchors.length) {
+	if (!field || !input || !anchors.length) {
 		return;
 	}
 
@@ -657,7 +659,6 @@ function addAnchorList(
 			scale: undefined
 		}) ?? c.span();
 
-	const field = url.closest<HTMLElement>('.jodit-ui-input__wrapper') ?? url;
 	const dropdown = new Popup(jodit).setMod('padding', false);
 	const items: HTMLElement[] = [];
 	let filled = '';
@@ -668,7 +669,7 @@ function addAnchorList(
 		}
 
 		// Clicks in the list then count as the form's, which stays open
-		dropdown.parentElement ||= UIElement.closestElement(field, UIElement);
+		dropdown.parentElement ||= input;
 		list.style.minWidth = field.offsetWidth + 'px';
 		dropdown.open(() => position(field));
 		attr(toggle, 'aria-expanded', true);
@@ -734,12 +735,12 @@ function addAnchorList(
 			wasOpen || dropdown.isOpened ? dropdown.close() : open();
 			wasOpen = false;
 		})
-		.on(url, 'input', () => {
+		.on(url, 'input.anchors', () => {
 			if (url.value && !url.value.startsWith('#')) {
 				dropdown.close();
 			}
 		})
-		.on(url, 'keydown', (e: KeyboardEvent) => {
+		.on(url, 'keydown.anchors', (e: KeyboardEvent) => {
 			if (e.key === KEY_DOWN) {
 				e.preventDefault();
 				open();
@@ -765,6 +766,12 @@ function addAnchorList(
 				url.focus();
 			}
 		});
+
+	// The URL input is destructed when the form closes
+	input.hookStatus('destructed', () => {
+		dropdown.destruct();
+		jodit.e.off([toggle, list, ...items]).off(url, '.anchors');
+	});
 
 	Dom.after(url, toggle);
 }
