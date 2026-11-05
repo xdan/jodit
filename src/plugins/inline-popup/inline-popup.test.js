@@ -1529,6 +1529,19 @@ describe('Text Inline Popup plugin', () => {
 				expect(getOpenedPopup(editor)).is.null;
 			});
 
+			it('Should close when Delete removes a captioned image', async () => {
+				const editor = getJodit({ defaultTimeout: 0 });
+				editor.value =
+					'<figure><img alt="" src="tests/artio.jpg"><figcaption>A caption</figcaption></figure>';
+
+				simulateEvent('click', editor.editor.querySelector('img'));
+				await editor.async.requestIdlePromise();
+				clickButton('delete', getOpenedPopup(editor));
+
+				expect(editor.editor.querySelector('figure')).is.null;
+				expect(getOpenedPopup(editor)).is.null;
+			});
+
 			it('Should close when Caption puts the caret in the new caption', async () => {
 				const editor = getJodit({ defaultTimeout: 0 });
 				editor.value = '<p><img alt="" src="tests/artio.jpg"></p>';
@@ -1559,6 +1572,27 @@ describe('Text Inline Popup plugin', () => {
 				expect(editor.editor.querySelector('figure')).is.null;
 				expect(getOpenedPopup(editor)).equals(popup);
 				expect(isBeside(popup, img)).is.true;
+			});
+		});
+
+		describe('Media popup', () => {
+			it('Should close when Delete removes the media', () => {
+				const editor = getJodit({
+					mediaWrappers: {
+						video: { tag: 'span', className: 'fr-video' }
+					}
+				});
+				editor.value =
+					'<p>text <span class="fr-video"><video width="320" height="180"></video></span> text</p>';
+
+				simulateEvent(
+					'click',
+					editor.editor.querySelector('.fr-video')
+				);
+				clickButton('bin', getOpenedPopup(editor));
+
+				expect(editor.editor.querySelector('video')).is.null;
+				expect(getOpenedPopup(editor)).is.null;
 			});
 		});
 
@@ -1650,14 +1684,6 @@ describe('Text Inline Popup plugin', () => {
 							editor.editor.querySelectorAll('p')[2].firstChild,
 							0
 						]
-					],
-					[
-						'with a video on the next line, which a double click past the end of the line selects with it',
-						'<p>some text</p><p><video src="" width="160" height="90"></video></p><p>next line</p>',
-						editor => [
-							editor.editor.querySelectorAll('p')[2].firstChild,
-							0
-						]
 					]
 				].forEach(([name, html, end]) => {
 					it(name, async () => {
@@ -1678,6 +1704,87 @@ describe('Text Inline Popup plugin', () => {
 
 						expect(editor.s.isCollapsed()).is.false;
 						expect(getOpenedPopup(editor)).is.null;
+					});
+				});
+			});
+
+			describe('Should open for a selection with no text, and stay open on a change', () => {
+				const lines = editor => editor.editor.querySelectorAll('p');
+
+				[
+					[
+						'two images',
+						'<p><img alt="" src="tests/artio.jpg"><img alt="" src="tests/artio.jpg"></p>',
+						editor => {
+							const [p] = lines(editor);
+							return [p, 0, p, 2];
+						}
+					],
+					[
+						'a rule between two lines',
+						'<p>some text</p><hr><p>next line</p>',
+						editor => {
+							const [p1, p2] = lines(editor);
+							return [
+								p1.firstChild,
+								p1.firstChild.length,
+								p2.firstChild,
+								0
+							];
+						}
+					],
+					[
+						'a video on the next line, which a double click past the end of the line selects with the break',
+						'<p>some text</p><p><video src="" width="160" height="90"></video></p><p>next line</p>',
+						editor => {
+							const [p1, , p3] = lines(editor);
+							return [
+								p1.firstChild,
+								p1.firstChild.length,
+								p3.firstChild,
+								0
+							];
+						}
+					],
+					[
+						'only &nbsp;',
+						'<p>some text</p><p>&nbsp;</p>',
+						editor => {
+							const text = lines(editor)[1].firstChild;
+							return [text, 0, text, 1];
+						}
+					],
+					[
+						'a line of only &nbsp; and the break after it',
+						'<p>&nbsp;</p><p>next line</p>',
+						editor => {
+							const [p1, p2] = lines(editor);
+							return [p1.firstChild, 0, p2.firstChild, 0];
+						}
+					]
+				].forEach(([name, html, bounds]) => {
+					it(name, async () => {
+						const editor = getJodit({
+							toolbarInlineForSelection: true
+						});
+						editor.value = html;
+
+						const [sc, so, ec, eo] = bounds(editor);
+						const range = editor.s.createRange();
+						range.setStart(sc, so);
+						range.setEnd(ec, eo);
+
+						const [p] = lines(editor);
+						simulateEvent('mousedown', p);
+						editor.s.selectRange(range);
+						simulateEvent(['mouseup', 'selectionchange'], p);
+						await delay(editor.defaultTimeout + 50);
+
+						const popup = getOpenedPopup(editor);
+						expect(popup).is.not.null;
+
+						editor.e.fire('change');
+						expect(getOpenedPopup(editor)).equals(popup);
 					});
 				});
 			});
