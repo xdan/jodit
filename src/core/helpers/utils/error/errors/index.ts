@@ -9,5 +9,6 @@
  */
 
 export * from './abort-error';
+export * from './answer-error';
 export * from './connection-error';
 export * from './options-error';

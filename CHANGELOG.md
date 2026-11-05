@@ -11,6 +11,11 @@
 
 ## 4.19.8
 
+#### :rocket: New Feature
+
+- `uploader.beforeUpload` may now return a promise, and may hand back the files to send instead of the dropped ones (renamed with `new File(...)`, or some left out) or a plan `{ files, data }` that also adds fields to the request, so the user can be asked before the upload goes out. Returning `false` still cancels. Base for the Finder dialog on a name that is already taken (`onExists` in the connectors).
+- A refused upload reaches the error handler as an `AnswerError`: `message` is the connector's text as before, plus `answer` (the whole answer) and `code` (`data.code`), so a handler can tell `409` "name already taken" from any other failure. The file browser's data provider throws the same error for its requests.
+
 #### :bug: Bug Fix
 
 - `Ajax` dropped the body of a connector answer sent with a status outside `successStatuses` (403, 409) and rejected with the reason phrase, so the file browser and uploader showed "Forbidden" or "Conflict" instead of the connector's own message. An answer whose body is the JSON envelope (`{"success": false, "data": {"code", "messages"}}`) is now resolved whatever the status and judged by `success` and `data.code`; only a body that is not such an envelope (an HTML error page) still rejects with the status text. Groundwork for the Finder dialog on an uploaded name that is already taken (connectors answer 409 since jodit-nodejs 2.1.1 and PHP 3.0.61).

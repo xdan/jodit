@@ -32,7 +32,7 @@ import { isFunction } from 'jodit/core/helpers/checker/is-function';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { normalizeRelativePath } from 'jodit/core/helpers/normalize/normalize-relative-path';
 import { ConfigProto } from 'jodit/core/helpers/utils/config-proto';
-import { abort, error } from 'jodit/core/helpers/utils/error';
+import { abort, answer, error } from 'jodit/core/helpers/utils/error';
 import { set } from 'jodit/core/helpers/utils/set';
 import { Ajax } from 'jodit/core/request/ajax';
 import { FileBrowserItem } from 'jodit/modules/file-browser/builders/item';
@@ -198,7 +198,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 			.then(resp => resp.json())
 			.then(resp => {
 				if (resp && !this.isSuccess(resp)) {
-					throw new Error(this.getMessage(resp));
+					throw answer(this.getMessage(resp), resp, resp.data?.code);
 				}
 
 				return resp;
@@ -435,7 +435,7 @@ export default class DataProvider implements IFileBrowserDataProvider {
 				return resp.data;
 			}
 
-			throw error(this.getMessage(resp));
+			throw answer(this.getMessage(resp), resp, resp.data?.code);
 		});
 	}
 

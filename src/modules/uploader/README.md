@@ -131,7 +131,13 @@ Jodit.make('#editor', {
 
 - Type: `function`
 
-Default error result processor.
+Default error result processor. A refused upload comes as an `AnswerError` with the connector's `code`, see the option's doc in the config.
+
+### uploader.beforeUpload
+
+- Type: `function`
+
+Called before the files are sent: cancel, replace the files or add request fields, after asking the user if needed. Examples are in the option's doc in the config.
 
 ## uploader.processFileName
 

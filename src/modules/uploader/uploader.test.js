@@ -5,6 +5,141 @@
  */
 
 describe('Test uploader module', function () {
+	describe('beforeUpload', function () {
+		function makeEditor(beforeUpload, prepareData) {
+			return getJodit({
+				uploader: {
+					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+					beforeUpload,
+					prepareData: prepareData || (form => form)
+				}
+			});
+		}
+
+		it('Should abort the upload when it returns false and hand the handler the reason', async function () {
+			const editor = makeEditor(() => false);
+			let caught = null;
+
+			try {
+				await editor.uploader.upload([FileXLS()]);
+			} catch (e) {
+				caught = e;
+			}
+
+			expect(caught).is.not.null;
+			expect(caught.message).equals('Upload canceled');
+		});
+
+		it('Should wait for a promise and send the files it resolves with instead of the dropped ones', async function () {
+			const sent = [];
+			const editor = makeEditor(
+				async files => {
+					await delay(10);
+					return [{ name: 'renamed.xls', type: files[0].type }];
+				},
+				form => {
+					sent.push(form.getName('files[0]'));
+					return form;
+				}
+			);
+
+			const resp = await editor.uploader.upload([FileXLS()]);
+
+			expect(sent).deep.equals(['renamed.xls']);
+			expect(resp.files).deep.equals(['renamed.xls']);
+		});
+
+		it('Should add the fields of a plan to the request', async function () {
+			let onExists = null;
+			const editor = makeEditor(
+				files => ({ files, data: { onExists: 'replace' } }),
+				form => {
+					onExists = form.get('onExists');
+					return form;
+				}
+			);
+
+			await editor.uploader.upload([FileXLS()]);
+
+			expect(onExists).equals('replace');
+		});
+
+		it('Should send nothing when the plan keeps no file', async function () {
+			let requests = 0;
+			const editor = makeEditor(
+				() => ({ files: [] }),
+				form => {
+					requests += 1;
+					return form;
+				}
+			);
+
+			const resp = await editor.uploader.upload([FileXLS()]);
+
+			expect(requests).equals(0);
+			expect(resp.files).deep.equals([]);
+		});
+
+		it('Should route a thrown error through the error handler', async function () {
+			const editor = makeEditor(() => {
+				throw new Error('Too many files');
+			});
+			let caught = null;
+
+			try {
+				await editor.uploader.upload([FileXLS()]);
+			} catch (e) {
+				caught = e;
+			}
+
+			expect(caught.message).equals('Too many files');
+		});
+	});
+
+	describe('Error answer', function () {
+		it('Should hand the handler an error that keeps the answer and its code', async function () {
+			const editor = getJodit({
+				uploader: {
+					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+					isSuccess: () => false,
+					getMessage: resp => resp.data.messages.join(' '),
+					process: resp => resp.data
+				}
+			});
+
+			const oldSend = Jodit.modules.Ajax.prototype.send;
+			Jodit.modules.Ajax.prototype.send = function () {
+				return Promise.resolve({
+					json: () =>
+						Promise.resolve({
+							success: false,
+							data: {
+								code: 409,
+								messages: ['File file.xls already exists']
+							}
+						})
+				});
+			};
+
+			let caught = null;
+
+			try {
+				try {
+					await editor.uploader.upload([FileXLS()]);
+				} catch (e) {
+					caught = e;
+				}
+			} finally {
+				Jodit.modules.Ajax.prototype.send = oldSend;
+			}
+
+			expect(caught).is.not.null;
+			expect(caught.message).equals('File file.xls already exists');
+			expect(caught.code).equals(409);
+			expect(caught.answer.data.code).equals(409);
+		});
+	});
+
 	describe('Drop file', function () {
 		describe('Drop Image like base64', function () {
 			it('Should insert image with SRC in base64', function (done) {

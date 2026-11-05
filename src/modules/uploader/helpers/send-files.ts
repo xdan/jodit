@@ -11,16 +11,25 @@
 import type {
 	HandlerError,
 	HandlerSuccess,
+	IDictionary,
 	IUploader,
-	IUploaderData
+	IUploaderData,
+	IUploadPlan
 } from 'jodit/types';
-import { error, isFunction, isPlainObject, toArray } from 'jodit/core/helpers';
+import {
+	error,
+	isArray,
+	isFunction,
+	isPlainObject,
+	toArray
+} from 'jodit/core/helpers';
+import { answer } from 'jodit/core/helpers/utils/error';
 import { send } from 'jodit/modules/uploader/helpers/send';
 
 /**
  * Send files to server
  */
-export function sendFiles(
+export async function sendFiles(
 	uploader: IUploader,
 	files: FileList | File[] | null,
 	handlerSuccess?: HandlerSuccess,
@@ -28,7 +37,7 @@ export function sendFiles(
 	process?: (form: FormData) => void
 ): Promise<any> {
 	if (!files) {
-		return Promise.reject(error('Need files'));
+		throw error('Need files');
 	}
 
 	const { o } = uploader;
@@ -36,16 +45,38 @@ export function sendFiles(
 	let fileList: File[] = toArray(files);
 
 	if (!fileList.length) {
-		return Promise.reject(error('Need files'));
+		throw error('Need files');
 	}
 
-	// Client-side validation hook — returning `false` aborts the upload.
+	let extraData: IDictionary<string> | undefined;
+
+	// Client-side validation hook — returning `false` aborts the upload, and it may hand back the files to send instead
 	// See https://github.com/xdan/jodit/issues/1329
 	if (isFunction(o.beforeUpload)) {
-		if (o.beforeUpload.call(uploader, fileList) === false) {
+		let plan: boolean | void | File[] | IUploadPlan;
+
+		try {
+			plan = await o.beforeUpload.call(uploader, fileList);
+		} catch (e) {
+			(handlerError || o.defaultHandlerError).call(uploader, e as Error);
+			throw e;
+		}
+
+		if (plan === false) {
 			const err = error('Upload canceled');
 			(handlerError || o.defaultHandlerError).call(uploader, err);
-			return Promise.reject(err);
+			throw err;
+		}
+
+		if (isArray(plan)) {
+			fileList = plan;
+		} else if (isPlainObject(plan) && isArray(plan.files)) {
+			fileList = plan.files;
+			extraData = (plan as IUploadPlan).data;
+		}
+
+		if (!fileList.length) {
+			return [];
 		}
 	}
 
@@ -120,6 +151,12 @@ export function sendFiles(
 			});
 		}
 
+		if (extraData) {
+			Object.keys(extraData).forEach((key: string) => {
+				form.append(key, extraData[key]);
+			});
+		}
+
 		o.prepareData.call(uploader, form);
 
 		promises.push(
@@ -141,7 +178,11 @@ export function sendFiles(
 
 					handler.call(
 						uploader,
-						error(o.getMessage.call(uploader, resp))
+						answer(
+							o.getMessage.call(uploader, resp),
+							resp,
+							resp.data?.code
+						)
 					);
 
 					return resp;
