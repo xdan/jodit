@@ -823,7 +823,9 @@ export class resizeCells extends Plugin {
 				'mousemove.resize-cells touchmove.resize-cells',
 				this.j.async.throttle(
 					(event: MouseEvent) => {
-						if (this.j.isLocked) {
+						// A drag from a cell isn't a resize, and the handle on
+						// a border it passes would take its moves (#1778)
+						if (this.j.isLocked || event.buttons) {
 							return;
 						}
 

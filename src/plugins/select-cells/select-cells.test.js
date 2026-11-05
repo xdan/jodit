@@ -100,13 +100,11 @@ describe('Select cells plugin', () => {
 			const tds = editor.editor.querySelectorAll('td');
 
 			simulateEvent('mousedown', tds[0]);
-			// first move — the throttled handler runs immediately
+			// the first move marks the second cell
 			simulateEvent('mousemove', tds[1]);
-			// let the trailing throttled move fire mid-drag (it also appends
-			// the temporary Firefox redraw-hack node into the cell)
+			// a pause mid-drag
 			await delay(editor.defaultTimeout);
-			// change the selection again and release right away, while the
-			// trailing throttled move is still pending
+			// change the selection again and release right away
 			simulateEvent('mousemove', tds[2]);
 			simulateEvent('mouseup', tds[2]);
 			// mousedown and mouseup happened on different cells, so the
@@ -115,8 +113,7 @@ describe('Select cells plugin', () => {
 
 			expect(getOpenedPopup(editor)).is.not.null;
 
-			// the popup must survive the pending throttle timer, the redraw
-			// hack cleanup and the debounced history change events
+			// the popup must survive the debounced history change events
 			await delay(1200);
 
 			expect(getOpenedPopup(editor)).is.not.null;
@@ -479,6 +476,52 @@ describe('Select cells plugin', () => {
 			);
 			expect(marked(editor)).deep.equals([td]);
 			expect(getOpenedPopup(editor)).is.not.null;
+		});
+	});
+
+	describe('The marks follow the mouse at once (#1778)', () => {
+		const VALUE =
+			'<table style="width: 300px"><tbody>' +
+			'<tr><td>One</td><td>Two</td></tr>' +
+			'<tr><td>Three</td><td>Four</td></tr>' +
+			'<tr><td>Five</td><td>Six</td></tr>' +
+			'</tbody></table>';
+
+		const over = element => e => {
+			const box = element.getBoundingClientRect();
+
+			Object.assign(e, {
+				clientX: box.left + Math.min(box.width / 2, 20),
+				clientY: (box.top + box.bottom) / 2
+			});
+		};
+
+		const marked = editor =>
+			editor
+				.getInstance(Jodit.modules.Table, editor.o)
+				.getAllSelectedCells();
+
+		const column = editor =>
+			Array.from(editor.editor.querySelector('table').rows).map(
+				row => row.cells[1]
+			);
+
+		it('should mark the cells as soon as the mouse goes into another one, however quickly', () => {
+			// The throttle that marked them came from this timeout
+			const editor = getJodit({ defaultTimeout: 100 });
+			editor.value = VALUE;
+
+			const [two, four, six] = column(editor);
+
+			simulateEvent('mousedown', two, over(two));
+			simulateEvent('mousemove', two, over(two));
+			simulateEvent('mousemove', four, over(four));
+
+			expect(marked(editor)).deep.equals([two, four]);
+
+			simulateEvent('mousemove', six, over(six));
+
+			expect(marked(editor)).deep.equals([two, four, six]);
 		});
 	});
 });

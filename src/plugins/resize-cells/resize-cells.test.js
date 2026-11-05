@@ -1506,4 +1506,65 @@ describe('Test Resize Cells', function () {
 			});
 		});
 	});
+
+	describe('No handle on a border passed in a drag from a cell (#1778)', () => {
+		const TABLE =
+			'<table style="width: 300px; border-collapse: collapse;"><tbody>' +
+			'<tr><td>1</td><td>2</td></tr>' +
+			'<tr><td>3</td><td>4</td></tr>' +
+			'</tbody></table>';
+
+		const handle = editor =>
+			editor.container.querySelector('.jodit-table-resizer');
+
+		it('should not show the row handle with the button down, as it would take the drag from select-cells', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelector('td');
+			const box = td.getBoundingClientRect();
+
+			simulateEvent('mousemove', td, options => {
+				options.offsetX = 20;
+				options.clientX = box.left + 20;
+				options.clientY = box.bottom - 2;
+				options.buttons = 1;
+			});
+
+			expect(handle(editor)).is.null;
+		});
+
+		it('should not show the column handle with the button down either', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelectorAll('td')[1];
+			const box = td.getBoundingClientRect();
+
+			simulateEvent('mousemove', td, options => {
+				options.offsetX = 3;
+				options.clientX = box.left + 3;
+				options.clientY = (box.top + box.bottom) / 2;
+				options.buttons = 1;
+			});
+
+			expect(handle(editor)).is.null;
+		});
+
+		it('should still show it on a hover with no button down', () => {
+			const editor = getJodit();
+			editor.value = TABLE;
+
+			const td = editor.editor.querySelector('td');
+			const box = td.getBoundingClientRect();
+
+			simulateEvent('mousemove', td, options => {
+				options.offsetX = 20;
+				options.clientX = box.left + 20;
+				options.clientY = box.bottom - 2;
+			});
+
+			expect(handle(editor)).is.not.null;
+		});
+	});
 });

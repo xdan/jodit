@@ -17,6 +17,7 @@ Enables interactive resizing of table columns, rows and entire tables by draggin
 - Left and right table edge resizing
 - RTL (right-to-left) language support
 - Automatic handle positioning
+- No handle while the mouse button is down for something else, such as a drag across cells, as the handle would take its moves
 - Throttled mouse move for performance
 - Minimum/maximum resize limits
 - Proportional width calculations

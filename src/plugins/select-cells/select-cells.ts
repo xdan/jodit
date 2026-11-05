@@ -23,7 +23,6 @@ import { Table } from 'jodit/modules/table/table';
 import './config';
 
 const key = 'table_processor_observer';
-const MOUSE_MOVE_LABEL = 'onMoveTableSelectCell';
 
 export class selectCells extends Plugin {
 	static override requires = ['select'];
@@ -191,6 +190,11 @@ export class selectCells extends Plugin {
 	private __isSelectionMode: boolean = false;
 
 	/**
+	 * The cell the marks were last drawn to
+	 */
+	private __movedTo: Nullable<HTMLTableCellElement> = null;
+
+	/**
 	 * Mouse click inside the table
 	 */
 	@autobind
@@ -259,6 +263,7 @@ export class selectCells extends Plugin {
 
 		this.__isSelectionMode = true;
 		this.__selectedCell = cell;
+		this.__movedTo = cell;
 
 		this.__tableModule.addSelection(cell);
 
@@ -266,11 +271,7 @@ export class selectCells extends Plugin {
 			.on(
 				table,
 				'mousemove.select-cells touchmove.select-cells',
-				// Don't use decorator because need clear label on mouseup
-				this.j.async.throttle(this.__onMove.bind(this, table), {
-					label: MOUSE_MOVE_LABEL,
-					timeout: this.j.defaultTimeout / 2
-				})
+				this.__onMove.bind(this, table)
 			)
 			.on(
 				table,
@@ -313,15 +314,20 @@ export class selectCells extends Plugin {
 			e.clientY
 		);
 
-		if (!node) {
-			return;
-		}
-
-		const cell = Dom.closest(node, ['td', 'th'], table);
+		const cell = node && Dom.closest(node, ['td', 'th'], table);
 
 		if (!cell || !this.__selectedCell) {
 			return;
 		}
+
+		// The marks change only when the mouse goes into another cell, and then
+		// at once rather than throttled, as the browser's own selection from
+		// the drag shows in the cells between until they do (#1778)
+		if (cell === this.__movedTo) {
+			return;
+		}
+
+		this.__movedTo = cell;
 
 		if (cell !== this.__selectedCell) {
 			this.j.lock(key);
@@ -451,8 +457,6 @@ export class selectCells extends Plugin {
 				'mousemove.select-cells touchmove.select-cells mouseup.select-cells touchend.select-cells'
 			);
 		});
-
-		this.j.async.clearTimeout(MOUSE_MOVE_LABEL);
 	}
 
 	/**
