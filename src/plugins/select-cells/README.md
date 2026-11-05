@@ -88,6 +88,8 @@ editor.e.on('showPopup', (table, getPosition, type) => {
 8. **Release**: User releases mouse (mouseup/touchend)
 9. **Show Popup**: Displays toolbar for selected cells
 
+The marks change as soon as the mouse goes into another cell, without a throttle, as until they do the browser's own selection from the drag shows in the cells between. Moves within a cell don't redo the marks.
+
 ### Selection Bounds
 
 Uses formal matrix to calculate rectangular selection:
