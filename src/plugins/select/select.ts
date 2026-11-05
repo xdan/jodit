@@ -26,6 +26,14 @@ import './config';
 
 const MEDIA = 'video, iframe, audio, object, embed';
 
+// The shade the browsers lay over a selected image: #b5d6fd on white
+const SHADE = `url("data:image/svg+xml,${encodeURIComponent(
+	"<svg xmlns='http://www.w3.org/2000/svg'>" +
+		"<filter id='s' x='0' y='0' width='1' height='1' color-interpolation-filters='sRGB'>" +
+		"<feFlood flood-color='#84bbfc' flood-opacity='.6'/><feComposite in2='SourceGraphic'/>" +
+		'</filter></svg>'
+)}#s")`;
+
 /**
  * A utility plugin that allows you to subscribe to a click/mousedown/touchstart/mouseup on an element in DOM order
  *
@@ -52,7 +60,7 @@ export class select extends Plugin {
 		});
 
 		jodit.e.on('dblclick', this.__onDblClickBesideRow, { top: true });
-		jodit.e.on(jodit.ed, 'selectionchange', this.__tintMedia);
+		jodit.e.on(jodit.ed, 'selectionchange', this.__markSelectedMedia);
 	}
 
 	protected override beforeDestruct(jodit: IJodit): void {
@@ -62,53 +70,50 @@ export class select extends Plugin {
 
 		this.__endPressBesideRow();
 		jodit.e.off('dblclick', this.__onDblClickBesideRow);
-		jodit.e.off(jodit.ed, 'selectionchange', this.__tintMedia);
+		jodit.e.off(jodit.ed, 'selectionchange', this.__markSelectedMedia);
 	}
 
-	private __tint = '';
+	private __selectedMediaStyle = '';
 
 	/**
-	 * The browsers tint an image in the selection, but not a video or an
-	 * embed in an uneditable wrapper, so a selection that took one in didn't
-	 * show it, and typing deleted it unseen (#1768). It gets the tint over
-	 * the media alone, in place of any of the browser's own, from a style in
-	 * the editing document, so the value doesn't change
+	 * The browsers shade an image in the selection, but Chrome doesn't shade
+	 * a video with controls, or one in a `jodit-media` wrapper, so a selection
+	 * that took one in didn't show it, and typing deleted it unseen (#1768).
+	 * The media gets the same shade from a filter, in place of the tint Safari
+	 * gives a block wrapper's whole line. It's a style in the editing
+	 * document, as selected cells get their border, so the content, and with
+	 * it the value, the history and a copy, doesn't change
 	 */
 	@autobind
-	private __tintMedia(): void {
-		const { s, editor } = this.j;
+	private __markSelectedMedia(): void {
+		const { s, editor, o } = this.j;
 		const range = s.sel?.rangeCount ? s.sel.getRangeAt(0) : null;
 		const rules: string[] = [];
 
-		if (range && !range.collapsed) {
+		if (
+			range &&
+			!range.collapsed &&
+			!o.readonly &&
+			Dom.isOrContains(editor, range.commonAncestorContainer)
+		) {
 			uneditableIn(range, editor).forEach(elm => {
 				const media = elm.querySelector(MEDIA);
-				const path = media && cssPath(elm);
+				const wrapper = cssPath(elm);
 
-				if (!media || !path) {
-					return;
+				if (media && wrapper) {
+					rules.push(
+						`${wrapper}::selection,${wrapper} ::selection{background:transparent}`,
+						`${cssPath(media)}{filter:${SHADE}}`
+					);
 				}
-
-				const box = elm.getBoundingClientRect(),
-					own = media.getBoundingClientRect();
-
-				rules.push(
-					`${path}{position:relative}` +
-						`${path}::selection,${path} ::selection{background:transparent}` +
-						`${path}::after{position:absolute;z-index:1;` +
-						`left:${own.left - box.left - elm.clientLeft}px;` +
-						`top:${own.top - box.top - elm.clientTop}px;` +
-						`width:${own.width}px;height:${own.height}px;` +
-						'background:#b5d6fd;opacity:.5;pointer-events:none;content:""}'
-				);
 			});
 		}
 
-		const tint = rules.join('');
+		const style = rules.join('');
 
-		if (tint !== this.__tint) {
-			this.__tint = tint;
-			getContainer(this.j, select, 'style', true).textContent = tint;
+		if (style !== this.__selectedMediaStyle) {
+			this.__selectedMediaStyle = style;
+			getContainer(this.j, select, 'style', true).textContent = style;
 		}
 	}
 
@@ -497,9 +502,10 @@ export class select extends Plugin {
 
 	/**
 	 * A double click past the end of a line selects only its line break, up
-	 * to the start of what follows. The browsers show no caret for it, and
-	 * typing replaces the break, joining the lines and taking any embed in
-	 * between with it (#1768). Put the caret at the end of the line instead
+	 * to the start of the next line a caret can go on. The browsers show no
+	 * caret for it, and typing replaces the break, joining the lines and
+	 * taking any video in between with it (#1768). Put the caret at the end
+	 * of the line instead
 	 */
 	@watch([':dblclick'])
 	protected onDblClickPastLineEnd(): void {
@@ -507,10 +513,8 @@ export class select extends Plugin {
 		const range = s.range;
 
 		if (
-			range.collapsed ||
-			range.toString() !== '' ||
 			!Dom.isOrContains(editor, range.commonAncestorContainer) ||
-			isElementSelection(range)
+			!isLineBreak(range, editor)
 		) {
 			return;
 		}
@@ -522,9 +526,9 @@ export class select extends Plugin {
 	/**
 	 * The browsers have no caret position beside an uneditable block alone
 	 * on its line, such as a video, so a drag that ends on its line runs on
-	 * past it, and typing deletes it (#1768). The selection stops at the
-	 * text before the block until the pointer has passed it, or after it
-	 * for a drag upwards
+	 * past it, and typing deletes it (#1768). Until the pointer has passed
+	 * the block, the selection stops at the last caret place in the block
+	 * before its line, or for a drag upwards at the first in the block after
 	 */
 	@watch([':mouseup'])
 	protected onMouseUpOnUneditableLine(e: MouseEvent): void {
@@ -535,7 +539,7 @@ export class select extends Plugin {
 			return;
 		}
 
-		const range = sel.getRangeAt(0);
+		const range = sel.getRangeAt(0).cloneRange();
 
 		// A video or image Jodit selected itself on the press
 		if (isElementSelection(range)) {
@@ -563,24 +567,53 @@ export class select extends Plugin {
 			return;
 		}
 
-		const isText = (node: Nullable<Node>): boolean =>
-			Dom.isText(node) && !Dom.isEmptyTextNode(node);
+		// Where a caret can go: in text, or before a <br>
+		const isCaretPlace = (node: Nullable<Node>): boolean =>
+			(Dom.isText(node) && !Dom.isEmptyTextNode(node)) ||
+			Dom.isTag(node, 'br');
 
-		const text = forward
-			? Dom.prev<Text>(line, isText, editor)
-			: Dom.next<Text>(line, isText, editor);
+		// Only the block beside the line, not one further on
+		const beside = Dom.findNotEmptySibling(line, forward);
+		const place = Dom.isBlock(beside)
+			? forward
+				? Dom.last(beside, isCaretPlace)
+				: Dom.first(beside, isCaretPlace)
+			: null;
 
-		if (!text) {
+		if (!place) {
 			return;
 		}
 
-		if (forward) {
-			range.setEnd(text, text.nodeValue?.length ?? 0);
+		if (Dom.isText(place)) {
+			if (forward) {
+				range.setEnd(place, place.nodeValue?.length ?? 0);
+			} else {
+				range.setStart(place, 0);
+			}
+		} else if (forward) {
+			range.setEndBefore(place);
 		} else {
-			range.setStart(text, 0);
+			range.setStartBefore(place);
 		}
 
-		s.selectRange(range);
+		// The drag's start stays the anchor
+		const { startContainer, startOffset, endContainer, endOffset } = range;
+
+		if (forward) {
+			sel.setBaseAndExtent(
+				startContainer,
+				startOffset,
+				endContainer,
+				endOffset
+			);
+		} else {
+			sel.setBaseAndExtent(
+				endContainer,
+				endOffset,
+				startContainer,
+				startOffset
+			);
+		}
 	}
 
 	@watch([':copy', ':cut'])
@@ -604,14 +637,14 @@ export class select extends Plugin {
 	}
 }
 
+const isUneditable = (node: Nullable<Node>): boolean =>
+	Dom.isElement(node) && node.getAttribute('contenteditable') === 'false';
+
 /**
  * The uneditable elements the range holds whole, without those inside
  * another
  */
 function uneditableIn(range: Range, root: HTMLElement): HTMLElement[] {
-	const isUneditable = (node: Nullable<Node>): boolean =>
-		Dom.isElement(node) && node.getAttribute('contenteditable') === 'false';
-
 	return toArray(
 		root.querySelectorAll<HTMLElement>('[contenteditable="false"]')
 	).filter(elm => {
@@ -636,6 +669,61 @@ function isElementSelection(range: Range): boolean {
 		startContainer === endContainer &&
 		endOffset - startOffset === 1 &&
 		Dom.isElement(startContainer.childNodes[startOffset])
+	);
+}
+
+/**
+ * The range holds a line end and nothing else: no characters but
+ * whitespace, and no element whole but a `<br>` or a line a caret can't go
+ * on, as a video's. It ends in another block, or holds the `<br>`
+ */
+function isLineBreak(range: Range, root: HTMLElement): boolean {
+	const { startContainer, endContainer } = range;
+
+	if (range.collapsed || trim(range.toString())) {
+		return false;
+	}
+
+	let crossesLineEnd =
+		Dom.closest(startContainer, Dom.isBlock, root) !==
+		Dom.closest(endContainer, Dom.isBlock, root);
+
+	const holdsBreaksOnly = (node: Node): boolean => {
+		if (!range.intersectsNode(node)) {
+			return true;
+		}
+
+		if (
+			Dom.isOrContains(node, startContainer) ||
+			Dom.isOrContains(node, endContainer)
+		) {
+			return toArray(node.childNodes).every(holdsBreaksOnly);
+		}
+
+		if (Dom.isTag(node, 'br')) {
+			crossesLineEnd = true;
+			return true;
+		}
+
+		return Dom.isText(node) || isCaretless(node);
+	};
+
+	return holdsBreaksOnly(range.commonAncestorContainer) && crossesLineEnd;
+}
+
+/**
+ * An uneditable element, or a block holding one and nothing else
+ */
+function isCaretless(node: Node): boolean {
+	const children = toArray(node.childNodes);
+
+	return (
+		isUneditable(node) ||
+		(Dom.isBlock(node) &&
+			children.some(isCaretless) &&
+			children.every(
+				child => Dom.isEmptyTextNode(child) || isCaretless(child)
+			))
 	);
 }
 
