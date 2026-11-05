@@ -876,13 +876,18 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 	/**
 	 * After the button's action, a popup that stays open (an element's)
 	 * keeps its place beside the element, and only the lists the button is
-	 * in close. Otherwise every popup closes
+	 * in close. Otherwise, as when the action removed the element, every
+	 * popup closes
 	 */
 	private __closePopups(): void {
 		const openers: ToolbarButton[] = [this];
 
 		for (let pe = this.parentElement; pe; pe = pe.parentElement) {
-			if (Component.isInstanceOf<Popup>(pe, Popup) && pe.keepOpen) {
+			if (
+				Component.isInstanceOf<Popup>(pe, Popup) &&
+				pe.keepOpen &&
+				(!this.target || this.target.isConnected)
+			) {
 				openers.forEach(button => button.__closePopup());
 				pe.updatePosition();
 				return;

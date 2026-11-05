@@ -44,6 +44,8 @@ Keeps an inline toolbar open after one of its buttons runs, beside its element (
 
 Set it to `false` to close the toolbar after every button.
 
+While it is on, a button in an inline toolbar doesn't fire `closeAllPopups` after it runs, unless it removed the element. To act after a button runs, listen for `afterExec` (a button with an `exec`) or `afterCommand` (a button that runs a command).
+
 **Example:**
 ```typescript
 Jodit.make('#editor', {

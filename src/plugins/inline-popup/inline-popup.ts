@@ -34,8 +34,7 @@ import {
 	keys,
 	position,
 	splitArray,
-	toArray,
-	trim
+	toArray
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { isMoved } from 'jodit/core/selection/helpers';
@@ -322,7 +321,7 @@ export class inlinePopup extends Plugin {
 					this.previousTarget = undefined;
 				} else if (
 					this.type === 'selection' &&
-					!this.__hasSelectedText()
+					!this.__hasSelectedContent()
 				) {
 					this.hidePopup();
 				}
@@ -411,7 +410,7 @@ export class inlinePopup extends Plugin {
 		const type = 'selection';
 		const range = this.j.s.range;
 
-		if (!this.__hasSelectedText() || this.isSelectedTarget(range)) {
+		if (!this.__hasSelectedContent() || this.isSelectedTarget(range)) {
 			if (this.type === type && this.popup.isOpened) {
 				this.hidePopup();
 			}
@@ -429,14 +428,32 @@ export class inlinePopup extends Plugin {
 	}
 
 	/**
-	 * The selection holds text to format. A double click past the end of a
-	 * line, or a drag from there to the start of the next, selects only the
-	 * line break, and a video on the next line with it
+	 * The selection holds more than a line break. A double click past the end
+	 * of a line, or a drag from there to the start of the next, selects only
+	 * the break: it ends in another block, and holds neither text that shows
+	 * nor an empty element other than a `<br>`, as an image, a rule or a video
 	 */
-	private __hasSelectedText(): boolean {
+	private __hasSelectedContent(): boolean {
 		const { sel, range } = this.j.s;
 
-		return Boolean(sel && !sel.isCollapsed && trim(range.toString()));
+		if (!sel || sel.isCollapsed) {
+			return false;
+		}
+
+		const block = (node: Node): Nullable<HTMLElement> =>
+			Dom.closest(node, Dom.isBlock, this.j.editor);
+
+		const root = range.commonAncestorContainer;
+
+		return (
+			block(range.startContainer) === block(range.endContainer) ||
+			// HTML collapses ASCII white space, but not &nbsp;
+			/[^\t\n\f\r \uFEFF\u200B]/.test(range.toString()) ||
+			(Dom.isElement(root) &&
+				toArray(root.querySelectorAll(':not(br):empty')).some(elm =>
+					range.intersectsNode(elm)
+				))
+		);
 	}
 
 	/**
