@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.8
+
+#### :bug: Bug Fix
+
+- `Ajax` dropped the body of a connector answer sent with a status outside `successStatuses` (403, 409) and rejected with the reason phrase, so the file browser and uploader showed "Forbidden" or "Conflict" instead of the connector's own message. An answer whose body is the JSON envelope (`{"success": false, "data": {"code", "messages"}}`) is now resolved whatever the status and judged by `success` and `data.code`; only a body that is not such an envelope (an HTML error page) still rejects with the status text. Groundwork for the Finder dialog on an uploaded name that is already taken (connectors answer 409 since jodit-nodejs 2.1.1 and PHP 3.0.61).
+
 ## 4.19.7
 
 #### :bug: Bug Fix

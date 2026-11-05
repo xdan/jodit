@@ -66,6 +66,93 @@ describe('Ajax module', () => {
 		});
 	});
 
+	describe('send', () => {
+		function createStatusMockXHR(status, statusText, responseText) {
+			return function () {
+				const xhr = {
+					open: function () {},
+					setRequestHeader: function () {},
+					send: function () {
+						setTimeout(function () {
+							xhr.readyState = 4;
+							xhr.status = status;
+							xhr.statusText = statusText;
+							xhr.responseText = responseText;
+							xhr.onreadystatechange && xhr.onreadystatechange();
+							xhr.onload && xhr.onload();
+						}, 5);
+					},
+					abort: function () {},
+					responseText: '',
+					readyState: 0,
+					status: 0,
+					statusText: '',
+					withCredentials: false,
+					onprogress: null,
+					onload: null,
+					onerror: null,
+					onabort: null,
+					onreadystatechange: null
+				};
+
+				return xhr;
+			};
+		}
+
+		beforeEach(function () {
+			unmockPromise();
+			unmockAjax();
+		});
+
+		afterEach(function () {
+			mockPromise();
+			mockAjax();
+		});
+
+		it('Should resolve the connector answer when a status outside successStatuses carries its JSON envelope', async () => {
+			const ajax = new Jodit.modules.Ajax({
+				url: 'https://example.com/connector',
+				xhr: createStatusMockXHR(
+					409,
+					'Conflict',
+					'{"success":false,"data":{"code":409,"messages":["File a.png already exists"]}}'
+				)
+			});
+
+			const resp = await ajax.send();
+			const answer = await resp.json();
+
+			expect(resp.status).equals(409);
+			expect(answer.success).is.false;
+			expect(answer.data.code).equals(409);
+			expect(answer.data.messages).deep.equals([
+				'File a.png already exists'
+			]);
+		});
+
+		it('Should reject with the reason phrase when a status outside successStatuses has no envelope', async () => {
+			const ajax = new Jodit.modules.Ajax({
+				url: 'https://example.com/connector',
+				xhr: createStatusMockXHR(
+					502,
+					'Bad Gateway',
+					'<html>Bad Gateway</html>'
+				)
+			});
+
+			let caughtError = null;
+
+			try {
+				await ajax.send();
+			} catch (e) {
+				caughtError = e;
+			}
+
+			expect(caughtError).is.not.null;
+			expect(caughtError.message).equals('Bad Gateway');
+		});
+	});
+
 	describe('stream', () => {
 		/**
 		 * Creates a mock XHR that delivers SSE text in chunks via onprogress,

@@ -69,7 +69,7 @@ Wraps the raw XMLHttpRequest result.
 
 ```ts
 interface AjaxOptions {
-	successStatuses: number[];     // Default: [200, 201, 202]
+	successStatuses: number[];     // Default: [200, 201, 202], see the note below
 	method?: string;               // Default: 'GET'
 	url?: string;
 	data: DataVariant;             // string | object | FormData | null
@@ -82,6 +82,9 @@ interface AjaxOptions {
 	onProgress?: (percentage: number) => void;
 }
 ```
+
+A response with a status outside `successStatuses` is still resolved when its body is a connector answer, a JSON object with a `success` field, such as `{"success": false, "data": {"code": 409, "messages": ["File a.png already exists"]}}` sent with HTTP 409. Read the answer with `resp.json()` and judge it by `success` and `data.code`; only a body that is not such an envelope (an HTML error page) rejects with the status text.
+
 
 Default headers: `{ 'X-REQUESTED-WITH': 'XMLHttpRequest' }`.
 

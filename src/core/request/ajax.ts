@@ -107,6 +107,28 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 
 	private __isFulfilled = false;
 
+	// A connector answers an error with its JSON envelope and a real HTTP status (403, 409): the body says why, the reason phrase does not
+	private __hasAnswerEnvelope(): boolean {
+		const { xhr } = this;
+
+		if (xhr.responseType && xhr.responseType !== 'text') {
+			return false;
+		}
+
+		const text = xhr.responseText;
+
+		if (!text || text[0] !== '{') {
+			return false;
+		}
+
+		try {
+			const answer = JSON.parse(text);
+			return isPlainObject(answer) && 'success' in answer;
+		} catch {
+			return false;
+		}
+	}
+
 	private __activated = false;
 
 	send(): RejectablePromise<IResponse<T>> {
@@ -162,7 +184,10 @@ export class Ajax<T extends object = any> implements IAjax<T> {
 				this.options.onProgress?.(10);
 
 				if (xhr.readyState === XMLHttpRequest.DONE) {
-					if (o.successStatuses.includes(xhr.status)) {
+					if (
+						o.successStatuses.includes(xhr.status) ||
+						this.__hasAnswerEnvelope()
+					) {
 						onResolve();
 					} else if (xhr.statusText) {
 						this.__isFulfilled = true;
