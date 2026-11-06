@@ -630,6 +630,7 @@ const excludeI18nKeys = new Set([
 	'delete word',
 	'enter',
 	'The File does not exist or is above the root of the connector',
+	'File already exists',
 	'bar',
 	'Classe 1',
 	'Classe 2',

@@ -260,8 +260,9 @@ export interface IUploaderOptions<T> {
 	 * user for another name in a prompt and send the file again under it,
 	 * before the error handler gets a say: this is part of the upload, not a
 	 * failure. The prompt comes with `promptOnExistsSuggestName(name)` filled
-	 * in; Cancel drops the file. Several files sent together are sent again
-	 * one by one, so only the taken names ask.
+	 * in; Cancel drops the file. A refused batch (the connector stores nothing
+	 * and does not say which name is taken) is sent again one file at a time,
+	 * so the free ones are stored and only the taken ones ask.
 	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {

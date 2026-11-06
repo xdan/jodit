@@ -18,6 +18,7 @@ import type {
 	IUploadPlan,
 	IViewBased
 } from 'jodit/types';
+import { ERROR_CODE_CONFLICT } from 'jodit/core/constants';
 import {
 	error,
 	isArray,
@@ -194,7 +195,7 @@ export async function sendFiles(
 					);
 
 					// A taken name is part of the upload, not a failure: ask for another one first
-					if (err.code === 409 && o.promptOnExists) {
+					if (err.code === ERROR_CODE_CONFLICT && o.promptOnExists) {
 						return askAnotherName(uploader, err);
 					}
 
@@ -221,9 +222,13 @@ function askAnotherName(
 ): Promise<unknown> {
 	const { files } = err;
 
-	// The answer names no file, so each goes alone and only the taken ones ask
+	// A batch is refused as a whole (the connector saved nothing) and the answer does not say which name is taken,
+	// so the files go again one by one: the free ones are simply stored, the taken one answers 409 alone and gets its prompt
 	if (files.length > 1) {
-		return Promise.all(files.map(file => err.retry({ files: [file] })));
+		return files.reduce<Promise<unknown>>(
+			(chain, file) => chain.then(() => err.retry({ files: [file] })),
+			Promise.resolve()
+		);
 	}
 
 	const [file] = files;
@@ -232,12 +237,12 @@ function askAnotherName(
 	return new Promise(resolve => {
 		let answered = false;
 
-		// Not `Dlgs.prompt`: it would run the connector's message through i18n
+		// `Dlgs.prototype.dlg`: the uploader's view does not always carry the Dlgs trait
 		const dialog = Prompt.call(
 			Dlgs.prototype.dlg.call(j as IViewBased & IDlgs, {
 				closeOnClickOverlay: true
 			}),
-			`${err.message}. ${j.i18n('Enter new name')}`,
+			j.i18n(err.message),
 			j.i18n('Rename'),
 			(newName: string): false | void => {
 				newName = newName.trim();
@@ -253,7 +258,7 @@ function askAnotherName(
 					})
 				);
 			},
-			j.i18n('type name'),
+			j.i18n('Enter new name'),
 			o.promptOnExistsSuggestName.call(uploader, file.name)
 		);
 

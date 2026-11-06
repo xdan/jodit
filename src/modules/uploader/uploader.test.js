@@ -128,11 +128,7 @@ describe('Test uploader module', function () {
 										success: false,
 										data: {
 											code: 409,
-											messages: [
-												'File ' +
-													clash +
-													' already exists'
-											]
+											messages: ['File already exists']
 										}
 									}
 								: {
@@ -174,7 +170,7 @@ describe('Test uploader module', function () {
 
 			const dialog = getOpenedDialog(editor);
 			expect(dialog).is.not.null;
-			expect(dialog.textContent).contains('File file.xls already exists');
+			expect(dialog.textContent).contains('File already exists');
 
 			const input = dialog.querySelector('input');
 			expect(input.value).equals('copy-file.xls');
@@ -205,7 +201,7 @@ describe('Test uploader module', function () {
 			expect(getOpenedDialog(editor)).is.null;
 		});
 
-		it('Should send a batch again one file at a time, so only the taken name asks', async function () {
+		it('Should send a refused batch again one file at a time, so only the taken name asks', async function () {
 			mockConnector(['file.xls']);
 			const editor = makeEditor({});
 
@@ -217,8 +213,7 @@ describe('Test uploader module', function () {
 
 			expect(requests.map(r => r.names)).deep.equals([
 				['file.xls', 'free.xls'],
-				['file.xls'],
-				['free.xls']
+				['file.xls']
 			]);
 
 			const dialog = getOpenedDialog(editor);
@@ -226,7 +221,12 @@ describe('Test uploader module', function () {
 			clickButton('ok', dialog);
 			await upload;
 
-			expect(requests[3].names).deep.equals(['other.xls']);
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls', 'free.xls'],
+				['file.xls'],
+				['other.xls'],
+				['free.xls']
+			]);
 		});
 
 		it('Should leave it to the error handler when promptOnExists is off, with the answer, the files and retry', async function () {
@@ -251,7 +251,7 @@ describe('Test uploader module', function () {
 			await delay(50);
 
 			expect(caught.code).equals(409);
-			expect(caught.message).equals('File file.xls already exists');
+			expect(caught.message).equals('File already exists');
 			expect(caught.answer.data.code).equals(409);
 			expect(caught.files.map(f => f.name)).deep.equals(['file.xls']);
 			expect(requests).deep.equals([
