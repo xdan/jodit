@@ -52,6 +52,8 @@ Config.prototype.font = {
 
 Icon.set('font', fontIcon).set('fontsize', fontsizeIcon);
 
+const hadSelection = new WeakSet<IToolbarButton>();
+
 Config.prototype.controls.fontsize = {
 	command: 'fontsize',
 
@@ -75,18 +77,20 @@ Config.prototype.controls.fontsize = {
 	tooltip: 'Font size',
 
 	value: (editor, button): string | undefined => {
-		const current = editor.s.current();
-		if (!current) {
-			return;
-		}
-		const box = Dom.closest(current, Dom.isElement, editor.editor);
-		if (!box) {
+		const current = editor.s.current(),
+			box = current && Dom.closest(current, Dom.isElement, editor.editor),
+			control = button.control;
+
+		// A select names its value, so until there is a selection it shows the
+		// editor's own size, and afterwards the size of the last one
+		if (box) {
+			hadSelection.add(button);
+		} else if (control.component !== 'select' || hadSelection.has(button)) {
 			return;
 		}
 
-		const control = button.control;
 		const cssKey = control.data?.cssRule || 'font-size';
-		const value = css(box, cssKey);
+		const value = css(box || editor.editor, cssKey);
 
 		if (cssKey === 'font-size') {
 			const numValue = parseFloat(value.toString());
@@ -133,8 +137,6 @@ Config.prototype.controls.fontsize = {
 		return keySet.has(normalize(value.toString()));
 	}
 } as IControlType<IJodit> as IControlType;
-
-const hadSelection = new WeakSet<IToolbarButton>();
 
 Config.prototype.controls.font = {
 	...Config.prototype.controls.fontsize,
