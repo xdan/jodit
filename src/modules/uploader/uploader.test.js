@@ -146,6 +146,11 @@ describe('Test uploader module', function () {
 			};
 		}
 
+		// The test SynchronousPromise does not adopt the promise an ES2015 async function returns, so the upload would resolve before the prompt is answered
+		beforeEach(function () {
+			unmockPromise();
+		});
+
 		afterEach(function () {
 			Jodit.modules.Ajax.prototype.send = oldSend;
 		});
@@ -220,6 +225,8 @@ describe('Test uploader module', function () {
 			dialog.querySelector('input').value = 'other.xls';
 			clickButton('ok', dialog);
 			await upload;
+			// `upload()` settles on the first stored file, the rest of the batch follows
+			await waitForCondition(() => requests.length === 4, 1000);
 
 			expect(requests.map(r => r.names)).deep.equals([
 				['file.xls', 'free.xls'],
@@ -272,11 +279,16 @@ describe('Test uploader module', function () {
 
 			const upload = editor.uploader.upload([FileXLS()]);
 			await delay(50);
-			clickButton('ok', getOpenedDialog(editor));
+			const dialog = getOpenedDialog(editor);
+			dialog.querySelector('input').value = 'other.xls';
+			clickButton('ok', dialog);
 			await upload;
 
 			expect(calls).equals(1);
-			expect(requests.length).equals(2);
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls'],
+				['other.xls']
+			]);
 		});
 	});
 
