@@ -5,6 +5,293 @@
  */
 
 describe('Test uploader module', function () {
+	describe('beforeUpload', function () {
+		function makeEditor(beforeUpload, prepareData) {
+			return getJodit({
+				uploader: {
+					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+					beforeUpload,
+					prepareData: prepareData || (form => form)
+				}
+			});
+		}
+
+		it('Should abort the upload when it returns false and hand the handler the reason', async function () {
+			const editor = makeEditor(() => false);
+			let caught = null;
+
+			try {
+				await editor.uploader.upload([FileXLS()]);
+			} catch (e) {
+				caught = e;
+			}
+
+			expect(caught).is.not.null;
+			expect(caught.message).equals('Upload canceled');
+		});
+
+		it('Should wait for a promise and send the files it resolves with instead of the dropped ones', async function () {
+			const sent = [];
+			const editor = makeEditor(
+				async files => {
+					await delay(10);
+					return [{ name: 'renamed.xls', type: files[0].type }];
+				},
+				form => {
+					sent.push(form.getName('files[0]'));
+					return form;
+				}
+			);
+
+			const resp = await editor.uploader.upload([FileXLS()]);
+
+			expect(sent).deep.equals(['renamed.xls']);
+			expect(resp.files).deep.equals(['renamed.xls']);
+		});
+
+		it('Should add the fields of a plan to the request', async function () {
+			let onExists = null;
+			const editor = makeEditor(
+				files => ({ files, data: { onExists: 'replace' } }),
+				form => {
+					onExists = form.get('onExists');
+					return form;
+				}
+			);
+
+			await editor.uploader.upload([FileXLS()]);
+
+			expect(onExists).equals('replace');
+		});
+
+		it('Should send nothing when the plan keeps no file', async function () {
+			let requests = 0;
+			const editor = makeEditor(
+				() => ({ files: [] }),
+				form => {
+					requests += 1;
+					return form;
+				}
+			);
+
+			const resp = await editor.uploader.upload([FileXLS()]);
+
+			expect(requests).equals(0);
+			expect(resp.files).deep.equals([]);
+		});
+
+		it('Should route a thrown error through the error handler', async function () {
+			const editor = makeEditor(() => {
+				throw new Error('Too many files');
+			});
+			let caught = null;
+
+			try {
+				await editor.uploader.upload([FileXLS()]);
+			} catch (e) {
+				caught = e;
+			}
+
+			expect(caught.message).equals('Too many files');
+		});
+	});
+
+	describe('Name already taken (409)', function () {
+		let oldSend, requests;
+
+		// A connector with the `error` strategy: the names in `taken` answer 409, the rest are stored
+		function mockConnector(taken) {
+			requests = [];
+			oldSend = Jodit.modules.Ajax.prototype.send;
+
+			Jodit.modules.Ajax.prototype.send = function () {
+				const form = this.options.data;
+				const names = [];
+
+				for (let i = 0; form.getName('files[' + i + ']'); i += 1) {
+					names.push(form.getName('files[' + i + ']'));
+				}
+
+				requests.push({ names, onExists: form.get('onExists') });
+
+				const clash = names.find(
+					name =>
+						taken.includes(name) &&
+						form.get('onExists') !== 'replace'
+				);
+
+				return Promise.resolve({
+					json: () =>
+						Promise.resolve(
+							clash
+								? {
+										success: false,
+										data: {
+											code: 409,
+											messages: ['File already exists']
+										}
+									}
+								: {
+										success: true,
+										data: {
+											baseurl:
+												'https://xdsoft.net/jodit/files/',
+											files: names,
+											isImages: names.map(() => false),
+											code: 220
+										}
+									}
+						)
+				});
+			};
+		}
+
+		// The test SynchronousPromise does not adopt the promise an ES2015 async function returns, so the upload would resolve before the prompt is answered
+		beforeEach(function () {
+			unmockPromise();
+		});
+
+		afterEach(function () {
+			Jodit.modules.Ajax.prototype.send = oldSend;
+		});
+
+		function makeEditor(uploader) {
+			return getJodit({
+				uploader: {
+					url: 'https://xdsoft.net/jodit/connector/index.php?action=fileUpload',
+					...uploader
+				}
+			});
+		}
+
+		it('Should ask for another name and send the file again under it', async function () {
+			mockConnector(['file.xls']);
+			const editor = makeEditor({
+				promptOnExistsSuggestName: name => 'copy-' + name
+			});
+
+			const upload = editor.uploader.upload([FileXLS()]);
+			await delay(50);
+
+			const dialog = getOpenedDialog(editor);
+			expect(dialog).is.not.null;
+			expect(dialog.textContent).contains('File already exists');
+
+			const input = dialog.querySelector('input');
+			expect(input.value).equals('copy-file.xls');
+
+			clickButton('ok', dialog);
+			const resp = await upload;
+
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls'],
+				['copy-file.xls']
+			]);
+			expect(resp.files).deep.equals(['copy-file.xls']);
+		});
+
+		it('Should drop the file when the prompt is cancelled', async function () {
+			mockConnector(['file.xls']);
+			const editor = makeEditor({});
+
+			const upload = editor.uploader.upload([FileXLS()]);
+			await delay(50);
+
+			const dialog = getOpenedDialog(editor);
+			clickButton('cancel', dialog);
+			const resp = await upload;
+
+			expect(requests.length).equals(1);
+			expect(resp.files).deep.equals([]);
+			expect(getOpenedDialog(editor)).is.null;
+		});
+
+		it('Should send a refused batch again one file at a time, so only the taken name asks', async function () {
+			mockConnector(['file.xls']);
+			const editor = makeEditor({});
+
+			const upload = editor.uploader.upload([
+				FileXLS(),
+				{ name: 'free.xls', type: 'application/xls' }
+			]);
+			await delay(50);
+
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls', 'free.xls'],
+				['file.xls']
+			]);
+
+			const dialog = getOpenedDialog(editor);
+			dialog.querySelector('input').value = 'other.xls';
+			clickButton('ok', dialog);
+			await upload;
+			// `upload()` settles on the first stored file, the rest of the batch follows
+			await waitForCondition(() => requests.length === 4, 1000);
+
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls', 'free.xls'],
+				['file.xls'],
+				['other.xls'],
+				['free.xls']
+			]);
+		});
+
+		it('Should leave it to the error handler when promptOnExists is off, with the answer, the files and retry', async function () {
+			mockConnector(['file.xls']);
+			let caught = null;
+			const editor = makeEditor({
+				promptOnExists: false,
+				defaultHandlerError(e) {
+					caught = e;
+					e.retry({ data: { onExists: 'replace' } });
+				}
+			});
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			simulateEvent('drop', editor.editor, function (data) {
+				Object.defineProperty(data, 'dataTransfer', {
+					value: { files: [FileXLS()] }
+				});
+			});
+			await delay(50);
+
+			expect(caught.code).equals(409);
+			expect(caught.message).equals('File already exists');
+			expect(caught.answer.data.code).equals(409);
+			expect(caught.files.map(f => f.name)).deep.equals(['file.xls']);
+			expect(requests).deep.equals([
+				{ names: ['file.xls'], onExists: undefined },
+				{ names: ['file.xls'], onExists: 'replace' }
+			]);
+			expect(getOpenedDialog(editor)).is.null;
+		});
+
+		it('Should not run beforeUpload again on retry', async function () {
+			mockConnector(['file.xls']);
+			let calls = 0;
+			const editor = makeEditor({
+				beforeUpload: () => {
+					calls += 1;
+				}
+			});
+
+			const upload = editor.uploader.upload([FileXLS()]);
+			await delay(50);
+			const dialog = getOpenedDialog(editor);
+			dialog.querySelector('input').value = 'other.xls';
+			clickButton('ok', dialog);
+			await upload;
+
+			expect(calls).equals(1);
+			expect(requests.map(r => r.names)).deep.equals([
+				['file.xls'],
+				['other.xls']
+			]);
+		});
+	});
+
 	describe('Drop file', function () {
 		describe('Drop Image like base64', function () {
 			it('Should insert image with SRC in base64', function (done) {

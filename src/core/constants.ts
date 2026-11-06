@@ -200,6 +200,9 @@ export const INSERT_ONLY_TEXT = 'insert_only_text';
 
 export const SAFE_COUNT_CHANGE_CALL = 10;
 
+// Connector answer code for a file name that is already taken (same as the HTTP status)
+export const ERROR_CODE_CONFLICT = 409;
+
 export const IS_MAC =
 	typeof globalWindow !== 'undefined' &&
 	/Mac|iPod|iPhone|iPad/.test(globalWindow.navigator.platform);

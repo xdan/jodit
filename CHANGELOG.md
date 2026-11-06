@@ -11,6 +11,12 @@
 
 ## 4.19.8
 
+#### :rocket: New Feature
+
+- `uploader.promptOnExists` (on by default): when the connector answers `409`, an uploaded name is already taken (the `error` value of `saveSameFileNameStrategy`; jodit-nodejs 2.1.1, PHP 3.0.61, jodit-python), the uploader asks for another name in a prompt and sends the file again under it, before the error handler gets a say. `uploader.promptOnExistsSuggestName(name)` fills the prompt in (default: the same name), Cancel drops the file, a batch is sent again one file at a time so only the taken names ask. Requested by Kevin Sormann (li-life web+it).
+- A refused upload reaches the error handler as an `UploadError`: `message` is the connector's text as before, plus `answer`, `code` (`data.code`), the sent `files` and `retry(plan)` to send them again with other files or extra request fields such as `onExists: 'replace'`, without running `beforeUpload` twice. The file browser's data provider throws an `AnswerError` with `answer` and `code` for its requests.
+- `uploader.beforeUpload` may return a promise, and may hand back the files to send instead of the dropped ones (renamed, or some left out) or `{ files, data }` that also adds fields to the request. Returning `false` still cancels.
+
 #### :bug: Bug Fix
 
 - `Ajax` dropped the body of a connector answer sent with a status outside `successStatuses` (403, 409) and rejected with the reason phrase, so the file browser and uploader showed "Forbidden" or "Conflict" instead of the connector's own message. An answer whose body is the JSON envelope (`{"success": false, "data": {"code", "messages"}}`) is now resolved whatever the status and judged by `success` and `data.code`; only a body that is not such an envelope (an HTML error page) still rejects with the status text. Groundwork for the Finder dialog on an uploaded name that is already taken (connectors answer 409 since jodit-nodejs 2.1.1 and PHP 3.0.61).

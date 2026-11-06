@@ -26,10 +26,10 @@ import { Dom } from 'jodit/core/dom/dom';
 import {
 	attr,
 	ConfigProto,
-	error,
 	isFunction,
 	isJoditObject
 } from 'jodit/core/helpers';
+import { answer } from 'jodit/core/helpers/utils/error';
 import { Config } from 'jodit/config';
 import {
 	ajaxInstances,
@@ -289,7 +289,11 @@ export class Uploader extends ViewComponent implements IUploader {
 
 				handlerE.call(
 					uploader,
-					error(o.getMessage.call(uploader, resp))
+					answer(
+						o.getMessage.call(uploader, resp),
+						resp,
+						resp.data?.code
+					)
 				);
 			})
 			.catch(e => handlerE.call(uploader, e));
@@ -297,7 +301,21 @@ export class Uploader extends ViewComponent implements IUploader {
 
 	upload(files: FileList | File[] | null): Promise<IUploaderData> {
 		return this.async.promise<IUploaderData>((resolve, reject) => {
-			sendFiles(this, files, resolve, reject);
+			let settled = false;
+
+			const settle =
+				<T>(end: (value: T) => void) =>
+				(value: T): void => {
+					settled = true;
+					end(value);
+				};
+
+			sendFiles(this, files, settle(resolve), settle(reject)).then(() => {
+				// `beforeUpload` kept no file, so no handler ran
+				if (!settled) {
+					resolve({ baseurl: '', files: [], isImages: [] });
+				}
+			}, settle(reject));
 		});
 	}
 

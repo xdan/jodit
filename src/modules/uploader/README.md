@@ -131,7 +131,20 @@ Jodit.make('#editor', {
 
 - Type: `function`
 
-Default error result processor.
+Default error result processor. A refused upload comes as an `UploadError` with the connector's `code`, the sent `files` and `retry()`, see the option's doc in the config.
+
+### uploader.promptOnExists
+
+- Type: `boolean`
+- Default: `true`
+
+On a `409` answer (the name is already taken) ask for another name and send the file again; `uploader.promptOnExistsSuggestName(name)` fills the prompt in. Details and examples are in the option's doc in the config.
+
+### uploader.beforeUpload
+
+- Type: `function`
+
+Called before the files are sent: cancel, replace the files or add request fields, after asking the user if needed. Examples are in the option's doc in the config.
 
 ## uploader.processFileName
 

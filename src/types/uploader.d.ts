@@ -13,6 +13,7 @@ import type { IViewBased } from './view';
 import type { IAjax } from './ajax';
 
 interface IUploaderData {
+	code?: number;
 	messages?: string[];
 	files: string[];
 	isImages?: boolean[];
@@ -35,6 +36,25 @@ interface IUploaderAnswer {
 }
 
 export type HandlerSuccess = (resp: IUploaderData) => void;
+
+/**
+ * Error the handler gets when the connector refused an upload: the answer,
+ * its `code`, the sent `files` and `retry` to send them again, changed
+ */
+export interface IUploadError extends Error {
+	code?: number;
+	answer: IUploaderAnswer;
+	files: File[];
+	retry(plan?: Partial<IUploadPlan>): Promise<unknown>;
+}
+
+/**
+ * What `beforeUpload` decided: the files to send and extra fields of the request
+ */
+export interface IUploadPlan {
+	files: File[];
+	data?: IDictionary<string>;
+}
 export type HandlerError = (e: Error) => void;
 export type BuildDataResult =
 	| FormData
@@ -126,28 +146,59 @@ export interface IUploaderOptions<T> {
 	withCredentials: boolean;
 
 	/**
-	 * Called with the list of files right before they are uploaded (or read as
-	 * base64). Return `false` to abort the whole upload — useful for client
-	 * side validation (size, type, count). Throwing an Error also aborts and
-	 * routes the message through the uploader error handler.
+	 * Called with the files right before they are sent (or read as base64).
+	 * What it returns decides what happens:
+	 *
+	 * - `false` cancels the upload, the error handler gets `Upload canceled`
+	 * - `undefined` (or `true`) sends the files as they are
+	 * - an array of `File` sends those files instead, so files can be renamed
+	 *   with `new File([file], 'other.png', { type: file.type })` or left out
+	 * - an object `{ files, data }` ({@link IUploadPlan}) sends those files
+	 *   and adds the fields of `data` to the request
+	 * - a promise of any of the above is awaited, so the user can be asked first
+	 *
+	 * Throwing an error cancels the upload and routes the message through
+	 * the error handler.
+	 *
+	 * Client-side validation (size, type, count):
 	 *
 	 * ```javascript
 	 * Jodit.make('#editor', {
 	 * 	uploader: {
-	 * 		url: '...',
+	 * 		url: 'https://example.com/connector/?action=fileUpload',
 	 * 		beforeUpload(files) {
-	 * 			for (const file of files) {
-	 * 				if (file.size > 2 * 1024 * 1024) {
-	 * 					this.jodit.message.error('Max 2MB');
-	 * 					return false;
-	 * 				}
+	 * 			if (files.some(file => file.size > 2 * 1024 * 1024)) {
+	 * 				this.j.message.error('Max 2MB');
+	 * 				return false;
 	 * 			}
 	 * 		}
 	 * 	}
 	 * });
 	 * ```
+	 *
+	 * Ask the user, say for a target folder the connector takes as a field:
+	 *
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: 'https://example.com/connector/?action=fileUpload',
+	 * 		beforeUpload(files) {
+	 * 			return new Promise(resolve =>
+	 * 				this.j.prompt('Folder', 'Upload to', folder =>
+	 * 					resolve({ files, data: { path: folder } })
+	 * 				)
+	 * 			);
+	 * 		}
+	 * 	}
+	 * });
+	 * ```
+	 *
+	 * A name that is already taken is not this hook's job: see `promptOnExists`.
 	 */
-	beforeUpload?: (this: T, files: File[]) => boolean | void;
+	beforeUpload?: (
+		this: T,
+		files: File[]
+	) => CanPromise<boolean | void | File[] | IUploadPlan>;
 
 	prepareData: (this: T, formData: FormData) => any;
 	buildData?: (this: T, formData: any) => BuildDataResult;
@@ -165,7 +216,70 @@ export interface IUploaderOptions<T> {
 	error: (this: T, e: Error) => void;
 
 	defaultHandlerSuccess: HandlerSuccess;
+
+	/**
+	 * Shows a failed upload. When the connector refused it, the error is an
+	 * {@link IUploadError}: `message` is the connector's text (`getMessage`),
+	 * `answer` the whole answer, `code` its `data.code`, `files` the files
+	 * that were sent and `retry(plan)` sends them again with other files or
+	 * extra request fields, without running `beforeUpload` a second time.
+	 *
+	 * Connectors answer `409` when an uploaded name is already taken and
+	 * `saveSameFileNameStrategy` is `error` (jodit-nodejs 2.1.1, PHP 3.0.61,
+	 * jodit-python). With `promptOnExists` off, ask the user here:
+	 *
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: 'https://example.com/connector/?action=fileUpload',
+	 * 		promptOnExists: false,
+	 * 		defaultHandlerError(e) {
+	 * 			if (e.code === 409) {
+	 * 				this.j.confirm('Replace?', yes => yes && e.retry({ data: { onExists: 'replace' } }));
+	 * 				return;
+	 * 			}
+	 *
+	 * 			this.j.message.error(e.message);
+	 * 		}
+	 * 	}
+	 * });
+	 * ```
+	 *
+	 * Or keep both files under another name:
+	 *
+	 * ```javascript
+	 * e.retry({
+	 * 	files: e.files.map(file => new File([file], 'copy-' + file.name, { type: file.type }))
+	 * });
+	 * ```
+	 */
 	defaultHandlerError: HandlerError;
+
+	/**
+	 * When the connector answers `409` (the name is already taken), ask the
+	 * user for another name in a prompt and send the file again under it,
+	 * before the error handler gets a say: this is part of the upload, not a
+	 * failure. The prompt comes with `promptOnExistsSuggestName(name)` filled
+	 * in; Cancel drops the file. A refused batch (the connector stores nothing
+	 * and does not say which name is taken) is sent again one file at a time,
+	 * so the free ones are stored and only the taken ones ask.
+	 *
+	 * ```javascript
+	 * Jodit.make('#editor', {
+	 * 	uploader: {
+	 * 		url: 'https://example.com/connector/?action=fileUpload',
+	 * 		promptOnExists: true,
+	 * 		promptOnExistsSuggestName: name => name.replace(/(\.\w+)?$/, '-copy$1')
+	 * 	}
+	 * });
+	 * ```
+	 */
+	promptOnExists: boolean;
+
+	/**
+	 * The name the `promptOnExists` prompt offers for a taken name. Default: the same name
+	 */
+	promptOnExistsSuggestName: (this: T, name: string) => string;
 
 	contentType: (this: T, requestData: any) => string | false;
 

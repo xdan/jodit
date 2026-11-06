@@ -8,7 +8,7 @@
  * @module helpers/utils
  */
 
-import { ConnectionError, OptionsError } from './errors';
+import { AnswerError, ConnectionError, OptionsError } from './errors';
 
 /**
  * Helper for create Error object
@@ -23,4 +23,8 @@ export function connection(message: string): Error {
 
 export function options(message: string): Error {
 	return new OptionsError(message);
+}
+
+export function answer<T>(message: string, resp: T, code?: number): Error {
+	return new AnswerError(message, resp, code);
 }

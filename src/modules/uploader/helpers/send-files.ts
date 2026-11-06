@@ -11,24 +11,40 @@
 import type {
 	HandlerError,
 	HandlerSuccess,
+	IDictionary,
+	IDlgs,
 	IUploader,
-	IUploaderData
+	IUploaderData,
+	IUploadPlan,
+	IViewBased
 } from 'jodit/types';
-import { error, isFunction, isPlainObject, toArray } from 'jodit/core/helpers';
+import { ERROR_CODE_CONFLICT } from 'jodit/core/constants';
+import {
+	error,
+	isArray,
+	isFunction,
+	isPlainObject,
+	toArray
+} from 'jodit/core/helpers';
+import { Dlgs } from 'jodit/core/traits/dlgs';
+import { Prompt } from 'jodit/modules/dialog/prompt';
 import { send } from 'jodit/modules/uploader/helpers/send';
+import { UploadError } from 'jodit/modules/uploader/helpers/upload-error';
 
 /**
  * Send files to server
  */
-export function sendFiles(
+export async function sendFiles(
 	uploader: IUploader,
 	files: FileList | File[] | null,
 	handlerSuccess?: HandlerSuccess,
 	handlerError?: HandlerError,
-	process?: (form: FormData) => void
+	process?: (form: FormData) => void,
+	// Set when a refused upload is sent again: `beforeUpload` already had its say
+	retryOf?: Partial<IUploadPlan>
 ): Promise<any> {
 	if (!files) {
-		return Promise.reject(error('Need files'));
+		throw error('Need files');
 	}
 
 	const { o } = uploader;
@@ -36,16 +52,38 @@ export function sendFiles(
 	let fileList: File[] = toArray(files);
 
 	if (!fileList.length) {
-		return Promise.reject(error('Need files'));
+		throw error('Need files');
 	}
 
-	// Client-side validation hook — returning `false` aborts the upload.
+	let extraData: IDictionary<string> | undefined = retryOf?.data;
+
+	// Client-side validation hook — returning `false` aborts the upload, and it may hand back the files to send instead
 	// See https://github.com/xdan/jodit/issues/1329
-	if (isFunction(o.beforeUpload)) {
-		if (o.beforeUpload.call(uploader, fileList) === false) {
+	if (!retryOf && isFunction(o.beforeUpload)) {
+		let plan: boolean | void | File[] | IUploadPlan;
+
+		try {
+			plan = await o.beforeUpload.call(uploader, fileList);
+		} catch (e) {
+			(handlerError || o.defaultHandlerError).call(uploader, e as Error);
+			throw e;
+		}
+
+		if (plan === false) {
 			const err = error('Upload canceled');
 			(handlerError || o.defaultHandlerError).call(uploader, err);
-			return Promise.reject(err);
+			throw err;
+		}
+
+		if (isArray(plan)) {
+			fileList = plan;
+		} else if (isPlainObject(plan) && isArray(plan.files)) {
+			fileList = plan.files;
+			extraData = (plan as IUploadPlan).data;
+		}
+
+		if (!fileList.length) {
+			return [];
 		}
 	}
 
@@ -120,6 +158,12 @@ export function sendFiles(
 			});
 		}
 
+		if (extraData) {
+			Object.keys(extraData).forEach((key: string) => {
+				form.append(key, extraData[key]);
+			});
+		}
+
 		o.prepareData.call(uploader, form);
 
 		promises.push(
@@ -135,14 +179,31 @@ export function sendFiles(
 						return resp;
 					}
 
+					const err = new UploadError(
+						o.getMessage.call(uploader, resp),
+						resp,
+						fileList,
+						plan =>
+							sendFiles(
+								uploader,
+								plan?.files ?? fileList,
+								handlerSuccess,
+								handlerError,
+								process,
+								{ data: { ...extraData, ...plan?.data } }
+							)
+					);
+
+					// A taken name is part of the upload, not a failure: ask for another one first
+					if (err.code === ERROR_CODE_CONFLICT && o.promptOnExists) {
+						return askAnotherName(uploader, err);
+					}
+
 					const handler = isFunction(handlerError)
 						? handlerError
 						: o.defaultHandlerError;
 
-					handler.call(
-						uploader,
-						error(o.getMessage.call(uploader, resp))
-					);
+					handler.call(uploader, err);
 
 					return resp;
 				})
@@ -153,6 +214,58 @@ export function sendFiles(
 	}
 
 	return Promise.all(promises);
+}
+
+function askAnotherName(
+	uploader: IUploader,
+	err: UploadError
+): Promise<unknown> {
+	const { files } = err;
+
+	// A batch is refused as a whole (the connector saved nothing) and the answer does not say which name is taken,
+	// so the files go again one by one: the free ones are simply stored, the taken one answers 409 alone and gets its prompt
+	if (files.length > 1) {
+		return files.reduce<Promise<unknown>>(
+			(chain, file) => chain.then(() => err.retry({ files: [file] })),
+			Promise.resolve()
+		);
+	}
+
+	const [file] = files;
+	const { j, o } = uploader;
+
+	return new Promise(resolve => {
+		let answered = false;
+
+		// `Dlgs.prototype.dlg`: the uploader's view does not always carry the Dlgs trait
+		const dialog = Prompt.call(
+			Dlgs.prototype.dlg.call(j as IViewBased & IDlgs, {
+				closeOnClickOverlay: true
+			}),
+			j.i18n(err.message),
+			j.i18n('Rename'),
+			(newName: string): false | void => {
+				newName = newName.trim();
+
+				if (!newName) {
+					return false;
+				}
+
+				answered = true;
+				resolve(
+					err.retry({
+						files: [new File([file], newName, { type: file.type })]
+					})
+				);
+			},
+			j.i18n('Enter new name'),
+			o.promptOnExistsSuggestName.call(uploader, file.name)
+		);
+
+		dialog.e.on(dialog, 'afterClose', () => {
+			!answered && resolve(undefined);
+		});
+	});
 }
 
 function readImagesWithReader(
