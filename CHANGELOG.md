@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.9
+
+#### :bug: Bug Fix
+
+- [#1792](https://github.com/xdan/jodit/issues/1792) `inView` goes by the document's `scroll-padding-top` and `scroll-padding-bottom` (in pixels or percent), as `scrollIntoView` already does, so a caret under a fixed bar on such a page is scrolled into view. Thanks @brendon.
+- [#1790](https://github.com/xdan/jodit/issues/1790) A digit key held with Shift is matched by its key code, so the list shortcuts (Ctrl+Shift+7, Ctrl+Shift+8) work on Windows, where Shift sends the symbol as the key. A hotkey registered on the shifted symbol itself (`ctrl+shift+&`) now has to be written with the digit. Thanks @brendon.
+- [#1796](https://github.com/xdan/jodit/issues/1796) `insertNode` removes the invisible character left beside an inserted block (hr, table, list), which showed as an empty line until the next clean-up. Thanks @brendon.
+- [#1788](https://github.com/xdan/jodit/issues/1788) The font size select shows the editor's own size until there is a selection, and keeps the size of the last selection after it is gone, as the font select does. The icon button stays unpressed without a selection. Thanks @brendon.
+- [#1794](https://github.com/xdan/jodit/issues/1794) Shift+Enter brings the caret's own line into view, not the line above it. Thanks @brendon.
+
 ## 4.19.8
 
 #### :rocket: New Feature
