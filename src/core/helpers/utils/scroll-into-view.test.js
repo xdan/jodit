@@ -7,6 +7,79 @@
 describe('Helper inView', () => {
 	const { inView } = Jodit.modules.Helpers;
 
+	describe('With scroll-padding on the document (#1792)', () => {
+		const root = document.documentElement;
+		let box, child;
+
+		// `top` is from the top of the window, and `bottom` from its bottom
+		const place = ({ top, bottom }) => {
+			child.style.top =
+				top === undefined
+					? `${root.clientHeight - bottom - 20}px`
+					: `${top}px`;
+		};
+
+		beforeEach(() => {
+			box = appendTestDiv();
+			box.style.cssText =
+				'position: fixed; top: 0; left: 0; width: 100px; height: 100%; overflow: visible; z-index: 1000';
+			child = document.createElement('div');
+			child.style.cssText =
+				'position: absolute; height: 20px; width: 20px';
+			box.appendChild(child);
+		});
+
+		afterEach(() => {
+			root.style.scrollPadding = '';
+			Jodit.modules.Dom.safeRemove(box);
+		});
+
+		it('Should count an element in the bottom padding as out of view', () => {
+			root.style.scrollPaddingBottom = '100px';
+			place({ bottom: 50 });
+
+			expect(inView(child, box, document)).is.false;
+		});
+
+		it('Should count an element above the bottom padding as in view', () => {
+			root.style.scrollPaddingBottom = '100px';
+			place({ bottom: 120 });
+
+			expect(inView(child, box, document)).is.true;
+		});
+
+		it('Should count an element in the top padding as out of view', () => {
+			root.style.scrollPaddingTop = '100px';
+			place({ top: 50 });
+
+			expect(inView(child, box, document)).is.false;
+		});
+
+		it('Should count an element below the top padding as in view', () => {
+			root.style.scrollPaddingTop = '100px';
+			place({ top: 120 });
+
+			expect(inView(child, box, document)).is.true;
+		});
+
+		it('Should take a percentage of the window', () => {
+			root.style.scrollPaddingBottom = '50%';
+			place({ top: root.clientHeight - 100 });
+
+			expect(inView(child, box, document)).is.false;
+
+			place({ top: 10 });
+
+			expect(inView(child, box, document)).is.true;
+		});
+
+		it('Should go by the window alone without any', () => {
+			place({ bottom: 2 });
+
+			expect(inView(child, box, document)).is.true;
+		});
+	});
+
 	const make = topPx => {
 		const box = document.createElement('div');
 		box.style.cssText = `position:fixed;left:0;width:100px;height:100px;top:${topPx}px;`;

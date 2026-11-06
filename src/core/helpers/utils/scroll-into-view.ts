@@ -66,9 +66,20 @@ export function inView(
 	const clientHeight =
 		(doc.documentElement && doc.documentElement.clientHeight) || 0;
 
+	// `scrollIntoView` keeps clear of the document's `scroll-padding`, which
+	// is how a page allows for a fixed header or footer, so its edges are the
+	// viewport's edges here too
+	const style = doc.defaultView?.getComputedStyle(doc.documentElement),
+		padding = (value: string = ''): number =>
+			value.endsWith('%')
+				? (parseFloat(value) * clientHeight) / 100
+				: parseFloat(value) || 0,
+		viewTop = padding(style?.scrollPaddingTop),
+		viewBottom = clientHeight - padding(style?.scrollPaddingBottom);
+
 	return (
-		(top + height <= clientHeight + SUBPIXEL_TOLERANCE || top <= 0) &&
-		top + height >= 0
+		(top + height <= viewBottom + SUBPIXEL_TOLERANCE || top <= viewTop) &&
+		top + height >= viewTop
 	);
 }
 
