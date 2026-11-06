@@ -849,7 +849,10 @@ export class Selection implements ISelect {
 			if (sel && sel.rangeCount) {
 				const range = sel.getRangeAt(0);
 
-				const { firstChild } = node;
+				// A block has no first child outside itself to go by, and what's
+				// left beside it would show as a line of its own
+				const isBlock = Dom.isBlock(node),
+					first = isBlock ? node : node.firstChild;
 
 				if (
 					Dom.isOrContains(this.area, range.commonAncestorContainer)
@@ -860,12 +863,12 @@ export class Selection implements ISelect {
 				}
 
 				[
+					(): Nullable<Node | undefined> => first?.previousSibling,
+					(): Nullable<Node | undefined> => first?.previousSibling,
 					(): Nullable<Node | undefined> =>
-						firstChild?.previousSibling,
+						first?.previousSibling?.lastChild,
 					(): Nullable<Node | undefined> =>
-						firstChild?.previousSibling,
-					(): Nullable<Node | undefined> =>
-						firstChild?.previousSibling?.lastChild
+						isBlock ? node.nextSibling : null
 				].forEach(getChildNode => {
 					const childNode = getChildNode();
 					// Only a text node left with nothing in it by the split

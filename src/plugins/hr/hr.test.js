@@ -56,4 +56,60 @@ describe('Test insert plugins', function () {
 			});
 		});
 	});
+	describe('With no stray character beside the inserted block (#1796)', () => {
+		const insertAt = (html, insert) => {
+			const editor = getJodit();
+
+			editor.value = html;
+			setCursorToChar(editor);
+			insert(editor);
+
+			return editor.editor.innerHTML.replace(/\uFEFF/g, '[inv]');
+		};
+
+		const hr = editor => editor.execCommand('insertHorizontalRule');
+
+		const table = editor =>
+			editor.s.insertNode(
+				editor.createInside.fromHTML(
+					'<table><tbody><tr><td>cell</td></tr></tbody></table>'
+				)
+			);
+
+		it('Should leave none at the end of a line', () => {
+			expect(insertAt('<p>first|</p>', hr)).equals(
+				'<p>first</p><hr><p>[inv]</p>'
+			);
+		});
+
+		it('Should leave none before a following line', () => {
+			expect(insertAt('<p>first|</p><p>second</p>', hr)).equals(
+				'<p>first</p><hr><p>second</p>'
+			);
+		});
+
+		it('Should leave none at the start of a line', () => {
+			expect(insertAt('<p>|first</p>', hr)).equals('<hr><p>first</p>');
+		});
+
+		it('Should leave none in the middle of a line', () => {
+			expect(insertAt('<p>fi|rst</p>', hr)).equals(
+				'<p>fi</p><hr><p>rst</p>'
+			);
+		});
+
+		it('Should leave none before a table', () => {
+			expect(insertAt('<p>first|</p>', table)).equals(
+				'<p>first</p><table><tbody><tr><td>cell</td></tr></tbody></table>'
+			);
+		});
+
+		it('Should keep a space before an inline element', () => {
+			const space = insertAt('<p><strong>a</strong> |</p>', editor =>
+				editor.s.insertNode(editor.createInside.element('em', 'b'))
+			);
+
+			expect(space).contains('</strong> <em>b</em>');
+		});
+	});
 });
