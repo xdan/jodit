@@ -9,6 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.0
+
+#### :rocket: New Feature
+
+- [#1715](https://github.com/xdan/jodit/issues/1715) Anchors: the new `anchor` plugin's Insert anchor button puts `<a id="name"></a>` at the caret, refusing a name with spaces or one already used. Each anchor shows as a marker in the editor only, and a click on it opens a form to rename the anchor, which updates the links to it, or to remove it. Older empty `<a name>` anchors count too and keep `name`. The link popup's URL field lists the document's anchors in a dropdown under "On this page", and picking one fills in its `#name`. Thanks [@brendon](https://github.com/brendon).
+- The default toolbar gains the Insert anchor button, in the `insert` group, so every editor with the default `buttons` shows it. `removeButtons: ['anchor']` leaves it out.
+
 ## 4.19.8
 
 #### :rocket: New Feature

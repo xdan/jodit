@@ -39,6 +39,12 @@ module.exports = {
 	'Insert file': 'Datei einfügen',
 	'Insert youtube/vimeo video': 'Youtube/vimeo Video einfügen',
 	'Insert link': 'Link einfügen',
+	'Insert anchor': 'Anker einfügen',
+	'Link to an anchor': 'Mit einem Anker verlinken',
+	'On this page': 'Auf dieser Seite',
+	'The name cannot contain spaces':
+		'Der Name darf keine Leerzeichen enthalten',
+	'This name is already in use': 'Dieser Name wird bereits verwendet',
 	'Font size': 'Schriftgröße',
 	'Font family': 'Schriftfamilie',
 	'Insert format block': 'Formatblock einfügen',

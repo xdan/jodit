@@ -111,8 +111,8 @@ if (typeof window.skipTest === 'undefined') {
 }
 
 if (typeof window.toolbarButtonsCount !== 'number') {
-	window.toolbarButtonsCount = 41;
-	window.toolbarButtonsCountMD = 31;
+	window.toolbarButtonsCount = 42;
+	window.toolbarButtonsCountMD = 32;
 	window.toolbarButtonsCountSM = 19;
 	window.toolbarButtonsCountXS = 13;
 }
