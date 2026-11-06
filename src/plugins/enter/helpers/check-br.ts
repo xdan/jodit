@@ -64,7 +64,13 @@ export function checkBR(
 			Dom.before(clone, fake);
 		}
 
-		scrollIntoViewIfNeeded(br, jodit.editor, jodit.ed);
+		// The new `br` ends the line above, so it takes something on the
+		// caret's own line to bring that line into view. Chrome won't scroll to
+		// an inline element without width, but it will to a `br`
+		const mark = br.cloneNode() as HTMLElement;
+		Dom.before(fake, mark);
+		scrollIntoViewIfNeeded(mark, jodit.editor, jodit.ed);
+		Dom.safeRemove(mark);
 
 		return true;
 	}

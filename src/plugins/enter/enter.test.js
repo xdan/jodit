@@ -53,6 +53,129 @@ describe('Enter behavior Tests', function () {
 			expect(newP.offsetTop).is.at.least(area.scrollTop);
 		});
 
+		describe('With Shift (#1794)', function () {
+			const shiftEnter = editor =>
+				simulateEvent(
+					'keydown',
+					Jodit.KEY_ENTER,
+					editor.editor,
+					data => {
+						data.shiftKey = true;
+					}
+				);
+
+			// A caret on an empty line has no rectangle of its own
+			const caretBottom = editor => {
+				const mark = editor.ed.createTextNode('\u200b'),
+					range = editor.s.range;
+
+				range.insertNode(mark);
+
+				const measure = editor.ed.createRange();
+				measure.selectNode(mark);
+
+				const { bottom } = measure.getBoundingClientRect();
+
+				mark.remove();
+
+				return bottom;
+			};
+
+			const area = editor => editor.editor;
+
+			// Firefox on Linux puts the caret's rectangle 1.5px below the line's
+			const TOLERANCE = 2;
+
+			it("Should keep the caret's line visible at the end of the last line", function () {
+				const editor = getJodit({ height: 150 });
+				fill(editor);
+				editor.s.setCursorIn(editor.editor.lastElementChild, false);
+				area(editor).scrollTop = area(editor).scrollHeight;
+
+				for (let i = 0; i < 4; i += 1) {
+					shiftEnter(editor);
+
+					expect(caretBottom(editor)).is.at.most(
+						area(editor).getBoundingClientRect().bottom + TOLERANCE
+					);
+				}
+			});
+
+			it("Should keep the caret's line visible before more text", function () {
+				const editor = getJodit({ height: 150 });
+				fill(editor);
+				editor.editor.lastElementChild.innerHTML = 'first second';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.lastElementChild.firstChild, 6);
+				range.collapse(true);
+				editor.s.selectRange(range);
+				area(editor).scrollTop = area(editor).scrollHeight;
+
+				for (let i = 0; i < 4; i += 1) {
+					shiftEnter(editor);
+
+					expect(caretBottom(editor)).is.at.most(
+						area(editor).getBoundingClientRect().bottom + TOLERANCE
+					);
+				}
+			});
+
+			it("Should keep the caret's line in the window when the page scrolls", function () {
+				const editor = getJodit();
+				editor.value = Array.from(
+					{ length: 100 },
+					(_, i) => `<p>line ${i}</p>`
+				).join('');
+
+				const { clientHeight } = document.documentElement,
+					line = editor.editor.children[60];
+
+				expect(document.documentElement.scrollHeight).is.above(
+					clientHeight
+				);
+
+				window.scrollBy(
+					0,
+					line.getBoundingClientRect().bottom - clientHeight + 2
+				);
+				editor.s.setCursorIn(line, false);
+
+				try {
+					for (let i = 0; i < 4; i += 1) {
+						shiftEnter(editor);
+
+						expect(caretBottom(editor)).is.at.most(
+							clientHeight + TOLERANCE
+						);
+					}
+				} finally {
+					window.scrollTo(0, 0);
+				}
+			});
+
+			it('Should leave only the line breaks in the content', function () {
+				const editor = getJodit({ height: 150 });
+				editor.value = '<p>first second</p>';
+
+				const range = editor.s.createRange();
+				range.setStart(editor.editor.firstChild.firstChild, 6);
+				range.collapse(true);
+				editor.s.selectRange(range);
+
+				shiftEnter(editor);
+
+				expect(editor.value).equals('<p>first <br>second</p>');
+
+				editor.value = '<p>first</p>';
+				editor.s.setCursorIn(editor.editor.firstChild, false);
+
+				shiftEnter(editor);
+
+				expect(editor.value).equals('<p>first<br><br></p>');
+			});
+		});
+
 		it('Should not scroll when the caret line is already visible', function () {
 			const editor = getJodit({ height: 150 });
 			fill(editor);
