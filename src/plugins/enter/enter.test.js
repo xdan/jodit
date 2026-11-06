@@ -83,6 +83,9 @@ describe('Enter behavior Tests', function () {
 
 			const area = editor => editor.editor;
 
+			// Firefox on Linux puts the caret's rectangle 1.5px below the line's
+			const TOLERANCE = 2;
+
 			it("Should keep the caret's line visible at the end of the last line", function () {
 				const editor = getJodit({ height: 150 });
 				fill(editor);
@@ -93,7 +96,7 @@ describe('Enter behavior Tests', function () {
 					shiftEnter(editor);
 
 					expect(caretBottom(editor)).is.at.most(
-						area(editor).getBoundingClientRect().bottom + 1
+						area(editor).getBoundingClientRect().bottom + TOLERANCE
 					);
 				}
 			});
@@ -113,7 +116,7 @@ describe('Enter behavior Tests', function () {
 					shiftEnter(editor);
 
 					expect(caretBottom(editor)).is.at.most(
-						area(editor).getBoundingClientRect().bottom + 1
+						area(editor).getBoundingClientRect().bottom + TOLERANCE
 					);
 				}
 			});
@@ -143,7 +146,7 @@ describe('Enter behavior Tests', function () {
 						shiftEnter(editor);
 
 						expect(caretBottom(editor)).is.at.most(
-							clientHeight + 1
+							clientHeight + TOLERANCE
 						);
 					}
 				} finally {
