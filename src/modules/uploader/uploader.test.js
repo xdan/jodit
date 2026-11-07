@@ -78,6 +78,7 @@ describe('Test uploader module', function () {
 
 			expect(requests).equals(0);
 			expect(resp.files).deep.equals([]);
+			expect(resp.items).deep.equals([]);
 		});
 
 		it('Should route a thrown error through the error handler', async function () {
@@ -188,6 +189,9 @@ describe('Test uploader module', function () {
 				['copy-file.xls']
 			]);
 			expect(resp.files).deep.equals(['copy-file.xls']);
+			expect(resp.items.map(item => item.file)).deep.equals([
+				'copy-file.xls'
+			]);
 		});
 
 		it('Should drop the file when the prompt is cancelled', async function () {
