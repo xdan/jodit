@@ -28,6 +28,7 @@ import {
 } from 'jodit/core/helpers';
 import { Dlgs } from 'jodit/core/traits/dlgs';
 import { Prompt } from 'jodit/modules/dialog/prompt';
+import { normalizeUploaderData } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { send } from 'jodit/modules/uploader/helpers/send';
 import { UploadError } from 'jodit/modules/uploader/helpers/upload-error';
 
@@ -174,7 +175,12 @@ export async function sendFiles(
 							? handlerSuccess
 							: o.defaultHandlerSuccess;
 
-						handler.call(uploader, o.process.call(uploader, resp));
+						handler.call(
+							uploader,
+							normalizeUploaderData(
+								o.process.call(uploader, resp)
+							)
+						);
 
 						return resp;
 					}
@@ -298,12 +304,16 @@ function readImagesWithReader(
 				(resolve, reject) => {
 					reader.onerror = reject;
 					reader.onloadend = (): void => {
-						const resp = {
+						const resp = normalizeUploaderData({
 							baseurl: '',
-							files: [reader.result],
-							isImages: [true],
-							fileNames: [name]
-						} as IUploaderData;
+							items: [
+								{
+									file: reader.result as string,
+									isImage: true,
+									name
+								}
+							]
+						} as IUploaderData);
 
 						const handler = isFunction(handlerSuccess)
 							? handlerSuccess

@@ -92,11 +92,10 @@ export class Uploader extends ViewComponent implements IUploader {
 	 * ```javascript
 	 * var $form = jQuery('<form><input type="text" typpe="file"></form>');
 	 * jQuery('body').append($form);
-	 * Jodit.editors.someidfoeditor.uploader.bind($form[0], function (files) {
-	 *     var i;
-	 *     for (i = 0; i < data.files.length; i += 1) {
-	 *         parent.s.insertImage(data.files[i])
-	 *     }
+	 * Jodit.editors.someidfoeditor.uploader.bind($form[0], function (data) {
+	 *     data.items.forEach(function (item) {
+	 *         parent.s.insertImage(data.baseurl + item.file);
+	 *     });
 	 * });
 	 * ```
 	 */
@@ -313,7 +312,12 @@ export class Uploader extends ViewComponent implements IUploader {
 			sendFiles(this, files, settle(resolve), settle(reject)).then(() => {
 				// `beforeUpload` kept no file, so no handler ran
 				if (!settled) {
-					resolve({ baseurl: '', files: [], isImages: [] });
+					resolve({
+						baseurl: '',
+						items: [],
+						files: [],
+						isImages: []
+					});
 				}
 			}, settle(reject));
 		});

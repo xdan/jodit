@@ -143,6 +143,36 @@ describe('Process Images plugins', function () {
 				expect(url).is.not.undefined;
 				expect(upload.offsetWidth).to.be.above(url.offsetWidth);
 			});
+
+			// Jodit PRO's file browser calls back with only the arrays
+			it('Should insert the images a file browser passes as arrays (#1752)', function () {
+				const editor = getJodit({
+					filebrowser: {
+						ajax: {
+							url: 'https://example.com/filebrowser'
+						}
+					}
+				});
+
+				Object.defineProperty(editor.filebrowser, 'open', {
+					value: callback =>
+						callback({
+							baseurl: 'https://xdsoft.net/jodit/files/',
+							files: ['artio.jpg'],
+							isImages: [true]
+						})
+				});
+
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				clickButton('image', editor);
+				clickButton('Browse', getOpenedPopup(editor), 'tab');
+
+				expect(sortAttributes(editor.value)).equals(
+					'<p>test<img src="https://xdsoft.net/jodit/files/artio.jpg" style="width:300px"></p>'
+				);
+			});
 		});
 
 		describe('Click on Image button', function () {

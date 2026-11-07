@@ -18,6 +18,7 @@ import { isArray } from 'jodit/core/helpers/checker/is-array';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Config } from 'jodit/config';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 
 declare module 'jodit/config' {
 	interface Config {
@@ -111,36 +112,35 @@ Config.prototype.uploader = {
 			return;
 		}
 
-		if (resp.files && resp.files.length) {
-			resp.files.forEach((filename, index: number) => {
-				const [tagName, attrName]: string[] =
-					resp.isImages && resp.isImages[index]
-						? ['img', 'src']
-						: ['a', 'href'];
+		const { baseurl } = resp;
 
-				const elm = j.createInside.element(tagName);
+		getItems(resp).forEach(({ file, isImage }) => {
+			const [tagName, attrName]: string[] = isImage
+				? ['img', 'src']
+				: ['a', 'href'];
 
-				attr(elm, attrName, resp.baseurl + filename);
+			const elm = j.createInside.element(tagName);
 
-				if (tagName === 'a') {
-					elm.textContent = j.o.uploader.getDisplayName.call(
-						this,
-						resp.baseurl,
-						filename
-					);
-				}
+			attr(elm, attrName, baseurl + file);
 
-				if (tagName === 'img') {
-					j.s.insertImage(
-						elm as HTMLImageElement,
-						null,
-						j.o.imageDefaultWidth
-					);
-				} else {
-					j.s.insertNode(elm);
-				}
-			});
-		}
+			if (tagName === 'a') {
+				elm.textContent = j.o.uploader.getDisplayName.call(
+					this,
+					baseurl,
+					file
+				);
+			}
+
+			if (tagName === 'img') {
+				j.s.insertImage(
+					elm as HTMLImageElement,
+					null,
+					j.o.imageDefaultWidth
+				);
+			} else {
+				j.s.insertNode(elm);
+			}
+		});
 	},
 
 	defaultHandlerError(this: IUploader, e: Error) {

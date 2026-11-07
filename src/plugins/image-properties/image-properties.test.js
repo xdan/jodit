@@ -1197,6 +1197,30 @@ describe('Edit image tests', () => {
 							expect(fb).does.not.equal(imagePropertiesDialog);
 						});
 
+						// Jodit PRO's file browser calls back with only the arrays
+						it('should take the image a file browser passes as arrays (#1752)', () => {
+							Object.defineProperty(editor.filebrowser, 'open', {
+								value: callback =>
+									callback({
+										baseurl: '',
+										files: [
+											'https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg'
+										],
+										isImages: [true]
+									})
+							});
+
+							clickButton(
+								'Browse',
+								getOpenedPopup(imagePropertiesDialog.component),
+								'tab'
+							);
+
+							expect(form.getElm('imageSrc').value).equals(
+								'https://xdsoft.net/jodit/files/ibanez-s520-443140.jpg'
+							);
+						});
+
 						describe('Select image', () => {
 							let fb, dialog, previousWidth, previousHeight;
 

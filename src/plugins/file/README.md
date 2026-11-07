@@ -137,7 +137,7 @@ editor.s.insertNode(
 
 When files selected from FileBrowser:
 ```javascript
-data.files.forEach(file => {
+data.items.forEach(({ file }) => {
   const url = data.baseurl + file;
   const title = file; // filename as title
   insert(url, title);
@@ -193,7 +193,7 @@ const editor = Jodit.make('#editor', {
     },
     file: {
         defaultHandlerSuccess(data) {
-            data.files.forEach(file => {
+            data.items.forEach(({ file }) => {
                 this.s.insertHTML(
                     `<a class="file" href="${data.baseurl + file}">${file}</a>`
                 );
