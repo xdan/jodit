@@ -570,10 +570,9 @@ export class imageCaption extends Plugin {
 			);
 
 			// The click opened the image's popup below the caption, so it
-			// opens again below the image, as after the popup's Caption button
+			// moves below the image, as after the popup's Caption button
 			if (clicked) {
 				j.e.fire('recalcPositionPopup');
-				j.e.fire('closeAllPopups');
 			}
 		}, 1);
 	}
