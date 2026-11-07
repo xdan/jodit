@@ -312,7 +312,12 @@ export class Uploader extends ViewComponent implements IUploader {
 			sendFiles(this, files, settle(resolve), settle(reject)).then(() => {
 				// `beforeUpload` kept no file, so no handler ran
 				if (!settled) {
-					resolve({ baseurl: '', files: [], isImages: [] });
+					resolve({
+						baseurl: '',
+						items: [],
+						files: [],
+						isImages: []
+					});
 				}
 			}, settle(reject));
 		});
