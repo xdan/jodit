@@ -1283,6 +1283,41 @@ describe('Text Inline Popup plugin', () => {
 		});
 	});
 
+	describe('A function popup', () => {
+		it('should be made again only for another target, and keep an element it gives back', () => {
+			let cached = null;
+			let calls = 0;
+
+			const editor = getJodit({
+				popup: {
+					img: jodit => {
+						calls += 1;
+						cached ??= new Jodit.modules.UIButton(jodit, {
+							name: 'cached',
+							text: 'Cached'
+						});
+						return cached;
+					}
+				}
+			});
+
+			editor.value =
+				'<p><img alt="" src="tests/artio.jpg"/> <img alt="" src="tests/artio.jpg"/></p>';
+			const [first, second] = editor.editor.querySelectorAll('img');
+
+			simulateEvent('click', first);
+			simulateEvent('click', first);
+			expect(calls).equals(1);
+
+			simulateEvent('click', second);
+			simulateEvent('click', first);
+			expect(calls).equals(3);
+
+			expect(cached.isDestructed).is.false;
+			expect(getOpenedPopup(editor).contains(cached.container)).is.true;
+		});
+	});
+
 	describe('when a string is passed to the popup config', () => {
 		it('Should show the content of the string in the popup', () => {
 			it('Should Open inline popup', () => {

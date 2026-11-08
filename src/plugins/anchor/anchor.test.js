@@ -99,6 +99,17 @@ describe('Anchor plugin', () => {
 			expect(editor.value).equals('<p>Fees</p>');
 			expect(errorIn(popup)).is.ok;
 		});
+
+		it('should not insert an anchor named only #, and say why', () => {
+			const editor = getJodit();
+			editor.value = '<p>Fees|</p>';
+			setCursorToChar(editor);
+
+			const popup = insertAnchor(editor, '#');
+
+			expect(editor.value).equals('<p>Fees</p>');
+			expect(errorIn(popup)).equals('Please fill out this field');
+		});
 	});
 
 	describe('In the editor', () => {
@@ -111,6 +122,20 @@ describe('Anchor plugin', () => {
 				expect(anchor.getAttribute('contenteditable')).equals('false');
 			});
 			expect(editor.value).equals(value);
+		});
+
+		it("should take the editor's attribute off anchors only, wherever it sits", () => {
+			const editor = getJodit();
+			const kept =
+				'<span contenteditable="false">C</span><a href="#y" contenteditable="false">D</a>';
+			editor.value = `<p>A<a class="x" name="y" title="t"></a>B<a contenteditable="false" id="z"></a>${kept}</p>`;
+
+			expect(
+				editor.editor.querySelector('a').getAttribute('contenteditable')
+			).equals('false');
+			expect(editor.value).equals(
+				`<p>A<a class="x" name="y" title="t"></a>B<a id="z"></a>${kept}</p>`
+			);
 		});
 
 		it('should leave links, and named links holding text, as they were', () => {

@@ -142,6 +142,14 @@ Programmatically show popup for an element.
 editor.e.fire('showPopup', element, () => element.getBoundingClientRect(), 'img');
 ```
 
+The popup is made again only for another element or type. Pass `true` as a fourth argument to make it again for the same element, as the anchor plugin does so that its form shows the anchor's name as it is now:
+
+```typescript
+editor.e.fire('showPopup', anchor, () => anchor.getBoundingClientRect(), 'anchor', true);
+```
+
+What a function in `popup` returns is taken out of the popup, not destructed, when it shows something else, so the function can return the same element again.
+
 ### `hidePopup`
 
 Programmatically hide the popup.

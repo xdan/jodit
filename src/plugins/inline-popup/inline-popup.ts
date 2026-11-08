@@ -125,12 +125,14 @@ export class inlinePopup extends Plugin {
 	 * Show inline popup with some toolbar
 	 *
 	 * @param type - selection, img, a etc.
+	 * @param force - make the popup again for the same target
 	 */
 	@wait((ctx: IViewComponent) => !ctx.j.isLocked)
 	private showPopup(
 		rect: () => IBound,
 		type: string,
-		target?: HTMLElement
+		target?: HTMLElement,
+		force: boolean = false
 	): boolean {
 		type = type.toLowerCase();
 
@@ -138,15 +140,15 @@ export class inlinePopup extends Plugin {
 			return false;
 		}
 
-		const data = this.j.o.popup[type];
-
-		// A function's popup is made afresh, so it shows its target as it is now
-		if (
-			isFunction(data) ||
-			this.type !== type ||
-			target !== this.previousTarget
-		) {
+		if (force || this.type !== type || target !== this.previousTarget) {
 			this.previousTarget = target;
+
+			// What it showed is taken out, not destructed: an element a
+			// function returns is its own, and may be shown again
+			this.popup.elements.slice().forEach(elm => this.popup.remove(elm));
+			Dom.detach(this.popup.getElm('content'));
+
+			const data = this.j.o.popup[type];
 
 			let content;
 
@@ -171,10 +173,6 @@ export class inlinePopup extends Plugin {
 				this.toolbar.buttonSize = this.j.o.toolbarButtonSize;
 				content = this.toolbar.container;
 			}
-
-			// Whatever it showed goes, including a form, which is its child
-			this.popup.clear();
-			Dom.detach(this.popup.getElm('content'));
 			this.popup.setContent(content);
 
 			this.type = type;
@@ -307,12 +305,14 @@ export class inlinePopup extends Plugin {
 				(
 					elm: HTMLElement | string,
 					rect: () => IBound,
-					type?: string
+					type?: string,
+					force?: boolean
 				) => {
 					this.showPopup(
 						rect,
 						type || (isString(elm) ? elm : elm.nodeName),
-						isString(elm) ? undefined : elm
+						isString(elm) ? undefined : elm,
+						force
 					);
 				}
 			)

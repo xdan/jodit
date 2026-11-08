@@ -43,6 +43,12 @@ const MARKER = ['id', 'name']
 const MARKER_STYLE = `${MARKER}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background:${ICON} center/contain no-repeat;cursor:pointer;content:''}`;
 
 /**
+ * The attribute `markAnchor` gives an anchor: an empty `<a>` with no `href`
+ */
+const MARK =
+	/(<a\b(?![^>]*\shref=)[^>]*?)\scontenteditable="false"([^>]*>)(?=<\/a>)/g;
+
+/**
  * Inserts anchors, empty `<a id>` that links in the document reach as
  * `#name`, and renames and removes them
  */
@@ -77,7 +83,15 @@ export class anchor extends Plugin {
 		}
 
 		j.e.stopPropagation(camelCase((e?.type ?? 'click') + '_a'));
-		j.e.fire('showPopup', target, () => position(target, j), 'anchor');
+
+		// Afresh, so a form left with a change unsaved shows the name it has
+		j.e.fire(
+			'showPopup',
+			target,
+			() => position(target, j),
+			'anchor',
+			true
+		);
 
 		return false;
 	}
@@ -103,21 +117,7 @@ export class anchor extends Plugin {
 	 */
 	@watch(':afterGetValueFromEditor')
 	protected onAfterGetValueFromEditor(data: { value: string }): void {
-		if (!data.value.includes('contenteditable')) {
-			return;
-		}
-
-		const template = this.j.c.element('template');
-		template.innerHTML = data.value;
-
-		const marked = getAnchors(template.content).filter(anchor =>
-			anchor.hasAttribute('contenteditable')
-		);
-
-		if (marked.length) {
-			marked.forEach(anchor => anchor.removeAttribute('contenteditable'));
-			data.value = template.innerHTML;
-		}
+		data.value = data.value.replace(MARK, '$1$2');
 	}
 
 	/**
@@ -172,8 +172,11 @@ export class anchor extends Plugin {
 			new UIBlock(j, buttons, { align: 'full' })
 		]);
 
-		// The toolbar's popup closes on Escape by itself; the anchor's own doesn't
 		if (current) {
+			this.__dropForm();
+			this.__form = form;
+
+			// The toolbar's popup closes on Escape by itself; the anchor's own doesn't
 			j.e.on(form.container, 'keydown', (e: KeyboardEvent) => {
 				if (e.key === consts.KEY_ESC) {
 					close();
@@ -191,11 +194,13 @@ export class anchor extends Plugin {
 
 			const name = input.value.trim().replace(/^#/, '');
 
-			const error = /\s/.test(name)
-				? 'The name cannot contain spaces'
-				: this.__isTaken(name, current)
-					? 'This name is already in use'
-					: '';
+			const error = !name
+				? 'Please fill out this field'
+				: /\s/.test(name)
+					? 'The name cannot contain spaces'
+					: this.__isTaken(name, current)
+						? 'This name is already in use'
+						: '';
 
 			if (error) {
 				input.error = error;
@@ -220,6 +225,23 @@ export class anchor extends Plugin {
 		j.async.requestIdleCallback(() => input.focus());
 
 		return form;
+	}
+
+	/**
+	 * The form in the anchor's own popup. The popup takes it out without
+	 * destructing it when it shows something else, so it goes when the next
+	 * one is made
+	 */
+	private __form: Nullable<IUIForm> = null;
+
+	private __dropForm(): void {
+		const form = this.__form;
+		this.__form = null;
+
+		if (form && !form.isInDestruct) {
+			this.j.e.off(form.container, 'keydown');
+			form.destruct();
+		}
 	}
 
 	/**
@@ -293,6 +315,8 @@ export class anchor extends Plugin {
 
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
+		this.__dropForm();
+
 		jodit.e
 			.off('generateAnchorForm.anchor', this.__generateForm)
 			.off('clickA touchstartA', this.__onClickA);
