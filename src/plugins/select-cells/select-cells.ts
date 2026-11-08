@@ -350,7 +350,12 @@ export class selectCells extends Plugin {
 			e.clientY
 		);
 
-		const cell = node && Dom.closest(node, ['td', 'th'], table);
+		// Over a table nested in a cell, the mouse is still in that cell
+		const cell = Dom.closest<HTMLTableCellElement>(
+			node,
+			elm => Dom.isCell(elm) && !Dom.closest(elm, 'table', table),
+			table
+		);
 
 		if (!cell || !this.__selectedCell) {
 			return;

@@ -180,6 +180,60 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('A cell selected whole from its row, as Firefox selects one', () => {
+		const table = rows =>
+			'<table><tbody>' +
+			rows
+				.map(
+					row =>
+						'<tr>' +
+						row.map(cell => '<td>' + cell + '</td>').join('') +
+						'</tr>'
+				)
+				.join('') +
+			'</tbody></table>';
+
+		[
+			[table([['a1', 'b1']]), 0, 0, table([['|<br>', 'b1']])],
+			[table([['a1', 'b1']]), 0, 1, table([['a1', '|<br>']])],
+			[
+				table([['a1', 'b1']]),
+				0,
+				0,
+				table([['|<br>', 'b1']]),
+				Jodit.KEY_DELETE
+			],
+			[
+				table([[table([['one two']]) + 'three four']]),
+				1,
+				0,
+				table([[table([['|<br>']]) + 'three four']])
+			],
+			[
+				table([['one two' + table([['three four']])]]),
+				0,
+				0,
+				table([['|<br>']])
+			]
+		].forEach(([input, row, index, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should clear the cell and keep it: ${input}, row ${row}, cell ${index} => ${result} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+
+				const tr = editor.editor.querySelectorAll('tr')[row];
+				const range = editor.s.createRange();
+				range.setStart(tr, index);
+				range.setEnd(tr, index + 1);
+				editor.s.selectRange(range);
+
+				simulateEvent('keydown', key, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(sortAttributes(editor.value)).equals(result);
+			});
+		});
+	});
+
 	describe('Selection that ends in a list', () => {
 		[
 			[
