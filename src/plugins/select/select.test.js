@@ -613,17 +613,52 @@ describe('Test select plugin', () => {
 				'<p>The term dates:</p><p>Second paragraph.</p>'
 			);
 		});
+
+		it('should leave the selection as it is in a read-only editor', () => {
+			const editor = getJodit({ readonly: true });
+			editor.value = '<p>The term dates:</p><p>Second paragraph.</p>';
+
+			const [first, second] = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, first.firstChild, second);
+			simulateEvent('dblclick', first);
+
+			expect(editor.s.range.collapsed).is.false;
+		});
+
+		it('should keep a video with fallback text on the line below', () => {
+			const editor = getJodit();
+			const video =
+				'<p><span contenteditable="false"><video width="320" height="180">Your browser cannot play this video.</video></span></p>';
+			editor.value =
+				'<p>Our camp is in March.</p>' +
+				video +
+				'<p>Find out more.</p>';
+
+			const paragraphs = editor.editor.querySelectorAll('p');
+			selectLineBreak(editor, paragraphs[0].firstChild, paragraphs[2]);
+			simulateEvent('dblclick', paragraphs[0]);
+
+			expect(caret(editor).collapsed).is.true;
+
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in March.X</p>' +
+					video +
+					'<p>Find out more.</p>'
+			);
+		});
 	});
 
 	describe('Drag onto the line of a video (#1768)', () => {
 		const VIDEO =
 			'<p><span contenteditable="false"><video width="320" height="180"></video></span></p>';
 
-		const make = options => {
+		const make = (options, video = VIDEO) => {
 			const editor = getJodit(options);
 			editor.value =
 				'<p>Our camp is in March.</p>' +
-				VIDEO +
+				video +
 				'<p>Find out more.</p>';
 
 			const [above, line, below] = editor.editor.querySelectorAll('p');
@@ -798,6 +833,36 @@ describe('Test select plugin', () => {
 					'<p>Find out more.</p>'
 			);
 		});
+
+		it('should leave a drag in a read-only editor as it is, so the video can be copied', () => {
+			const { editor, above, below, video, line } = make({
+				readonly: true
+			});
+
+			drag(editor, [above, above.nodeValue.length], [below, 0]);
+			release(editor, line, video.getBoundingClientRect().top + 8);
+
+			expect(editor.s.range.intersectsNode(video)).is.true;
+			expect(editor.s.range.endContainer).equals(below);
+		});
+
+		it('should stop before a video with fallback text', () => {
+			const withText = VIDEO.replace(
+				'></video>',
+				'>Your browser cannot play this video.</video>'
+			);
+			const { editor, above, below, video, line } = make({}, withText);
+
+			drag(editor, [above, above.nodeValue.length], [below, 0]);
+			release(editor, line, video.getBoundingClientRect().top + 8);
+			editor.s.insertHTML('X');
+
+			expect(editor.value).equals(
+				'<p>Our camp is in March.X</p>' +
+					withText +
+					'<p>Find out more.</p>'
+			);
+		});
 	});
 
 	describe('A video in the selection (#1768)', () => {
@@ -917,6 +982,59 @@ describe('Test select plugin', () => {
 			select(editor, above.firstChild, 0, below.firstChild, 4);
 
 			expect(isShaded(editor)).is.true;
+		});
+
+		it('should not shade a video a click selected, as its resize frame shows it', async () => {
+			const editor = getJodit({
+				mediaWrappers: { video: { tag: 'span', className: 'fr-video' } }
+			});
+			editor.value = VALUE.replace(
+				'<span contenteditable="false">',
+				'<span class="fr-video" contenteditable="false">'
+			);
+			await delay(100);
+
+			const video = editor.editor.querySelector('video');
+			simulateEvent(['mousedown', 'mouseup', 'click'], video);
+			simulateEvent('selectionchange', editor.ed);
+
+			expect(editor.s.range.intersectsNode(video)).is.true;
+			expect(isShaded(editor)).is.false;
+		});
+
+		describe('Without a selection change', () => {
+			const shaded = options => {
+				const editor = getJodit(options);
+				editor.value = VALUE;
+
+				const [above, , below] = editor.editor.querySelectorAll('p');
+				select(editor, above.firstChild, 0, below.firstChild, 4);
+				expect(isShaded(editor)).is.true;
+
+				return editor;
+			};
+
+			it('should lose the shade when the editor turns read-only', () => {
+				const editor = shaded();
+				editor.setReadOnly(true);
+
+				expect(isShaded(editor)).is.false;
+			});
+
+			it('should lose the shade when the value is set, so it never lands on another element', () => {
+				const editor = shaded();
+				editor.value = VALUE.replace('March', 'April');
+
+				expect(isShaded(editor)).is.false;
+			});
+
+			// In iframe mode, as the style's paths start in the editing document
+			it('should lose the shade in source mode', () => {
+				const editor = shaded({ iframe: true });
+				editor.setMode(Jodit.MODE_SOURCE);
+
+				expect(isShaded(editor)).is.false;
+			});
 		});
 	});
 });

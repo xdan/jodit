@@ -11,7 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { IS_INLINE, LIST_TAGS } from 'jodit/core/constants';
+import { IS_INLINE, LIST_TAGS, MODE_SOURCE } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { getContainer, pluginSystem } from 'jodit/core/global';
@@ -82,8 +82,13 @@ export class select extends Plugin {
 	 * The media gets the same shade from a filter, in place of the tint Safari
 	 * gives a block wrapper's whole line. It's a style in the editing
 	 * document, as selected cells get their border, so the content, and with
-	 * it the value, the history and a copy, doesn't change
+	 * it the value, the history and a copy, doesn't change. Media a click
+	 * selected whole is left alone, as its resize frame shows it (#1528). A
+	 * change, read-only and the source mode redo or drop the style, as the
+	 * selection may not change with them, and the style's paths could then
+	 * fit other elements
 	 */
+	@watch([':change', ':readonly', ':afterSetMode'])
 	@autobind
 	private __markSelectedMedia(): void {
 		const { s, editor, o } = this.j;
@@ -94,6 +99,8 @@ export class select extends Plugin {
 			range &&
 			!range.collapsed &&
 			!o.readonly &&
+			this.j.getMode() !== MODE_SOURCE &&
+			!isElementSelection(range) &&
 			Dom.isOrContains(editor, range.commonAncestorContainer)
 		) {
 			uneditableIn(range, editor).forEach(elm => {
@@ -509,10 +516,11 @@ export class select extends Plugin {
 	 */
 	@watch([':dblclick'])
 	protected onDblClickPastLineEnd(): void {
-		const { s, editor } = this.j;
+		const { s, editor, o } = this.j;
 		const range = s.range;
 
 		if (
+			o.readonly ||
 			!Dom.isOrContains(editor, range.commonAncestorContainer) ||
 			!isLineBreak(range, editor)
 		) {
@@ -532,10 +540,10 @@ export class select extends Plugin {
 	 */
 	@watch([':mouseup'])
 	protected onMouseUpOnUneditableLine(e: MouseEvent): void {
-		const { s, editor } = this.j;
+		const { s, editor, o } = this.j;
 		const { sel } = s;
 
-		if (!sel?.rangeCount || sel.isCollapsed) {
+		if (o.readonly || !sel?.rangeCount || sel.isCollapsed) {
 			return;
 		}
 
@@ -552,7 +560,7 @@ export class select extends Plugin {
 
 		const lines = uneditableIn(range, editor)
 			.map(elm => Dom.closest(elm, Dom.isBlock, editor) ?? elm)
-			.filter(line => !trim(line.textContent ?? ''));
+			.filter(line => !trim(ownText(line)));
 
 		const isAhead = (line: HTMLElement): boolean => {
 			const box = line.getBoundingClientRect();
@@ -641,13 +649,35 @@ const isUneditable = (node: Nullable<Node>): boolean =>
 	Dom.isElement(node) && node.getAttribute('contenteditable') === 'false';
 
 /**
+ * The text a node shows outside its uneditable elements, whose own text, as
+ * a video's fallback text, isn't on the line
+ */
+const ownText = (node: Node): string =>
+	isUneditable(node)
+		? ''
+		: Dom.isText(node)
+			? (node.nodeValue ?? '')
+			: toArray(node.childNodes).map(ownText).join('');
+
+/**
  * The uneditable elements the range holds whole, without those inside
- * another
+ * another. Only those under the range's common ancestor can be, and none
+ * when that's a text node, as along one line of a drag
  */
 function uneditableIn(range: Range, root: HTMLElement): HTMLElement[] {
+	const box = range.commonAncestorContainer;
+
+	if (!Dom.isElement(box)) {
+		return [];
+	}
+
 	return toArray(
-		root.querySelectorAll<HTMLElement>('[contenteditable="false"]')
+		box.querySelectorAll<HTMLElement>('[contenteditable="false"]')
 	).filter(elm => {
+		if (!range.intersectsNode(elm)) {
+			return false;
+		}
+
 		const own = elm.ownerDocument.createRange();
 		own.selectNode(elm);
 
@@ -680,7 +710,10 @@ function isElementSelection(range: Range): boolean {
 function isLineBreak(range: Range, root: HTMLElement): boolean {
 	const { startContainer, endContainer } = range;
 
-	if (range.collapsed || trim(range.toString())) {
+	if (
+		range.collapsed ||
+		(trim(range.toString()) && trim(ownText(range.cloneContents())))
+	) {
 		return false;
 	}
 
