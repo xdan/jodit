@@ -1660,57 +1660,80 @@ describe('Text Inline Popup plugin', () => {
 				expect(getOpenedPopup(editor)).is.null;
 			});
 
-			describe('Should not open for only a line break', () => {
-				const TEXT = '<p>some text</p><p>next line</p>';
+			// A selection set as the browser makes it, by its bounds
+			const selectionToolbarFor = async (html, bounds) => {
+				const editor = getJodit({ toolbarInlineForSelection: true });
+				editor.value = html;
 
+				const [sc, so, ec, eo] = bounds(editor);
+				const range = editor.s.createRange();
+				range.setStart(sc, so);
+				range.setEnd(ec, eo);
+
+				const p = editor.editor.querySelector('p');
+				simulateEvent('mousedown', p);
+				editor.s.selectRange(range);
+				simulateEvent(['mouseup', 'selectionchange'], p);
+				await delay(editor.defaultTimeout + 50);
+
+				expect(editor.s.isCollapsed()).is.false;
+				return [editor, getOpenedPopup(editor)];
+			};
+
+			const lines = editor => editor.editor.querySelectorAll('p');
+
+			// From the end of the first line's text
+			const fromLineEnd = end => editor => {
+				const text = lines(editor)[0].firstChild;
+				return [text, text.length, ...end(editor)];
+			};
+
+			const toLine = n => editor => [lines(editor)[n].firstChild, 0];
+
+			describe('Should not open for only a line break, a selection that starts at the end of a line and holds no text', () => {
 				[
 					[
 						'as a double click past the end of a line selects',
-						TEXT,
-						editor => [editor.editor, 1]
+						'<p>some text</p><p>next line</p>',
+						fromLineEnd(editor => [editor.editor, 1])
 					],
 					[
 						'as a drag from there to the start of the next line selects in Safari',
-						TEXT,
-						editor => [
-							editor.editor.querySelectorAll('p')[1].firstChild,
-							0
-						]
+						'<p>some text</p><p>next line</p>',
+						fromLineEnd(toLine(1))
 					],
 					[
 						'across an empty line',
 						'<p>some text</p><p><br></p><p>next line</p>',
-						editor => [
-							editor.editor.querySelectorAll('p')[2].firstChild,
-							0
-						]
+						fromLineEnd(toLine(2))
+					],
+					[
+						'across a rule, as a drag from there to the line after it selects',
+						'<p>some text</p><hr><p>next line</p>',
+						fromLineEnd(toLine(1))
+					],
+					[
+						'with a video on the next line, which a double click past the end of the line selects with the break',
+						'<p>some text</p><p><video src="" width="160" height="90"></video></p><p>next line</p>',
+						fromLineEnd(toLine(2))
+					],
+					[
+						'after an image that ends the line',
+						'<p>some text<img alt="" src="tests/artio.jpg"></p><p>next line</p>',
+						editor => [lines(editor)[0], 2, ...toLine(1)(editor)]
 					]
-				].forEach(([name, html, end]) => {
+				].forEach(([name, html, bounds]) => {
 					it(name, async () => {
-						const editor = getJodit({
-							toolbarInlineForSelection: true
-						});
-						editor.value = html;
-
-						const p = editor.editor.querySelector('p');
-						const range = editor.s.createRange();
-						range.setStart(p.firstChild, p.firstChild.length);
-						range.setEnd(...end(editor));
-
-						simulateEvent('mousedown', p);
-						editor.s.selectRange(range);
-						simulateEvent(['mouseup', 'selectionchange'], p);
-						await delay(editor.defaultTimeout + 50);
-
-						expect(editor.s.isCollapsed()).is.false;
-						expect(getOpenedPopup(editor)).is.null;
+						const [, popup] = await selectionToolbarFor(
+							html,
+							bounds
+						);
+						expect(popup).is.null;
 					});
 				});
 			});
 
-			describe('Should open for a selection with no text, and stay open on a change', () => {
-				const lines = editor => editor.editor.querySelectorAll('p');
-
+			describe('Should open for any other selection with no text, and stay open on a change', () => {
 				[
 					[
 						'two images',
@@ -1721,30 +1744,19 @@ describe('Text Inline Popup plugin', () => {
 						}
 					],
 					[
-						'a rule between two lines',
-						'<p>some text</p><hr><p>next line</p>',
-						editor => {
-							const [p1, p2] = lines(editor);
-							return [
-								p1.firstChild,
-								p1.firstChild.length,
-								p2.firstChild,
-								0
-							];
-						}
+						'a line of only images, as a triple click selects it with the break after it',
+						'<p><img alt="" src="tests/artio.jpg"><img alt="" src="tests/artio.jpg"></p><p>next line</p>',
+						editor => [lines(editor)[0], 0, ...toLine(1)(editor)]
 					],
 					[
-						'a video on the next line, which a double click past the end of the line selects with the break',
-						'<p>some text</p><p><video src="" width="160" height="90"></video></p><p>next line</p>',
-						editor => {
-							const [p1, , p3] = lines(editor);
-							return [
-								p1.firstChild,
-								p1.firstChild.length,
-								p3.firstChild,
-								0
-							];
-						}
+						'an image at the end of a line and the break after it',
+						'<p>some text<img alt="" src="tests/artio.jpg"></p><p>next line</p>',
+						fromLineEnd(toLine(1))
+					],
+					[
+						'a rule on its own',
+						'<p>some text</p><hr><p>next line</p>',
+						editor => [editor.editor, 1, editor.editor, 2]
 					],
 					[
 						'only &nbsp;',
@@ -1757,30 +1769,18 @@ describe('Text Inline Popup plugin', () => {
 					[
 						'a line of only &nbsp; and the break after it',
 						'<p>&nbsp;</p><p>next line</p>',
-						editor => {
-							const [p1, p2] = lines(editor);
-							return [p1.firstChild, 0, p2.firstChild, 0];
-						}
+						editor => [
+							lines(editor)[0].firstChild,
+							0,
+							...toLine(1)(editor)
+						]
 					]
 				].forEach(([name, html, bounds]) => {
 					it(name, async () => {
-						const editor = getJodit({
-							toolbarInlineForSelection: true
-						});
-						editor.value = html;
-
-						const [sc, so, ec, eo] = bounds(editor);
-						const range = editor.s.createRange();
-						range.setStart(sc, so);
-						range.setEnd(ec, eo);
-
-						const [p] = lines(editor);
-						simulateEvent('mousedown', p);
-						editor.s.selectRange(range);
-						simulateEvent(['mouseup', 'selectionchange'], p);
-						await delay(editor.defaultTimeout + 50);
-
-						const popup = getOpenedPopup(editor);
+						const [editor, popup] = await selectionToolbarFor(
+							html,
+							bounds
+						);
 						expect(popup).is.not.null;
 
 						editor.e.fire('change');

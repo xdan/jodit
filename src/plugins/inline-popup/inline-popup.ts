@@ -429,9 +429,9 @@ export class inlinePopup extends Plugin {
 
 	/**
 	 * The selection holds more than a line break. A double click past the end
-	 * of a line, or a drag from there to the start of the next, selects only
-	 * the break: it ends in another block, and holds neither text that shows
-	 * nor an empty element other than a `<br>`, as an image, a rule or a video
+	 * of a line, or a drag from there into the next, selects only the break,
+	 * with any rule, video or empty line it crosses: it starts at the end of a
+	 * line, after everything in it, and holds no text that shows
 	 */
 	private __hasSelectedContent(): boolean {
 		const { sel, range } = this.j.s;
@@ -440,19 +440,30 @@ export class inlinePopup extends Plugin {
 			return false;
 		}
 
-		const block = (node: Node): Nullable<HTMLElement> =>
-			Dom.closest(node, Dom.isBlock, this.j.editor);
+		// HTML collapses ASCII white space, but not &nbsp;
+		const showsText = (r: Range): boolean =>
+			/[^\t\n\f\r \uFEFF\u200B]/.test(r.toString());
 
-		const root = range.commonAncestorContainer;
+		const line = Dom.closest(
+			range.startContainer,
+			Dom.isBlock,
+			this.j.editor
+		);
+
+		if (!line || line === this.j.editor || showsText(range)) {
+			return true;
+		}
+
+		// The rest of the line after the selection's start
+		const rest = this.j.s.createRange();
+		rest.setStart(range.startContainer, range.startOffset);
+		rest.setEnd(line, line.childNodes.length);
 
 		return (
-			block(range.startContainer) === block(range.endContainer) ||
-			// HTML collapses ASCII white space, but not &nbsp;
-			/[^\t\n\f\r \uFEFF\u200B]/.test(range.toString()) ||
-			(Dom.isElement(root) &&
-				toArray(root.querySelectorAll(':not(br):empty')).some(elm =>
-					range.intersectsNode(elm)
-				))
+			showsText(rest) ||
+			toArray(line.querySelectorAll(':not(br):empty')).some(elm =>
+				rest.intersectsNode(elm)
+			)
 		);
 	}
 
