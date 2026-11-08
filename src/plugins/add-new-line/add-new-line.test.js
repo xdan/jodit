@@ -82,7 +82,7 @@ describe('Add new Line plugin', function () {
 
 		simulateEvent('mousedown', 0, newline.querySelector('span'));
 		expect(editor.getElementValue()).equals(
-			'<p></p><table><tbody>' +
+			'<p><br></p><table><tbody>' +
 				'<tr><td>2</td></tr>' +
 				'<tr><td>2</td></tr>' +
 				'<tr><td>3</td></tr>' +
@@ -130,7 +130,7 @@ describe('Add new Line plugin', function () {
 			'<table><tbody>' +
 				'<tr><td>3</td></tr>' +
 				'<tr><td>2</td></tr>' +
-				'</tbody></table><p></p>'
+				'</tbody></table><p><br></p>'
 		);
 	});
 
@@ -175,7 +175,7 @@ describe('Add new Line plugin', function () {
 			'<table><tbody>' +
 				'<tr><td>3</td></tr>' +
 				'<tr><td>2</td></tr>' +
-				'</tbody></table><p></p>'
+				'</tbody></table><p><br></p>'
 		);
 	});
 
@@ -276,6 +276,97 @@ describe('Add new Line plugin', function () {
 
 				expect(editor.value).equals(before);
 			});
+		});
+	});
+
+	describe('The line it adds, with fillEmptyParagraph off (#1807)', function () {
+		// Typing elsewhere clears the invisible character the caret had in the
+		// line, so only a `<br>` keeps it a line
+		const typeAbove = editor => {
+			editor.s.setCursorIn(editor.editor.firstChild);
+			editor.s.insertHTML('x');
+		};
+
+		const scrollToEditor = editor =>
+			window.scrollTo(
+				0,
+				Jodit.modules.Helpers.offset(
+					editor.editor,
+					editor,
+					editor.ownerDocument
+				).top
+			);
+
+		it('Should keep its height after a click on the line below a table', function () {
+			const editor = getJodit();
+			editor.value =
+				'<p>Above</p><table><tbody><tr><td>1</td></tr></tbody></table>';
+			scrollToEditor(editor);
+
+			simulateEvent('mousemove', 0, editor.editor, function (data) {
+				const pos = Jodit.modules.Helpers.position(
+					editor.editor.lastChild,
+					editor
+				);
+
+				data.clientX = pos.left + 5;
+				data.clientY = pos.top + (pos.height - 5);
+			});
+
+			const newline = editor.container.querySelector(
+				'.jodit-add-new-line'
+			);
+			expect(newline).not.is.null;
+			simulateEvent('mousedown', 0, newline.querySelector('span'));
+
+			const line = editor.editor.lastChild;
+			typeAbove(editor);
+
+			expect(editor.value).equals(
+				'<p>Abovex</p><table><tbody><tr><td>1</td></tr></tbody></table><p><br></p>'
+			);
+			expect(line.offsetHeight).above(0);
+		});
+
+		it('Should keep its height after a double click below the content', function () {
+			const editor = getJodit({ height: 400 });
+			editor.value = '<p>Above</p><p>Text</p>';
+			editor.s.setCursorIn(editor.editor.lastChild);
+
+			simulateEvent('dblclick', 0, editor.editor, function (data) {
+				const pos = Jodit.modules.Helpers.offset(
+					editor.editor,
+					editor,
+					editor.ed
+				);
+
+				data.pageY = pos.top + pos.height - 10;
+			});
+
+			const line = editor.editor.lastChild;
+			typeAbove(editor);
+
+			expect(editor.value).equals('<p>Abovex</p><p>Text</p><p><br></p>');
+			expect(line.offsetHeight).above(0);
+		});
+
+		it('Should keep its height after an arrow key past an embed', async function () {
+			const editor = getJodit();
+			editor.value =
+				'<p>Above|</p><p><iframe src="https://www.youtube.com/embed/3JZ_D3ELwOQ"></iframe></p>';
+			setCursorToChar(editor);
+			const before = editor.value;
+
+			simulateEvent('keydown', 'ArrowDown', editor.editor);
+			await delay(20);
+
+			const line = editor.editor.lastChild;
+			typeAbove(editor);
+
+			expect(editor.value).equals(
+				before.replace('Above', 'Abovex') + '<p><br></p>'
+			);
+			expect(line.offsetHeight).above(0);
 		});
 	});
 });

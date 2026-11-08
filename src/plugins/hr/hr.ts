@@ -73,6 +73,13 @@ export function hr(editor: IJodit): void {
 		}
 
 		const p = editor.createInside.element(editor.o.enter);
+
+		// As Enter's new line has, so it keeps its height without clean-html's
+		// fillEmptyParagraph (#1807)
+		if (!Dom.isTag(p, 'br')) {
+			Dom.append(p, editor.createInside.element('br'));
+		}
+
 		Dom.after(elm, p);
 		editor.s.setCursorIn(p);
 

@@ -150,9 +150,24 @@ export class addNewLine extends Plugin {
 			.on(editor.editor, 'mousemove' + '.' + ns, this.__onMouseMove);
 	}
 
+	/**
+	 * An empty line with a `<br>`, as Enter makes, so it keeps its height
+	 * without clean-html's fillEmptyParagraph (#1807)
+	 */
+	private __newLine(): HTMLElement {
+		const { j } = this;
+		const line = j.createInside.element(j.o.enter);
+
+		if (!Dom.isTag(line, 'br')) {
+			Dom.append(line, j.createInside.element('br'));
+		}
+
+		return line;
+	}
+
 	private __onClickLine = (e: MouseEvent): void => {
 		const editor = this.j;
-		const p = editor.createInside.element(editor.o.enter);
+		const p = this.__newLine();
 
 		if (
 			this.__isBeforeContent &&
@@ -223,7 +238,7 @@ export class addNewLine extends Plugin {
 				return;
 			}
 
-			const p = editor.createInside.element(editor.o.enter);
+			const p = this.__newLine();
 			forward
 				? Dom.append(editor.editor, p)
 				: Dom.prepend(editor.editor, p);
@@ -248,7 +263,7 @@ export class addNewLine extends Plugin {
 
 			const top = e.pageY - editor.ew.scrollX;
 
-			const p = editor.createInside.element(editor.o.enter);
+			const p = this.__newLine();
 
 			if (
 				Math.abs(top - editorBound.top) <
