@@ -194,13 +194,14 @@ export interface IFileBrowserCallBackData {
 	baseurl: string;
 
 	/**
-	 * One object per file
+	 * One object per file. In 4.x the arrays win while `files` is set, as in
+	 * the uploader's data
 	 */
 	items?: IUploadedFile[];
 
-	/** @deprecated Use `items` instead */
+	/** @deprecated Use `items` instead. Removed in 5.0 */
 	files: string[];
-	/** @deprecated Use `items` instead */
+	/** @deprecated Use `items` instead. Removed in 5.0 */
 	isImages?: boolean[];
 }
 

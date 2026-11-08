@@ -37,15 +37,18 @@ interface IUploaderData {
 	 * One object per file. Handlers always get it: Jodit builds it from
 	 * `files`, `isImages` and `fileNames` when the server or
 	 * `uploader.process` gives those, and fills those arrays in from it when
-	 * it's given alone. While `files` is set, the arrays win: the default
-	 * handlers read them, so a handler that edits them and passes the data
-	 * on to a default still gets its edits inserted.
+	 * it's given alone.
+	 *
+	 * In 4.x the arrays win while `files` is set: the default handlers read
+	 * them, not `items`. A handler that changes what a default handler
+	 * inserts edits `files` and `isImages`, or edits `items` and deletes
+	 * `files` before passing the data on.
 	 */
 	items?: IUploadedFile[];
 
-	/** @deprecated Use `items` instead */
+	/** @deprecated Use `items` instead. Removed in 5.0 */
 	files: string[];
-	/** @deprecated Use `items` instead */
+	/** @deprecated Use `items` instead. Removed in 5.0 */
 	isImages?: boolean[];
 	path?: string;
 	baseurl: string;
@@ -55,9 +58,18 @@ interface IUploaderData {
 	 * The names the files had on the user's device. Only set when the
 	 * images were read as base64 (`insertImageAsBase64URI`), where `files`
 	 * holds data URIs.
-	 * @deprecated Use `items` instead
+	 * @deprecated Use `items` instead. Removed in 5.0
 	 */
 	fileNames?: string[];
+}
+
+/**
+ * What `uploader.process` returns: the data handlers get, where `files` can
+ * be left out when `items` is given
+ */
+export interface IUploaderProcessData extends Omit<IUploaderData, 'files'> {
+	/** @deprecated Use `items` instead. Removed in 5.0 */
+	files?: string[];
 }
 
 interface IUploaderAnswer {
@@ -242,7 +254,7 @@ export interface IUploaderOptions<T> {
 
 	getMessage: (this: T, resp: IUploaderAnswer) => string;
 
-	process: (this: T, resp: IUploaderAnswer) => IUploaderData;
+	process: (this: T, resp: IUploaderAnswer) => IUploaderProcessData;
 
 	error: (this: T, e: Error) => void;
 

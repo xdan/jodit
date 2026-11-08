@@ -84,6 +84,22 @@ describe('File plugin', function () {
 			dropInFilePopup(editor, new FileImage());
 		});
 
+		it('Should insert the items file.defaultHandlerSuccess is given (#1752)', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			editor.o.file.defaultHandlerSuccess.call(editor, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				items: [{ file: 'file.xls', isImage: false }]
+			});
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
+		});
+
 		it('Should still insert the files file.defaultHandlerSuccess is given as arrays (#1752)', function () {
 			const editor = getJodit();
 

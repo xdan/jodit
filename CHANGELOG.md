@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.0
+
+#### :rocket: New Feature
+
+- [#1752](https://github.com/xdan/jodit/issues/1752) Upload and file browser handlers get `items`, one `{ file, isImage, name }` object per file. `uploader.process` and servers can answer with `items` instead of `files` and `isImages`. Thanks @brendon.
+
+#### :house: Internal
+
+- [#1752](https://github.com/xdan/jodit/issues/1752) Deprecated: `files`, `isImages` and `fileNames` in the data upload and file browser handlers get. Use `items`. They will be removed in 5.0. Until then they win over `items` while `files` is set, so a handler that edits `items` and passes the data on to a default handler deletes `files` first. Thanks @brendon.
+
 ## 4.19.10
 
 #### :bug: Bug Fix

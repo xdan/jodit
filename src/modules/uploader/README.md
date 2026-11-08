@@ -95,7 +95,17 @@ const process = resp => ({
 });
 ```
 
-It can return `items`, one object per file (see `uploader.defaultHandlerSuccess`), instead of `files` and `isImages`. Return one or the other: while `files` is set, Jodit builds `items` from the arrays.
+It can return `items`, one object per file (see `uploader.defaultHandlerSuccess`), instead of `files` and `isImages`. Its return type, `IUploaderProcessData`, lets `files` be left out then, and Jodit fills the arrays in from `items`. Return one or the other: when both are given, Jodit builds `items` from the arrays, unless `files` is empty.
+
+```js
+const process = resp => ({
+	baseurl: resp.data.baseurl,
+	items: resp.data.files.map((file, i) => ({
+		file,
+		isImage: resp.data.isImages[i]
+	}))
+});
+```
 
 ### uploader.error
 
@@ -137,7 +147,25 @@ Jodit.make('#editor', {
 
 #### `files`, `isImages` and `fileNames` (deprecated)
 
-Use `items`. The data still has these parallel arrays, with the same details, and when the server or `uploader.process` gives only `items`, Jodit fills them in from it. While `files` is set, the default handlers read the arrays rather than `items`, so a handler that edits them and passes the data on to a default still works. They will be removed in 5.0.
+Use `items`. The data still has these parallel arrays, with the same details, and when the server or `uploader.process` gives only `items`, Jodit fills them in from it. They will be removed in 5.0.
+
+Until then the arrays win while `files` is set: the default handlers read them rather than `items`, so a handler that edits them and passes the data on to a default still works. A handler that edits `items` instead deletes `files` before passing the data on, or its edits aren't inserted:
+
+```js
+Jodit.make('#editor', {
+	uploader: {
+		defaultHandlerSuccess(data) {
+			data.items = data.items.filter(({ isImage }) => isImage);
+			delete data.files;
+
+			Jodit.defaultOptions.uploader.defaultHandlerSuccess.call(
+				this,
+				data
+			);
+		}
+	}
+});
+```
 
 ### uploader.defaultHandlerError
 

@@ -35,6 +35,7 @@ import {
 	ajaxInstances,
 	hasFiles,
 	hasItems,
+	normalizeUploaderData,
 	processOldBrowserDrag,
 	send,
 	sendFiles
@@ -282,7 +283,10 @@ export class Uploader extends ViewComponent implements IUploader {
 						? handlerSuccess
 						: o.defaultHandlerSuccess;
 
-					handler.call(uploader, o.process.call(uploader, resp));
+					handler.call(
+						uploader,
+						normalizeUploaderData(o.process.call(uploader, resp))
+					);
 					return;
 				}
 

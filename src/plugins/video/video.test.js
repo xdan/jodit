@@ -335,6 +335,22 @@ describe('video plugin', () => {
 			dropVideo(jodit, openPopup(jodit));
 		});
 
+		it('should insert the items video.defaultHandlerSuccess is given (#1752)', () => {
+			const jodit = getJodit();
+
+			jodit.value = '<p>one|</p><p>two</p>';
+			setCursorToChar(jodit);
+
+			jodit.o.video.defaultHandlerSuccess.call(jodit, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				items: [{ file: 'movie.mp4', isImage: false }]
+			});
+
+			expect(sortAttributes(jodit.value)).equals(
+				'<p>one</p><video controls="" src="https://xdsoft.net/jodit/files/movie.mp4"></video><p>two</p>'
+			);
+		});
+
 		it('should still insert the videos video.defaultHandlerSuccess is given as arrays (#1752)', () => {
 			const jodit = getJodit();
 

@@ -911,6 +911,91 @@ describe('Test uploader module', function () {
 			);
 		});
 
+		describe('With the arrays authoritative while files is set', function () {
+			it('Should insert the items a handler edits once it deletes files', async function () {
+				const editor = getJodit({ uploader: { url } });
+
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				const data = await editor.uploader.upload([new FileImage()]);
+				data.items = [{ file: 'report.pdf', isImage: false }];
+				delete data.files;
+
+				editor.o.uploader.defaultHandlerSuccess.call(
+					editor.uploader,
+					data
+				);
+
+				expect(editor.value).equals(
+					'<p>test<a href="https://xdsoft.net/jodit/files/report.pdf">https://xdsoft.net/jodit/files/report.pdf</a></p>'
+				);
+			});
+
+			it('Should insert the arrays, not the items a handler edits while files is set', async function () {
+				const editor = getJodit({ uploader: { url } });
+
+				editor.value = '<p>test|</p>';
+				setCursorToChar(editor);
+
+				const data = await editor.uploader.upload([new FileImage()]);
+				data.items = [{ file: 'report.pdf', isImage: false }];
+
+				editor.o.uploader.defaultHandlerSuccess.call(
+					editor.uploader,
+					data
+				);
+
+				expect(editor.value).contains(
+					'src="https://xdsoft.net/jodit/files/logo.gif"'
+				);
+				expect(editor.value).does.not.contain('report.pdf');
+			});
+		});
+
+		it('Should take items from a process that gives them with an empty files array', async function () {
+			const editor = getJodit({
+				uploader: {
+					url,
+					process: resp => ({
+						...resp.data,
+						files: [],
+						items: [{ file: 'report.pdf', isImage: false }]
+					})
+				}
+			});
+
+			const data = await editor.uploader.upload([new FileImage()]);
+
+			expect(data.items).deep.equals([
+				{ file: 'report.pdf', isImage: false }
+			]);
+			expect(data.files).deep.equals(['report.pdf']);
+		});
+
+		it('Should pass on what a process returns that is not an object', async function () {
+			const editor = getJodit({
+				uploader: { url, process: () => null }
+			});
+
+			expect(await editor.uploader.upload([new FileImage()])).is.null;
+		});
+
+		it('Should give the uploadRemoteImage handler items too', async function () {
+			const editor = getJodit({ uploader: { url } });
+
+			const data = await new Promise((resolve, reject) =>
+				editor.uploader.uploadRemoteImage(
+					'https://example.com/artio.jpg',
+					resolve,
+					reject
+				)
+			);
+
+			expect(data.items).deep.equals([]);
+			expect(data.newfilename).equals('artio.jpg');
+		});
+
 		it('Should insert the items the default handler is given', function () {
 			const editor = getJodit();
 
