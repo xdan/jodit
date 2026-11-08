@@ -221,6 +221,63 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe("Space left at a cell's edge by deleting a selection across cells (#1783)", () => {
+		const table = rows =>
+			'<table><tbody>' +
+			rows
+				.map(
+					row =>
+						`<tr>${row.map(cell => `<td>${cell}</td>`).join('')}</tr>`
+				)
+				.join('') +
+			'</tbody></table>';
+
+		[
+			[
+				table([['one |two', 'three| four']]),
+				table([['one&nbsp;|', '&nbsp;four']])
+			],
+			[
+				table([['one |two', 'three| four']]),
+				table([['one&nbsp;|', '&nbsp;four']]),
+				Jodit.KEY_DELETE
+			],
+			[table([['a |b'], ['c| d']]), table([['a&nbsp;|'], ['&nbsp;d']])],
+			[table([['a |b', 'c|d']]), table([['a&nbsp;|', 'd']])],
+			[
+				'<p>a |b</p>' + table([['c| d']]),
+				'<p>a&nbsp;|</p>' + table([['&nbsp;d']])
+			],
+			[
+				table([['x y', 'a |b']]) + '<p>c| d</p>',
+				table([['x y', 'a&nbsp;|']]) + '<p>&nbsp;d</p>'
+			],
+			[
+				table([['<p>a |b</p>', '<p>c| d</p>']]),
+				table([['<p>a&nbsp;|</p>', '<p>&nbsp;d</p>']])
+			],
+			[
+				table([[table([['a |b']]) + 'c| d']]),
+				table([[table([['a&nbsp;|']]) + '&nbsp;d']])
+			],
+			[
+				table([['a |b' + table([['c| d']])]]),
+				table([['a&nbsp;|' + table([['&nbsp;d']])]])
+			]
+		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should make the space non-breaking: ${input} => ${result} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', key, editor.editor);
+				replaceCursorToChar(editor);
+
+				expect(editor.value).equals(result);
+			});
+		});
+	});
+
 	describe('Space left at an edge of the deleted selection', () => {
 		// https://github.com/xdan/jodit/issues/1522
 		[
