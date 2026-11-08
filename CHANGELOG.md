@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.10
+
+#### :bug: Bug Fix
+
+- [#1783](https://github.com/xdan/jodit/issues/1783) Deleting a selection that starts or ends in a table cell keeps the space left at the cell's edge visible, as a deletion inside a block already did, also around a nested table and in the block the selection reached into. Thanks @brendon.
+
 ## 4.19.9
 
 #### :bug: Bug Fix
