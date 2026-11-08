@@ -211,27 +211,19 @@ export class deleteCommand extends Plugin {
 			}
 
 			// A space left at the cell's edge, where the selection started or
-			// ended in it, would be hidden, as at a block's (#1783). The caret
-			// goes beside the fake, as making the space non-breaking would
+			// ended in it, would be hidden, as at a block's (#1783). Each edge
+			// moves beside its fake, as making the space non-breaking would
 			// move it to the start of its text
-			const edge = [caret, end].find(edge =>
-				Dom.isOrContains(cell, edge.startContainer)
-			);
-
-			if (!edge) {
-				return;
-			}
-
-			const fake = createInside.fake();
-			edge.insertNode(fake);
-			this.__keepSpacesVisible(fake);
-
-			if (edge === caret) {
-				caret.setStartBefore(fake);
-				caret.collapse(true);
-			}
-
-			Dom.safeRemove(fake);
+			[caret, end]
+				.filter(edge => Dom.isOrContains(cell, edge.startContainer))
+				.forEach(edge => {
+					const fake = createInside.fake();
+					edge.insertNode(fake);
+					this.__keepSpacesVisible(fake);
+					edge.setStartBefore(fake);
+					edge.collapse(true);
+					Dom.safeRemove(fake);
+				});
 		});
 
 		return startTable ? caret : null;

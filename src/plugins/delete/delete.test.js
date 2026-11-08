@@ -255,6 +255,14 @@ describe('Delete plugin', () => {
 			[
 				table([['<p>a |b</p>', '<p>c| d</p>']]),
 				table([['<p>a&nbsp;|</p>', '<p>&nbsp;d</p>']])
+			],
+			[
+				table([[table([['a |b']]) + 'c| d']]),
+				table([[table([['a&nbsp;|']]) + '&nbsp;d']])
+			],
+			[
+				table([['a |b' + table([['c| d']])]]),
+				table([['a&nbsp;|' + table([['&nbsp;d']])]])
 			]
 		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
 			it(`Should make the space non-breaking: ${input} => ${result} on ${key}`, () => {
