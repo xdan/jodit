@@ -55,16 +55,20 @@ export function media(editor: IJodit): void {
 			attr(wrapper, 'style', attr(element, 'style'));
 
 			// The wrapper fits the media, whose size changes as its metadata loads
-			// and as it's resized. A percentage width is of the line, so it takes that
+			// and as it's resized. It's inline, as the media is by default, so the
+			// line's text-align still places it, or a block when the media is one.
+			// A percentage width is of the line, so the wrapper is a block that
+			// takes the line, and the media in it follows the text-align it inherits
 			const fit = (): void => {
+				const ofLine = cssInline(media, 'width').endsWith('%');
+
 				css(wrapper, {
 					display:
-						cssInline(media, 'display') === 'inline-block'
+						!ofLine &&
+						/^inline/.test(css(media, 'display').toString())
 							? 'inline-block'
 							: 'block',
-					width: cssInline(media, 'width').endsWith('%')
-						? ''
-						: 'fit-content',
+					width: ofLine ? '' : 'fit-content',
 					height: ''
 				});
 			};

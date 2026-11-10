@@ -727,6 +727,67 @@ describe('Resize plugin', () => {
 			).equals('IFRAME');
 		});
 
+		// https://github.com/xdan/jodit/issues/1809
+		describe('In an aligned line', () => {
+			const iframe =
+				'<iframe src="about:blank" width="200" height="100"></iframe>';
+
+			[
+				['p', 'text-align: center', 'centre'],
+				['p', 'text-align: right', 'right'],
+				['span', 'display: block; text-align: center', 'centre']
+			].forEach(([tag, style, side]) => {
+				it(`should show an iframe in a ${tag} with ${style} at its ${side}`, () => {
+					const editor = getJodit();
+
+					editor.value = `<${tag} style="${style}">${iframe}</${tag}>`;
+
+					const line = editor.editor
+						.querySelector(tag)
+						.getBoundingClientRect();
+					const box = editor.editor
+						.querySelector('iframe')
+						.getBoundingClientRect();
+
+					if (side === 'centre') {
+						expect(box.left - line.left).is.closeTo(
+							line.right - box.right,
+							1
+						);
+					} else {
+						expect(box.right).is.closeTo(line.right, 1);
+					}
+
+					expect(
+						editor.editor.querySelector(
+							'[data-jodit_iframe_wrapper]'
+						).style.display
+					).equals('inline-block');
+				});
+			});
+
+			it('should keep the wrapper of a block iframe a block', () => {
+				const editor = getJodit();
+
+				editor.value =
+					'<p style="text-align: center"><iframe src="about:blank" width="200" height="100" style="display: block"></iframe></p>';
+
+				expect(
+					editor.editor.querySelector('[data-jodit_iframe_wrapper]')
+						.style.display
+				).equals('block');
+				expect(
+					editor.editor
+						.querySelector('iframe')
+						.getBoundingClientRect().left
+				).is.closeTo(
+					editor.editor.querySelector('p').getBoundingClientRect()
+						.left,
+					1
+				);
+			});
+		});
+
 		// https://github.com/xdan/jodit/issues/1583
 		it('should delete a clicked embed with Backspace, as with Delete', () => {
 			const editor = getJodit({ history: { timeout: 0 } });

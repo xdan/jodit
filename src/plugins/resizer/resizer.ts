@@ -619,11 +619,13 @@ export class resizer extends Plugin {
 				const height =
 					element.offsetHeight || attrPixelSize(element, 'height');
 
+				// The wrapper takes the iframe's place in its line: inline, as an
+				// iframe is by default, so the line's text-align still places it,
+				// or a block when the iframe is one
 				css(wrapper, {
-					display:
-						cssInline(element, 'display') === 'inline-block'
-							? 'inline-block'
-							: 'block'
+					display: /^inline/.test(css(element, 'display').toString())
+						? 'inline-block'
+						: 'block'
 				});
 
 				if (width) {

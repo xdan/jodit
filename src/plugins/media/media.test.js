@@ -79,6 +79,52 @@ describe('Media plugin', () => {
 			);
 		});
 
+		// https://github.com/xdan/jodit/issues/1809
+		[
+			['center', 'width: 200px', 'inline-block'],
+			['right', 'width: 200px', 'inline-block'],
+			['center', 'width: 50%', 'block']
+		].forEach(([align, width, display]) => {
+			it(`should show a video in jodit-media with ${width} where text-align: ${align} puts it`, async () => {
+				const editor = getJodit();
+
+				editor.value = `<p style="text-align: ${align}"><video src="movie.mp4" style="${width}; height: 100px"></video></p>`;
+				await delay(100);
+
+				const line = editor.editor
+					.querySelector('p')
+					.getBoundingClientRect();
+				const box = editor.editor
+					.querySelector('video')
+					.getBoundingClientRect();
+
+				if (align === 'center') {
+					expect(box.left - line.left).is.closeTo(
+						line.right - box.right,
+						1
+					);
+				} else {
+					expect(box.right).is.closeTo(line.right, 1);
+				}
+
+				expect(
+					editor.editor.querySelector('jodit-media').style.display
+				).equals(display);
+			});
+		});
+
+		it('should keep jodit-media a block for a block video', async () => {
+			const editor = getJodit();
+
+			editor.value =
+				'<p style="text-align: center"><video src="movie.mp4" style="display: block; width: 200px; height: 100px"></video></p>';
+			await delay(100);
+
+			expect(
+				editor.editor.querySelector('jodit-media').style.display
+			).equals('block');
+		});
+
 		describe('Cover', () => {
 			// What a click in the middle of the media lands on
 			function hit(editor, media) {

@@ -224,7 +224,7 @@ When a media element is detected:
      - `data-jodit_fake_wrapper="1"`: Internal marker
 3. **Style Preservation**: Copies `style` attribute from original element
 4. **Dimension Setting**:
-   - Display mode: Preserves `inline-block` or uses `block`
+   - Display mode: `inline-block`, as the media is inline by default, so its line's `text-align` places it, or `block` when the media is a block or its width is a percentage
    - Width: `fit-content`, so it takes the media's width as its metadata loads and as it's resized, or the whole line when the media's width is a percentage
    - Height: follows the media
 5. **DOM Insertion**: Inserts wrapper before original element and moves element inside
@@ -272,7 +272,7 @@ Uses `dataBind(elm, 'jodit_fake_wrapper', true)` to:
 
 4. **Style Preservation**: Original element's `style` attribute is copied to wrapper
 
-5. **Display Mode**: Wrapper respects original element's display mode (inline-block vs block)
+5. **Display Mode**: Wrapper takes the media's place in its line: `inline-block` for inline media, `block` for block media and for a percentage width, where the media follows the line's `text-align` inside it
 
 6. **Dimensions**: Wrapper dimensions follow the media's rendered size, before and after its metadata loads and when it's resized
 
