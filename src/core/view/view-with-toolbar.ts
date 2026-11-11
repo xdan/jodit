@@ -97,10 +97,17 @@ export abstract class ViewWithToolbar extends View implements IViewWithToolbar {
 			? (splitArray(this.o.buttons) as Buttons)
 			: [];
 
+		const container = this.toolbarContainer;
+
 		this.toolbar
 			?.setRemoveButtons(this.o.removeButtons)
 			.build(buttons.concat(this.o.extraButtons || []))
-			.appendTo(this.toolbarContainer);
+			.appendTo(container);
+
+		// The toolbar's own element, as editors can share the one it is placed in
+		if (this.toolbar && !Dom.isOrContains(this.container, container)) {
+			this.__tooltip.attach(this.toolbar.container);
+		}
 	}
 
 	registeredButtons: Set<IPluginButton> = new Set();

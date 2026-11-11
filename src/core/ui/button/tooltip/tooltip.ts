@@ -52,11 +52,7 @@ export class UITooltip extends UIElement {
 
 	constructor(view: IViewBased) {
 		super(view);
-		if (
-			!view.o.textIcons &&
-			view.o.showTooltip &&
-			!view.o.useNativeTooltip
-		) {
+		if (this.__isEnabled) {
 			this.j.e.on('getContainer', (box: HTMLElement) => {
 				this.__onAttach(box);
 			});
@@ -64,6 +60,21 @@ export class UITooltip extends UIElement {
 			view.hookStatus(STATUSES.ready, () => {
 				this.__onAttach(this.j.container);
 			});
+		}
+	}
+
+	private get __isEnabled(): boolean {
+		const { o } = this.j;
+		return !o.textIcons && Boolean(o.showTooltip) && !o.useNativeTooltip;
+	}
+
+	/**
+	 * Show tooltips for the buttons in an element outside the editor's
+	 * container, such as a toolbar placed by the `toolbar` option
+	 */
+	attach(container: HTMLElement): void {
+		if (this.__isEnabled) {
+			this.__onAttach(container);
 		}
 	}
 
