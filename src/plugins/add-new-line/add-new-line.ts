@@ -201,6 +201,12 @@ export class addNewLine extends Plugin {
 
 		const { startContainer, startOffset } = editor.s.range;
 
+		// A caret in the editor itself, as beside a horizontal line, is in no
+		// paragraph, and the browsers can leave it there with text beyond (#1803)
+		if (startContainer === editor.editor) {
+			return;
+		}
+
 		// Once the browser has moved the caret, if it could. With a 0 timeout
 		// Jodit would run this at once, before the browser moves it
 		editor.async.setTimeout(() => {

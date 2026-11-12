@@ -277,5 +277,42 @@ describe('Add new Line plugin', function () {
 				expect(editor.value).equals(before);
 			});
 		});
+
+		describe('With the caret in the editor itself, beside a horizontal line (#1803)', function () {
+			it('Should add nothing on ArrowUp after Backspace in an empty line after the line', async function () {
+				const [editor] = load(
+					'<p>Above</p><hr><p>|<br></p><p>Below</p>'
+				);
+
+				simulateEvent('keydown', 'Backspace', editor.editor);
+				expect(editor.s.range.startContainer).equals(editor.editor);
+
+				simulateEvent('keydown', 'ArrowUp', editor.editor);
+				await delay(20);
+
+				expect(editor.value).equals('<p>Above</p><hr><p>Below</p>');
+			});
+
+			[
+				['<p>Above</p><hr><p>Below</p>', 2, 'ArrowUp'],
+				['<p>Above</p><hr><p>Below</p>', 2, 'ArrowLeft'],
+				['<p>Above</p><hr><p>Below</p>', 1, 'ArrowDown'],
+				['<p>Above</p><hr><p>Below</p>', 1, 'ArrowRight']
+			].forEach(([source, offset, key]) => {
+				it(`Should add nothing on ${key} with the caret at ${offset} in ${source}`, async function () {
+					const editor = getJodit();
+					editor.value = source;
+
+					const range = editor.ed.createRange();
+					range.setStart(editor.editor, offset);
+					editor.s.selectRange(range);
+
+					simulateEvent('keydown', key, editor.editor);
+					await delay(20);
+
+					expect(editor.value).equals(source);
+				});
+			});
+		});
 	});
 });
