@@ -18,12 +18,14 @@ import type {
 	IViewOptions
 } from 'jodit/types';
 import { isJoditObject } from 'jodit/core/helpers/checker/is-jodit-object';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isViewObject } from 'jodit/core/helpers/checker/is-view-object';
 import { kebabCase } from 'jodit/core/helpers/string/kebab-case';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
 import { getClassName } from 'jodit/core/helpers/utils/get-class-name';
+import { isUnsafeProtoKey } from 'jodit/core/helpers/utils/is-unsafe-proto-key';
 import { PluginSystem } from 'jodit/core/plugin/plugin-system';
 
 import { eventEmitter as globalEventEmitter } from './event-emitter/global';
@@ -59,13 +61,29 @@ export const pluginSystem = new PluginSystem({
 
 export const modules: IDictionary<Function> = {};
 
+/**
+ * Merge language packs into the global `lang` registry
+ *
+ * `__proto__`, `constructor` and `prototype` are skipped on both levels, so a
+ * pack parsed from untrusted JSON cannot reach `Object.prototype` (CWE-1321).
+ */
 export const extendLang = (langs: IDictionary): void => {
 	Object.keys(langs).forEach(key => {
-		if (lang[key]) {
-			Object.assign(lang[key], langs[key]);
-		} else {
-			lang[key] = langs[key];
+		const pack = langs[key];
+
+		if (isUnsafeProtoKey(key) || !isPlainObject<string>(pack)) {
+			return;
 		}
+
+		if (!Object.prototype.hasOwnProperty.call(lang, key)) {
+			lang[key] = {};
+		}
+
+		Object.keys(pack).forEach(name => {
+			if (!isUnsafeProtoKey(name)) {
+				lang[key][name] = pack[name];
+			}
+		});
 	});
 };
 

@@ -283,5 +283,58 @@
 				);
 			});
 		});
+
+		describe('Jodit.extendLang (GHSA-6gxg-6pj3-m22j)', () => {
+			afterEach(() => {
+				delete Object.prototype.polluted;
+				delete Object.polluted;
+				delete Jodit.lang.xx;
+			});
+
+			it('Should not pollute Object.prototype via a __proto__ pack', () => {
+				Jodit.extendLang(
+					JSON.parse('{"__proto__":{"polluted":"yes"}}')
+				);
+
+				expect({}.polluted).eq(undefined);
+				expect(Object.prototype.polluted).eq(undefined);
+			});
+
+			it('Should not pollute Object.prototype via a __proto__ key inside a pack', () => {
+				Jodit.extendLang(
+					JSON.parse(
+						'{"en":{"__proto__":{"polluted":"yes"}},"xx":{"__proto__":{"polluted":"yes"},"Bold":"Fett"}}'
+					)
+				);
+
+				expect({}.polluted).eq(undefined);
+				expect(Jodit.lang.en.polluted).eq(undefined);
+				expect(Jodit.lang.xx.Bold).eq('Fett');
+				expect(Object.getPrototypeOf(Jodit.lang.xx)).eq(
+					Object.prototype
+				);
+			});
+
+			it('Should ignore constructor and prototype packs', () => {
+				Jodit.extendLang(
+					JSON.parse(
+						'{"constructor":{"polluted":"yes"},"prototype":{"polluted":"yes"}}'
+					)
+				);
+
+				expect(Object.polluted).eq(undefined);
+				expect(Object.prototype.polluted).eq(undefined);
+			});
+
+			it('Should still merge an ordinary pack', () => {
+				Jodit.extendLang({ xx: { Bold: 'Fett' } });
+				Jodit.extendLang({ xx: { Italic: 'Kursiv' } });
+
+				expect(Jodit.lang.xx).deep.eq({
+					Bold: 'Fett',
+					Italic: 'Kursiv'
+				});
+			});
+		});
 	}
 );

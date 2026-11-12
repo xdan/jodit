@@ -195,6 +195,20 @@ const URL_ATTRIBUTES = [
 ];
 
 /**
+ * SVG animation elements can write a URL attribute at run time, as
+ * `<animate attributeName="href" values="javascript:…">` does, and the
+ * attributes below carry the values they write.
+ */
+const ANIMATION_TAGS = new Set([
+	'animate',
+	'set',
+	'animatemotion',
+	'animatetransform'
+]);
+
+const ANIMATION_VALUE_ATTRIBUTES = ['values', 'from', 'to', 'by'];
+
+/**
  * Tags that load their URL as a *document* (scripts inside run). An SVG data
  * URL is only an XSS vector here — as an `<img>` source it renders inertly.
  */
@@ -285,6 +299,24 @@ export function sanitizeHTMLElement(
 			if (value && isDangerousUrl(value, tagName)) {
 				attr(elm, name, null);
 				effected = true;
+			}
+		}
+
+		// SMIL sets the attribute on click time, after the static check above:
+		// `<svg><a><animate attributeName="href" values="javascript:…">` ran
+		// in Chromium and Safari. Drop the values that hold a dangerous
+		// scheme; `values` is a `;` list. See GHSA-6wrw-v5gj-6xg7
+		if (ANIMATION_TAGS.has(tagName)) {
+			for (const name of ANIMATION_VALUE_ATTRIBUTES) {
+				const value = attrRaw(elm, name);
+
+				if (
+					value &&
+					value.split(';').some(part => isDangerousUrl(part, 'a'))
+				) {
+					attr(elm, name, null);
+					effected = true;
+				}
 			}
 		}
 	}

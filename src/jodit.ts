@@ -53,6 +53,7 @@ import {
 } from 'jodit/core/decorators';
 import {
 	eventEmitter,
+	extendLang,
 	instances,
 	modules,
 	pluginSystem
@@ -313,6 +314,11 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 	static readonly instances: IDictionary<IJodit> = instances;
 
 	static readonly lang: any = lang;
+
+	/**
+	 * Merge language packs into `Jodit.lang`; prototype keys are ignored
+	 */
+	static readonly extendLang: (langs: IDictionary) => void = extendLang;
 
 	static readonly core = {
 		Plugin

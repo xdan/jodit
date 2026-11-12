@@ -137,6 +137,56 @@ describe('Security test', () => {
 					);
 				});
 			});
+
+			describe('SVG animation writes a javascript: href (GHSA-6wrw-v5gj-6xg7)', () => {
+				it('Should drop the animated values with a dangerous scheme', () => {
+					const editor = getJodit();
+					editor.value =
+						'<svg width="80" height="20"><a>' +
+						'<animate attributeName="href" values="javascript:alert(document.domain)" begin="0s" fill="freeze"></animate>' +
+						'<set attributeName="xlink:href" to="JavaScript:alert(1)"></set>' +
+						'<animate attributeName="href" from="https://xdsoft.net" to="data:text/html,<script>alert(1)</script>"></animate>' +
+						'<text x="0" y="15">click here</text></a></svg>';
+
+					expect(/javascript:|data:text\/html/i.test(editor.value)).is
+						.false;
+					expect(sortAttributes(editor.value)).eq(
+						'<p><svg height="20" width="80"><a>' +
+							'<animate attributename="href" begin="0s" fill="freeze"></animate>' +
+							'<set attributename="xlink:href"></set>' +
+							'<animate attributename="href" from="https://xdsoft.net"></animate>' +
+							'<text x="0" y="15">click here</text></a></svg></p>'
+					);
+				});
+
+				it('Should drop a dangerous scheme hidden in a values list or behind control characters', () => {
+					const editor = getJodit();
+					editor.value =
+						'<svg><a>' +
+						'<animate attributeName="href" values="https://xdsoft.net;java\tscript:alert(1)"></animate>' +
+						'<text>x</text></a></svg>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<p><svg><a><animate attributename="href"></animate><text>x</text></a></svg></p>'
+					);
+				});
+
+				it('Should keep an ordinary animation', () => {
+					const editor = getJodit();
+					editor.value =
+						'<svg><rect width="10" height="10">' +
+						'<animate attributeName="x" from="0" to="10" dur="1s" repeatCount="indefinite"></animate>' +
+						'<animate attributeName="fill" values="red;blue;red" dur="2s"></animate>' +
+						'</rect></svg>';
+
+					expect(sortAttributes(editor.value)).eq(
+						'<p><svg><rect height="10" width="10">' +
+							'<animate attributename="x" dur="1s" from="0" repeatcount="indefinite" to="10"></animate>' +
+							'<animate attributename="fill" dur="2s" values="red;blue;red"></animate>' +
+							'</rect></svg></p>'
+					);
+				});
+			});
 		});
 
 		describe('Insert ready Node', () => {
