@@ -81,6 +81,87 @@ describe('Test interface', function () {
 		});
 	});
 
+	describe('Text styles of the page (#1812)', function () {
+		let style;
+
+		beforeEach(() => {
+			style = document.createElement('style');
+			style.textContent =
+				'html body { color: rgb(30, 115, 190); font-family: Georgia, serif; font-weight: 300; line-height: 2; }' +
+				'a { color: rgb(204, 0, 0); font-weight: 700; }';
+			document.head.appendChild(style);
+		});
+
+		afterEach(() => {
+			style.remove();
+		});
+
+		function expectUnchangedByPage(
+			element,
+			properties = ['color', 'fontFamily', 'fontWeight', 'lineHeight']
+		) {
+			const read = () => {
+				const computed = getComputedStyle(element);
+				return Object.fromEntries(
+					properties.map(property => [property, computed[property]])
+				);
+			};
+
+			const withPage = read();
+			style.disabled = true;
+			const withoutPage = read();
+			style.disabled = false;
+
+			expect(withPage).deep.equals(withoutPage);
+		}
+
+		it('Should not reach the text of popups, dialogs and messages', () => {
+			const editor = getJodit({
+				toolbarAdaptive: false,
+				buttons: ['link', 'symbols']
+			});
+
+			clickButton('link', editor);
+			expectUnchangedByPage(
+				getOpenedPopup(editor).querySelector(
+					'.jodit-ui-checkbox__label'
+				)
+			);
+
+			clickButton('symbols', editor);
+			const dialog = getOpenedDialog(editor);
+			expectUnchangedByPage(
+				dialog.querySelector('.jodit-dialog__header-title')
+			);
+			expectUnchangedByPage(
+				dialog.querySelector('.jodit-symbols__table a')
+			);
+
+			editor.message.info('A message');
+			expectUnchangedByPage(
+				editor.container.querySelector('.jodit-ui-message')
+			);
+		});
+
+		it('Should not reach the links Jodit uses as controls', async () => {
+			const editor = getJodit();
+			editor.value =
+				'<p><img src="tests/artio.jpg" width="80" height="40"></p>';
+
+			simulateEvent('dblclick', editor.editor.querySelector('img'));
+			await editor.async.requestIdlePromise();
+
+			const dialog = getOpenedDialog(editor);
+			expectUnchangedByPage(
+				dialog.querySelector(
+					'.jodit-ui-image-properties-form__lockSize'
+				),
+				['color']
+			);
+			expectUnchangedByPage(dialog.querySelector('a.jodit-button'));
+		});
+	});
+
 	describe('className', function () {
 		it('Should apply className to the main container area', () => {
 			const editor = getJodit({

@@ -9,6 +9,12 @@
 
 .jodit-ui-image-position-tab,
 .jodit-ui-image-properties-form {
+	// Its icon is drawn in `currentColor`, which a page's link colour would set
+	&__lockMargin,
+	&__lockSize {
+		color: inherit;
+	}
+
 	&__lockMargin > svg,
 	&__lockSize > svg {
 		display: inline-block;
