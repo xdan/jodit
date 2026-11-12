@@ -45,8 +45,7 @@ const MARKER_STYLE = `${MARKER}{display:inline-block;width:.75em;height:1em;marg
 /**
  * The attribute `markAnchor` gives an anchor: an empty `<a>` with no `href`
  */
-const MARK =
-	/(<a\b(?![^>]*\shref=)[^>]*?)\scontenteditable="false"([^>]*>)(?=<\/a>)/g;
+const MARK = ' contenteditable="false"';
 
 /**
  * Inserts anchors, empty `<a id>` that links in the document reach as
@@ -117,7 +116,7 @@ export class anchor extends Plugin {
 	 */
 	@watch(':afterGetValueFromEditor')
 	protected onAfterGetValueFromEditor(data: { value: string }): void {
-		data.value = data.value.replace(MARK, '$1$2');
+		data.value = unmarkAnchors(data.value);
 	}
 
 	/**
@@ -327,6 +326,53 @@ function markAnchor(anchor: HTMLAnchorElement): void {
 	if (attr(anchor, 'contenteditable') !== 'false') {
 		attr(anchor, 'contenteditable', false);
 	}
+}
+
+/**
+ * Takes `MARK` off each anchor in one pass over the tags, as a regex with
+ * `[^>]*` backtracks quadratically on a long run of `<a` (CWE-1333)
+ */
+function unmarkAnchors(html: string): string {
+	if (!html.includes(MARK)) {
+		return html;
+	}
+
+	let result = '';
+	let copied = 0;
+	let cursor = 0;
+
+	for (;;) {
+		const start = html.indexOf('<', cursor);
+
+		if (start === -1) {
+			break;
+		}
+
+		const end = html.indexOf('>', start);
+
+		if (end === -1) {
+			break;
+		}
+
+		if (
+			html.startsWith('<a', start) &&
+			/\s/.test(html.charAt(start + 2)) &&
+			html.startsWith('</a>', end + 1)
+		) {
+			const tag = html.slice(start, end);
+			const at = tag.indexOf(MARK);
+
+			if (at !== -1 && !/\shref=/.test(tag)) {
+				result += html.slice(copied, start + at);
+				copied = start + at + MARK.length;
+			}
+		}
+
+		// Past the whole tag, so an `<a` inside one of its attributes is never read as a tag
+		cursor = end + 1;
+	}
+
+	return copied === 0 ? html : result + html.slice(copied);
 }
 
 pluginSystem.add('anchor', anchor);

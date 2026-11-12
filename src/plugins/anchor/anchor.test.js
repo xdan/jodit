@@ -138,6 +138,17 @@ describe('Anchor plugin', () => {
 			);
 		});
 
+		it('should take linear time on a long run of <a in the value (ReDoS)', () => {
+			const editor = getJodit();
+			const value = `<p>A<a id="x"></a>B</p><!--${'<a '.repeat(30000)}-->`;
+			editor.value = value;
+
+			const start = performance.now();
+			const read = editor.value;
+			expect(performance.now() - start).is.below(500);
+			expect(read).equals(value);
+		});
+
 		it('should leave links, and named links holding text, as they were', () => {
 			const editor = getJodit();
 			editor.value =
