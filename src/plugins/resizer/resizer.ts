@@ -27,6 +27,7 @@ import {
 	markOwner,
 	offset
 } from 'jodit/core/helpers';
+import { unwrapMarkedTags } from 'jodit/core/helpers/html/tag-scan';
 import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin/plugin';
 import { isMoved } from 'jodit/core/selection/helpers';
@@ -144,12 +145,12 @@ export class resizer extends Plugin {
 			.on(
 				'afterGetValueFromEditor.resizer',
 				(data: { value: string }) => {
-					const rgx =
-						/<jodit[^>]+data-jodit_iframe_wrapper[^>]+>(.*?<iframe[^>]*>.*?<\/iframe>.*?)<\/jodit>/gi;
-
-					if (rgx.test(data.value)) {
-						data.value = data.value.replace(rgx, '$1');
-					}
+					data.value = unwrapMarkedTags(
+						data.value,
+						'jodit',
+						'data-jodit_iframe_wrapper',
+						inner => /<iframe/i.test(inner)
+					);
 				}
 			);
 

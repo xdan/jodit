@@ -24,6 +24,7 @@ import {
 	isString,
 	isVoid
 } from 'jodit/core/helpers/checker';
+import { removeTagsByPrefix } from 'jodit/core/helpers/html/tag-scan';
 import { Button } from 'jodit/core/ui/button/button/button';
 
 import type { PasteEvent } from './interface';
@@ -33,7 +34,7 @@ import type { PasteEvent } from './interface';
  * @private
  */
 function removeExtraFragments(html: string): string {
-	html = html.replace(/<meta[^>]+?>/g, '');
+	html = removeTagsByPrefix(html, ['<meta']);
 
 	const start = html.search(/<!--StartFragment-->/i);
 
@@ -58,7 +59,8 @@ function removeExtraFragments(html: string): string {
  * @private
  */
 export function removeGoogleDocsWrapper(html: string): string {
-	if (!/<b\s[^>]*docs-internal-guid-/i.test(html)) {
+	// A plain search: the wrapper check is left to the parsed document below
+	if (!/docs-internal-guid-/i.test(html)) {
 		return html;
 	}
 

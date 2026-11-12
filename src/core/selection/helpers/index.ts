@@ -8,11 +8,9 @@
  * @module selection
  */
 
-import {
-	INVISIBLE_SPACE_REG_EXP_END as INV_END,
-	INVISIBLE_SPACE_REG_EXP_START as INV_START
-} from 'jodit/core/constants';
+import { INVISIBLE_SPACE_REG_EXP_START as INV_START } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
+import { trimInvEnd } from 'jodit/core/helpers/string/trim';
 
 export * from './composed-ranges';
 export * from './is-moved';
@@ -33,7 +31,7 @@ export function cursorInTheEdgeOfString(
 ): boolean {
 	const text = container.nodeValue?.length ? container.nodeValue : '';
 
-	if (end && text.replace(INV_END(), '').length > offset) {
+	if (end && trimInvEnd(text).length > offset) {
 		return true;
 	}
 

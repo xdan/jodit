@@ -398,8 +398,9 @@
 
 							expect(changeCounter).equals(2);
 
+							// The document is the same in both modes, so the switch alone changes nothing
 							editor.toggleMode();
-							expect(changeCounter).equals(3);
+							expect(changeCounter).equals(2);
 
 							editor.__plugins.source.sourceEditor.instance.value =
 								'Some text3';
@@ -407,7 +408,7 @@
 								'change',
 								editor.__plugins.source.sourceEditor.instance
 							);
-							expect(changeCounter).equals(4);
+							expect(changeCounter).equals(3);
 
 							editor.toggleMode();
 							editor.editor.appendChild(
@@ -416,7 +417,7 @@
 							editor.synchronizeValues();
 							simulateEvent('keydown', 'x', editor.editor);
 
-							expect(changeCounter).above(4);
+							expect(changeCounter).above(3);
 						});
 					});
 				});

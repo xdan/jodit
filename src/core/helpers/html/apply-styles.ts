@@ -11,6 +11,10 @@
 import { globalDocument, IS_PROD } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import {
+	indexOfOpenTag,
+	removeWordWrappers
+} from 'jodit/core/helpers/html/tag-scan';
+import {
 	readWordListItems,
 	wrapWordListItems
 } from 'jodit/core/helpers/html/word-lists';
@@ -19,12 +23,28 @@ import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
 import { $$ } from 'jodit/core/helpers/utils/selector';
 
+// Drop the `mso-*` and `border*` declarations and turn pt/cm into px; one declaration at a time, so a long value cannot make the regexes backtrack
 function normalizeCSS(s: string): string {
-	return s
-		.replace(/mso-[a-z-]+:[\s]*[^;]+;/gi, '')
-		.replace(/mso-[a-z-]+:[\s]*[^";']+$/gi, '')
-		.replace(/border[a-z-]*:[\s]*[^;]+;/gi, '')
-		.replace(/([0-9.]+)(pt|cm)/gi, (match, units, metrics) => {
+	const declarations = s.split(';');
+	const last = declarations.length - 1;
+
+	return declarations
+		.filter((declaration, index) => {
+			const match = /^\s*([a-z-]{1,64})\s*:/i.exec(declaration);
+
+			if (!match) {
+				return true;
+			}
+
+			const property = match[1].toLowerCase();
+
+			return !(
+				property.startsWith('mso-') ||
+				(property.startsWith('border') && index !== last)
+			);
+		})
+		.join(';')
+		.replace(/([0-9.]{1,32})(pt|cm)/gi, (match, units, metrics) => {
 			switch (metrics.toLowerCase()) {
 				case 'pt':
 					return (parseFloat(units) * 1.328).toFixed(0) + 'px';
@@ -50,13 +70,13 @@ export function applyStyles(html: string): string {
 	// cell backgrounds/borders, e.g. `.xl31 { background:#FCE4D6 }`) were never
 	// inlined and all styling was lost once the `<style>` block got stripped.
 	// See https://github.com/xdan/jodit/issues/1362
-	const openMatch = /<html(?:\s[^>]*)?>/i.exec(html);
+	const open = indexOfOpenTag(html, 'html');
 
-	if (!openMatch) {
+	if (open === -1) {
 		return html;
 	}
 
-	html = html.substring(openMatch.index);
+	html = html.substring(open);
 
 	const closeIndex = html.toLowerCase().lastIndexOf('</html>');
 
@@ -162,9 +182,5 @@ export function applyStyles(html: string): string {
 		html = convertedString;
 	}
 
-	return trim(
-		html
-			.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-			.replace(/<!--[^>]*>/g, '')
-	);
+	return trim(removeWordWrappers(html));
 }

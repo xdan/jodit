@@ -14,6 +14,7 @@ import type { IJodit, MediaWrapper } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { getContainer, pluginSystem } from 'jodit/core/global';
+import { unwrapMarkedTags } from 'jodit/core/helpers/html/tag-scan';
 import {
 	$$,
 	attr,
@@ -124,14 +125,11 @@ export function media(editor: IJodit): void {
 	if (mediaInFakeBlock || Object.keys(mediaWrappers).length) {
 		editor.e
 			.on('afterGetValueFromEditor', (data: { value: string }) => {
-				const rxp = new RegExp(
-					`<${mediaFakeTag}[^>]+data-${keyFake}[^>]+>([^]+?)</${mediaFakeTag}>`,
-					'ig'
+				data.value = unwrapMarkedTags(
+					data.value,
+					mediaFakeTag,
+					`data-${keyFake}`
 				);
-
-				if (rxp.test(data.value)) {
-					data.value = data.value.replace(rxp, '$1');
-				}
 			})
 			.on(
 				'change afterInit afterSetMode changePlace',

@@ -78,6 +78,7 @@ import {
 	toArray,
 	ucfirst
 } from 'jodit/core/helpers';
+import { removeEmptyMarkedTags } from 'jodit/core/helpers/html/tag-scan';
 import { cssInline } from 'jodit/core/helpers/utils/css';
 import { Ajax } from 'jodit/core/request';
 import { Dlgs } from 'jodit/core/traits/dlgs';
@@ -620,9 +621,10 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 		);
 
 		if (removeSelectionMarkers) {
-			value = value.replace(
-				/<span[^>]+id="jodit-selection_marker_[^>]+><\/span>/g,
-				''
+			value = removeEmptyMarkedTags(
+				value,
+				'span',
+				'id="jodit-selection_marker_'
 			);
 		}
 

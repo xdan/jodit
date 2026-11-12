@@ -11,6 +11,7 @@
 import { globalDocument } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
+import { removeWordWrappers } from 'jodit/core/helpers/html/tag-scan';
 import {
 	readWordListItems,
 	wrapWordListItems
@@ -120,7 +121,5 @@ export function cleanFromWord(html: string): string {
 
 	html = html.split(/(\n)/).filter(trim).join('\n');
 
-	return html
-		.replace(/<(\/)?(html|colgroup|col|o:p)[^>]*>/g, '')
-		.replace(/<!--[^>]*>/g, '');
+	return removeWordWrappers(html);
 }

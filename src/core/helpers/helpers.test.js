@@ -65,6 +65,97 @@ describe('Test helpers', () => {
 	});
 
 	describe('Checkers', () => {
+		describe('isHTML', () => {
+			const { isHTML } = Jodit.modules.Helpers;
+
+			it('Should be true only for a string with an element and its closing tag', () => {
+				const values = [
+					['<p>a</p>', true],
+					['<p class="x">a <b>b</b></p>', true],
+					['<div>\n<p>a</p>\n</div>', true],
+					['<p>a', false],
+					['<br><br/>', false],
+					['x < 1 && y > 2', false],
+					['<p>a</P>', false],
+					['', false],
+					[123, false],
+					[null, false]
+				];
+
+				for (const [value, result] of values) {
+					expect(isHTML(value)).equals(result, String(value));
+				}
+			});
+
+			it('Should take linear time on a long run of unclosed tags (ReDoS)', () => {
+				const start = performance.now();
+
+				expect(isHTML('<a>'.repeat(100000))).is.false;
+				expect(isHTML('<a'.repeat(100000))).is.false;
+				expect(isHTML('<p class="x">'.repeat(50000) + '</p>')).is.true;
+
+				expect(performance.now() - start).is.below(500);
+			});
+		});
+
+		describe('isHtmlFromWord', () => {
+			const { isHtmlFromWord } = Jodit.modules.Helpers;
+
+			it('Should detect the Word, Excel and LibreOffice clipboard markers', () => {
+				const values = [
+					[
+						'<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:w="urn:schemas-microsoft-com:office:word"><p>a</p></html>',
+						true
+					],
+					[
+						'<head><meta http-equiv=Content-Type content="text/html; charset=utf-8"><meta name=ProgId content=Word.Document><meta name=Generator content="Microsoft Word 15"></head>',
+						true
+					],
+					[
+						'<meta name=Generator content="Microsoft Excel 16">',
+						true
+					],
+					['<meta name=ProgId content=Excel.Sheet>', true],
+					[
+						'<meta name="generator" content="LibreOffice 7.6.4.1 (Linux)"/>',
+						true
+					],
+					['<p class=MsoNormal><span>a</span></p>', true],
+					['<p class="MsoListParagraph">a</p>', true],
+					[
+						"<p style='margin-left:36.0pt;mso-list:l0 level1 lfo1'>a</p>",
+						true
+					],
+					['<font face="Calibri"><p style="mso-list:l0">a</p>', true],
+					['<p style="mso-list:l0">a</p>', false],
+					['<p>I use Microsoft Word 2016 daily</p>', false],
+					[
+						'<html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width"></head><body><p class="lead">Hello <b>world</b></p></body></html>',
+						false
+					],
+					['class=MsoNormal as plain text', false],
+					['', false]
+				];
+
+				for (const [value, result] of values) {
+					expect(isHtmlFromWord(value)).equals(result, value);
+				}
+			});
+
+			it('Should take linear time on a long run of meta tags (ReDoS)', () => {
+				const start = performance.now();
+
+				expect(
+					isHtmlFromWord('<pre>' + '<meta'.repeat(52428) + '</pre>')
+				).is.false;
+				expect(isHtmlFromWord('<a'.repeat(52428))).is.false;
+				expect(isHtmlFromWord("style='".repeat(40000))).is.false;
+				expect(isHtmlFromWord('<meta ' + 'x'.repeat(260000))).is.false;
+
+				expect(performance.now() - start).is.below(500);
+			});
+		});
+
 		describe('isVoid', () => {
 			it('Should check value is undefned or null', () => {
 				const values = [
@@ -321,6 +412,168 @@ describe('Test helpers', () => {
 	});
 
 	describe('HTML', () => {
+		describe('Tag scans', () => {
+			const {
+				removeTagsByPrefix,
+				removeWordWrappers,
+				indexOfOpenTag,
+				unwrapMarkedTags,
+				removeEmptyMarkedTags,
+				removeBetween
+			} = Jodit.modules.Helpers;
+
+			it('Should remove the tags that start with a prefix, up to their closing bracket', () => {
+				expect(
+					removeTagsByPrefix(
+						'<META charset="utf-8"><p>a</p><meta name="x" content="y">',
+						['<meta']
+					)
+				).equals('<p>a</p>');
+
+				expect(removeTagsByPrefix('<p>a</p>', ['<meta'])).equals(
+					'<p>a</p>'
+				);
+			});
+
+			it('Should strip the Word wrapper tags and comments', () => {
+				expect(
+					removeWordWrappers(
+						'<html xmlns:o="urn:schemas-microsoft-com:office:office"><!--[if gte mso 9]><xml></xml><![endif]--><p>a<o:p></o:p></p><colgroup><col width=64></colgroup></html>'
+					)
+				).equals('<xml></xml><![endif]--><p>a</p>');
+			});
+
+			it('Should find the html tag with or without attributes', () => {
+				expect(
+					indexOfOpenTag('<p>x</p><html xmlns:o="a">', 'html')
+				).equals(8);
+				expect(indexOfOpenTag('<HTML><body>', 'html')).equals(0);
+				expect(indexOfOpenTag('<htmlx>', 'html')).equals(-1);
+				expect(indexOfOpenTag('<html', 'html')).equals(-1);
+			});
+
+			it('Should unwrap the marked elements and keep the others', () => {
+				expect(
+					unwrapMarkedTags(
+						'<p><jodit-media data-jodit_fake_wrapper="1"><video src="a"></video></jodit-media><jodit-media>x</jodit-media></p>',
+						'jodit-media',
+						'data-jodit_fake_wrapper'
+					)
+				).equals(
+					'<p><video src="a"></video><jodit-media>x</jodit-media></p>'
+				);
+
+				expect(
+					unwrapMarkedTags(
+						'<b data-jodit-temp="1">x</b><i data-jodit-temp="1"><u>y</u></i>',
+						null,
+						'data-jodit-temp'
+					)
+				).equals('x<u>y</u>');
+
+				expect(
+					unwrapMarkedTags(
+						'<jodit data-jodit_iframe_wrapper="1"><p>no iframe</p></jodit>',
+						'jodit',
+						'data-jodit_iframe_wrapper',
+						inner => /<iframe/i.test(inner)
+					)
+				).equals(
+					'<jodit data-jodit_iframe_wrapper="1"><p>no iframe</p></jodit>'
+				);
+			});
+
+			it('Should remove the empty marked elements only', () => {
+				expect(
+					removeEmptyMarkedTags(
+						'<p>a<span id="jodit-selection_marker_1_a" data-jodit-selection_marker="start" style="line-height: 0; display: none;"></span>b<span id="x">c</span></p>',
+						'span',
+						'id="jodit-selection_marker_'
+					)
+				).equals('<p>ab<span id="x">c</span></p>');
+			});
+
+			it('Should remove the blocks between an opener with the marker and its closer', () => {
+				expect(
+					removeBetween(
+						'<style class="jodit-box">.a{}</style><style>.b{}</style><span>x</span>',
+						'<style',
+						'>',
+						'</style>',
+						'jodit-box'
+					)
+				).equals('<style>.b{}</style><span>x</span>');
+
+				expect(
+					removeBetween(
+						'a<span>x</span>b<span c>y</span>',
+						'<span',
+						'>',
+						'</span>'
+					)
+				).equals('ab');
+			});
+
+			it('Should take linear time on crafted input (ReDoS)', () => {
+				const start = performance.now();
+
+				removeTagsByPrefix('<metae'.repeat(50000), ['<meta']);
+				removeWordWrappers('<o:p'.repeat(50000) + '<!--'.repeat(50000));
+				indexOfOpenTag('<HTML\t'.repeat(50000), 'html');
+				removeEmptyMarkedTags(
+					'<spano'.repeat(10000) +
+						'id="jodit-selection_marker_o'.repeat(10000),
+					'span',
+					'id="jodit-selection_marker_'
+				);
+				unwrapMarkedTags(
+					'<jodit data-jodit_iframe_wrapper="1">' +
+						'<iframe>_'.repeat(30000),
+					'jodit',
+					'data-jodit_iframe_wrapper'
+				);
+				unwrapMarkedTags(
+					'<b data-jodit-temp="1">'.repeat(20000),
+					null,
+					'data-jodit-temp'
+				);
+				removeBetween(
+					'<styles'.repeat(30000) + 'jodit-box'.repeat(30000),
+					'<style',
+					'>',
+					'</style>',
+					'jodit-box'
+				);
+
+				expect(performance.now() - start).is.below(500);
+			});
+		});
+
+		describe('trim', () => {
+			const { trim, trimInv, trimInvEnd, trimChars } =
+				Jodit.modules.Helpers;
+
+			it('Should cut the spaces and invisible chars from both ends', () => {
+				expect(trim(' \t\n a b \uFEFF\u200b')).equals('a b');
+				expect(trim('ab')).equals('ab');
+				expect(trim('   ')).equals('');
+				expect(trimInv('\uFEFFa \uFEFF')).equals('a ');
+				expect(trimInvEnd('\uFEFFa\uFEFF\uFEFF')).equals('\uFEFFa');
+				expect(trimChars('//a/b//', '/')).equals('a/b');
+			});
+
+			it('Should take linear time on a long run of spaces in the middle (ReDoS)', () => {
+				const start = performance.now();
+
+				expect(
+					trim(' '.repeat(300000) + 'a' + ' '.repeat(300000))
+				).equals('a');
+				expect(trimInv('\uFEFF'.repeat(300000) + 'a')).equals('a');
+
+				expect(performance.now() - start).is.below(500);
+			});
+		});
+
 		describe('stripTags', () => {
 			const values = [
 				['<p>Type something<p>', 'Type something'],

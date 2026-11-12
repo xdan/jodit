@@ -37,6 +37,7 @@ import { isHTML } from 'jodit/core/helpers/checker/is-html';
 import { isSet } from 'jodit/core/helpers/checker/is-set';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { isVoid } from 'jodit/core/helpers/checker/is-void';
+import { unwrapMarkedTags } from 'jodit/core/helpers/html/tag-scan';
 import { trim } from 'jodit/core/helpers/string/trim';
 import { assert } from 'jodit/core/helpers/utils/assert';
 import { attr } from 'jodit/core/helpers/utils/attr';
@@ -44,11 +45,6 @@ import { css } from 'jodit/core/helpers/utils/css';
 import { dataBind } from 'jodit/core/helpers/utils/data-bind';
 import { error } from 'jodit/core/helpers/utils/error';
 import { call } from 'jodit/core/helpers/utils/utils';
-
-const TEMP_ELEMENT_REG_EXP = new RegExp(
-	`<([a-z]+)[^>]+${TEMP_ATTR}[^>]*>(.+?)</\\1>`,
-	'gi'
-);
 
 /**
  * Module for working with DOM
@@ -1294,7 +1290,7 @@ export class Dom {
 	 * Unwrap temporary elements inside a HTML string (keeps their content)
 	 */
 	static replaceTemporaryFromString(value: string): string {
-		return value.replace(TEMP_ELEMENT_REG_EXP, '$2');
+		return unwrapMarkedTags(value, null, TEMP_ATTR);
 	}
 
 	/**

@@ -14,3 +14,4 @@ export * from './htmlspecialchars';
 export * from './nl2br';
 export * from './safe-html';
 export * from './strip-tags';
+export * from './tag-scan';

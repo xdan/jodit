@@ -22,6 +22,11 @@ import {
 	css,
 	defaultLanguage
 } from 'jodit/core/helpers/';
+import {
+	indexOfClosingTag,
+	indexOfOpenTag,
+	removeBetween
+} from 'jodit/core/helpers/html/tag-scan';
 
 import './config';
 
@@ -139,43 +144,122 @@ export function iframe(editor: IJodit): void {
 					);
 				};
 
-				const clearMarkers = (html: string): string => {
-					// The plugins' own styles, from `getContainer`, aren't part of the value
-					html = html.replace(
-						/<style[^>]+jodit-box[^>]*>[\s\S]*?<\/style>/gi,
+				// The start of the whitespace run that ends at `to`
+				const skipBack = (text: string, to: number): number => {
+					while (to > 0 && /\s/.test(text.charAt(to - 1))) {
+						to -= 1;
+					}
+
+					return to;
+				};
+
+				// The editor's own attributes on `<body>`: `min-height` and `contenteditable=true`
+				const cleanBodyTag = (tag: string): string => {
+					tag = tag.replace(
+						/min-height["'\s]*:[\s"']*[0-9]+(px|%)/i,
 						''
 					);
 
-					const bodyReg = /<body.*<\/body>/im,
-						bodyMarker = '{%%BODY%%}',
-						body = bodyReg.exec(html);
+					const skip = (from: number, chars: RegExp): number => {
+						while (chars.test(tag.charAt(from))) {
+							from += 1;
+						}
 
-					if (body) {
-						// remove markers
-						html = html
-							.replace(bodyReg, bodyMarker)
-							.replace(/<span([^>]*?)>(.*?)<\/span>/gim, '')
-							.replace(
-								/&lt;span([^&]*?)&gt;(.*?)&lt;\/span&gt;/gim,
-								''
-							)
-							.replace(
-								bodyMarker,
+						return from;
+					};
 
-								body[0]
-									.replace(
-										/(<body[^>]+?)min-height["'\s]*:[\s"']*[0-9]+(px|%)/im,
-										'$1'
-									)
-									.replace(
-										/(<body[^>]+?)([\s]*["'])?contenteditable["'\s]*=[\s"']*true["']?/im,
-										'$1'
-									)
-									.replace(
-										/<(style|script|span)[^>]+jodit[^>]+>.*?<\/\1>/g,
-										''
-									)
-							)
+					let index = tag.indexOf('contenteditable');
+
+					while (index !== -1) {
+						let to = skip(
+							index + 'contenteditable'.length,
+							/["'\s]/
+						);
+
+						if (tag.charAt(to) === '=') {
+							to = skip(to + 1, /[\s"']/);
+
+							if (tag.startsWith('true', to)) {
+								to = skip(to + 4, /["']/);
+
+								let from = index;
+
+								if (/["']/.test(tag.charAt(from - 1))) {
+									from -= 1;
+								}
+
+								from = skipBack(tag, from);
+
+								return tag.slice(0, from) + tag.slice(to);
+							}
+						}
+
+						index = tag.indexOf('contenteditable', index + 1);
+					}
+
+					return tag;
+				};
+
+				const clearMarkers = (html: string): string => {
+					// The plugins' own styles, from `getContainer`, aren't part of the value
+					html = removeBetween(
+						html,
+						'<style',
+						'>',
+						'</style>',
+						'jodit-box'
+					);
+
+					const bodyStart = indexOfOpenTag(html, 'body');
+					let bodyEnd = -1;
+
+					for (
+						let index = indexOfClosingTag(
+							html,
+							'body',
+							bodyStart + 1
+						);
+						index !== -1;
+						index = indexOfClosingTag(html, 'body', index + 1)
+					) {
+						bodyEnd = index;
+					}
+
+					if (bodyStart !== -1 && bodyEnd !== -1) {
+						const afterBody = bodyEnd + '</body>'.length;
+						const gt = html.indexOf('>', bodyStart);
+						let body = html.slice(bodyStart, afterBody);
+
+						if (gt !== -1 && gt < bodyEnd) {
+							body =
+								cleanBodyTag(html.slice(bodyStart, gt)) +
+								html.slice(gt, afterBody);
+						}
+
+						for (const tag of ['style', 'script', 'span']) {
+							body = removeBetween(
+								body,
+								'<' + tag,
+								'>',
+								'</' + tag + '>',
+								'jodit'
+							);
+						}
+
+						// remove markers: the spans outside the body are the editor's own
+						const stripSpans = (part: string): string =>
+							removeBetween(
+								removeBetween(part, '<span', '>', '</span>'),
+								'&lt;span',
+								'&gt;',
+								'&lt;/span&gt;'
+							);
+
+						html = (
+							stripSpans(html.slice(0, bodyStart)) +
+							body +
+							stripSpans(html.slice(afterBody))
+						)
 							.replace(
 								/(class\s*=\s*)(['"])([^"']*)(jodit-wysiwyg|jodit)([^"']*\2)/g,
 								'$1$2$3$5'

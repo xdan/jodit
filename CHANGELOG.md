@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.11
+
+#### :bug: Bug Fix
+
+- Security: `isHtmlFromWord` and `isHTML`, which run on every paste, used regexes that backtracked quadratically on crafted clipboard HTML (a long run of `<meta` or `<a`), so a 256 KB paste froze the tab for half a minute (CWE-1333, ReDoS). Both are single `indexOf` scans now, as are the other tag searches on the paste and value paths: the `<meta>` and Word wrapper clean-up, the selection marker, temporary element, media and iframe wrapper removal, the iframe document marker clean-up, `trim` and the `mso-` style filter. Reported by Jiawei Guo.
+
 ## 4.19.10
 
 #### :bug: Bug Fix
@@ -435,7 +441,7 @@ Thanks to Brendon Muir for all of the above.
 
 #### :bug: Bug Fix
 
-- Link dialog: a brand-new link inserted at a collapsed caret was left *selected* after the dialog closed. Safari does not paint that selection, so the link looked plain and the next Enter silently replaced it instead of starting a new line (Chrome/Firefox showed the same selection, just visibly). The caret is now placed right after the freshly inserted link; making a link out of a text selection keeps the selection as before. Reported by an OEM customer via the support tracker.
+- Link dialog: a brand-new link inserted at a collapsed caret was left _selected_ after the dialog closed. Safari does not paint that selection, so the link looked plain and the next Enter silently replaced it instead of starting a new line (Chrome/Firefox showed the same selection, just visibly). The caret is now placed right after the freshly inserted link; making a link out of a text selection keeps the selection as before. Reported by an OEM customer via the support tracker.
 
 ## 4.15.5
 
@@ -483,7 +489,7 @@ Thanks to Brendon Muir for all of the above.
 
 #### :bug: Bug Fix
 
-- **File browser**: the **Download** item of the file context menu showed the *upload* icon (arrow pointing up into a tray). Added a dedicated `download` icon (arrow pointing down, same Font Awesome style as the rest of the set — also available via `Jodit.modules.Icon.get('download')`) and used it for that item. Fixes [#1472](https://github.com/xdan/jodit/issues/1472).
+- **File browser**: the **Download** item of the file context menu showed the _upload_ icon (arrow pointing up into a tray). Added a dedicated `download` icon (arrow pointing down, same Font Awesome style as the rest of the set — also available via `Jodit.modules.Icon.get('download')`) and used it for that item. Fixes [#1472](https://github.com/xdan/jodit/issues/1472).
 
 ## 4.14.6
 
@@ -544,7 +550,7 @@ Thanks to Brendon Muir for all of the above.
 
 #### :house: Internal
 
-- **DOM access goes through the `Dom` module only.** Groundwork for virtual-DOM editing, no public API changes: parameter types are widened, return types untouched. New `src/types/vdom.d.ts` describes the structural subset of the browser DOM the editor relies on (`VNode`, `VElement`, `VHTMLElement`, `VStyle`, `VDocument`); browser nodes satisfy it, so existing call sites compile unchanged. The `Dom` mutation/structural core (`append`, `prepend`, `after`, `before`, `appendChildFirst`, `detach`, `unwrap`, `moveContent`, `sibling`, `hide`/`show`) is typed against that subset and deduplicated (`first`/`last` share one traversal, `prevWithClass`/`nextWithClass` share one helper). A new *Virtual DOM contract* suite in `dom.test.js` runs `Dom` against a non-browser VNode implementation, pinning the invariant at runtime. Across `core`, `modules`, `plugins` and `jodit.ts`: no direct `appendChild`/`insertBefore`/`removeChild`/`replaceChild` left outside `Dom` (was ~207 call sites), `.style.x =` → `css()`/`VStyle`, `get`/`setAttribute` → `attr()`, `querySelector` reduced to the sanctioned boundaries (user-supplied selectors in `selector.ts`, pasted stylesheet selectors in `apply-styles.ts`, the `BASE_PATH` bootstrap in `constants.ts`, the sanitizers). [#1441](https://github.com/xdan/jodit/pull/1441)
+- **DOM access goes through the `Dom` module only.** Groundwork for virtual-DOM editing, no public API changes: parameter types are widened, return types untouched. New `src/types/vdom.d.ts` describes the structural subset of the browser DOM the editor relies on (`VNode`, `VElement`, `VHTMLElement`, `VStyle`, `VDocument`); browser nodes satisfy it, so existing call sites compile unchanged. The `Dom` mutation/structural core (`append`, `prepend`, `after`, `before`, `appendChildFirst`, `detach`, `unwrap`, `moveContent`, `sibling`, `hide`/`show`) is typed against that subset and deduplicated (`first`/`last` share one traversal, `prevWithClass`/`nextWithClass` share one helper). A new _Virtual DOM contract_ suite in `dom.test.js` runs `Dom` against a non-browser VNode implementation, pinning the invariant at runtime. Across `core`, `modules`, `plugins` and `jodit.ts`: no direct `appendChild`/`insertBefore`/`removeChild`/`replaceChild` left outside `Dom` (was ~207 call sites), `.style.x =` → `css()`/`VStyle`, `get`/`setAttribute` → `attr()`, `querySelector` reduced to the sanctioned boundaries (user-supplied selectors in `selector.ts`, pasted stylesheet selectors in `apply-styles.ts`, the `BASE_PATH` bootstrap in `constants.ts`, the sanitizers). [#1441](https://github.com/xdan/jodit/pull/1441)
 - **Dialog**: open dialogs are tracked in a static registry; `setMaxZIndex`/`getMaxZIndexDialog` read it instead of scanning the whole `destination` subtree (usually `document.body`) on every open and mousedown.
 
 #### :rocket: New Feature
@@ -650,7 +656,7 @@ Thanks to Brendon Muir for all of the above.
 
 #### :rocket: New Feature
 
-- **Uploader / insert popup**: new option `uploader.showTabInFileSelector` (default `true`). Set it to `false` to hide the *Upload* (drag-and-drop) tab in the image/file insert popup while keeping the uploader configured for the file browser — previously any configured uploader forced the tab to appear. Fixes [#1406](https://github.com/xdan/jodit/issues/1406).
+- **Uploader / insert popup**: new option `uploader.showTabInFileSelector` (default `true`). Set it to `false` to hide the _Upload_ (drag-and-drop) tab in the image/file insert popup while keeping the uploader configured for the file browser — previously any configured uploader forced the tab to appear. Fixes [#1406](https://github.com/xdan/jodit/issues/1406).
 
 ## 4.13.14
 
@@ -775,9 +781,9 @@ Thanks to Brendon Muir for all of the above.
 - **Link dialog / `link.deriveUrlFromText`**: new opt-in option (default `false`). When the link dialog is opened for a new link with an empty URL field, the URL is pre-filled from the selected text when it looks like a URL or email — a bare domain gets `https://` (`example.com` → `https://example.com`), an email gets `mailto:`, an already-schemed URL is kept as is, and plain text is left untouched. Requested in [#1248](https://github.com/xdan/jodit/issues/1248) / [#1323](https://github.com/xdan/jodit/issues/1323).
 - **CSP `nonce` support**: added a `nonce` option that is applied to every `<style>`, `<script>` and `<link>` element Jodit injects at runtime (plugin styles, CDN scripts for ACE/beautify, downloaded stylesheets). Setting it to the nonce from your `Content-Security-Policy` header lets the editor run under a strict `style-src`/`script-src` policy without `'unsafe-inline'`. Requested in [#1276](https://github.com/xdan/jodit/issues/1276).
 
-  ```js
-  Jodit.make('#editor', { nonce: 'r4nd0m' });
-  ```
+    ```js
+    Jodit.make('#editor', { nonce: 'r4nd0m' });
+    ```
 
 #### :memo: Documentation
 
@@ -858,7 +864,7 @@ Thanks to Brendon Muir for all of the above.
 
 #### :bug: Bug Fix
 
-- **Paste from Excel / "Keep" formatting**: content copied from MS Excel (and other apps that wrap the clipboard in a bare `<html>` tag) lost all styling — table cells styled by class in a `<style>` block (e.g. `.xl31 { background:#FCE4D6 }`, the typical Excel export) came in with no background, fonts or alignment. `applyStyles` (the *Paste as HTML → Keep* path) only inlined `<style>` rules when the opening tag carried attributes (`<html …>`, as Word emits); Excel emits a bare `<html>`, so the rules were never inlined and were dropped together with the `<style>` block. The opening `<html>` tag is now matched with or without attributes, so class-based styling is inlined onto the cells and survives. Reported in [#1362](https://github.com/xdan/jodit/issues/1362).
+- **Paste from Excel / "Keep" formatting**: content copied from MS Excel (and other apps that wrap the clipboard in a bare `<html>` tag) lost all styling — table cells styled by class in a `<style>` block (e.g. `.xl31 { background:#FCE4D6 }`, the typical Excel export) came in with no background, fonts or alignment. `applyStyles` (the _Paste as HTML → Keep_ path) only inlined `<style>` rules when the opening tag carried attributes (`<html …>`, as Word emits); Excel emits a bare `<html>`, so the rules were never inlined and were dropped together with the `<style>` block. The opening `<html>` tag is now matched with or without attributes, so class-based styling is inlined onto the cells and survives. Reported in [#1362](https://github.com/xdan/jodit/issues/1362).
 
 ## 4.12.29
 
@@ -889,7 +895,7 @@ Thanks to Brendon Muir for all of the above.
 #### :rocket: New Feature
 
 - **Link dialog**: new opt-in option `link.ariaLabelInput` (default `false`) adds an **Aria label** text field to the Insert/Edit link form. It reads the existing `aria-label` when editing and writes it to the `<a>` on submit (clearing it when empty) — useful for accessibility when several links share the same visible text (e.g. multiple "here" links a screen reader can't tell apart). Addresses [#1204](https://github.com/xdan/jodit/issues/1204).
-- **Image editor**: new `afterImageEditorSave` event, fired when the user clicks **Save** / **Save as** in the image editor (crop/resize). The handler receives the action box `{ action: 'resize' | 'crop', box }` (and the new name for *Save as*), so you can react to the applied crop/resize — e.g. update the image's aspect ratio or set its real size. The existing `afterImageEditor` only fired when the editor *opened*. Addresses [#820](https://github.com/xdan/jodit/issues/820).
+- **Image editor**: new `afterImageEditorSave` event, fired when the user clicks **Save** / **Save as** in the image editor (crop/resize). The handler receives the action box `{ action: 'resize' | 'crop', box }` (and the new name for _Save as_), so you can react to the applied crop/resize — e.g. update the image's aspect ratio or set its real size. The existing `afterImageEditor` only fired when the editor _opened_. Addresses [#820](https://github.com/xdan/jodit/issues/820).
 - **Uploader**: new `uploader.beforeUpload(files)` hook, called with the file list right before upload (or base64 read). Return `false` to abort — useful for client-side validation of size/type/count; `this` is the uploader (so `this.j` is the editor). Addresses [#1329](https://github.com/xdan/jodit/issues/1329).
 - **Table / Select cells**: **Ctrl/Cmd + click** now toggles individual cells into a non-contiguous selection (clicking an already-selected cell removes it), in addition to the existing click-and-drag rectangular selection. The cell properties popup opens for the accumulated selection, and toolbar actions (background color, etc.) apply to every selected cell. Previously each Ctrl+click reset the selection to the single clicked cell. Fixes [#1163](https://github.com/xdan/jodit/issues/1163).
 - **Backspace/Delete**: new option `delete.disableCases` (a `Set<string>`) lets you turn off individual Backspace/Delete cleanup behaviors that the plugin applies after the native deletion — e.g. `delete: { disableCases: new Set(['join-neighbors']) }` stops Backspace at the start of a paragraph from merging it into the previous one. Available keys: `remove-unbreakable`, `remove-not-editable`, `remove-char`, `table-cell`, `remove-empty-parent`, `remove-empty-neighbor`, `join-two-lists`, `join-neighbors`, `unwrap-first-list-item`. Addresses [#1060](https://github.com/xdan/jodit/issues/1060).
@@ -904,18 +910,18 @@ Thanks to Brendon Muir for all of the above.
 #### :bug: Bug Fix
 
 - **Search (Ctrl+F)**: pressing Enter in the search input **submitted the parent `<form>`** instead of jumping to the next match — the `preventDefault()` for Enter lived inside a debounced handler, so it ran only after the browser had already dispatched the form submission. Enter is now canceled synchronously, while the search logic itself stays debounced. Fixes [#918](https://github.com/xdan/jodit/issues/918).
-- **i18n / language bundles**: translations for keys that were missing from `ar.js` never reached the build — the master i18n key list was generated **only from `ar.js`**, and every other language is serialized as an array indexed by that list, so existing translations for the ordered-list menu items (*Lower Alpha*, *Lower Greek*, *Lower Roman*, *Upper Alpha*, *Upper Roman* — translated in de/es/fi/it/ja/pt_br) and a dozen other keys were silently dropped from every bundle. The key list is now built as the **union of all language files**. Fixes [#997](https://github.com/xdan/jodit/issues/997).
+- **i18n / language bundles**: translations for keys that were missing from `ar.js` never reached the build — the master i18n key list was generated **only from `ar.js`**, and every other language is serialized as an array indexed by that list, so existing translations for the ordered-list menu items (_Lower Alpha_, _Lower Greek_, _Lower Roman_, _Upper Alpha_, _Upper Roman_ — translated in de/es/fi/it/ja/pt_br) and a dozen other keys were silently dropped from every bundle. The key list is now built as the **union of all language files**. Fixes [#997](https://github.com/xdan/jodit/issues/997).
 - **Custom `ownerWindow` (editor created inside an iframe)**: UI components (toolbar collection, popups, dialogs) always kept the **global** `window` as their owner window instead of the configured one. Popup/dropdown outside-click close handlers were therefore bound to the wrong window — clicks inside the iframe never reached them, so toolbar dropdowns did not close on an outside click. `ViewComponent` now inherits the owner window from its parent view. Fixes [#965](https://github.com/xdan/jodit/issues/965).
 - **Toolbar content controls (`getContent`)**: controls rendered through `getContent` (e.g. the FileBrowser **Upload** button) never ran the status calculation, so their `isDisabled`/`isActive`/`update` callbacks were silently ignored — the Upload button stayed enabled even when the backend permissions (`canI('FileUpload')`) said otherwise. `ToolbarContent.update()` now evaluates the control's status like regular toolbar buttons and also propagates the disabled state to nested form controls (the file `<input>` of the Upload button). Thanks @WatchfulEyeOfZod for the diagnosis and the patch draft. Fixes [#1094](https://github.com/xdan/jodit/issues/1094).
 - **Inline toolbar / Iframe mode**: with `iframe: true` the selection toolbar (`toolbarInlineForSelection`) opened far away from the selected text — the popup was positioned by `range.getBoundingClientRect()`, whose coordinates are **iframe-local**, while the popup itself lives in the host document. The iframe offset is now added to the selection bound. Fixes [#1058](https://github.com/xdan/jodit/issues/1058).
-- **Paste toolbar button**: the *Paste from clipboard* toolbar button inserted only the **plain text** flavor of the clipboard, while Ctrl+V pasted the full HTML — the button explicitly requested `text/plain` from `navigator.clipboard.read()` even when `text/html` was available. The button now prefers the HTML flavor (falling back to plain text), so both paste paths behave the same. Fixes [#1061](https://github.com/xdan/jodit/issues/1061).
+- **Paste toolbar button**: the _Paste from clipboard_ toolbar button inserted only the **plain text** flavor of the clipboard, while Ctrl+V pasted the full HTML — the button explicitly requested `text/plain` from `navigator.clipboard.read()` even when `text/html` was available. The button now prefers the HTML flavor (falling back to plain text), so both paste paths behave the same. Fixes [#1061](https://github.com/xdan/jodit/issues/1061).
 - **Format block (H1–H6 / paragraph)**: applying a heading to a block pasted from an external source seemed to do nothing — the tag actually changed, but leftover inline styles like `font-weight: normal; font-size: 24px` visually overrode the new format, so an `<h2>` looked exactly like the old text. When a block format is applied, the conflicting `font-size`/`font-weight` inline styles are now removed from the block (other styles like color stay). Fixes [#1063](https://github.com/xdan/jodit/issues/1063).
 - **Backspace/Delete next to a table**: pressing Backspace at the start of a paragraph that follows a table (or Delete at the end of a paragraph before one) merged the paragraph's text **into the `<table>` element itself** — it landed after `</tbody>`, which is invalid HTML; on the next parse the browser foster-parents such content out of the table, corrupting the document and causing follow-up DOM errors (the `Failed to execute 'appendChild'` console spam from the report). The join logic now merges the text into the edge table **cell** (last cell for Backspace, first for Delete). Covers [#1064](https://github.com/xdan/jodit/issues/1064).
-- **Paste from Word (`askBeforePasteFromWord`)**: office content was frequently mis-detected as plain HTML, so the generic *Paste as HTML* dialog appeared instead of the Word one. The detector only matched a `Microsoft Word N` meta generator or `mso-` styles in **double** quotes combined with `<font>` tags — while the raw Word clipboard fragment uses **single-quoted** `style='mso-…'`, unquoted `class=MsoNormal`, an unquoted `ProgId` meta and office XML namespaces (and modern Word emits no `<font>` at all); LibreOffice/OpenOffice content was never detected. The detector now also recognizes all of these markers. Fixes [#1078](https://github.com/xdan/jodit/issues/1078).
+- **Paste from Word (`askBeforePasteFromWord`)**: office content was frequently mis-detected as plain HTML, so the generic _Paste as HTML_ dialog appeared instead of the Word one. The detector only matched a `Microsoft Word N` meta generator or `mso-` styles in **double** quotes combined with `<font>` tags — while the raw Word clipboard fragment uses **single-quoted** `style='mso-…'`, unquoted `class=MsoNormal`, an unquoted `ProgId` meta and office XML namespaces (and modern Word emits no `<font>` at all); LibreOffice/OpenOffice content was never detected. The detector now also recognizes all of these markers. Fixes [#1078](https://github.com/xdan/jodit/issues/1078).
 - **Drag and drop (`enableDragAndDropFileToEditor: false`)**: dropping a file (e.g. a JPG from another window) into the editor still embedded it — with the option off no handler was bound to the `drop` event, nothing called `preventDefault`, and Firefox inserted the dropped image **natively**. With the option disabled the editor now cancels file drops, so they do nothing — as the option promises. Fixes [#1077](https://github.com/xdan/jodit/issues/1077).
-- **AI Assistant**: the *Insert After* button placed the generated text after the **first** node of the selection — with several selected paragraphs the result landed inside/after the first paragraph instead of after the whole selection. The insertion point is now the collapsed **end** of the selection, so the result follows everything that was selected; single-word/sentence behavior is unchanged. Fixes [#1263](https://github.com/xdan/jodit/issues/1263).
+- **AI Assistant**: the _Insert After_ button placed the generated text after the **first** node of the selection — with several selected paragraphs the result landed inside/after the first paragraph instead of after the whole selection. The insertion point is now the collapsed **end** of the selection, so the result follows everything that was selected; single-word/sentence behavior is unchanged. Fixes [#1263](https://github.com/xdan/jodit/issues/1263).
 - **Color / Select cells**: applying a text or background color from the main toolbar to table cells selected with the `select-cells` plugin (click or drag-select a cell — typical for tables pasted from Word) silently did nothing: the cell selection drops or collapses the native range, so the color was committed as a pending caret format in an empty `<span>` **outside** the table. When cells are selected and the native selection is collapsed, the `forecolor`/`background` commands now recolor the content of every selected cell (including nested spans carrying their own Word colors). Fixes [#1250](https://github.com/xdan/jodit/issues/1250).
-- **Shadow DOM / Table**: clicking a table cell inside a Shadow DOM editor (the `shadowRoot` option, e.g. a Stencil/web component integration) never opened the cell properties popup (background, vertical align, split/merge, add/remove row & column). `document.elementFromPoint` does not pierce shadow boundaries — it returns the shadow **host** — so the `select-cells` plugin could not find the clicked cell on `mouseup`. The hit-testing now starts from the configured shadow root in `select-cells` (cell selection on click and drag-select), `add-new-line` (the *Break* line over tables/images) and `Popup.getKeepBound`. Fixes [#1312](https://github.com/xdan/jodit/issues/1312).
+- **Shadow DOM / Table**: clicking a table cell inside a Shadow DOM editor (the `shadowRoot` option, e.g. a Stencil/web component integration) never opened the cell properties popup (background, vertical align, split/merge, add/remove row & column). `document.elementFromPoint` does not pierce shadow boundaries — it returns the shadow **host** — so the `select-cells` plugin could not find the clicked cell on `mouseup`. The hit-testing now starts from the configured shadow root in `select-cells` (cell selection on click and drag-select), `add-new-line` (the _Break_ line over tables/images) and `Popup.getKeepBound`. Fixes [#1312](https://github.com/xdan/jodit/issues/1312).
 
 ## 4.12.22
 
@@ -925,24 +931,24 @@ Thanks to Brendon Muir for all of the above.
 - **Source mode / multiple editors**: switching an editor into source mode focused its code mirror **unconditionally** — when the switch happened programmatically (e.g. a Vue/React wrapper re-initializing the editor) it pulled the focus out of the editor the user was typing in. The mirror is now focused only when the focus is not already inside another editor or control. Fixes [#1356](https://github.com/xdan/jodit/issues/1356) (follow-up to [#1313](https://github.com/xdan/jodit/issues/1313)).
 - **Limit (`limitChars` + `countTextSpaces`)**: the character limiter never counted spaces — even with `countTextSpaces: true` the limit applied to non-space characters only (`limitChars: 10` allowed `I   am    only     8` because only 8 visible characters were counted), while the status-bar counter showed the space-inclusive number. With `countTextSpaces: true` the limiter now counts characters the same way as the counter — including spaces. Fixes [#1144](https://github.com/xdan/jodit/issues/1144).
 - **Value assignment re-requested images (jodit-react)**: every `editor.value = …` assignment parsed the HTML into a helper element of the **live** document to sanitize it, so the browser issued a network request for every `<img>` in the value — with wrappers that sync the value on each change (e.g. jodit-react `onChange`), the image URLs were re-requested on every click/keystroke. The sanitize sandbox is now an **inert document** (`implementation.createHTMLDocument`), which never loads sub-resources; `Dom.isElement`/`Dom.isHTMLElement` no longer require a browsing context (`defaultView`), so the sanitizer keeps working on inert nodes. The internal `safeHTML` hook is now fired as an event for extensibility. Fixes [#1237](https://github.com/xdan/jodit/issues/1237).
-- **Inline toolbar (`toolbarInlineForSelection`)**: clicking a button in the selection toolbar (e.g. *Bold*) applied the command but closed the toolbar, even though the selection was still active — applying several formats required re-selecting the same text again and again. After a command fired from inside the popup, the selection toolbar is now reopened while the selection is not collapsed. Fixes [#1238](https://github.com/xdan/jodit/issues/1238).
+- **Inline toolbar (`toolbarInlineForSelection`)**: clicking a button in the selection toolbar (e.g. _Bold_) applied the command but closed the toolbar, even though the selection was still active — applying several formats required re-selecting the same text again and again. After a command fired from inside the popup, the selection toolbar is now reopened while the selection is not collapsed. Fixes [#1238](https://github.com/xdan/jodit/issues/1238).
 - **Clean HTML (`allowTags`)**: when `cleanHTML.allowTags` was configured as a map with per-tag attribute rules (e.g. `{p: true, a: {href: true}}`) and the content contained a tag **outside** the list that had attributes (e.g. `<meta charset="utf-8">` from pasted e-mail HTML), the cleanup worker threw `TypeError: Cannot read properties of undefined` on every pass — the editor "crashed" on the first click and disallowed tags were never removed. The attribute filter now skips tags that are not in the allow list (the tags filter removes them). Fixes [#1224](https://github.com/xdan/jodit/issues/1224).
 - **Paste (plain text)**: pasting plain text containing a stray `<` (e.g. `TD}gy{<KMj3ScW1[efbi`) lost everything after the bracket — the clipboard text was inserted through the HTML path, so `<KMj3…` was parsed as an unclosed tag and swallowed the rest of the string. When the clipboard contains **only** `text/plain` (and it is not actual HTML), special characters are now escaped before insertion, so `<`, `>` and `&` survive as literal text; the `nl2brInPlainText` line-break conversion still applies after escaping. Fixes [#1227](https://github.com/xdan/jodit/issues/1227).
 - **i18n (Turkish)**: the Word/Excel paste prompt ("The pasted content is coming from a Microsoft Word/Excel document…") was shown in **German** when the editor language was set to Turkish — `langs/tr.js` contained a copy of the German translation for that key. Replaced with the proper Turkish text. Fixes [#1245](https://github.com/xdan/jodit/issues/1245).
-- **Dialog**: a dialog (e.g. *Paste as HTML*) could be resized by its corner handle to a size smaller than its own header, content and footer, so the footer buttons ended up rendered outside the dialog box. Interactive resizing is now clamped to a minimum size: `dialog.minWidth`/`dialog.minHeight` options when set, otherwise the sum of the header, the content's CSS `min-height` and the footer (and the footer buttons' row width). Fixes [#1262](https://github.com/xdan/jodit/issues/1262).
+- **Dialog**: a dialog (e.g. _Paste as HTML_) could be resized by its corner handle to a size smaller than its own header, content and footer, so the footer buttons ended up rendered outside the dialog box. Interactive resizing is now clamped to a minimum size: `dialog.minWidth`/`dialog.minHeight` options when set, otherwise the sum of the header, the content's CSS `min-height` and the footer (and the footer buttons' row width). Fixes [#1262](https://github.com/xdan/jodit/issues/1262).
 - **Resize handler / Iframe**: resizing the **editor itself** by the statusbar handle was jerky in `iframe` mode — while dragging, the editor height jumped between two values. Same root cause as the image-resizer fix below: `mousemove` events proxied from the editor's iframe carry iframe-viewport coordinates and were mixed as-is with host-window ones; they are now shifted into the host coordinate space (checked via `e.view`). Fixes [#1287](https://github.com/xdan/jodit/issues/1287).
 - **Resizer / Iframe**: resizing an image (or table) by its handles was jerky in `iframe` mode (e.g. with `editHTMLDocumentMode`) — the size jumped while dragging, making it impossible to set precisely. During a drag, `mousemove` events arrive both from the host window (pointer over the resize frame) and proxied from the editor's iframe (pointer over the content), but the iframe-viewport coordinate correction was applied to **all** of them, so host-window events were shifted by the workplace offset. The correction is now applied only to events that originate from the iframe window (`e.view`). Fixes [#1264](https://github.com/xdan/jodit/issues/1264).
 
 #### :house: Internal
 
-- **Popup tests**: added a regression test asserting that with `allowTabNavigation: true` an inner popup (a dropdown opened from a button inside another popup — e.g. the image *Horizontal align* list) is positioned next to its trigger button. With that option the inner popup is appended into the button inside the outer popup, whose CSS `transform` shifts `position: fixed` coordinates; covers [#1265](https://github.com/xdan/jodit/issues/1265) (already fixed in 4.12.8 by the `getFixedPositionOffset` containing-block compensation from [#1350](https://github.com/xdan/jodit/issues/1350)).
+- **Popup tests**: added a regression test asserting that with `allowTabNavigation: true` an inner popup (a dropdown opened from a button inside another popup — e.g. the image _Horizontal align_ list) is positioned next to its trigger button. With that option the inner popup is appended into the button inside the outer popup, whose CSS `transform` shifts `position: fixed` coordinates; covers [#1265](https://github.com/xdan/jodit/issues/1265) (already fixed in 4.12.8 by the `getFixedPositionOffset` containing-block compensation from [#1350](https://github.com/xdan/jodit/issues/1350)).
 - **Shadow DOM tests**: added regression tests asserting that with the `shadowRoot` option the image **resizer frame**, the **image properties dialog** (double click) and the **inline popup** all open correctly inside the shadow root. Covers the scenario from [#1109](https://github.com/xdan/jodit/issues/1109), which does not reproduce with a vanilla Shadow DOM.
 - **Tooltip tests**: added a regression test asserting that buttons inside the table-cell inline popup show their tooltip on hover. Covers [#1141](https://github.com/xdan/jodit/issues/1141), fixed back in 4.2.40.
 - **Image-processor tests**: added regression tests asserting that a base64 (`data:`) image is replaced with a `blob:` URL **only in the view** and never leaks into `editor.value`, the source element, the controlled-value loop (value re-assigned on every change, as jodit-react does) or the value left after `destruct()` (React remount). Covers the scenario from [#1244](https://github.com/xdan/jodit/issues/1244), which does not reproduce in the core editor.
 - **Selection tests**: added a regression test asserting that `editor.selection.insertHTML()` called after the editor lost focus (e.g. from a click handler on a non-focusable page element) inserts at the previously saved caret position instead of the start of the editor. Covers the scenario from [#1239](https://github.com/xdan/jodit/issues/1239), which does not reproduce on the current version in Chrome or Firefox.
 - **Color tests**: added a regression test asserting that applying a font color over a selection that includes a whole table recolors the text in **every** cell — including cells whose color sits on the `<td>` itself (as Word produces) rather than on inner spans. Covers the scenario from [#1221](https://github.com/xdan/jodit/issues/1221), which does not reproduce on the current version.
 - **Select-cells tests**: added a regression test asserting that the table cells popup stays open after a fast drag-select — including a pending trailing throttled `mousemove`, the Firefox redraw-hack cleanup, debounced history changes and the browser's `click` dispatched on the common `TR` ancestor. Covers the scenario from [#1174](https://github.com/xdan/jodit/issues/1174), which does not reproduce on the current version in Chrome or Firefox.
-- **Paste tests**: added regression tests asserting that Word's inter-word spaces placed in their own spans (`<span style="letter-spacing:-.5pt"> </span>`) survive pasting in every mode (*keep*, *clean*, *text*). Covers the scenario from [#1230](https://github.com/xdan/jodit/issues/1230), which does not reproduce on the current version (verified with the full table HTML from the issue).
+- **Paste tests**: added regression tests asserting that Word's inter-word spaces placed in their own spans (`<span style="letter-spacing:-.5pt"> </span>`) survive pasting in every mode (_keep_, _clean_, _text_). Covers the scenario from [#1230](https://github.com/xdan/jodit/issues/1230), which does not reproduce on the current version (verified with the full table HTML from the issue).
 - **Resizer tests**: added a regression test asserting that in `iframe: true` + `editHTMLDocumentMode: true` mode the image resize frame is hidden when the iframe content is scrolled (the `iframe` plugin proxies the inner window's `scroll` event into the main window, where the `resizer` plugin listens). Covers the scenario from [#1266](https://github.com/xdan/jodit/issues/1266), which does not reproduce on the current version.
 
 ## 4.12.21
@@ -950,15 +956,15 @@ Thanks to Brendon Muir for all of the above.
 #### :bug: Bug Fix
 
 - **Security (stored XSS)**: the HTML sanitizer (`safeHTML`) stripped `on*` event handlers and `javascript:` links but left several executable constructs in the serialized editor value, so an application that re-rendered `editor.value` as trusted HTML could execute attacker script. It now also: drops `iframe[srcdoc]`; removes `data:text/html` / `data:application/xhtml` (and SVG `data:` URLs in `iframe`/`object`/`embed`/`frame`) sources; and strips `javascript:`/`vbscript:`/`livescript:`/`mocha:` from every URL-bearing attribute (`src`, `data`, `action`, `formaction`, `poster`, `background`, `xlink:href`), not just `<a href>`. Safe `data:image/*` sources (e.g. base64 PNG/SVG used in `<img>`) are preserved. Responsibly reported by Yuji Tounai ([@yousukezan](https://x.com/yousukezan)).
-- **Paste (Insert as Text)**: pasting multi-line content with the *Insert as Text* option lost its line breaks — the escaped text kept raw newlines that collapse to spaces when rendered. The *Insert as Text* path now converts newlines to `<br>` (gated on `nl2brInPlainText`, like the plain-text paste path). Fixes [#1093](https://github.com/xdan/jodit/issues/1093).
-- **Hotkeys**: the default keyboard shortcut for *Insert Unordered List* (`Ctrl/Cmd+Shift+8`) never fired — both variants were written as a single comma-joined string `'ctrl+shift+8, cmd+shift+8'` instead of two separate array entries, so the combined value never matched a real keypress. Fixes [#1079](https://github.com/xdan/jodit/issues/1079).
+- **Paste (Insert as Text)**: pasting multi-line content with the _Insert as Text_ option lost its line breaks — the escaped text kept raw newlines that collapse to spaces when rendered. The _Insert as Text_ path now converts newlines to `<br>` (gated on `nl2brInPlainText`, like the plain-text paste path). Fixes [#1093](https://github.com/xdan/jodit/issues/1093).
+- **Hotkeys**: the default keyboard shortcut for _Insert Unordered List_ (`Ctrl/Cmd+Shift+8`) never fired — both variants were written as a single comma-joined string `'ctrl+shift+8, cmd+shift+8'` instead of two separate array entries, so the combined value never matched a real keypress. Fixes [#1079](https://github.com/xdan/jodit/issues/1079).
 - **Color / Brush button**: the brush (text/background color) button never reflected the color under the caret. Its `update` handler computed the current color into the icon fill but then **unconditionally** reset `icon.fill` to an empty string on every toolbar update, discarding it — which also made the icon render invisibly against some themes (`editorCssClass`). The computed fill is now kept when a color is present (and only cleared when there is none). Fixes [#195](https://github.com/xdan/jodit/issues/195) and [#182](https://github.com/xdan/jodit/issues/182).
 - **Toolbar / Selection**: when a text selection was started inside the editor and the mouse button was released **outside** of the editable area (a drag-select that ends over the page), the editor never received the `mouseup` event, so the active state of toolbar buttons (Bold, Italic, etc.) was not recalculated and stayed stale. A document-level `mouseup` listener now re-fires `changeSelection` when the selection still belongs to the editor, so the toolbar updates correctly. Fixes [#1251](https://github.com/xdan/jodit/issues/1251).
-- **Media embed (YouTube & Vimeo)**: real-world share URLs were not converted to an embedded player. For YouTube, short links of the form `https://youtu.be/<id>?si=…` (the *Share* button format) and `?t=` timestamp links were inserted as plain text — the video id sits in the path but was only read when there was no query string — and `/shorts/<id>` / `/live/<id>` produced a broken `embed/shorts/<id>` src. For Vimeo, `?share=copy` tracking params and `channels/<name>/<id>` / `groups/<name>/videos/<id>` URLs produced a broken `video/channels/…` src. `convertMediaUrlToVideoEmbed` now extracts the video id (and the unlisted Vimeo hash) from the URL path, ignoring tracking params and channel/group/`embed`/`shorts`/`live` prefixes, and also recognises the `m.youtube.com` (mobile) and `music.youtube.com` hosts. Fixes [#1209](https://github.com/xdan/jodit/issues/1209).
-- **Indent / Lists**: the *Decrease Indent* (outdent) toolbar button stayed disabled when the cursor was inside a nested list item, even though `Shift+Tab` could un-nest it. The button's enabled state only considered an inline indent margin and ignored list nesting. It is now also enabled when the cursor sits in a list whose parent is another list item (matching the `tab` plugin's outdent behaviour). Fixes [#1247](https://github.com/xdan/jodit/issues/1247).
+- **Media embed (YouTube & Vimeo)**: real-world share URLs were not converted to an embedded player. For YouTube, short links of the form `https://youtu.be/<id>?si=…` (the _Share_ button format) and `?t=` timestamp links were inserted as plain text — the video id sits in the path but was only read when there was no query string — and `/shorts/<id>` / `/live/<id>` produced a broken `embed/shorts/<id>` src. For Vimeo, `?share=copy` tracking params and `channels/<name>/<id>` / `groups/<name>/videos/<id>` URLs produced a broken `video/channels/…` src. `convertMediaUrlToVideoEmbed` now extracts the video id (and the unlisted Vimeo hash) from the URL path, ignoring tracking params and channel/group/`embed`/`shorts`/`live` prefixes, and also recognises the `m.youtube.com` (mobile) and `music.youtube.com` hosts. Fixes [#1209](https://github.com/xdan/jodit/issues/1209).
+- **Indent / Lists**: the _Decrease Indent_ (outdent) toolbar button stayed disabled when the cursor was inside a nested list item, even though `Shift+Tab` could un-nest it. The button's enabled state only considered an inline indent margin and ignored list nesting. It is now also enabled when the cursor sits in a list whose parent is another list item (matching the `tab` plugin's outdent behaviour). Fixes [#1247](https://github.com/xdan/jodit/issues/1247).
 - **Uploader (base64)**: with `uploader.insertImageAsBase64URI = true`, dropping or pasting images in formats outside the default `imagesExtensions` list — notably `.svg`, `.bmp`, `.webp` — failed with `Need Url for Ajax Request` instead of being inlined as a data URI (the file fell through to the server-upload path). The default `imagesExtensions` now also includes `webp`, `bmp`, `svg`, `tiff` and `avif`. Fixes [#1228](https://github.com/xdan/jodit/issues/1228).
-- **Paste (Insert only Text)**: pasting multi-paragraph HTML with the *Insert only Text* option collapsed everything into a single paragraph — block boundaries became spaces, so the text could no longer be split into list items or separate blocks. `stripTags` gained an opt-in `blockBr` mode and the *Insert only Text* path now uses it (gated on `nl2brInPlainText`), so paragraphs are separated by `<br>`. The default `stripTags` behaviour (space-joined single-line plain text) is unchanged. Fixes [#1232](https://github.com/xdan/jodit/issues/1232).
-- **Paste from Word**: list items pasted from Microsoft Word kept their auto-generated marker text — the bullet glyph or the literal item number (`1.`, `2.`, …) leaked into the content as plain text. Word emits these markers inside `<span style="mso-list:Ignore">` elements that are explicitly flagged as display-only; both paste paths now drop those spans entirely instead of just stripping their attributes — `cleanFromWord` (the *Clean* / *As text* options) and `applyStyles` (the *Keep* / insert-as-HTML option). Fixes [#948](https://github.com/xdan/jodit/issues/948).
+- **Paste (Insert only Text)**: pasting multi-paragraph HTML with the _Insert only Text_ option collapsed everything into a single paragraph — block boundaries became spaces, so the text could no longer be split into list items or separate blocks. `stripTags` gained an opt-in `blockBr` mode and the _Insert only Text_ path now uses it (gated on `nl2brInPlainText`), so paragraphs are separated by `<br>`. The default `stripTags` behaviour (space-joined single-line plain text) is unchanged. Fixes [#1232](https://github.com/xdan/jodit/issues/1232).
+- **Paste from Word**: list items pasted from Microsoft Word kept their auto-generated marker text — the bullet glyph or the literal item number (`1.`, `2.`, …) leaked into the content as plain text. Word emits these markers inside `<span style="mso-list:Ignore">` elements that are explicitly flagged as display-only; both paste paths now drop those spans entirely instead of just stripping their attributes — `cleanFromWord` (the _Clean_ / _As text_ options) and `applyStyles` (the _Keep_ / insert-as-HTML option). Fixes [#948](https://github.com/xdan/jodit/issues/948).
 
 #### :house: Internal
 
@@ -991,7 +997,7 @@ Thanks to Brendon Muir for all of the above.
 
 #### :bug: Bug Fix
 
-- **DTD / Formatting**: applying an inline style (bold, underline, etc.) with the cursor on an empty line removed a `<br>` line break. The `removeExtraBr` cleanup (run after the style marker is inserted) deleted the following `<br>` even when real content followed it. It now only removes a *trailing* `<br>` (with nothing meaningful after it), so line breaks in the middle of a block are preserved. Fixes [#1302](https://github.com/xdan/jodit/issues/1302).
+- **DTD / Formatting**: applying an inline style (bold, underline, etc.) with the cursor on an empty line removed a `<br>` line break. The `removeExtraBr` cleanup (run after the style marker is inserted) deleted the following `<br>` even when real content followed it. It now only removes a _trailing_ `<br>` (with nothing meaningful after it), so line breaks in the middle of a block are preserved. Fixes [#1302](https://github.com/xdan/jodit/issues/1302).
 
 ## 4.12.15
 
@@ -1065,21 +1071,21 @@ Thanks to Brendon Muir for all of the above.
 
 - Add `Jodit.configure()` static method for deep-merging partial options into global defaults without losing existing keys. Previously, overriding nested defaults like `controls` or `createAttributes` required setting each property individually. Now you can patch only the keys you need:
 
-  ```js
-  // Add a button without losing existing controls
-  Jodit.configure({
-    controls: {
-      myButton: { icon: 'pencil', command: 'selectall' }
-    }
-  });
+    ```js
+    // Add a button without losing existing controls
+    Jodit.configure({
+    	controls: {
+    		myButton: { icon: 'pencil', command: 'selectall' }
+    	}
+    });
 
-  // Partially update createAttributes
-  Jodit.configure({
-    createAttributes: {
-      div: { class: 'my-class' }
-    }
-  });
-  ```
+    // Partially update createAttributes
+    Jodit.configure({
+    	createAttributes: {
+    		div: { class: 'my-class' }
+    	}
+    });
+    ```
 
 #### :house: Internal
 
@@ -1101,23 +1107,23 @@ Thanks to Brendon Muir for all of the above.
 
 - Add `stream()` method to `Ajax` class for SSE (Server-Sent Events) streaming over XMLHttpRequest. Returns an `AsyncGenerator<string>` that yields parsed `data:` fields incrementally via `onprogress`.
 
-  ```js
-  const ajax = new Jodit.modules.Ajax({
-    method: 'POST',
-    url: '/api/ai/stream',
-    contentType: 'application/json',
-    data: { prompt: 'Hello' }
-  });
+    ```js
+    const ajax = new Jodit.modules.Ajax({
+    	method: 'POST',
+    	url: '/api/ai/stream',
+    	contentType: 'application/json',
+    	data: { prompt: 'Hello' }
+    });
 
-  try {
-    for await (const data of ajax.stream()) {
-      const event = JSON.parse(data);
-      editor.s.insertHTML(event.text);
+    try {
+    	for await (const data of ajax.stream()) {
+    		const event = JSON.parse(data);
+    		editor.s.insertHTML(event.text);
+    	}
+    } finally {
+    	ajax.destruct();
     }
-  } finally {
-    ajax.destruct();
-  }
-  ```
+    ```
 
 #### :memo: Documentation
 
@@ -1164,51 +1170,53 @@ Thanks to Brendon Muir for all of the above.
 #### :rocket: New Feature
 
 - `ProgressBar.showFileUploadAnimation(from?, to?)` — animated file icon that flies from a given point and fades out. Coordinates are relative to the editor container. Both `from` and `to` are optional with sensible defaults. The animation is automatically cleaned up on `destruct()`.
-  ```js
-  const editor = Jodit.make('#editor')
-  jodit.progressbar.showFileUploadAnimation();
-  ```
+    ```js
+    const editor = Jodit.make('#editor');
+    jodit.progressbar.showFileUploadAnimation();
+    ```
 
 ## 4.11.4
 
 #### :boom: Breaking Change
 
 - `.jodit-icon` `transform-origin` changed from `0 0 !important` to `var(--jd-icon-transform-origin)` (default `center`), and the `!important` flag was removed. If your layout depends on the old top-left origin, restore it via CSS:
-  ```css
-  :root {
-      --jd-icon-transform-origin: 0 0 !important;
-  }
-  ```
+    ```css
+    :root {
+    	--jd-icon-transform-origin: 0 0 !important;
+    }
+    ```
 
 #### :rocket: New Feature
 
 - `IUIIconState` now supports `scale` property — when set, applies `transform: scale(...)` to the SVG icon element, overriding the CSS variable
 - `IControlType.icon` now accepts `string | IUIIconState` — allows setting icon name, fill, iconURL, and scale directly from toolbar button config
 
-  Per-button scale example:
-  ```javascript
-  Jodit.make('#editor', {
-      buttons: Jodit.atom([
-          'bold',
-          {
-              name: 'big-italic',
-              icon: { name: 'italic', fill: '', iconURL: '', scale: 1.5 },
-              tooltip: 'Italic (large icon)'
-          },
-          'underline'
-      ])
-  });
-  ```
+    Per-button scale example:
+
+    ```javascript
+    Jodit.make('#editor', {
+    	buttons: Jodit.atom([
+    		'bold',
+    		{
+    			name: 'big-italic',
+    			icon: { name: 'italic', fill: '', iconURL: '', scale: 1.5 },
+    			tooltip: 'Italic (large icon)'
+    		},
+    		'underline'
+    	])
+    });
+    ```
 
 - CSS custom properties `--jd-icon-transform-origin` and `--jd-icon-transform-scale` for global icon scaling. Override them to resize all editor icons at once. Per-button `scale` in `IUIIconState` takes priority over the CSS variable.
 
-  Global scale override via CSS:
-  ```css
-  :root {
-      --jd-icon-transform-scale: 1.3;
-      --jd-icon-transform-origin: center;
-  }
-  ```
+    Global scale override via CSS:
+
+    ```css
+    :root {
+    	--jd-icon-transform-scale: 1.3;
+    	--jd-icon-transform-origin: center;
+    }
+    ```
 
 ## 4.11.2
 
@@ -1291,7 +1299,7 @@ Thanks to Brendon Muir for all of the above.
 #### :rocket: New Feature
 
 - The `getRole():string` method has been added to `UIElement`. This allows you to set container roles for accessibility.
-- The `UIGroup` role is set to list. 
+- The `UIGroup` role is set to list.
 
 ## 4.9.7
 
@@ -1372,68 +1380,68 @@ feat: Create utility functions for file browser builders
 #### :rocket: New Feature
 
 - **AsyncStorage API with IndexedDB support**
-  - Added `AsyncStorage` class for asynchronous storage operations
-  - Implemented `IndexedDBProvider` for persistent browser storage with async API
-  - Support for multiple storage strategies: `indexedDB`, `localStorage`, `sessionStorage`, and in-memory fallback
-  - Comprehensive test coverage for all storage providers and async operations
-  - `canUseIndexedDB()` utility function to check IndexedDB availability
+    - Added `AsyncStorage` class for asynchronous storage operations
+    - Implemented `IndexedDBProvider` for persistent browser storage with async API
+    - Support for multiple storage strategies: `indexedDB`, `localStorage`, `sessionStorage`, and in-memory fallback
+    - Comprehensive test coverage for all storage providers and async operations
+    - `canUseIndexedDB()` utility function to check IndexedDB availability
 
 #### :house: Internal
 
 - **Enhanced storage system**
-  - Refactored storage providers to support both sync and async interfaces
-  - Added workplace slots layout system for improved editor structure
-  - Comprehensive test suites for storage functionality (`storage.test.js`, `async-storage.test.js`)
-  - Added slot system tests (`slots.test.js`) for UI layout validation
-  - Improved CSS variable handling for slot dimensions
-  - Updated build configuration to use esbuild for ESM minification
+    - Refactored storage providers to support both sync and async interfaces
+    - Added workplace slots layout system for improved editor structure
+    - Comprehensive test suites for storage functionality (`storage.test.js`, `async-storage.test.js`)
+    - Added slot system tests (`slots.test.js`) for UI layout validation
+    - Improved CSS variable handling for slot dimensions
+    - Updated build configuration to use esbuild for ESM minification
 
 #### :bug: Bug Fix
 
 - **Fixed IndexedDB store name handling in AsyncStorage**
-  - Correctly construct database names with suffix for proper isolation
-  - Use consistent `keyValueStore` as the object store name
+    - Correctly construct database names with suffix for proper isolation
+    - Use consistent `keyValueStore` as the object store name
 
 ## 4.7.6
 
 #### :boom: Breaking Change
 
 - **`@autobind` decorator now only supports methods, not classes**
-  - Replaced external `autobind-decorator` dependency with internal implementation
-  - The old package is no longer maintained (last release was 7 years ago)
-  - **Migration Option 1** (Recommended): Apply `@autobind` to individual methods:
-    ```typescript
-    // Before (no longer supported):
-    @autobind
-    class MyClass {
-        method1() { }
-        method2() { }
-    }
-
-    // After:
-    class MyClass {
+    - Replaced external `autobind-decorator` dependency with internal implementation
+    - The old package is no longer maintained (last release was 7 years ago)
+    - **Migration Option 1** (Recommended): Apply `@autobind` to individual methods:
+        ```typescript
+        // Before (no longer supported):
         @autobind
-        method1() { }
+        class MyClass {
+        	method1() {}
+        	method2() {}
+        }
+
+        // After:
+        class MyClass {
+        	@autobind
+        	method1() {}
+
+        	@autobind
+        	method2() {}
+        }
+        ```
+    - **Migration Option 2** (If you need class-level binding): Install and use the original package directly:
+        ```bash
+        npm install autobind-decorator
+        ```
+        ```typescript
+        import autobind from 'autobind-decorator';
 
         @autobind
-        method2() { }
-    }
-    ```
-  - **Migration Option 2** (If you need class-level binding): Install and use the original package directly:
-    ```bash
-    npm install autobind-decorator
-    ```
-    ```typescript
-    import autobind from 'autobind-decorator';
-
-    @autobind
-    class MyClass {
-        method1() { }
-        method2() { }
-    }
-    ```
-    Note: `autobind-decorator` package is no longer maintained, but it still works if you need class-level binding.
-  - Internal affected files: `data-provider.ts`, `resize-handler.ts`, `size.ts`, `recognize-manager.ts`
+        class MyClass {
+        	method1() {}
+        	method2() {}
+        }
+        ```
+        Note: `autobind-decorator` package is no longer maintained, but it still works if you need class-level binding.
+    - Internal affected files: `data-provider.ts`, `resize-handler.ts`, `size.ts`, `recognize-manager.ts`
 
 ## 4.7.5
 

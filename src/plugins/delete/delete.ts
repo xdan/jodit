@@ -34,6 +34,26 @@ const KEEPS_SPACES = new Set(['pre', 'pre-wrap', 'break-spaces']);
  * A plain space beside this neighbor isn't shown: there is none, or it's a
  * line break, a block or text starting (or ending) with a plain space
  */
+// The run of spaces at the end (or the start) of the text becomes nbsp; counted, as `/ +$/` backtracks on a long run
+function replaceEdgeSpaces(text: string, atEnd: boolean): string {
+	let count = 0;
+
+	while (
+		count < text.length &&
+		text.charAt(atEnd ? text.length - 1 - count : count) === ' '
+	) {
+		count += 1;
+	}
+
+	if (count === 0) {
+		return text;
+	}
+
+	return atEnd
+		? text.slice(0, text.length - count) + NBSP_SPACE.repeat(count)
+		: NBSP_SPACE.repeat(count) + text.slice(count);
+}
+
 function hidesSpace(neighbor: Nullable<Node>, edge: RegExp): boolean {
 	return (
 		!neighbor ||
@@ -302,15 +322,11 @@ export class deleteCommand extends Plugin {
 		const after = this.__findNeighbor(fake, false, block);
 
 		if (Dom.isText(before) && hidesSpace(after, /^ /)) {
-			before.nodeValue = before.nodeValue!.replace(/ +$/, spaces =>
-				NBSP_SPACE.repeat(spaces.length)
-			);
+			before.nodeValue = replaceEdgeSpaces(before.nodeValue!, true);
 		}
 
 		if (Dom.isText(after) && hidesSpace(before, / $/)) {
-			after.nodeValue = after.nodeValue!.replace(/^ +/, spaces =>
-				NBSP_SPACE.repeat(spaces.length)
-			);
+			after.nodeValue = replaceEdgeSpaces(after.nodeValue!, false);
 		}
 	}
 
