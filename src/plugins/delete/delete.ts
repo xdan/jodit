@@ -125,6 +125,8 @@ export class deleteCommand extends Plugin {
 		jodit.s.expandSelection();
 
 		const range = jodit.s.range;
+		this.__moveEdgesIntoCells(range);
+
 		const caret = this.__clearSelectedCells(range);
 
 		if (caret && range.collapsed) {
@@ -154,6 +156,32 @@ export class deleteCommand extends Plugin {
 		jodit.s.selectRange(caret ?? range);
 
 		return false;
+	}
+
+	/**
+	 * Firefox selects cells whole from their row, as after a drag into or out
+	 * of a table nested in a cell, and `deleteContents` would remove them. The
+	 * edges move into the cells, so their content is cleared instead, as in
+	 * Firefox's own delete
+	 */
+	private __moveEdgesIntoCells(range: Range): void {
+		const { startContainer, startOffset, endContainer, endOffset } = range;
+
+		const first = Dom.isTag(startContainer, 'tr')
+			? startContainer.childNodes[startOffset]
+			: null;
+
+		const last = Dom.isTag(endContainer, 'tr')
+			? endContainer.childNodes[endOffset - 1]
+			: null;
+
+		if (Dom.isCell(first)) {
+			range.setStart(first, 0);
+		}
+
+		if (Dom.isCell(last)) {
+			range.setEnd(last, last.childNodes.length);
+		}
 	}
 
 	/**

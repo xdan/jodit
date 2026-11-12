@@ -525,6 +525,67 @@ describe('Select cells plugin', () => {
 		});
 	});
 
+	describe('A drag over a table nested in a cell', () => {
+		const VALUE =
+			'<table style="width: 300px"><tbody><tr>' +
+			'<td>One two<table><tbody><tr><td>Three four</td></tr></tbody></table></td>' +
+			'<td>Five</td>' +
+			'</tr></tbody></table>';
+
+		const over = element => e => {
+			const box = element.getBoundingClientRect();
+
+			Object.assign(e, {
+				clientX: box.left + Math.min(box.width / 2, 20),
+				clientY: (box.top + box.bottom) / 2
+			});
+		};
+
+		const marked = editor =>
+			editor
+				.getInstance(Jodit.modules.Table, editor.o)
+				.getAllSelectedCells();
+
+		it("should keep the browser's own selection while the mouse stays in the cell, and mark the cell it goes on to", () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const [outer, five] =
+				editor.editor.querySelector('table').rows[0].cells;
+			const inner = outer.querySelector('td');
+			const [oneTwo, threeFour] = [outer.firstChild, inner.firstChild];
+
+			simulateEvent('mousedown', outer, over(outer));
+
+			// The browsers' selection from the drag, so far
+			const range = editor.s.createRange();
+			range.setStart(oneTwo, 4);
+			range.setEnd(threeFour, 5);
+			editor.s.selectRange(range);
+
+			simulateEvent('mousemove', inner, over(inner));
+
+			expect(marked(editor)).to.have.ordered.members([outer]);
+			expect(editor.isLocked).is.false;
+
+			const selected = editor.s.range;
+			expect([
+				selected.startContainer,
+				selected.startOffset,
+				selected.endContainer,
+				selected.endOffset
+			]).deep.equals([oneTwo, 4, threeFour, 5]);
+
+			simulateEvent('mousemove', five, over(five));
+			expect(marked(editor)).to.have.ordered.members([outer, five]);
+
+			simulateEvent('mousemove', inner, over(inner));
+			expect(marked(editor)).to.have.ordered.members([outer]);
+
+			simulateEvent('mouseup', inner, over(inner));
+		});
+	});
+
 	describe('A drag let go outside the table (#1774)', () => {
 		const VALUE =
 			'<table style="width: 300px"><tbody>' +
