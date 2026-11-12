@@ -11,12 +11,12 @@ describe('Test insert plugins', function () {
 			editor.execCommand('insertHorizontalRule');
 			editor.execCommand('insertHorizontalRule');
 			editor.execCommand('insertHorizontalRule');
-			expect(editor.value).equals('<hr><hr><hr><p></p>');
+			expect(editor.value).equals('<hr><hr><hr><p><br></p>');
 		});
 
 		describe('Caret after the line (#1606)', function () {
 			[
-				['<p>One|</p>', '<p>One</p><hr><p>|</p>'],
+				['<p>One|</p>', '<p>One</p><hr><p>|<br></p>'],
 				['<p>On|e</p>', '<p>On</p><hr><p>|e</p>'],
 				['<p>|One</p>', '<hr><p>|One</p>'],
 				['<p>One|</p><p>Two</p>', '<p>One</p><hr><p>|Two</p>'],
@@ -33,7 +33,7 @@ describe('Test insert plugins', function () {
 				['<ul><li>|<br></li></ul>', '<ul><li><hr>|</li></ul>'],
 				[
 					'<ul><li><p>One|</p></li></ul>',
-					'<ul><li><p>One</p><hr><p>|</p></li></ul>'
+					'<ul><li><p>One</p><hr><p>|<br></p></li></ul>'
 				],
 				[
 					'<table><tbody><tr><td>a|1</td></tr></tbody></table>',
@@ -78,7 +78,7 @@ describe('Test insert plugins', function () {
 
 		it('Should leave none at the end of a line', () => {
 			expect(insertAt('<p>first|</p>', hr)).equals(
-				'<p>first</p><hr><p>[inv]</p>'
+				'<p>first</p><hr><p><br></p>'
 			);
 		});
 
@@ -110,6 +110,36 @@ describe('Test insert plugins', function () {
 			);
 
 			expect(space).contains('</strong> <em>b</em>');
+		});
+	});
+
+	describe('The line added after the rule (#1807)', () => {
+		// The tests run with `cleanHTML.fillEmptyParagraph` off, so only the
+		// command can give the line its `<br>`
+		it('Should keep its height once the caret leaves', () => {
+			const editor = getJodit();
+			editor.value = '<p>Above</p><p>Text|</p>';
+			setCursorToChar(editor);
+			editor.execCommand('insertHorizontalRule');
+
+			const line = editor.editor.lastChild;
+			editor.s.setCursorIn(editor.editor.firstChild);
+			editor.s.insertHTML('x');
+
+			expect(editor.value).equals(
+				'<p>Abovex</p><p>Text</p><hr><p><br></p>'
+			);
+			expect(line.offsetHeight).above(0);
+		});
+
+		it('Should add only its own <br> with enter: br', () => {
+			const editor = getJodit({ enter: 'br' });
+			editor.value = 'Text|';
+			setCursorToChar(editor);
+			editor.execCommand('insertHorizontalRule');
+			replaceCursorToChar(editor);
+
+			expect(editor.value).equals('Text<hr>|<br>');
 		});
 	});
 });
