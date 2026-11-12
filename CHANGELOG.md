@@ -9,6 +9,17 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.19.12
+
+#### :bug: Bug Fix
+
+- [#1804](https://github.com/xdan/jodit/issues/1804) A drag over a table nested in a cell keeps the browser's own selection and marks the cell that holds the nested table, and releasing the mouse over the nested table still opens the cells popup; a cell Firefox selects whole is cleared instead of removed. Thanks @brendon.
+- [#1803](https://github.com/xdan/jodit/issues/1803) An arrow key with the caret directly in the editor, beside a horizontal line, no longer adds a paragraph at the top.
+- [#1807](https://github.com/xdan/jodit/issues/1807) The empty line the HR command and the add-new-line bar add gets a `<br>`, as Enter's does, so it keeps its height once the caret leaves it.
+- [#1809](https://github.com/xdan/jodit/issues/1809) A wrapped iframe, video or audio shows in the editor where its line aligns it (`text-align: center/right`), as in the saved HTML.
+- [#1811](https://github.com/xdan/jodit/issues/1811) Tooltips show for a toolbar placed outside the editor with the `toolbar` option.
+- [#1812](https://github.com/xdan/jodit/issues/1812) Popups, dialogs and messages keep the page's text colour, weight, line height and alignment out; content with no style of its own now gets a normal line height and `text-align: start`.
+
 ## 4.19.11
 
 #### :bug: Bug Fix

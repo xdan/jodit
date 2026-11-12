@@ -343,19 +343,7 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
-		// host, so the lookup must start from the shadow root
-		const node = (this.j.o.shadowRoot ?? this.j.ed).elementFromPoint(
-			e.clientX,
-			e.clientY
-		);
-
-		// Over a table nested in a cell, the mouse is still in that cell
-		const cell = Dom.closest<HTMLTableCellElement>(
-			node,
-			elm => Dom.isCell(elm) && !Dom.closest(elm, 'table', table),
-			table
-		);
+		const cell = this.__cellUnder(e, table);
 
 		if (!cell || !this.__selectedCell) {
 			return;
@@ -418,6 +406,25 @@ export class selectCells extends Plugin {
 		this.__selectedCell = null;
 	}
 
+	// The cell of this table under the pointer; over a table nested in a cell, the mouse is still in that cell
+	private __cellUnder(
+		e: MouseEvent,
+		table: HTMLTableElement
+	): Nullable<HTMLTableCellElement> {
+		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
+		// host, so the lookup must start from the shadow root
+		const node = (this.j.o.shadowRoot ?? this.j.ed).elementFromPoint(
+			e.clientX,
+			e.clientY
+		);
+
+		return Dom.closest<HTMLTableCellElement>(
+			node,
+			elm => Dom.isCell(elm) && !Dom.closest(elm, 'table', table),
+			table
+		);
+	}
+
 	/**
 	 * Stop a selection process
 	 */
@@ -431,27 +438,10 @@ export class selectCells extends Plugin {
 
 		this.j.unlock();
 
-		// Inside Shadow DOM `document.elementFromPoint` returns the shadow
-		// host, so the lookup must start from the shadow root
-		const node = (this.j.o.shadowRoot ?? this.j.ed).elementFromPoint(
-			e.clientX,
-			e.clientY
-		);
-
-		if (!node) {
-			return;
-		}
-
-		const cell = Dom.closest(node, ['td', 'th'], table);
+		const cell = this.__cellUnder(e, table);
 
 		if (!cell) {
 			return;
-		}
-
-		const ownTable = Dom.closest(cell, 'table', table);
-
-		if (ownTable && ownTable !== table) {
-			return; // Nested tables
 		}
 
 		this.__showCellsPopup(table, [cell, this.__selectedCell]);

@@ -584,6 +584,24 @@ describe('Select cells plugin', () => {
 
 			simulateEvent('mouseup', inner, over(inner));
 		});
+
+		it('should open the cells popup when the mouse is let go over the nested table', () => {
+			const editor = getJodit();
+			editor.value = VALUE;
+
+			const [outer, five] =
+				editor.editor.querySelector('table').rows[0].cells;
+			const inner = outer.querySelector('td');
+
+			simulateEvent('mousedown', outer, over(outer));
+			simulateEvent('mousemove', five, over(five));
+			expect(marked(editor)).to.have.ordered.members([outer, five]);
+
+			simulateEvent('mouseup', inner, over(inner));
+
+			expect(marked(editor)).to.have.ordered.members([outer, five]);
+			expect(getOpenedPopup(editor)).is.not.null;
+		});
 	});
 
 	describe('A drag let go outside the table (#1774)', () => {
