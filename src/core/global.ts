@@ -61,6 +61,10 @@ export const pluginSystem = new PluginSystem({
 
 export const modules: IDictionary<Function> = {};
 
+// A CommonJS pack imported as a namespace carries the dictionary in `default`; a translation of the word is a string
+const unwrapModule = (pack: unknown): unknown =>
+	isPlainObject(pack) && isPlainObject(pack.default) ? pack.default : pack;
+
 /**
  * Merge language packs into the global `lang` registry
  *
@@ -69,13 +73,16 @@ export const modules: IDictionary<Function> = {};
  */
 export const extendLang = (langs: IDictionary): void => {
 	Object.keys(langs).forEach(key => {
-		const pack = langs[key];
+		const pack = unwrapModule(langs[key]);
 
 		if (isUnsafeProtoKey(key) || !isPlainObject<string>(pack)) {
 			return;
 		}
 
-		if (!Object.prototype.hasOwnProperty.call(lang, key)) {
+		if (
+			!Object.prototype.hasOwnProperty.call(lang, key) ||
+			!isPlainObject(lang[key])
+		) {
 			lang[key] = {};
 		}
 

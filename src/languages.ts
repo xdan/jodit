@@ -14,6 +14,7 @@
 
 import type { IDictionary } from 'jodit/types';
 import { isArray } from 'jodit/core/helpers/checker/is-array';
+import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 
 import ar from 'jodit/langs/ar';
 import az from 'jodit/langs/az';
@@ -77,8 +78,13 @@ exp = {
 };
 
 /* Unpack array to hash */
+// Unwrap a module (`default` is the dictionary or the packed array), but keep a dictionary whose `default` is a translation (`no.js`)
 const get = (value: IDictionary): IDictionary =>
-		value ? value.default || value : {},
+		value
+			? isArray(value.default) || isPlainObject(value.default)
+				? value.default
+				: value
+			: {},
 	hashLang: IDictionary = {};
 
 if (isArray(get(keys))) {

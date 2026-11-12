@@ -23,6 +23,15 @@ describe('ESM build', () => {
 		editor.destruct();
 	});
 
+	it('Should keep every language a dictionary, with a `default` translation inside (no.js)', () => {
+		Object.keys(Jodit.lang).forEach(key => {
+			expect(typeof Jodit.lang[key]).eq('object', key);
+		});
+
+		expect(Jodit.lang.no.default).eq('Standard');
+		expect(Jodit.lang.no['Speech Recognize']).to.be.a('string');
+	});
+
 	it('should have all helpers', () => {
 		expect(Object.keys(Jodit.modules.Helpers).length).to.be.greaterThan(
 			120

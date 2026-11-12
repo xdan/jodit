@@ -9,12 +9,13 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
-## 4.19.13
+## 4.19.14
 
 #### :bug: Bug Fix
 
 - Security: an SVG animation could write a `javascript:` URL into a link after the sanitizer had run. `<svg><a><animate attributeName="href" values="javascript:…">` passed `safeHTML`, which checked only the static URL attributes, and a click on the link ran the script in Chromium and Safari (CWE-79, stored XSS in the default configuration). The `values`, `from`, `to` and `by` of `<animate>`, `<set>`, `<animateMotion>` and `<animateTransform>` now go through the same scheme check and are dropped when one of them holds a dangerous URL. Reported by David Vieira Kurz (HiSolutions AG), GHSA-6wrw-v5gj-6xg7.
 - Security: `extendLang()` merged a language pack with `Object.assign` and no key filter, so a pack parsed from untrusted JSON with a `__proto__` key wrote into `Object.prototype` (CWE-1321). The keys `__proto__`, `constructor` and `prototype` are skipped on both levels, as `set()` and `Jodit.configure()` already did; the helper is also reachable as `Jodit.extendLang`. Reported by zx, GHSA-6gxg-6pj3-m22j.
+- ESM build: a language file whose dictionary holds a `default` entry (`no.js`, "Standard") was taken for a module, so the Norwegian pack was replaced by that string, and the `default` of a CommonJS pack a plugin imports overwrote the translation. Both now unwrap a module only when `default` is a dictionary.
 
 ## 4.19.12
 
