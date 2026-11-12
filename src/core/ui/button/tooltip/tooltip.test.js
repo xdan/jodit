@@ -98,6 +98,45 @@
 			});
 		});
 
+		describe('Toolbar outside the editor (#1811)', () => {
+			function getTooltipText() {
+				return document.querySelector('.jodit-ui-tooltip_visible_true')
+					?.textContent;
+			}
+
+			it('Should show and hide a tooltip for its buttons', () => {
+				const toolbar = appendTestDiv();
+				getJodit({ ...OPTIONS, toolbar });
+
+				const button = getButton('bold', toolbar);
+				simulateEvent('mouseenter', button.parentElement);
+				timers.delay(100);
+				expect(getTooltipText()).equals('Bold');
+
+				simulateEvent('mouseleave', button.parentElement);
+				timers.delay(100);
+				expect(getTooltipText()).is.undefined;
+			});
+
+			it('Should show one tooltip when editors share the element', () => {
+				const toolbar = appendTestDiv();
+				const first = getJodit({ ...OPTIONS, toolbar });
+				getJodit({ ...OPTIONS, toolbar });
+
+				simulateEvent(
+					'mouseenter',
+					getButton('italic', first.toolbar.container).parentElement
+				);
+				timers.delay(100);
+
+				expect(
+					document.querySelectorAll('.jodit-ui-tooltip_visible_true')
+						.length
+				).equals(1);
+				expect(getTooltipText()).equals('Italic');
+			});
+		});
+
 		describe('Jodit tooltip', () => {
 			let editor, button1, button2, button3, button4;
 

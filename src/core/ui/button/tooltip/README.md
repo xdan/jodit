@@ -7,7 +7,8 @@ keywords: jodit, tooltip, button tooltip, ui element, hint, interface
 # Tooltip for buttons
 
 `UITooltip` renders Jodit's custom (non-native) tooltips. A single instance is created per
-view and it listens, via delegation, for `mouseenter`/`mouseleave` on the editor container.
+view and it listens, via delegation, for `mouseenter`/`mouseleave` on the editor container,
+on the boxes popups go in, and on a toolbar the `toolbar` option places outside the editor.
 When the pointer enters any Jodit element that carries an `aria-label`, the tooltip shows
 that label near the element.
 
