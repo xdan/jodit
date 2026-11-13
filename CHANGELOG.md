@@ -17,10 +17,19 @@
 - The default toolbar gains the Insert anchor button, in the `insert` group, so every editor with the default `buttons` shows it. `removeButtons: ['anchor']` leaves it out.
 - Empty `<a id>` and `<a name>` anchors already in a document now show a marker in the editor, and a click on one opens the anchor form. `disablePlugins: ['anchor']` leaves them as they were.
 - [#1752](https://github.com/xdan/jodit/issues/1752) Upload and file browser handlers get `items`, one `{ file, isImage, name }` object per file. `uploader.process` and servers can answer with `items` instead of `files` and `isImages`. Thanks @brendon.
+- [#1741](https://github.com/xdan/jodit/issues/1741) A button in an element's popup (cells, image, media, link, the selection toolbar) leaves that popup open beside its element and closes only the list it opened; the popup still closes on a click outside, on a key that moves the caret off the element and when a button removes the element. The new option `toolbarInlineKeepOpen` (default `true`) turns it off.
+
+#### :boom: Breaking Change
+
+- Inline popups no longer close after one of their buttons runs. Set `toolbarInlineKeepOpen: false` to get the old behaviour, where every button fired `closeAllPopups`.
 
 #### :house: Internal
 
 - [#1752](https://github.com/xdan/jodit/issues/1752) Deprecated: `files`, `isImages` and `fileNames` in the data upload and file browser handlers get. Use `items`. They will be removed in 5.0. Until then they win over `items` while `files` is set, so a handler that edits `items` and passes the data on to a default handler deletes `files` first. Thanks @brendon.
+
+#### :bug: Bug Fix
+
+- [#1768](https://github.com/xdan/jodit/issues/1768) A double click past the end of a line, or a drag from there to the start of the next, no longer selects only the line break (the caret goes to the end of the line and the selection toolbar does not open), and a drag that does not pass a video or iframe on its own line leaves it out; a selected video gets the selection tint over its own box.
 
 ## 4.19.14
 
