@@ -14,6 +14,8 @@ A utility plugin that normalizes selection behavior and provides event proxying 
 - Element-specific event firing (e.g., `clickImg`, `mousedownTable`)
 - Selection normalization before copy/cut
 - Triple-click selection normalization
+- A double click past the end of a line puts the caret there, and a drag onto a video's line stops before the video
+- A video or embed in the selection is shaded, as the browsers shade an image
 - Select all command handling
 - Outside click detection
 - A click to the right of a table row sends typing into the next row, as Word does
@@ -233,6 +235,14 @@ When `normalizeTripleClick` is enabled and user triple-clicks:
 4. **Result**: Entire block selected instead of line
 
 This provides more intuitive selection behavior matching user expectations.
+
+### Selections Past the End of a Line
+
+A double click in the empty space after a line's text makes Chrome and Safari select only the line break, from the end of the text to the start of the next line a caret can go on. Nothing shows, as there's no caret, and typing replaces the break, joining the lines, along with any video between them. On `dblclick`, a selection in the editor that holds only a line break becomes a caret at its start, the end of the line. That means no characters but whitespace, and nothing held whole but a `<br>`, which Chrome selects on its own at a line's end or on an empty line, or a line holding only an uneditable element, as a video's. The selection must end in another block, or hold the `<br>`. A double click on a word or a space, a selection that holds an image, an `<hr>` or an empty cell, and the same line break selected with Shift+Right or a drag, stay as they are. Chrome selects the line break before an `<hr>` that's double clicked, so that becomes a caret at the end of the line above, and typing no longer deletes the `<hr>`.
+
+The browsers have no caret position beside an uneditable block alone on its line, such as a video in its wrapper, so a drag that ends on that line runs on past the block, and typing deletes it. On `mouseup`, a selection that takes in such a block the pointer hasn't passed (it's still above the block's bottom, or below its top for a drag upwards) stops at the last place a caret can go in the block before the block's line: the end of its text, or before the `<br>` of an empty line. A drag upwards starts at the first such place in the block after it. Only that neighbouring block is looked in, and when it has no such place the selection stays as it is. A video Jodit selected itself on the press is left alone.
+
+The browsers shade an image in the selection, but Chrome doesn't shade a video with controls, or one in a `jodit-media` wrapper, so a selection that took one in didn't show it. On `selectionchange`, in an editor that isn't read-only, each `video`, `iframe`, `audio`, `object` or `embed` whose uneditable wrapper a selection in the editor holds whole gets the same shade, `#b5d6fd` on white, from an SVG `filter`, and the browsers' own tint inside the wrapper, which Safari gives the wrapper's whole line, is turned off. It's a style in the editing document, written with the elements' CSS paths as the table module's cell selection is, so the content doesn't change, and the value, the history and a copied selection carry nothing of it. Media a click selected whole isn't shaded, as its resize frame shows it. A change, read-only and the source mode redo the style, as the selection may stay where it was. Its selectors are the media's full paths, so while the media is selected the shade outranks a `filter` it has of its own.
 
 ### Select All Command
 
