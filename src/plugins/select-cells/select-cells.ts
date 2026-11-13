@@ -18,6 +18,7 @@ import { pluginSystem } from 'jodit/core/global';
 import { $$, alignElement, position, toArray } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
 import { isMoved } from 'jodit/core/selection/helpers';
+import { Popup, UIElement } from 'jodit/core/ui';
 import { Table } from 'jodit/modules/table/table';
 
 import './config';
@@ -172,12 +173,30 @@ export class selectCells extends Plugin {
 		// As after a click, the first change to the cell keeps the mark
 		this.__selectedCell = cell;
 		this.__tableModule.addSelection(cell);
-		this.j.e.fire(
-			'showPopup',
-			table,
-			(): IBound => position(cell, this.j),
-			'cells'
-		);
+		this.j.e.fire('showPopup', table, this.__markedBound, 'cells');
+	}
+
+	/**
+	 * The box round the marked cells, which their popup opens beside and
+	 * follows when its commands add, merge or replace cells
+	 */
+	@autobind
+	private __markedBound(): IBound {
+		const bounds = this.__tableModule
+			.getAllSelectedCells()
+			.filter(cell => cell.isConnected)
+			.map(cell => position(cell, this.j));
+
+		if (!bounds.length) {
+			return { left: 0, top: 0, width: 0, height: 0 };
+		}
+
+		const left = Math.min(...bounds.map(b => b.left)),
+			top = Math.min(...bounds.map(b => b.top)),
+			right = Math.max(...bounds.map(b => b.left + b.width)),
+			bottom = Math.max(...bounds.map(b => b.top + b.height));
+
+		return { left, top, width: right - left, height: bottom - top };
 	}
 
 	/**
@@ -241,12 +260,7 @@ export class selectCells extends Plugin {
 			this.j.s.sel?.removeAllRanges();
 
 			if (this.__tableModule.getAllSelectedCells().length) {
-				this.j.e.fire(
-					'showPopup',
-					table,
-					(): IBound => position(cell, this.j),
-					'cells'
-				);
+				this.j.e.fire('showPopup', table, this.__markedBound, 'cells');
 			} else {
 				this.j.e.fire('hidePopup', 'cells');
 			}
@@ -324,9 +338,31 @@ export class selectCells extends Plugin {
 		}
 	}
 
+	/**
+	 * The last press or key went to a popup, as to the cell popup's own
+	 * controls, whose changes keep the cells marked
+	 */
+	private __inPopup: boolean = false;
+
+	@watch([
+		'ow:mousedown',
+		'ow:touchstart',
+		'ow:keydown',
+		':mousedown',
+		':touchstart',
+		':keydown'
+	])
+	protected onPress(e?: Event): void {
+		this.__inPopup = Boolean(
+			e &&
+			Dom.isNode(e.target) &&
+			UIElement.closestElement(e.target, Popup)
+		);
+	}
+
 	@watch(':change')
 	protected onChange(): void {
-		if (!this.j.isLocked && !this.__isSelectionMode) {
+		if (!this.j.isLocked && !this.__isSelectionMode && !this.__inPopup) {
 			this.__onRemoveSelection();
 		}
 	}
@@ -495,24 +531,7 @@ export class selectCells extends Plugin {
 			return;
 		}
 
-		this.j.e.fire(
-			'showPopup',
-			table,
-			(): IBound => {
-				const minOffset = position(min, this.j),
-					maxOffset = position(max, this.j);
-
-				return {
-					left: minOffset.left,
-					top: minOffset.top,
-
-					width: maxOffset.left - minOffset.left + maxOffset.width,
-
-					height: maxOffset.top - minOffset.top + maxOffset.height
-				};
-			},
-			'cells'
-		);
+		this.j.e.fire('showPopup', table, this.__markedBound, 'cells');
 	}
 
 	private __stopListening(): void {
@@ -702,6 +721,14 @@ export class selectCells extends Plugin {
 						break;
 				}
 
+				// A split unmarks the cells. They stay marked, as after the
+				// other commands, so their popup stays beside them
+				if (/^split/.test(command)) {
+					cells.forEach(cell =>
+						this.__tableModule.addSelection(cell)
+					);
+				}
+
 				if (
 					/^bin(row|column)$/.test(command) &&
 					!this.__tableModule.getColumnsCount(table)
@@ -736,11 +763,6 @@ export class selectCells extends Plugin {
 				module.addSelection(next);
 			}
 		});
-
-		// As after the click that marked it, the command's own change keeps
-		// the marks, so the popup can stay open for another toggle
-		const anchor = this.__selectedCell ?? cells[0];
-		this.__selectedCell = replaced.get(anchor) ?? anchor;
 	}
 
 	/**

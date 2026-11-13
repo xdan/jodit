@@ -178,6 +178,11 @@ export class select extends Plugin {
 			return;
 		}
 
+		// An item of a list that closed once it was chosen was in a popup
+		if (Dom.isNode(node) && !node.isConnected) {
+			return;
+		}
+
 		const box = UIElement.closestElement(node, Popup);
 
 		if (!box) {

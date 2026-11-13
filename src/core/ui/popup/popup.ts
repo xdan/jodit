@@ -62,6 +62,12 @@ export class Popup extends UIGroup implements IPopup {
 	isOpened: boolean = false;
 	strategy: PopupStrategy = 'leftBottom';
 
+	/**
+	 * The popup stays open after one of its buttons runs: the button closes
+	 * only the lists it opened. See #1741
+	 */
+	keepOpen: boolean = false;
+
 	protected override appendChildToContainer(
 		childContainer: HTMLElement
 	): void {

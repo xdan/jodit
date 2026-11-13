@@ -69,6 +69,13 @@ declare module 'jodit/config' {
 		toolbarInlineForSelection: boolean;
 
 		/**
+		 * Keep an inline toolbar open after one of its buttons runs, beside its
+		 * element or the selection. A list the button opened still closes.
+		 * `false` closes the toolbar after every button
+		 */
+		toolbarInlineKeepOpen: boolean;
+
+		/**
 		 * CSS selector or array of selectors for elements that should not trigger the inline toolbar
 		 */
 		toolbarInlineDisableFor: string | string[];
@@ -77,6 +84,7 @@ declare module 'jodit/config' {
 
 Config.prototype.toolbarInline = true;
 Config.prototype.toolbarInlineForSelection = false;
+Config.prototype.toolbarInlineKeepOpen = true;
 Config.prototype.toolbarInlineDisableFor = [];
 Config.prototype.toolbarInlineDisabledButtons = ['source'];
 
