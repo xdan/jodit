@@ -128,6 +128,50 @@ describe('Resize plugin', () => {
 		});
 	});
 
+	describe('Touch (#1816)', () => {
+		const frameOf = editor =>
+			document.querySelector(
+				'.jodit-resizer[data-editor_id=' + editor.id + ']'
+			);
+
+		function tap(element) {
+			simulateEvent('touchstart', element);
+			simulateEvent('touchend', element);
+		}
+
+		it('Should frame an image after a tap that sends no click', async () => {
+			const editor = getJodit();
+			editor.value =
+				'<p><img alt="" src="tests/artio.jpg" style="width:100px;height:100px"/></p>';
+
+			tap(editor.editor.querySelector('img'));
+			await delay(20);
+
+			const frame = frameOf(editor);
+			expect(frame).is.not.null;
+			expect(frame.parentNode).is.not.null;
+		});
+
+		it('Should move the frame to another image tapped', async () => {
+			const editor = getJodit();
+			editor.value =
+				'<p><img alt="" src="tests/artio.jpg" style="width:100px;height:100px"/></p>' +
+				'<p><img alt="" src="tests/artio.jpg" style="width:50px;height:50px"/></p>';
+			const [first, second] = editor.editor.querySelectorAll('img');
+
+			tap(first);
+			await delay(20);
+			tap(second);
+			await delay(20);
+
+			const frame = frameOf(editor);
+			expect(frame.parentNode).is.not.null;
+			expect(Math.round(frame.getBoundingClientRect().top)).equals(
+				Math.round(second.getBoundingClientRect().top)
+			);
+		});
+	});
+
 	describe('Resize box', () => {
 		describe('In relative object', () => {
 			it('should be in front of image', () => {
