@@ -183,6 +183,8 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 				this.control.name,
 				this.j.i18n(this.state.text)
 			);
+			// The name given before the text came would otherwise stay
+			this.updateAriaLabel();
 		} else {
 			super.onChangeText();
 		}
