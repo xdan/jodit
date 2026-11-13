@@ -543,7 +543,7 @@ editor.e.on('processPaste.link', (e, text, insert) => {
 
 The default form includes:
 
-1. **URL Input**: Required text input with `url_input` ref
+1. **URL Input**: Required URL input (`type="url"`, so touch keyboards leave the address as typed) with `url_input` ref
 2. **Anchor List**: When the document has anchors (empty `<a id>` or `<a name>` with no `href`), a dropdown arrow inside the URL field (`.jodit-link-anchors__toggle`) lists them under "On this page" (`.jodit-link-anchors`), each by the words after it and its `#name`. Picking one fills in its `#name`, and gives a link with no text those words, leaving the form open to insert the link. The list opens in a popup of its own over the form, from the arrow or the down arrow key, with the anchor in the URL marked (`aria-current`). It's as wide as the URL field, or wider for longer text, up to 360px, and scrolls past `min(260px, 40vh)`. A long name is cut short at 35% of the row, so the text keeps the rest. The arrow keys move through it, and Escape, a click outside it or typing an address closes it
 3. **Content Input**: Optional text input for link text with `content_input` ref
 4. **Class Name Field**: Input or select based on `modeClassName`:

@@ -349,6 +349,36 @@ describe('Link plugin', () => {
 			).equals('Text');
 		});
 	});
+	describe('URL field (#1817)', () => {
+		it('Should be a URL input, so touch keyboards leave the address as typed', () => {
+			const editor = getJodit();
+			editor.value = '<p>|here|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+
+			expect(
+				getOpenedPopup(editor).querySelector('[ref=url_input]').type
+			).equals('url');
+		});
+
+		it('Should still take an address without a scheme, or an anchor', () => {
+			['www.example.com', '#top'].forEach(href => {
+				const editor = getJodit();
+				editor.value = '<p>|here|</p>';
+				setCursorToChar(editor);
+
+				clickButton('link', editor);
+				const popup = getOpenedPopup(editor);
+				popup.querySelector('[ref=url_input]').value = href;
+				simulateEvent('submit', popup.querySelector('form'));
+
+				expect(editor.value).equals(
+					`<p><a href="${href}">here</a></p>`
+				);
+			});
+		});
+	});
 
 	// https://github.com/xdan/jodit/issues/1749
 	describe('Focus in the link popup', () => {
