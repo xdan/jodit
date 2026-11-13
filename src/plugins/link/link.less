@@ -1,0 +1,87 @@
+@import (reference) '../../styles/mixins';
+
+.jodit-link-anchors {
+	max-width: 360px;
+	max-height: min(260px, 40vh);
+	box-sizing: border-box;
+	padding-bottom: calc(var(--padding-default) / 2);
+	overflow-y: auto;
+
+	&__toggle {
+		display: flex;
+		flex-shrink: 0;
+		align-items: center;
+		align-self: stretch;
+		padding: 0 var(--padding-default);
+		border: 0;
+		background: none;
+		color: var(--color-icon);
+		cursor: pointer;
+
+		&:hover,
+		&[aria-expanded='true'] {
+			background-color: var(--color-background-button-hover);
+		}
+
+		svg {
+			.size(10px);
+		}
+	}
+
+	&__heading {
+		padding: var(--padding-default) var(--padding-default)
+			calc(var(--padding-default) / 4);
+		color: var(--color-label);
+		font-size: var(--font-size-small);
+		line-height: 1;
+		text-transform: uppercase;
+	}
+
+	&__item {
+		display: flex;
+		width: 100%;
+		align-items: center;
+		padding: calc(var(--padding-default) / 2) var(--padding-default);
+		border: 0;
+		background: none;
+		color: var(--color-default);
+		cursor: pointer;
+		font: inherit;
+		gap: var(--padding-default);
+		text-align: left;
+
+		&:hover,
+		&:focus-visible {
+			background-color: var(--color-background-button-hover);
+		}
+
+		&[aria-current='true'] {
+			font-weight: bold;
+		}
+
+		svg {
+			.size(14px);
+
+			flex-shrink: 0;
+			color: var(--color-icon);
+		}
+	}
+
+	&__text,
+	&__name {
+		overflow: hidden;
+		text-overflow: ellipsis;
+		white-space: nowrap;
+	}
+
+	&__text {
+		flex: 1;
+	}
+
+	&__name {
+		max-width: 35%;
+		flex-shrink: 0;
+		color: var(--color-placeholder);
+		font-size: var(--font-size-small);
+	}
+}

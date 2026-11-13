@@ -10,6 +10,7 @@
  * @module icons
  */
 
+import anchor from './anchor.svg';
 import angle_down from './angle-down.svg';
 import angle_left from './angle-left.svg';
 import angle_right from './angle-right.svg';
@@ -41,6 +42,7 @@ import upload from './upload.svg';
 import valign from './valign.svg';
 
 export {
+	anchor,
 	angle_down,
 	angle_left,
 	angle_right,
