@@ -120,6 +120,8 @@ export class UIInput extends UIElement implements IUIInput {
 		if (label) {
 			Dom.before(this.wrapper, this.label);
 			this.label.innerText = this.j.i18n(label);
+			// The label is a span, so it names the input only this way
+			attr(input, 'aria-label', this.j.i18n(label));
 		} else {
 			Dom.safeRemove(this.label);
 		}

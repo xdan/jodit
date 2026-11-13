@@ -328,6 +328,28 @@ describe('Link plugin', () => {
 		});
 	});
 
+	describe('Names of the form fields (#1815)', () => {
+		it('Should name each text field by its label', () => {
+			const editor = getJodit();
+			editor.value = '<p>|here|</p>';
+			setCursorToChar(editor);
+
+			clickButton('link', editor);
+			const popup = getOpenedPopup(editor);
+
+			expect(
+				popup
+					.querySelector('[ref=url_input]')
+					.getAttribute('aria-label')
+			).equals('URL');
+			expect(
+				popup
+					.querySelector('[ref=content_input]')
+					.getAttribute('aria-label')
+			).equals('Text');
+		});
+	});
+
 	// https://github.com/xdan/jodit/issues/1749
 	describe('Focus in the link popup', () => {
 		it('Should put the caret in the URL field of the toolbar popup, and still link the selected text', () => {

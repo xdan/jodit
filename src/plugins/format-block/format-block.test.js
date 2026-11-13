@@ -5,6 +5,27 @@
  */
 
 describe('Format block plugin', () => {
+	describe('Names of the items in the list (#1815)', () => {
+		it('Should name each item by its text, not its tag', () => {
+			const editor = getJodit();
+			editor.value = '<p>text</p>';
+			clickTrigger('paragraph', editor);
+
+			const names = Array.from(
+				getOpenedPopup(editor).querySelectorAll(
+					'.jodit-toolbar-button button'
+				)
+			).map(
+				button =>
+					button.getAttribute('aria-label') ||
+					button.textContent.trim()
+			);
+
+			expect(names).to.include.members(['Heading 1', 'Quote', 'Code']);
+			expect(names).to.not.include.members(['h1']);
+		});
+	});
+
 	describe('Previews in the list take the content styles (#1710)', () => {
 		// The previews are opt in: the full list of properties they can copy
 		const full = {
