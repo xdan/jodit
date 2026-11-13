@@ -33,7 +33,9 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 		new UIBlock(editor, [
 			new UIInput(editor, {
 				name: 'url',
-				type: 'text',
+				// Touch keyboards leave a URL field as typed, with no capital or
+				// correction. The form is `novalidate`, so any address still goes in
+				type: 'url',
 				ref: 'url_input',
 				label: 'URL',
 				placeholder: 'http://',

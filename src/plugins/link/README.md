@@ -542,7 +542,7 @@ editor.e.on('processPaste.link', (e, text, insert) => {
 
 The default form includes:
 
-1. **URL Input**: Required text input with `url_input` ref
+1. **URL Input**: Required URL input (`type="url"`, so touch keyboards leave the address as typed) with `url_input` ref
 2. **Content Input**: Optional text input for link text with `content_input` ref
 3. **Class Name Field**: Input or select based on `modeClassName`:
    - Input mode: Text field with `className_input` ref
