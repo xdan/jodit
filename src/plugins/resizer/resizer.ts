@@ -159,6 +159,19 @@ export class resizer extends Plugin {
 	}
 
 	/**
+	 * A tap that selects an image sends no `click` (iPadOS), so `touchend`
+	 * stands in for it. A tick later, after `onClickOutside` has had the same
+	 * `touchend`, as `click` comes after `mouseup`
+	 */
+	@watch(':touchend')
+	protected onEditorTouchEnd(e: TouchEvent): void {
+		this.j.async.setTimeout(
+			() => this.onEditorClick(e as unknown as MouseEvent),
+			1
+		);
+	}
+
+	/**
 	 * Click in the editor area
 	 */
 	@watch(':click')
