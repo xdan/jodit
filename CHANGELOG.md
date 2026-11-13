@@ -9,6 +9,14 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.1
+
+#### :bug: Bug Fix
+
+- [#1815](https://github.com/xdan/jodit/issues/1815) Accessibility: items of a toolbar list drawn by a template (the Paragraph list) are named by their text ("Heading 1", "Quote"), not by their tag, and a labelled input takes its label as `aria-label`, so the link form's and the image properties dialog's fields have names. Thanks [@brendon](https://github.com/brendon).
+- [#1816](https://github.com/xdan/jodit/issues/1816) A tap on an image on an iPad, which sends no `click`, shows the resize handles as a click does.
+- [#1817](https://github.com/xdan/jodit/issues/1817) The link form's URL field is a `type="url"` input, so touch keyboards leave the address as typed, with no capital letter or autocorrection; addresses without a scheme and anchors still go in.
+
 ## 4.20.0
 
 #### :rocket: New Feature
