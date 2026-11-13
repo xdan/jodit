@@ -20,6 +20,7 @@ import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Config } from 'jodit/config';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 
 declare module 'jodit/config' {
@@ -33,7 +34,7 @@ declare module 'jodit/config' {
 			 * Jodit.make('#editor', {
 			 * 		file: {
 			 * 			defaultHandlerSuccess(data) {
-			 * 				data.files.forEach(file => {
+			 * 				data.items.forEach(({ file }) => {
 			 * 					this.s.insertHTML(`<a class="file" href="${data.baseurl + file}">${file}</a>`);
 			 * 				});
 			 * 			}
@@ -78,8 +79,10 @@ function wrapSelectionInLink(
 }
 
 function insertLinks(this: IJodit, data: IUploaderData): void {
-	data.files?.forEach(file => {
-		const href = data.baseurl + file;
+	const { baseurl } = data;
+
+	getItems(data).forEach(({ file }) => {
+		const href = baseurl + file;
 
 		if (wrapSelectionInLink(this, href)) {
 			return;
@@ -89,7 +92,7 @@ function insertLinks(this: IJodit, data: IUploaderData): void {
 
 		link.textContent = this.o.uploader.getDisplayName.call(
 			this.uploader,
-			data.baseurl,
+			baseurl,
 			file
 		);
 
@@ -147,8 +150,9 @@ Config.prototype.controls.file = {
 			editor,
 			{
 				filebrowser: (data: IFileBrowserCallBackData) => {
-					data.files &&
-						data.files.forEach(file => insert(data.baseurl + file));
+					getItems(data).forEach(({ file }) =>
+						insert(data.baseurl + file)
+					);
 
 					close();
 				},

@@ -421,6 +421,36 @@ describe('Video properties plugin', () => {
 					'https://xdsoft.net/jodit/files/poster.jpg'
 				);
 			});
+
+			// Jodit PRO's file browser calls back with only the arrays
+			it('should take one a file browser passes as arrays (#1752)', async () => {
+				const { editor, dialog, elm } = await openDialog(
+					span(`<video controls="" src="${clip}"></video>`),
+					{
+						filebrowser: {
+							ajax: { url: 'https://example.com/filebrowser' }
+						}
+					}
+				);
+
+				Object.defineProperty(editor.filebrowser, 'open', {
+					value: callback =>
+						callback({
+							baseurl: '',
+							files: [
+								'https://xdsoft.net/jodit/files/poster.jpg'
+							],
+							isImages: [true]
+						})
+				});
+
+				simulateEvent('click', elm('changePoster'));
+				clickButton('Browse', getOpenedPopup(dialog.component), 'tab');
+
+				expect(elm('poster').value).equals(
+					'https://xdsoft.net/jodit/files/poster.jpg'
+				);
+			});
 		});
 
 		it('should leave the video as it was on Cancel', async () => {

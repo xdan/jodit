@@ -58,10 +58,13 @@ describe('File plugin', function () {
 					defaultHandlerSuccess: function (data) {
 						try {
 							expect(this).equals(editor);
+							expect(data.items).deep.equals([
+								{ file: 'logo.gif', isImage: true }
+							]);
 							expect(data.files).deep.equals(['logo.gif']);
 
 							this.s.insertHTML(
-								`<a class="file" href="${data.baseurl}${data.files[0]}">Logo</a>`
+								`<a class="file" href="${data.baseurl}${data.items[0].file}">Logo</a>`
 							);
 
 							expect(editor.value).equals(
@@ -79,6 +82,38 @@ describe('File plugin', function () {
 			setCursorToChar(editor);
 
 			dropInFilePopup(editor, new FileImage());
+		});
+
+		it('Should insert the items file.defaultHandlerSuccess is given (#1752)', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			editor.o.file.defaultHandlerSuccess.call(editor, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				items: [{ file: 'file.xls', isImage: false }]
+			});
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
+		});
+
+		it('Should still insert the files file.defaultHandlerSuccess is given as arrays (#1752)', function () {
+			const editor = getJodit();
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			editor.o.file.defaultHandlerSuccess.call(editor, {
+				baseurl: 'https://xdsoft.net/jodit/files/',
+				files: ['file.xls']
+			});
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls">https://xdsoft.net/jodit/files/file.xls</a></p>'
+			);
 		});
 
 		it('Should make the selected text the link to an uploaded file', async function () {
@@ -142,6 +177,38 @@ describe('File plugin', function () {
 
 			expect(editor.value).equals(
 				'<p>test<a href="https://xdsoft.net/terms.pdf" title="">https://xdsoft.net/terms.pdf</a></p>'
+			);
+		});
+	});
+
+	describe('Browse tab', function () {
+		// Jodit PRO's file browser calls back with only the arrays
+		it('Should insert links to the files a file browser passes as arrays (#1752)', function () {
+			const editor = getJodit({
+				filebrowser: {
+					ajax: {
+						url: 'https://example.com/filebrowser'
+					}
+				}
+			});
+
+			Object.defineProperty(editor.filebrowser, 'open', {
+				value: callback =>
+					callback({
+						baseurl: 'https://xdsoft.net/jodit/files/',
+						files: ['file.xls'],
+						isImages: [false]
+					})
+			});
+
+			editor.value = '<p>test|</p>';
+			setCursorToChar(editor);
+
+			clickButton('file', editor);
+			clickButton('Browse', getOpenedPopup(editor), 'tab');
+
+			expect(editor.value).equals(
+				'<p>test<a href="https://xdsoft.net/jodit/files/file.xls" title="">https://xdsoft.net/jodit/files/file.xls</a></p>'
 			);
 		});
 	});

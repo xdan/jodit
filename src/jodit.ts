@@ -94,6 +94,7 @@ import {
 	STATUSES,
 	ViewWithToolbar
 } from 'jodit/modules';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 
 const FOCUS_EVENTS = new Set(['focus', 'blur', 'focusin', 'focusout']);
 
@@ -485,28 +486,25 @@ export class Jodit extends ViewWithToolbar implements IJodit, Dlgs {
 				theme: jodit.o.theme,
 				shadowRoot: jodit.o.shadowRoot,
 				defaultCallback(data: IFileBrowserCallBackData): void {
-					if (data.files && data.files.length) {
-						data.files.forEach((file, i) => {
-							const url = data.baseurl + file;
-							const isImage = data.isImages
-								? data.isImages[i]
-								: false;
+					const { baseurl } = data;
 
-							if (isImage) {
-								jodit.s.insertImage(
-									url,
-									null,
-									jodit.o.imageDefaultWidth
-								);
-							} else {
-								jodit.s.insertNode(
-									jodit.createInside.fromHTML(
-										`<a href='${url}' title='${url}'>${url}</a>`
-									)
-								);
-							}
-						});
-					}
+					getItems(data).forEach(({ file, isImage }) => {
+						const url = baseurl + file;
+
+						if (isImage) {
+							jodit.s.insertImage(
+								url,
+								null,
+								jodit.o.imageDefaultWidth
+							);
+						} else {
+							jodit.s.insertNode(
+								jodit.createInside.fromHTML(
+									`<a href='${url}' title='${url}'>${url}</a>`
+								)
+							);
+						}
+					});
 				}
 			},
 			this.o.filebrowser

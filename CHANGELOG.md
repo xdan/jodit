@@ -16,6 +16,11 @@
 - [#1715](https://github.com/xdan/jodit/issues/1715) Anchors: the new `anchor` plugin's Insert anchor button puts `<a id="name"></a>` at the caret, refusing a name with spaces or one already used. Each anchor shows as a marker in the editor only, and a click on it opens a form to rename the anchor, which updates the links to it, or to remove it. Older empty `<a name>` anchors count too and keep `name`. The link popup's URL field lists the document's anchors in a dropdown under "On this page", and picking one fills in its `#name`. Thanks [@brendon](https://github.com/brendon).
 - The default toolbar gains the Insert anchor button, in the `insert` group, so every editor with the default `buttons` shows it. `removeButtons: ['anchor']` leaves it out.
 - Empty `<a id>` and `<a name>` anchors already in a document now show a marker in the editor, and a click on one opens the anchor form. `disablePlugins: ['anchor']` leaves them as they were.
+- [#1752](https://github.com/xdan/jodit/issues/1752) Upload and file browser handlers get `items`, one `{ file, isImage, name }` object per file. `uploader.process` and servers can answer with `items` instead of `files` and `isImages`. Thanks @brendon.
+
+#### :house: Internal
+
+- [#1752](https://github.com/xdan/jodit/issues/1752) Deprecated: `files`, `isImages` and `fileNames` in the data upload and file browser handlers get. Use `items`. They will be removed in 5.0. Until then they win over `items` while `files` is set, so a handler that edits `items` and passes the data on to a default handler deletes `files` first. Thanks @brendon.
 
 ## 4.19.14
 

@@ -21,6 +21,7 @@ import { $$ } from 'jodit/core/helpers';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
+import { getItems } from 'jodit/modules/uploader/helpers/normalize-uploader-data';
 import { FileSelectorWidget } from 'jodit/modules/widget';
 
 import imageIcon from './image.svg';
@@ -50,14 +51,13 @@ Config.prototype.controls.image = {
 				filebrowser: (data: IFileBrowserCallBackData) => {
 					editor.s.restore();
 
-					data.files &&
-						data.files.forEach(file =>
-							editor.s.insertImage(
-								data.baseurl + file,
-								null,
-								editor.o.imageDefaultWidth
-							)
-						);
+					getItems(data).forEach(({ file }) =>
+						editor.s.insertImage(
+							data.baseurl + file,
+							null,
+							editor.o.imageDefaultWidth
+						)
+					);
 
 					close();
 				},

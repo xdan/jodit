@@ -16,7 +16,7 @@ import type {
 	IPermissions,
 	Nullable
 } from './types';
-import type { IUploader, IUploaderOptions } from './uploader';
+import type { IUploadedFile, IUploader, IUploaderOptions } from './uploader';
 import type { IViewOptions, IViewWithToolbar } from './view';
 import type { IUIGroup } from './ui';
 import type { IObservable } from './events';
@@ -192,7 +192,16 @@ export interface IFileBrowserOptions extends IViewOptions {
 
 export interface IFileBrowserCallBackData {
 	baseurl: string;
+
+	/**
+	 * One object per file. In 4.x the arrays win while `files` is set, as in
+	 * the uploader's data
+	 */
+	items?: IUploadedFile[];
+
+	/** @deprecated Use `items` instead. Removed in 5.0 */
 	files: string[];
+	/** @deprecated Use `items` instead. Removed in 5.0 */
 	isImages?: boolean[];
 }
 
