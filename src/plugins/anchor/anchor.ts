@@ -34,14 +34,24 @@ import './config';
 const ICON =
 	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e88e5' stroke-width='2.5' stroke-linejoin='round'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z'/%3E%3C/svg%3E\")";
 
-const MARKER = ['id', 'name']
-	.map(key => `.jodit-wysiwyg a[${key}]:not([href]):empty::before`)
-	.join(',');
+/**
+ * The editing area of an editor with the plugin, when it shares its document
+ * with the page and so with any other editor on it
+ */
+const WITH_ANCHORS = 'jodit-wysiwyg_anchors';
 
 /**
- * Each anchor's marker, in the editing area only
+ * Each anchor's marker, in the editing areas `scope` picks out
  */
-const MARKER_STYLE = `${MARKER}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background:${ICON} center/contain no-repeat;cursor:pointer;content:''}`;
+function markerStyle(scope: string): string {
+	const marker = ['id', 'name']
+		.map(
+			key => `.jodit-wysiwyg${scope} a[${key}]:not([href]):empty::before`
+		)
+		.join(',');
+
+	return `${marker}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background:${ICON} center/contain no-repeat;cursor:pointer;content:''}`;
+}
 
 /**
  * The attribute `markAnchor` gives an anchor: an empty `<a>` with no `href`
@@ -63,8 +73,18 @@ export class anchor extends Plugin {
 
 	/** @override */
 	protected afterInit(jodit: IJodit): void {
+		// An iframe's document is the editor's alone, and its body is part of
+		// the value with `editHTMLDocumentMode`, so it gets no class
+		const shared = jodit.ed === jodit.od;
+
+		if (shared) {
+			jodit.editor.classList.add(WITH_ANCHORS);
+		}
+
 		// It goes in the editing document, so iframe mode has it whatever `iframeStyle` holds
-		getContainer(jodit, 'anchor', 'style', true).textContent = MARKER_STYLE;
+		getContainer(jodit, 'anchor', 'style', true).textContent = markerStyle(
+			shared ? '.' + WITH_ANCHORS : ''
+		);
 
 		jodit.e
 			.on('generateAnchorForm.anchor', this.__generateForm)
@@ -398,6 +418,7 @@ export class anchor extends Plugin {
 	/** @override */
 	protected beforeDestruct(jodit: IJodit): void {
 		this.__dropForm();
+		jodit.editor.classList.remove(WITH_ANCHORS);
 
 		jodit.e
 			.off('generateAnchorForm.anchor', this.__generateForm)

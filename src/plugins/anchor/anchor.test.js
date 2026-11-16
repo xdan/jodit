@@ -181,6 +181,33 @@ describe('Anchor plugin', () => {
 			expect(parseFloat(marker.width)).is.above(0);
 		});
 
+		describe('With two editors on the page', () => {
+			const markerOf = editor =>
+				editor.ew.getComputedStyle(
+					editor.editor.querySelector('a'),
+					'::before'
+				);
+
+			it('should leave the anchors unmarked in the one with the plugin off', () => {
+				const editor = getJodit();
+				const other = getJodit({ disablePlugins: ['anchor'] });
+				editor.value = '<p>A<a id="x"></a>B</p>';
+				other.value = '<p>A<a id="x"></a>B</p>';
+
+				expect(parseFloat(markerOf(editor).width)).is.above(0);
+				expect(markerOf(other).content).equals('none');
+			});
+
+			it('should keep the markers in one when the other goes', () => {
+				const editor = getJodit();
+				const other = getJodit();
+				editor.value = '<p>A<a id="x"></a>B</p>';
+				other.destruct();
+
+				expect(parseFloat(markerOf(editor).width)).is.above(0);
+			});
+		});
+
 		it('should keep the value through the source view', () => {
 			const editor = getJodit();
 			const value = '<p>A<a id="x"></a>B</p>';
