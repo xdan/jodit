@@ -208,6 +208,43 @@ describe('Anchor plugin', () => {
 			});
 		});
 
+		describe('Marker colour', () => {
+			const markerOf = editor =>
+				editor.ew.getComputedStyle(
+					editor.editor.querySelector('a'),
+					'::before'
+				);
+
+			it("should draw the anchor icon in the theme's icon colour", () => {
+				const editor = getJodit();
+				editor.value = '<p>A<a id="x"></a>B</p>';
+
+				const marker = markerOf(editor);
+				expect(marker.backgroundColor).equals('rgb(76, 76, 76)');
+				expect(marker.maskImage || marker.webkitMaskImage).contains(
+					'data:image/svg+xml'
+				);
+			});
+
+			it("should take the dark theme's icon colour", () => {
+				const editor = getJodit({ theme: 'dark' });
+				editor.value = '<p>A<a id="x"></a>B</p>';
+
+				expect(markerOf(editor).backgroundColor).equals(
+					'rgb(192, 192, 192)'
+				);
+			});
+
+			it("should fall back to the default theme's colour in iframe mode", () => {
+				const editor = getJodit({ iframe: true, theme: 'dark' });
+				editor.value = '<p>A<a id="x"></a>B</p>';
+
+				expect(markerOf(editor).backgroundColor).equals(
+					'rgb(76, 76, 76)'
+				);
+			});
+		});
+
 		it('should keep the value through the source view', () => {
 			const editor = getJodit();
 			const value = '<p>A<a id="x"></a>B</p>';

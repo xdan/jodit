@@ -28,11 +28,9 @@ import {
 import { Plugin } from 'jodit/core/plugin';
 import { UIButton } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput } from 'jodit/core/ui/form';
+import { Icon } from 'jodit/core/ui/icon';
 
 import './config';
-
-const ICON =
-	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e88e5' stroke-width='2.5' stroke-linejoin='round'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z'/%3E%3C/svg%3E\")";
 
 /**
  * The editing area of an editor with the plugin, when it shares its document
@@ -50,7 +48,9 @@ function markerStyle(scope: string): string {
 		)
 		.join(',');
 
-	return `${marker}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background:${ICON} center/contain no-repeat;cursor:pointer;content:''}`;
+	const icon = `url("data:image/svg+xml,${encodeURIComponent(Icon.get('anchor'))}") center/contain no-repeat`;
+
+	return `${marker}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background-color:var(--jd-color-icon,#4c4c4c);-webkit-mask:${icon};mask:${icon};cursor:pointer;content:''}`;
 }
 
 /**

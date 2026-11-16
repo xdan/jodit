@@ -52,6 +52,7 @@ const editor = Jodit.make('#editor', {
 - On `change`, `afterInit` and `afterSetMode`, each anchor gets `contenteditable="false"`, so typing beside it never goes into it, the arrow keys step over it, and Backspace or Delete removes it whole.
 - On `afterGetValueFromEditor`, that attribute comes off again, so it isn't saved
 - The marker is a `::before`, drawn by a style in the editing document (the iframe's in iframe mode). On the page, the style needs the `jodit-wysiwyg_anchors` class the plugin gives its editing area, so another editor there with the plugin off shows no markers. An iframe's document is the editor's alone, so there it needs no class, which would otherwise be saved on `<body>` with `editHTMLDocumentMode`
+- The marker uses the `anchor` icon as a mask in the theme's `--jd-color-icon` colour. The dark theme lightens it in the editing area; an iframe uses the default theme's colour because its document has no theme variables
 - On `beforePasteInsert`, pasted HTML with an anchor whose name is taken is parsed in a `<template>`, so nothing in it loads, and the anchor is renamed there before it's inserted. Content dropped from outside the editor takes the same path; a copy dragged with Ctrl within the editor doesn't
 
 ### Click
