@@ -332,6 +332,41 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('Deleting all of a formatted word keeps the formatting for the next letter, as the browsers do (#1784)', () => {
+		[
+			[
+				'<p>ab <strong>|c|</strong></p>',
+				'<p>ab&nbsp;<strong>x</strong></p>'
+			],
+			['<p>ab <em>|cd|</em> ef</p>', '<p>ab&nbsp;<em>x</em> ef</p>'],
+			// A line that holds only the word, taken whole
+			[
+				'<p>Intro</p><p><strong>|word|</strong></p>',
+				'<p>Intro</p><p><strong>x</strong></p>',
+				Jodit.KEY_DELETE
+			],
+			[
+				'<p>ab <strong><em>|cd|</em></strong> ef</p>',
+				'<p>ab&nbsp;<strong><em>x</em></strong> ef</p>'
+			],
+			// A link isn't carried on into new text
+			['<p>ab <a href="/page">|cd|</a> ef</p>', '<p>ab&nbsp;x ef</p>'],
+			// The formatting where the selection starts, as in the browsers
+			['<p>a|b <strong>c|</strong></p>', '<p>ax</p>']
+		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
+			it(`Should type x as ${result}: ${input} on ${key}`, () => {
+				const editor = getJodit({ history: { timeout: 0 } });
+				editor.value = input;
+				setCursorToChar(editor);
+
+				simulateEvent('keydown', key, editor.editor);
+				editor.s.insertHTML('x');
+
+				expect(editor.value).equals(result);
+			});
+		});
+	});
+
 	describe('Space left at an edge of the deleted selection', () => {
 		// https://github.com/xdan/jodit/issues/1522
 		[
@@ -340,7 +375,10 @@ describe('Delete plugin', () => {
 			['<p>|a| b</p>', '<p>|&nbsp;b</p>'],
 			['<p>a |b| c</p>', '<p>a&nbsp;| c</p>'],
 			['<p>a |b|<br>c</p>', '<p>a&nbsp;|<br>c</p>'],
-			['<p>ab <strong>|c|</strong></p>', '<p>ab&nbsp;|</p>'],
+			[
+				'<p>ab <strong>|c|</strong></p>',
+				'<p>ab&nbsp;<strong>|</strong></p>'
+			],
 			['<p>a |b</p><p>c| d</p>', '<p>a&nbsp;| d</p>']
 		].forEach(([input, result, key = Jodit.KEY_BACKSPACE]) => {
 			it(`Should make the space non-breaking: ${input} => ${result} on ${key}`, () => {
