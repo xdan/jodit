@@ -1703,7 +1703,9 @@
 				});
 
 				describe('Click on preview', () => {
-					it('Should open preview dialog', async () => {
+					// The connector's files are on xdsoft.net, so the preview
+					// loads the image Karma serves, not one over the network
+					const openPreview = async (href = '/tests/artio.jpg') => {
 						unmockPromise();
 
 						const editor = getJodit({
@@ -1722,6 +1724,7 @@
 						expect(files).is.not.null;
 
 						const item = getFirstFBItem(filebrowser);
+						item.setAttribute('href', href);
 						const pos = Jodit.modules.Helpers.position(item);
 
 						simulateEvent('contextmenu', item, function (o) {
@@ -1743,7 +1746,11 @@
 							clickButton('eye', context);
 						});
 
-						const dialog = getOpenedDialog(filebrowser);
+						return [getOpenedDialog(filebrowser), item];
+					};
+
+					it('Should open preview dialog', async () => {
+						const [dialog, item] = await openPreview();
 
 						expect(dialog).is.not.null;
 						const previewsButtons = dialog.querySelectorAll(
@@ -1751,6 +1758,26 @@
 						);
 
 						expect(previewsButtons.length).equals(2);
+						expect(dialog.querySelector('img').alt).equals(
+							item.getAttribute('data-name')
+						);
+					});
+
+					it('Should show the preview without the loader when its image cannot load', async () => {
+						const [dialog, item] = await openPreview(
+							'/tests/no-such-image.jpg'
+						);
+
+						expect(dialog.querySelector('.jodit-icon_loader')).is
+							.null;
+						expect(
+							dialog.querySelectorAll(
+								'.jodit-file-browser-preview__navigation'
+							).length
+						).equals(2);
+						expect(dialog.querySelector('img').alt).equals(
+							item.getAttribute('data-name')
+						);
 					});
 				});
 			});

@@ -137,13 +137,14 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 										const image = self.c.element('img');
 
 										attr(image, 'src', src);
+										attr(image, 'alt', ga('data-name'));
 
 										const onload = (): void => {
 											if (self.isInDestruct) {
 												return;
 											}
 
-											self.e.off(image, 'load');
+											self.e.off(image, 'load error');
 
 											Dom.detach(temp_content);
 
@@ -191,7 +192,10 @@ export default (self: IFileBrowser): ((e: DragEvent) => boolean | void) => {
 											);
 										};
 
-										self.e.on(image, 'load', onload);
+										// An image that can't load is shown too,
+										// broken with the file's name, rather
+										// than the loader for good
+										self.e.on(image, 'load error', onload);
 
 										if (image.complete) {
 											onload();
