@@ -15,6 +15,7 @@ import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import {
 	attr,
+	css,
 	hasBrowserColorPicker,
 	isArray,
 	isFunction,
@@ -118,7 +119,9 @@ export const ColorPickerWidget = (
 		const index = items.indexOf(item);
 
 		if (key === KEY_LEFT || key === KEY_RIGHT) {
-			return items[key === KEY_LEFT ? index - 1 : index + 1];
+			const step = key === KEY_LEFT ? -1 : 1;
+			const rtl = css(item, 'direction') === 'rtl';
+			return items[index + (rtl ? -step : step)];
 		}
 
 		const down = key === KEY_DOWN,

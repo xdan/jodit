@@ -355,6 +355,24 @@
 				expect(first.tabIndex).equals(-1);
 			});
 
+			it('Should follow the visual direction of a right-to-left palette', function () {
+				const [, popup] = openOnSelection('<p>text</p>');
+				const items = swatches(popup);
+				items[0].closest('.jodit-color-picker').dir = 'rtl';
+
+				expect(items[1].offsetLeft).is.below(items[0].offsetLeft);
+				items[0].focus();
+
+				press('ArrowRight');
+				expect(document.activeElement).equals(items[0]);
+
+				press('ArrowLeft');
+				expect(document.activeElement).equals(items[1]);
+
+				press('ArrowRight');
+				expect(document.activeElement).equals(items[0]);
+			});
+
 			it('Should move down by the number of columns set', function () {
 				document.documentElement.style.setProperty(
 					'--jd-color-picker-columns',
