@@ -788,7 +788,7 @@ describe('Test paste plugin', () => {
 
 				expect(editor.value).equals(
 					'<h2><span>Sports day</span></h2>' +
-						'<p><span>Please bring a </span><span>hat</span></p>'
+						'<p><span>Please bring a </span><strong>hat</strong></p>'
 				);
 			});
 
@@ -820,6 +820,179 @@ describe('Test paste plugin', () => {
 				expect(editor.value).equals(
 					'<p>Sports day<br>Please bring a hat</p>'
 				);
+			});
+		});
+	});
+
+	// https://github.com/xdan/jodit/issues/1780
+	describe('Clean paste keeps what the content means (#1780)', () => {
+		const { cleanFromWord } = Jodit.modules.Helpers;
+		const image =
+			'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+
+		describe('Attributes', () => {
+			it('Should keep merged cells, header scope, alt text, and the target and title of links', () => {
+				expect(
+					cleanFromWord(
+						'<table class="grid" style="width:100%"><tbody>' +
+							'<tr><th scope="col" colspan="2" style="color:red">Term 1</th></tr>' +
+							'<tr><td rowspan="2" id="week">Week 1</td><td>Monday</td></tr>' +
+							'<tr><td>Tuesday</td></tr>' +
+							'</tbody></table>' +
+							`<p><img src="${image}" alt="The school hall" width="300"></p>` +
+							'<p><a href="https://example.com/" target="_blank" title="Our website" class="button">Visit us</a></p>'
+					)
+				).equals(
+					'<table><tbody>' +
+						'<tr><th scope="col" colspan="2">Term 1</th></tr>' +
+						'<tr><td rowspan="2">Week 1</td><td>Monday</td></tr>' +
+						'<tr><td>Tuesday</td></tr>' +
+						'</tbody></table>' +
+						`<p><img src="${image}" alt="The school hall"></p>` +
+						'<p><a href="https://example.com/" target="_blank" title="Our website">Visit us</a></p>'
+				);
+			});
+
+			it('Should still remove the lang from Word and the dir from Google Docs', () => {
+				expect(
+					cleanFromWord(
+						'<p dir="ltr"><span lang="EN-GB">Hello</span></p>'
+					)
+				).equals('<p><span>Hello</span></p>');
+			});
+
+			it('Should keep only the attributes passed to it', () => {
+				expect(
+					cleanFromWord(
+						'<p><a href="/" title="Home" class="button">Home</a></p>',
+						['href', 'class']
+					)
+				).equals('<p><a href="/" class="button">Home</a></p>');
+			});
+
+			it('Should keep merged cells in a clean paste', () => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					defaultActionOnPaste: Jodit.INSERT_CLEAR_HTML
+				});
+
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
+				simulatePaste(
+					editor.editor,
+					'<table style="width:100%"><tbody><tr><td colspan="2">Term 1</td></tr>' +
+						'<tr><td>Monday</td><td>Tuesday</td></tr></tbody></table>'
+				);
+
+				expect(editor.value).equals(
+					'<table><tbody><tr><td colspan="2">Term 1</td></tr>' +
+						'<tr><td>Monday</td><td>Tuesday</td></tr></tbody></table>'
+				);
+			});
+
+			it('Should keep the attributes in pasteKeepAttributes', () => {
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					defaultActionOnPaste: Jodit.INSERT_CLEAR_HTML,
+					pasteKeepAttributes: ['href', 'class']
+				});
+
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
+				simulatePaste(
+					editor.editor,
+					'<p><a href="/" class="button" target="_blank" style="color:red">Home</a></p>'
+				);
+
+				expect(editor.value).equals(
+					'<p><a href="/" class="button">Home</a></p>'
+				);
+			});
+
+			it('Should keep them when HTML from Word is pasted with Clean', async () => {
+				const editor = getJodit({
+					askBeforePasteFromWord: false,
+					defaultActionOnPasteFromWord: Jodit.INSERT_AS_TEXT
+				});
+
+				editor.value = '<p>|<br></p>';
+				setCursorToChar(editor);
+				simulatePaste(
+					editor.editor,
+					'<html xmlns:o="urn:schemas-microsoft-com:office:office" ' +
+						'xmlns:w="urn:schemas-microsoft-com:office:word"><body><!--StartFragment-->' +
+						"<table class=MsoTableGrid border=1 style='border-collapse:collapse'>" +
+						"<tr><td width=200 colspan=2 style='width:150.0pt'>" +
+						'<p class=MsoNormal><span lang=EN-GB>Term 1<o:p></o:p></span></p></td></tr>' +
+						'<tr><td><p class=MsoNormal><span lang=EN-GB>Monday</span></p></td>' +
+						'<td><p class=MsoNormal><span lang=EN-GB>Tuesday</span></p></td></tr>' +
+						'</table><!--EndFragment--></body></html>'
+				);
+
+				await delay(300);
+
+				const div = document.createElement('div');
+				div.innerHTML = editor.value;
+
+				expect(
+					Array.from(div.querySelectorAll('td')).map(td => [
+						td.getAttribute('colspan'),
+						td.textContent
+					])
+				).deep.equals([
+					['2', 'Term 1'],
+					[null, 'Monday'],
+					[null, 'Tuesday']
+				]);
+				expect(div.querySelector('[lang], [class], [width]')).is.null;
+			});
+		});
+
+		describe('Google Docs formatting', () => {
+			it('Should turn bold, italic, underlined and struck spans into tags', () => {
+				expect(
+					cleanFromWord(
+						'<p dir="ltr"><span style="font-weight:700;">Bold</span>' +
+							'<span style="font-weight:400;"> and </span>' +
+							'<span style="font-style:italic;font-weight:400;">italic</span>' +
+							'<span style="font-weight:400;"> and </span>' +
+							'<span style="text-decoration:underline;-webkit-text-decoration-skip:none;text-decoration-skip-ink:none;font-weight:400;">underlined</span>' +
+							'<span style="font-weight:400;"> and </span>' +
+							'<span style="text-decoration:line-through;font-weight:400;">struck</span></p>'
+					)
+				).equals(
+					'<p><strong>Bold</strong><span> and </span><em>italic</em>' +
+						'<span> and </span><u>underlined</u>' +
+						'<span> and </span><s>struck</s></p>'
+				);
+			});
+
+			it('Should nest the tags when a span has several', () => {
+				expect(
+					cleanFromWord(
+						'<p><span style="font-weight:700;font-style:italic;text-decoration:underline;">All three</span></p>'
+					)
+				).equals('<p><strong><em><u>All three</u></em></strong></p>');
+			});
+
+			it('Should take a weight of 600 or more, or bold, as bold', () => {
+				expect(
+					cleanFromWord(
+						'<p><span style="font-weight:600">a</span>' +
+							'<span style="font-weight:bold">b</span>' +
+							'<span style="font-weight:500">c</span></p>'
+					)
+				).equals(
+					'<p><strong>a</strong><strong>b</strong><span>c</span></p>'
+				);
+			});
+
+			it('Should not read the mso- properties of Word as formatting', () => {
+				expect(
+					cleanFromWord(
+						"<p><span style='mso-bidi-font-weight:bold;mso-bidi-font-style:italic'>Plain</span></p>"
+					)
+				).equals('<p><span>Plain</span></p>');
 			});
 		});
 	});

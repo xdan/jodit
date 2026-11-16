@@ -218,7 +218,10 @@ export class paste extends Plugin {
 
 			switch (action) {
 				case INSERT_CLEAR_HTML:
-					html = cleanFromWord(removeGoogleDocsWrapper(html));
+					html = cleanFromWord(
+						removeGoogleDocsWrapper(html),
+						this.j.o.pasteKeepAttributes
+					);
 					break;
 
 				case INSERT_ONLY_TEXT:

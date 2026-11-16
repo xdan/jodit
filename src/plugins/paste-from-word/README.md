@@ -233,7 +233,8 @@ The `cleanFromWord()` function:
 - Normalizes whitespace
 - Removes empty elements
 - Converts Word list markup to standard HTML lists (see Word Lists below)
-- Strips proprietary Word attributes
+- Turns spans styled bold, italic, underlined or struck through into `<strong>`, `<em>`, `<u>` and `<s>`
+- Keeps only the attributes in its second argument, the editor's `pasteKeepAttributes` (by default `src`, `href`, `rel`, `content`, `alt`, `title`, `colspan`, `rowspan`, `scope` and `target`), and removes every style
 
 ### Style Application
 

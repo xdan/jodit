@@ -8,7 +8,8 @@
  * @module helpers/html
  */
 
-import { globalDocument } from 'jodit/core/constants';
+import type { HTMLTagNames } from 'jodit/types';
+import { globalDocument, PASTE_KEEP_ATTRIBUTES } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { removeWordWrappers } from 'jodit/core/helpers/html/tag-scan';
@@ -20,10 +21,64 @@ import { trim } from 'jodit/core/helpers/string/trim';
 import { attr, attrRaw } from 'jodit/core/helpers/utils/attr';
 
 /**
+ * Google Docs marks bold, italic, underline and strikethrough with styles on
+ * spans, where Word uses tags, so they become the tags before the styles go
+ */
+function formattedSpansToTags(root: HTMLElement): void {
+	toArray(root.querySelectorAll<HTMLElement>('span[style]')).forEach(span => {
+		const { fontWeight, fontStyle } = span.style;
+		const lines =
+			span.style.textDecorationLine || span.style.textDecoration;
+
+		const tags = (
+			[
+				(fontWeight === 'bold' ||
+					fontWeight === 'bolder' ||
+					parseInt(fontWeight, 10) >= 600) &&
+					'strong',
+				/^(italic|oblique)/.test(fontStyle) && 'em',
+				/underline/.test(lines) && 'u',
+				/line-through/.test(lines) && 's'
+			] as Array<HTMLTagNames | false>
+		).filter((tag): tag is HTMLTagNames => Boolean(tag));
+
+		if (!tags.length) {
+			return;
+		}
+
+		const elements = tags.map(tag => span.ownerDocument.createElement(tag));
+
+		// The outermost takes the span's attributes, which the cleaning
+		// that follows filters as it would the span's
+		toArray(span.attributes).forEach(({ name, value }) =>
+			elements[0].setAttribute(name, value)
+		);
+
+		elements.reduce((parent, child) => parent.appendChild(child));
+
+		const innermost = elements[elements.length - 1];
+
+		while (span.firstChild) {
+			innermost.appendChild(span.firstChild);
+		}
+
+		Dom.before(span, elements[0]);
+		Dom.safeRemove(span);
+	});
+}
+
+/**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
  * content that matches the look and feel of the site.
+ *
+ * @param keepAttributes - The attributes to keep; every other attribute, and every style, is removed
  */
-export function cleanFromWord(html: string): string {
+export function cleanFromWord(
+	html: string,
+	keepAttributes: readonly string[] = PASTE_KEEP_ATTRIBUTES
+): string {
+	const keep = new Set(keepAttributes.map(name => name.toLowerCase()));
+
 	if (html.indexOf('<html ') !== -1) {
 		html = html.substring(html.indexOf('<html '), html.length);
 		html = html.substring(
@@ -40,6 +95,8 @@ export function cleanFromWord(html: string): string {
 
 		const marks: Node[] = [];
 		const listItems = readWordListItems(div);
+
+		formattedSpansToTags(div);
 
 		if (div.firstChild) {
 			Dom.each(div, node => {
@@ -79,14 +136,9 @@ export function cleanFromWord(html: string): string {
 								toArray((node as Element).attributes).forEach(
 									(attribute: Attr) => {
 										if (
-											[
-												'src',
-												'href',
-												'rel',
-												'content'
-											].indexOf(
+											!keep.has(
 												attribute.name.toLowerCase()
-											) === -1
+											)
 										) {
 											// `attrRaw`: SVG keeps camelCase names
 											// (`viewBox`), `attr()` would kebab-case
