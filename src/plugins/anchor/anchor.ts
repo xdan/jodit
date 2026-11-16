@@ -27,20 +27,24 @@ import {
 import { Plugin } from 'jodit/core/plugin';
 import { UIButton } from 'jodit/core/ui/button';
 import { UIBlock, UIForm, UIInput } from 'jodit/core/ui/form';
+import { Icon } from 'jodit/core/ui/icon';
 
 import './config';
-
-const ICON =
-	"url(\"data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%231e88e5' stroke-width='2.5' stroke-linejoin='round'%3E%3Cpath d='M6 3h12v18l-6-4-6 4z'/%3E%3C/svg%3E\")";
 
 const MARKER = ['id', 'name']
 	.map(key => `.jodit-wysiwyg a[${key}]:not([href]):empty::before`)
 	.join(',');
 
 /**
- * Each anchor's marker, in the editing area only
+ * Each anchor's marker, in the editing area only: the anchor icon as a mask
+ * over the theme's icon colour, or the default theme's in an iframe, whose
+ * document doesn't get the theme's variables
  */
-const MARKER_STYLE = `${MARKER}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background:${ICON} center/contain no-repeat;cursor:pointer;content:''}`;
+function markerStyle(): string {
+	const icon = `url("data:image/svg+xml,${encodeURIComponent(Icon.get('anchor'))}") center/contain no-repeat`;
+
+	return `${MARKER}{display:inline-block;width:.75em;height:1em;margin:0 .1em;vertical-align:-.15em;background-color:var(--jd-color-icon,#4c4c4c);-webkit-mask:${icon};mask:${icon};cursor:pointer;content:''}`;
+}
 
 /**
  * The attribute `markAnchor` gives an anchor: an empty `<a>` with no `href`
@@ -63,7 +67,8 @@ export class anchor extends Plugin {
 	/** @override */
 	protected afterInit(jodit: IJodit): void {
 		// It goes in the editing document, so iframe mode has it whatever `iframeStyle` holds
-		getContainer(jodit, 'anchor', 'style', true).textContent = MARKER_STYLE;
+		getContainer(jodit, 'anchor', 'style', true).textContent =
+			markerStyle();
 
 		jodit.e
 			.on('generateAnchorForm.anchor', this.__generateForm)

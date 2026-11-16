@@ -50,7 +50,7 @@ const editor = Jodit.make('#editor', {
 
 - On `change`, `afterInit` and `afterSetMode`, each anchor gets `contenteditable="false"`, so typing beside it never goes into it, the arrow keys step over it, and Backspace or Delete removes it whole.
 - On `afterGetValueFromEditor`, that attribute comes off again, so it isn't saved
-- The marker is a `::before`, drawn by a style in the editing document (the iframe's in iframe mode)
+- The marker is a `::before`, drawn by a style in the editing document (the iframe's in iframe mode). It's the `anchor` icon as a mask over the theme's icon colour, `--jd-color-icon`, which the dark theme lightens in the editing area. An iframe's document doesn't get the theme's variables, so there it takes the default theme's colour
 
 ### Click
 
