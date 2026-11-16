@@ -404,4 +404,71 @@ describe('Anchor plugin', () => {
 			expect(isOpen(popup)).is.false;
 		});
 	});
+
+	describe('Paste', () => {
+		const pasteInto = (value, html) => {
+			const editor = getJodit({ askBeforePasteHTML: false });
+			editor.value = value;
+			setCursorToChar(editor);
+			simulatePaste(editor.editor, html);
+			return editor;
+		};
+
+		it('should give a copy of an anchor the next free name, and the links pasted with it', () => {
+			const editor = pasteInto(
+				'<p><a href="#fees">See the fees</a></p><p><a id="fees"></a>Fees</p><p>|</p>',
+				'<p><a href="#fees">See the fees</a></p><p><a id="fees"></a>Fees</p>'
+			);
+
+			expect(editor.value).equals(
+				'<p><a href="#fees">See the fees</a></p><p><a id="fees"></a>Fees</p>' +
+					'<p><a href="#fees-2">See the fees</a></p><p><a id="fees-2"></a>Fees</p>'
+			);
+		});
+
+		it('should leave a link pasted without its anchor on the original', () => {
+			const editor = pasteInto(
+				'<p><a id="fees"></a>Fees</p><p>|</p>',
+				'<p><a href="#fees">See the fees</a></p>'
+			);
+
+			expect(editor.value).equals(
+				'<p><a id="fees"></a>Fees</p><p><a href="#fees">See the fees</a></p>'
+			);
+		});
+
+		it('should skip the names already taken, in the document and in the paste', () => {
+			const editor = pasteInto(
+				'<p><a id="fees"></a>Fees</p><h2 id="fees-2">Fees</h2><p>|</p>',
+				'<p><a id="fees"></a>Fees</p><p><a id="fees-3"></a>More</p>'
+			);
+
+			expect(editor.value).equals(
+				'<p><a id="fees"></a>Fees</p><h2 id="fees-2">Fees</h2>' +
+					'<p><a id="fees-4"></a>Fees</p><p><a id="fees-3"></a>More</p>'
+			);
+		});
+
+		it("should keep an older anchor's name attribute", () => {
+			const editor = pasteInto(
+				'<p><a name="fees"></a>Fees</p><p>|</p>',
+				'<p><a name="fees"></a>Fees</p>'
+			);
+
+			expect(editor.value).equals(
+				'<p><a name="fees"></a>Fees</p><p><a name="fees-2"></a>Fees</p>'
+			);
+		});
+
+		it('should leave an anchor with a name of its own as it was', () => {
+			const editor = pasteInto(
+				'<p><a id="fees"></a>Fees</p><p>|</p>',
+				'<p><a id="uniform"></a>Uniform</p>'
+			);
+
+			expect(editor.value).equals(
+				'<p><a id="fees"></a>Fees</p><p><a id="uniform"></a>Uniform</p>'
+			);
+		});
+	});
 });

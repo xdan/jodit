@@ -13,7 +13,8 @@ Adds anchors: points in the document that links jump to, for long pages such as 
 - An **Insert anchor** button in the `insert` group, which asks for a name and inserts `<a id="name"></a>` at the caret, or at the start of selected text
 - The name can't have spaces, or be the `id` of another element or the name of another anchor; the form says why when it doesn't fit. A `#` typed before it is dropped
 - Each anchor shows as a small marker in the editing area only, so the value doesn't change
-- Clicking a marker opens a popup to rename the anchor or remove it, and Escape closes it. A rename also updates the links to it in the document, unless something else still has the old name, as after a copy of the anchor is pasted
+- Clicking a marker opens a popup to rename the anchor or remove it, and Escape closes it. A rename also updates the links to it in the document, unless something else still has the old name
+- A pasted or dropped copy of an anchor whose name the document already has gets the next free one, such as `fees-2`, and the links that came with it in the same paste follow it. The links already in the document stay with the original
 - An empty `<a id>` or `<a name>` with no `href`, as older content has, counts as an anchor and keeps whichever attribute it has. New anchors use `id`, as `name` on `<a>` is obsolete in HTML5
 - The link popup lists the document's anchors by the words after them, to pick as the URL (see the link plugin)
 
@@ -51,6 +52,7 @@ const editor = Jodit.make('#editor', {
 - On `change`, `afterInit` and `afterSetMode`, each anchor gets `contenteditable="false"`, so typing beside it never goes into it, the arrow keys step over it, and Backspace or Delete removes it whole.
 - On `afterGetValueFromEditor`, that attribute comes off again, so it isn't saved
 - The marker is a `::before`, drawn by a style in the editing document (the iframe's in iframe mode)
+- On `beforePasteInsert`, pasted HTML with an anchor whose name is taken is parsed in a `<template>`, so nothing in it loads, and the anchor is renamed there before it's inserted. Content dropped from outside the editor takes the same path; a copy dragged with Ctrl within the editor doesn't
 
 ### Click
 

@@ -21,6 +21,7 @@ import {
 	getAnchorName,
 	getAnchors,
 	isAnchor,
+	isString,
 	position,
 	toArray
 } from 'jodit/core/helpers';
@@ -117,6 +118,30 @@ export class anchor extends Plugin {
 	@watch(':afterGetValueFromEditor')
 	protected onAfterGetValueFromEditor(data: { value: string }): void {
 		data.value = unmarkAnchors(data.value);
+	}
+
+	/**
+	 * A pasted or dropped copy of an anchor the document already has gets the
+	 * next free name, as `fees-2`, and the links that came with it follow it
+	 */
+	@watch(':beforePasteInsert')
+	protected onBeforePasteInsert(html: unknown): string | void {
+		if (Dom.isElement(html) || Dom.isFragment(html)) {
+			this.__renameCopies(html);
+			return;
+		}
+
+		if (!isString(html) || !/<a\s/i.test(html)) {
+			return;
+		}
+
+		// Inert, so nothing in it loads
+		const template = this.j.createInside.element('template');
+		template.innerHTML = html;
+
+		if (this.__renameCopies(template.content)) {
+			return template.innerHTML;
+		}
 	}
 
 	/**
@@ -310,6 +335,64 @@ export class anchor extends Plugin {
 				attr(link, 'href', '#' + name);
 			}
 		});
+	}
+
+	/**
+	 * Gives each anchor in `root` whose name the document already has the
+	 * next free one, avoiding the names in `root` too, and points the links
+	 * in `root` to it at the new name. Whether any was renamed
+	 */
+	private __renameCopies(root: ParentNode): boolean {
+		const inRoot = new Set(
+			toArray(root.querySelectorAll<HTMLElement>('[id], a[name]')).map(
+				elm => elm.id || attr(elm, 'name')
+			)
+		);
+		const renamed = new Map<string, string>();
+
+		getAnchors(root).forEach(anchor => {
+			const name = getAnchorName(anchor);
+
+			if (!this.__isTaken(name, null)) {
+				return;
+			}
+
+			let copy = name;
+
+			for (
+				let n = 2;
+				inRoot.has(copy) || this.__isTaken(copy, null);
+				n += 1
+			) {
+				copy = `${name}-${n}`;
+			}
+
+			['id', 'name'].forEach(key => {
+				if (anchor.hasAttribute(key)) {
+					attr(anchor, key, copy);
+				}
+			});
+
+			inRoot.add(copy);
+			renamed.set(name, copy);
+		});
+
+		if (!renamed.size) {
+			return false;
+		}
+
+		toArray(root.querySelectorAll<HTMLAnchorElement>('a[href]')).forEach(
+			link => {
+				const href = attr(link, 'href') ?? '';
+				const copy = href[0] === '#' && renamed.get(href.slice(1));
+
+				if (copy) {
+					attr(link, 'href', '#' + copy);
+				}
+			}
+		);
+
+		return true;
 	}
 
 	/** @override */
