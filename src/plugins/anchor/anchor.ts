@@ -369,8 +369,9 @@ export class anchor extends Plugin {
 			)
 		);
 		const renamed = new Map<string, string>();
+		const anchors = isAnchor(root) ? [root] : getAnchors(root);
 
-		getAnchors(root).forEach(anchor => {
+		anchors.forEach(anchor => {
 			const name = getAnchorName(anchor);
 
 			if (!this.__isTaken(name, null)) {

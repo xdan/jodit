@@ -470,6 +470,26 @@ describe('Anchor plugin', () => {
 	});
 
 	describe('Paste', () => {
+		['id', 'name'].forEach(attribute => {
+			it(`should rename a pasted anchor node with a duplicate ${attribute}`, () => {
+				const anchor = document.createElement('a');
+				anchor.setAttribute(attribute, 'fees');
+
+				const editor = getJodit({
+					askBeforePasteHTML: false,
+					events: { processPaste: () => anchor }
+				});
+				editor.value = '<p><a id="fees"></a>Fees</p><p>|</p>';
+				setCursorToChar(editor);
+				simulatePaste(editor.editor, '<a id="fees"></a>');
+
+				expect(editor.value).equals(
+					'<p><a id="fees"></a>Fees</p>' +
+						`<p><a ${attribute}="fees-2"></a></p>`
+				);
+			});
+		});
+
 		const pasteInto = (value, html) => {
 			const editor = getJodit({ askBeforePasteHTML: false });
 			editor.value = value;
