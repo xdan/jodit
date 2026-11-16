@@ -22,6 +22,8 @@ Jodit.make('#editor', {
 });
 ```
 
+A screen reader hears the control's tooltip with the value, such as "Font family, Arial".
+
 A select is at least 100px wide and grows to fit its value. These CSS variables give it a fixed width instead, and a longer value is shortened with an ellipsis:
 
 | Variable                              | Sets the width of           |

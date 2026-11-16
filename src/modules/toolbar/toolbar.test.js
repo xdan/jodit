@@ -2318,3 +2318,62 @@ describe('Toolbar select width', () => {
 		expect(width('fontsize')).equals(80);
 	});
 });
+
+// https://github.com/xdan/jodit/issues/1815
+describe('Toolbar select name', () => {
+	let editor;
+
+	beforeEach(() => {
+		editor = getJodit({
+			toolbarAdaptive: false,
+			buttons: 'paragraph,fontsize',
+			controls: {
+				paragraph: { component: 'select' },
+				fontsize: { component: 'select' }
+			}
+		});
+
+		editor.value = '<p>test</p><h1>test</h1>';
+	});
+
+	afterEach(() => {
+		editor.destruct();
+	});
+
+	const button = name =>
+		editor.toolbar.container.querySelector(
+			`.jodit-toolbar-select_${name} .jodit-toolbar-select__button`
+		);
+
+	// The toolbar's update after the first waits for a timeout
+	const caretIn = async elm => {
+		editor.s.focus();
+		editor.s.setCursorIn(elm);
+		simulateEvent('mousedown', 0, elm);
+		await delay(10);
+	};
+
+	it('should name the button by its control as well as its value', async () => {
+		await caretIn(editor.editor.firstChild);
+
+		expect(button('paragraph').getAttribute('aria-label')).equals(
+			'Insert format block, Paragraph'
+		);
+
+		const size = button('fontsize').textContent.trim();
+
+		expect(size).matches(/^\d/);
+		expect(button('fontsize').getAttribute('aria-label')).equals(
+			`Font size, ${size}`
+		);
+	});
+
+	it('should follow the value', async () => {
+		await caretIn(editor.editor.firstChild);
+		await caretIn(editor.editor.lastChild);
+
+		expect(button('paragraph').getAttribute('aria-label')).equals(
+			'Insert format block, Heading 1'
+		);
+	});
+});
