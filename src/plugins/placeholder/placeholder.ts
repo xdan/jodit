@@ -17,6 +17,7 @@ import { debounce } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { isMarker } from 'jodit/core/helpers/checker/is-marker';
+import { isAnchor } from 'jodit/core/helpers/utils/anchor';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { css } from 'jodit/core/helpers/utils/css';
 import { Plugin } from 'jodit/core/plugin/plugin';
@@ -64,12 +65,13 @@ function isBlank(root: HTMLElement): boolean {
 		return Dom.isEmptyTextNode(first);
 	}
 
+	// An anchor has no text, but it's content, shown as a marker
 	return (
 		!next &&
 		Dom.each(
 			first,
 			elm =>
-				!(Dom.isLeaf(elm) || Dom.isList(elm)) &&
+				!(Dom.isLeaf(elm) || Dom.isList(elm) || isAnchor(elm)) &&
 				(Dom.isEmpty(elm) || Dom.isTag(elm, 'br'))
 		)
 	);
