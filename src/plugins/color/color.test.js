@@ -266,6 +266,148 @@
 			});
 		});
 
+		// https://github.com/xdan/jodit/issues/1815
+		describe('Keyboard and screen readers', function () {
+			const visible = (popup, selector) =>
+				Array.from(popup.querySelectorAll(selector)).filter(
+					elm => elm.offsetParent
+				);
+
+			const swatches = popup =>
+				visible(popup, '.jodit-color-picker__color-item');
+
+			const openOnSelection = html => {
+				const editor = getJodit();
+
+				editor.value = html;
+
+				const range = editor.s.createRange();
+				range.selectNodeContents(editor.editor.firstChild);
+				editor.s.selectRange(range);
+
+				clickTrigger('brush', editor);
+
+				return [editor, getOpenedPopup(editor)];
+			};
+
+			const press = key =>
+				simulateEvent('keydown', key, document.activeElement);
+
+			const focused = () => document.activeElement.dataset.color;
+
+			afterEach(() => {
+				document.documentElement.style.removeProperty(
+					'--jd-color-picker-columns'
+				);
+			});
+
+			it('Should make each color a button named by its color, with the current one pressed', function () {
+				const [, popup] = openOnSelection(
+					'<p><span style="background-color: #F9CB9C">text</span></p>'
+				);
+
+				const items = swatches(popup);
+
+				expect(items.length).equals(80);
+
+				items.forEach(item => {
+					const current = item.dataset.color === '#F9CB9C';
+
+					expect(item.tagName).equals('BUTTON');
+					expect(item.type).equals('button');
+					expect(item.title).equals(item.dataset.color);
+					expect(item.getAttribute('aria-pressed')).equals(
+						String(current)
+					);
+					expect(item.tabIndex).equals(current ? 0 : -1);
+				});
+
+				const [remove] = visible(popup, '.jodit-color-picker__remove');
+
+				expect(remove.tagName).equals('BUTTON');
+				expect(remove.title).equals('Remove');
+			});
+
+			it('Should move the focus with the arrow keys, as the palette is laid out', function () {
+				const [, popup] = openOnSelection('<p>text</p>');
+				const [first] = swatches(popup);
+
+				expect(first.tabIndex).equals(0);
+				first.focus();
+
+				press('ArrowUp');
+				expect(focused()).equals('#000000');
+
+				press('ArrowRight');
+				expect(focused()).equals('#434343');
+
+				press('ArrowDown');
+				expect(focused()).equals('#FF0000');
+
+				press('ArrowDown');
+				expect(focused()).equals('#F4CCCC');
+
+				press('ArrowUp');
+				press('ArrowLeft');
+				expect(focused()).equals('#980000');
+
+				expect(document.activeElement.tabIndex).equals(0);
+				expect(first.tabIndex).equals(-1);
+			});
+
+			it('Should move down by the number of columns set', function () {
+				document.documentElement.style.setProperty(
+					'--jd-color-picker-columns',
+					'5'
+				);
+
+				const [, popup] = openOnSelection('<p>text</p>');
+
+				swatches(popup)[0].focus();
+				press('ArrowDown');
+
+				expect(focused()).equals('#CCCCCC');
+			});
+
+			it('Should apply a color pressed from the keyboard, which only clicks', function () {
+				const [editor, popup] = openOnSelection('<p>text</p>');
+
+				simulateEvent(
+					'click',
+					popup.querySelector('[data-color="#F9CB9C"]')
+				);
+
+				expect(editor.value).equals(
+					'<p><span style="background-color: rgb(249, 203, 156);">text</span></p>'
+				);
+			});
+
+			it('Should apply a color once when the click follows the mouse press', function () {
+				const [editor, popup] = openOnSelection('<p>text</p>');
+				const swatch = popup.querySelector('[data-color="#F9CB9C"]');
+
+				simulateEvent('mousedown', swatch);
+				simulateEvent('click', swatch);
+
+				expect(editor.value).equals(
+					'<p><span style="background-color: rgb(249, 203, 156);">text</span></p>'
+				);
+			});
+
+			it('Should remove the color from the keyboard', function () {
+				const [editor, popup] = openOnSelection(
+					'<p><span style="background-color: rgb(249, 203, 156);">text</span></p>'
+				);
+
+				simulateEvent(
+					'click',
+					visible(popup, '.jodit-color-picker__remove')[0]
+				);
+
+				expect(editor.value).equals('<p>text</p>');
+			});
+		});
+
 		describe('Show native color picker', function () {
 			describe('Enable', function () {
 				describe('Select all content by edges', function () {

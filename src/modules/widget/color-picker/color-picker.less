@@ -31,7 +31,9 @@
 		display: block;
 		width: var(--color-picker-cell-size);
 		height: var(--color-picker-cell-size);
+		padding: 0;
 		border: 1px solid transparent;
+		appearance: none;
 		text-align: center;
 		text-decoration: none;
 		vertical-align: middle;
@@ -60,7 +62,11 @@
 		padding: 2px;
 		margin-left: auto;
 		border: 1px solid transparent;
+		appearance: none;
+		background: none;
+		color: inherit;
 		cursor: pointer;
+		font: inherit;
 
 		&:hover {
 			border-color: var(--color-text);
@@ -70,6 +76,15 @@
 			width: 16px;
 			height: 16px;
 		}
+	}
+
+	// Above the colors after it, which would cover the outline
+	&__color-item:focus-visible,
+	&__remove:focus-visible {
+		position: relative;
+		z-index: 1;
+		outline: 2px solid var(--color-text);
+		outline-offset: 1px;
 	}
 
 	&__hex {

@@ -11,6 +11,7 @@
  */
 
 import type { IDictionary, IJodit } from 'jodit/types';
+import { KEY_DOWN, KEY_LEFT, KEY_RIGHT, KEY_UP } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import {
 	attr,
@@ -19,7 +20,8 @@ import {
 	isFunction,
 	isPlainObject,
 	normalizeColor,
-	refs
+	refs,
+	toArray
 } from 'jodit/core/helpers/';
 import { Icon } from 'jodit/core/ui';
 
@@ -70,12 +72,12 @@ export const ColorPickerWidget = (
 				});
 			} else if (isArray(colors)) {
 				colors.forEach(color => {
+					const active = valueHex === color;
+
 					stack.push(
-						`<span class='${cn}__color-item ${
-							valueHex === color
-								? cn + '__color-item_active_true'
-								: ''
-						}' title="${color}" style="background-color:${color}" data-color="${color}"></span>`
+						`<button type="button" class='${cn}__color-item ${
+							active ? cn + '__color-item_active_true' : ''
+						}' title="${color}" aria-pressed="${active}" tabindex="-1" style="background-color:${color}" data-color="${color}"></button>`
 					);
 				});
 			}
@@ -93,6 +95,55 @@ export const ColorPickerWidget = (
 		form,
 		editor.c.fromHTML(`<div class="${cn}__groups">${groups}</div>`)
 	);
+
+	const items = toArray(
+		form.querySelectorAll<HTMLElement>(`.${cn}__color-item`)
+	);
+
+	// Tab stops at one color, the current one or the first, and the arrow
+	// keys move from it
+	const tabStop =
+		items.find(item => attr(item, 'aria-pressed') === 'true') ?? items[0];
+
+	if (tabStop) {
+		attr(tabStop, 'tabindex', 0);
+	}
+
+	// Along a row, or to the nearest color in the row above or below, as the
+	// palette is laid out
+	const nextItem = (
+		item: HTMLElement,
+		key: string
+	): HTMLElement | undefined => {
+		const index = items.indexOf(item);
+
+		if (key === KEY_LEFT || key === KEY_RIGHT) {
+			return items[key === KEY_LEFT ? index - 1 : index + 1];
+		}
+
+		const down = key === KEY_DOWN,
+			rows = items.filter(other =>
+				down
+					? other.offsetTop > item.offsetTop
+					: other.offsetTop < item.offsetTop
+			);
+
+		if (!rows.length) {
+			return;
+		}
+
+		const top = (down ? Math.min : Math.max)(
+				...rows.map(other => other.offsetTop)
+			),
+			distance = (other: HTMLElement): number =>
+				Math.abs(other.offsetLeft - item.offsetLeft);
+
+		return rows
+			.filter(other => other.offsetTop === top)
+			.reduce((nearest, other) =>
+				distance(other) < distance(nearest) ? other : nearest
+			);
+	};
 
 	Dom.append(
 		form,
@@ -158,9 +209,9 @@ export const ColorPickerWidget = (
 	Dom.append(
 		extra,
 		editor.c.fromHTML(
-			`<span class="${cn}__remove" data-color="" title="${editor.i18n('Remove')}">${
+			`<button type="button" class="${cn}__remove" data-color="" title="${editor.i18n('Remove')}">${
 				editor.o.textIcons ? editor.i18n('Remove') : Icon.get('eraser')
-			}</span>`
+			}</button>`
 		)
 	);
 
@@ -196,6 +247,31 @@ export const ColorPickerWidget = (
 		});
 	}
 
+	// The color of a swatch, or '' for Remove, from an event on it or its icon
+	const colorOf = (node: Node): string | undefined => {
+		const button = Dom.closest(
+			node,
+			elm =>
+				Dom.isHTMLElement(elm) &&
+				(elm.classList.contains(cn + '__color-item') ||
+					elm.classList.contains(cn + '__remove')),
+			form
+		);
+
+		return button ? attr(button, '-color') || '' : undefined;
+	};
+
+	const apply = (color: string): void => {
+		if (callback && isFunction(callback)) {
+			callback(color);
+		}
+	};
+
+	// A pointer applies the color on `mousedown`, which keeps the selection.
+	// The keyboard and screen readers press the button, which sends only
+	// `click`, so a click after the pointer's `mousedown` is skipped
+	let pointerPressed = false;
+
 	editor.e.on(form, 'mousedown touchend', (e: MouseEvent) => {
 		// let the hex/native inputs receive focus and clicks
 		if (Dom.isTag(e.target as Node, 'input')) {
@@ -206,36 +282,49 @@ export const ColorPickerWidget = (
 		e.stopPropagation();
 		e.preventDefault();
 
-		let target = e.target as HTMLElement;
+		const color = colorOf(e.target as Node);
 
-		if (
-			(!target ||
-				!target.tagName ||
-				Dom.isTag(target, 'svg') ||
-				Dom.isTag(target, 'path')) &&
-			target.parentNode
-		) {
-			target = Dom.closest(
-				target.parentNode,
-				'span',
-				editor.editor
-			) as HTMLElement;
-		}
-
-		if (
-			!Dom.isTag(target, 'span') ||
-			(!target.classList.contains(cn + '__color-item') &&
-				!target.classList.contains(cn + '__remove'))
-		) {
-			return;
-		}
-
-		const color: string = attr(target, '-color') || '';
-
-		if (callback && isFunction(callback)) {
-			callback(color);
+		if (color !== undefined) {
+			pointerPressed = e.type === 'mousedown';
+			apply(color);
 		}
 	});
+
+	editor.e
+		.on(form, 'click', (e: MouseEvent) => {
+			const color = colorOf(e.target as Node);
+
+			if (color !== undefined && !pointerPressed) {
+				apply(color);
+			}
+
+			pointerPressed = false;
+		})
+		.on(form, 'keydown', (e: KeyboardEvent) => {
+			pointerPressed = false;
+
+			const item = e.target as HTMLElement;
+
+			if (
+				!items.includes(item) ||
+				![KEY_LEFT, KEY_RIGHT, KEY_UP, KEY_DOWN].includes(e.key)
+			) {
+				return;
+			}
+
+			// The toolbar's dropdown would walk every color one by one
+			e.preventDefault();
+			e.stopPropagation();
+
+			nextItem(item, e.key)?.focus();
+		})
+		.on(form, 'focusin', (e: FocusEvent) => {
+			if (items.includes(e.target as HTMLElement)) {
+				items.forEach(item =>
+					attr(item, 'tabindex', item === e.target ? 0 : -1)
+				);
+			}
+		});
 
 	editor.e.fire('afterGenerateColorPicker', form, extra, callback, valueHex);
 
