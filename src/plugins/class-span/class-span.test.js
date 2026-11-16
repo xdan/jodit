@@ -213,10 +213,12 @@ describe('classSpan test', () => {
 
 					const popup = getOpenedPopup(editor);
 
-					const class3 = popup.querySelector('[class*=class3]');
+					const class3 = popup.querySelector(
+						'[class*=class3] button'
+					);
 
 					expect(class3).does.not.equal(className);
-					expect(class3.hasAttribute('aria-pressed')).is.true;
+					expect(class3.getAttribute('aria-pressed')).equals('true');
 				});
 			});
 		});

@@ -50,6 +50,11 @@
 	.jodit-ui-button-sizes();
 	.jodit-ui-button-variants();
 
+	// Before the focus look, which wins over it, as it does over `aria-pressed`
+	&_activated_true &__button {
+		.jodit-ui-button-pressed();
+	}
+
 	&__button {
 		.jodit-ui-button-interaction();
 		.jodit-ui-button_clear();

@@ -25,6 +25,11 @@ export class ToolbarSelect<
 		return 'ToolbarSelect';
 	}
 
+	// It shows its value, rather than being on or off
+	protected override get isToggle(): boolean {
+		return false;
+	}
+
 	override update(): void {
 		super.update();
 

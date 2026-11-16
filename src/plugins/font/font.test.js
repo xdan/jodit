@@ -503,7 +503,7 @@ describe('Font test', function () {
 					clickTrigger('fontsize', editor);
 
 					const font12 = getOpenedPopup(editor).querySelector(
-						'[role="listitem"][class*="12"]'
+						'[role="listitem"][class*="12"] button'
 					);
 
 					expect(font12.getAttribute('aria-pressed')).equals('true');
@@ -541,11 +541,13 @@ describe('Font test', function () {
 					const popup = getOpenedPopup(editor);
 
 					const fontGeorgia = popup.querySelector(
-						'[class*=Georgia__Palatino__serif]'
+						'[class*=Georgia__Palatino__serif] button'
 					);
 
 					expect(fontGeorgia).does.not.equal(font);
-					expect(fontGeorgia.hasAttribute('aria-pressed')).is.true;
+					expect(fontGeorgia.getAttribute('aria-pressed')).equals(
+						'true'
+					);
 				});
 			});
 		});

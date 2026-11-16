@@ -36,7 +36,6 @@ Icon.set('line-height', lineHeightIcon);
 
 Config.prototype.controls.lineHeight = {
 	command: 'applyLineHeight',
-	tags: ['ol'],
 	tooltip: 'Line height',
 	list: [1, 1.1, 1.2, 1.3, 1.4, 1.5, 2],
 	exec: (editor, event, { control }): void | false =>

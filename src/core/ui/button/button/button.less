@@ -30,6 +30,17 @@
 	}
 }
 
+.jodit-ui-button-pressed() {
+	&:not([disabled]) {
+		background-color: var(--color-button-background-hover-opacity40);
+		outline: 0;
+	}
+
+	&:hover:not([disabled]) {
+		background-color: var(--color-button-background-hover-opacity60);
+	}
+}
+
 .jodit-ui-button-interaction() {
 	cursor: pointer;
 
@@ -40,14 +51,13 @@
 		outline: 0;
 	}
 
-	&:active:not([disabled]),
-	&[aria-pressed='true']:not([disabled]) {
+	&:active:not([disabled]) {
 		background-color: var(--color-button-background-hover-opacity40);
 		outline: 0;
 	}
 
-	&[aria-pressed='true']:hover:not([disabled]) {
-		background-color: var(--color-button-background-hover-opacity60);
+	&[aria-pressed='true'] {
+		.jodit-ui-button-pressed();
 	}
 
 	&[disabled] {

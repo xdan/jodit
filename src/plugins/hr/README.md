@@ -27,7 +27,6 @@ The `hr` control can be customized through the `controls` configuration:
 
 **Properties:**
 - `command`: `'insertHorizontalRule'` - The command to execute
-- `tags`: `['hr']` - HTML tags associated with this control
 - `tooltip`: `'Insert Horizontal Line'` - Tooltip text for the button
 
 **Example:**
@@ -81,8 +80,7 @@ editor.execCommand('insertHorizontalRule');
 const editor = Jodit.make('#editor', {
     controls: {
         hr: {
-            tooltip: 'Add separator line',
-            tags: ['hr']
+            tooltip: 'Add separator line'
         }
     },
     buttons: ['bold', 'italic', 'hr', 'link']

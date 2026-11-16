@@ -215,7 +215,6 @@ editor.execCommand('applyLineHeight', false, 1.8);
 ```typescript
 {
     command: 'applyLineHeight',
-    tags: ['ol'],  // Associated tags (note: seems unusual for line-height)
     tooltip: 'Line height',
     list: [1, 1.1, 1.2, 1.3, 1.4, 1.5, 2]
 }
@@ -259,7 +258,6 @@ Without `Jodit.atom()`, custom configuration merges with defaults.
 - The button appears in the `font` toolbar group
 - Default line height applies to entire editor via root element styling
 - Block-specific line heights override the default
-- The control's `tags` property lists `['ol']` which seems unrelated to line height
 - Values in the list are unitless (CSS line-height relative values)
 - Toggle behavior allows removing line height by reselecting same value
 - The plugin uses `memorizeExec` to remember last selected value

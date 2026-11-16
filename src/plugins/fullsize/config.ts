@@ -55,6 +55,9 @@ Config.prototype.controls.fullsize = {
 		editor.toggleFullSize();
 	},
 
+	// Makes it a toggle. `update` sets the state, which holds while the editor doesn't have the focus
+	isActive: (editor: IViewBased) => editor.isFullSize,
+
 	update(editor, button) {
 		const mode = editor.isFullSize ? 'shrink' : 'fullsize';
 
