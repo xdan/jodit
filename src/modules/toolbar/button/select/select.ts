@@ -12,6 +12,7 @@ import type { IViewBased } from 'jodit/types';
 import { component } from 'jodit/core/decorators';
 import { isPlainObject } from 'jodit/core/helpers/checker/is-plain-object';
 import { isString } from 'jodit/core/helpers/checker/is-string';
+import { attr } from 'jodit/core/helpers/utils/attr';
 
 import { ToolbarButton } from '../button';
 
@@ -55,6 +56,25 @@ export class ToolbarSelect<
 
 			this.state.text =
 				this.control.textTemplate?.(this.jodit, text) ?? text;
+		}
+	}
+
+	/**
+	 * The button shows only the value, so its name says which control it
+	 * is too: "Font size, 16px"
+	 */
+	protected override updateAriaLabel(): void {
+		super.updateAriaLabel();
+
+		const { tooltip } = this.state;
+		const value = this.text.textContent?.trim();
+
+		if (tooltip && value) {
+			attr(
+				this.button,
+				'aria-label',
+				`${this.jodit.i18n(tooltip)}, ${value}`
+			);
 		}
 	}
 }
