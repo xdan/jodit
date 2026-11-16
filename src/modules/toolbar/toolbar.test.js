@@ -1722,6 +1722,108 @@ describe('Toolbar', () => {
 				expect(align.getAttribute('aria-pressed')).equals('true');
 			});
 
+			// https://github.com/xdan/jodit/issues/1815
+			describe('aria-pressed', function () {
+				it('should be on a button its control can show as on, saying whether it is', function () {
+					const editor = getJodit({
+						buttons: ['bold', 'link', 'undo', 'hr', 'lineHeight']
+					});
+
+					expect(
+						getButton('bold', editor).getAttribute('aria-pressed')
+					).equals('false');
+					expect(
+						getButton('link', editor).getAttribute('aria-pressed')
+					).equals('false');
+
+					['undo', 'hr', 'lineHeight'].forEach(name => {
+						expect(
+							getButton(name, editor).hasAttribute(
+								'aria-pressed'
+							),
+							name
+						).is.false;
+					});
+				});
+
+				it('should leave it off the list item round the button', function () {
+					const editor = getJodit({ buttons: ['bold'] });
+					editor.value = '<p><strong>test</strong></p>';
+					editor.s.focus();
+					editor.s.setCursorIn(editor.editor.querySelector('strong'));
+					simulateEvent('mousedown', 0, editor.editor.firstChild);
+
+					const bold = getButton('bold', editor);
+
+					expect(bold.getAttribute('aria-pressed')).equals('true');
+					expect(
+						bold
+							.closest('[role=listitem]')
+							.hasAttribute('aria-pressed')
+					).is.false;
+				});
+
+				it('should give a button the pressed look while its list is open, without making it a toggle', function () {
+					const editor = getJodit({ buttons: ['lineHeight'] });
+					const button = getButton('lineHeight', editor);
+					const item = button.closest('[role=listitem]');
+
+					clickTrigger('lineHeight', editor);
+					expect(getOpenedPopup(editor)).is.not.null;
+					expect(item.className).contains(
+						'jodit-toolbar-button_activated_true'
+					);
+					expect(button.hasAttribute('aria-pressed')).is.false;
+
+					clickTrigger('lineHeight', editor);
+					expect(item.className).does.not.contain(
+						'jodit-toolbar-button_activated'
+					);
+				});
+
+				it('should give a select the pressed look, without making it a toggle', function () {
+					const editor = getJodit({
+						buttons: ['paragraph'],
+						controls: { paragraph: { component: 'select' } }
+					});
+					const select = editor.toolbar.container.querySelector(
+						'.jodit-toolbar-select_paragraph'
+					);
+					const button = select.querySelector(
+						'.jodit-toolbar-select__button'
+					);
+
+					editor.value = '<h1>test</h1>';
+					editor.s.focus();
+					editor.s.setCursorIn(editor.editor.firstChild);
+					simulateEvent('mousedown', 0, editor.editor.firstChild);
+
+					expect(select.className).contains(
+						'jodit-toolbar-select_activated_true'
+					);
+					expect(button.hasAttribute('aria-pressed')).is.false;
+				});
+
+				it('should make fullsize a toggle', function () {
+					const editor = getJodit({ toolbarAdaptive: false });
+					const fullsize = getButton('fullsize', editor);
+
+					expect(fullsize.getAttribute('aria-pressed')).equals(
+						'false'
+					);
+
+					clickButton('fullsize', editor);
+					expect(fullsize.getAttribute('aria-pressed')).equals(
+						'true'
+					);
+
+					clickButton('fullsize', editor);
+					expect(fullsize.getAttribute('aria-pressed')).equals(
+						'false'
+					);
+				});
+			});
+
 			describe('In list', function () {
 				describe('Format block button', function () {
 					it('Should be activated then element has some tagname', function () {
@@ -1752,7 +1854,9 @@ describe('Toolbar', () => {
 						clickTrigger('paragraph', editor);
 
 						const header =
-							getOpenedPopup(editor).querySelector('[class*=h1]');
+							getOpenedPopup(editor).querySelector(
+								'[class*=h1] button'
+							);
 						expect(header.getAttribute('aria-pressed')).equals(
 							'true'
 						);

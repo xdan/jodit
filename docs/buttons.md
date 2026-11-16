@@ -339,6 +339,8 @@ Jodit.make('#editor', {
 });
 ```
 
+A button with `isActive`, `tags` or `css` is a toggle: its `aria-pressed` tells a screen reader whether it is on. Other buttons, and selects (`component: 'select'`), have no `aria-pressed`.
+
 ### isVisible
 
 You can even remove the button from the toolbar entirely if it is not needed at the moment:

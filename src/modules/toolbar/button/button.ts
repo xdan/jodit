@@ -172,9 +172,27 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		return Boolean(tc && tc.shouldBeDisabled(this));
 	}
 
+	/**
+	 * A button that its control can show as on is a toggle, and says whether
+	 * it's pressed
+	 */
+	protected get isToggle(): boolean {
+		const { isActive, tags, css } = this.control;
+		return Boolean(isActive || tags || css);
+	}
+
+	/**
+	 * The pressed look comes from the mod, as any button looks pressed while
+	 * its list is open, and the container is a `listitem`, which can't have
+	 * `aria-pressed`
+	 */
 	protected override onChangeActivated(): void {
-		attr(this.button, 'aria-pressed', this.state.activated);
-		super.onChangeActivated();
+		attr(
+			this.button,
+			'aria-pressed',
+			this.isToggle ? this.state.activated : null
+		);
+		this.setMod('activated', this.state.activated || null);
 	}
 
 	protected override onChangeText(): void {
@@ -314,6 +332,9 @@ export class ToolbarButton<T extends IViewBased = IViewBased>
 		}
 
 		state.hasTrigger = Boolean(ctr.list || (ctr.popup && ctr.exec));
+
+		// UIButton's template makes every button a toggle
+		this.onChangeActivated();
 	}
 
 	private __initIconFromControl(): void {

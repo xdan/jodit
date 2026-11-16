@@ -22,7 +22,6 @@ Icon.set('hr', hrIcon);
 
 Config.prototype.controls.hr = {
 	command: 'insertHorizontalRule',
-	tags: ['hr'],
 	tooltip: 'Insert Horizontal Line'
 } as IControlType;
 

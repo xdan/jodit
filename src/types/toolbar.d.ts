@@ -45,6 +45,8 @@ interface IControlType<
 	/**
 	 * You can use it function for control - active/not active button
 	 *
+	 * A button with `isActive`, `tags` or `css` is a toggle, with `aria-pressed`
+	 *
 	 * @see copyformat plugin
 	 * @example
 	 * ```javascript
