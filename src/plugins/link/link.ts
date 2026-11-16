@@ -191,7 +191,8 @@ export class link extends Plugin {
 			noFollowCheckbox,
 			formTemplate,
 			formClassName,
-			modeClassName
+			modeClassName,
+			selectKeepOtherClassNames
 		} = jodit.o.link;
 
 		const html = formTemplate(jodit);
@@ -361,7 +362,8 @@ export class link extends Plugin {
 					modeClassName,
 					className_input,
 					className_select,
-					a
+					a,
+					selectKeepOtherClassNames
 				);
 
 				if (!isImageContent) {
@@ -828,7 +830,8 @@ function writeClasses(
 	modeClassName: 'input' | 'select',
 	className_input: HTMLInputElement,
 	className_select: HTMLSelectElement,
-	a: HTMLAnchorElement
+	a: HTMLAnchorElement,
+	keepOtherClassNames: boolean
 ): void {
 	if (modeClassName && (className_input ?? className_select)) {
 		if (modeClassName === 'input') {
@@ -840,22 +843,23 @@ function writeClasses(
 				attr(a, 'class', className_input.value);
 			}
 		} else if (modeClassName === 'select') {
-			if (a.hasAttribute('class')) {
+			const classes = (option: HTMLOptionElement): string[] =>
+				option.value.split(/\s+/).filter(cn => cn.trim().length > 0);
+
+			if (keepOtherClassNames) {
+				Array.from(className_select.options).forEach(option =>
+					classes(option).forEach(cn => a.classList.remove(cn))
+				);
+			} else {
 				attr(a, 'class', null);
 			}
 
-			for (let i = 0; i < className_select.selectedOptions.length; i++) {
-				const className =
-					className_select.selectedOptions.item(i)?.value;
+			Array.from(className_select.selectedOptions).forEach(option =>
+				classes(option).forEach(cn => a.classList.add(cn))
+			);
 
-				if (className) {
-					className
-						.split(/\s+/)
-						.filter(cn => cn.trim().length > 0)
-						.forEach(cn => {
-							a.classList.add(cn);
-						});
-				}
+			if (!a.classList.length) {
+				attr(a, 'class', null);
 			}
 		}
 	}
