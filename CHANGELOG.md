@@ -9,6 +9,18 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.2
+
+#### :bug: Bug Fix
+
+- [#1827](https://github.com/xdan/jodit/pull/1827) Toolbar buttons expose `aria-pressed` only when their control has `isActive`, `tags` or `css`; selects and action buttons have none. The surrounding list item no longer has it. Custom toolbar controls that set `state.activated` through `update` also need `isActive` to retain toggle semantics. For styles on the wrapper, use `.jodit-toolbar-button_activated_true`; read `aria-pressed` from the nested button.
+- [#1829](https://github.com/xdan/jodit/pull/1829) Color swatches and Remove are native buttons, with the current color exposed as pressed. Arrow keys follow the palette's layout in LTR and RTL, and Enter or Space applies a color. Custom styles or integrations selecting swatches as `span` elements should use `.jodit-color-picker__color-item` instead.
+
+- [#1824](https://github.com/xdan/jodit/pull/1824) Pasted anchors with names already in use get the next free suffix, and links in the same paste follow the copy. This includes a DOM anchor returned by `processPaste`, with either `id` or the older `name` attribute. Thanks [@brendon](https://github.com/brendon).
+- [#1825](https://github.com/xdan/jodit/pull/1825) Anchor markers stay within editors with the anchor plugin enabled; another editor on the page with the plugin disabled no longer shows them.
+- [#1826](https://github.com/xdan/jodit/pull/1826) Anchor markers use the registered anchor icon and the theme's icon color, including the dark theme, with a default color in iframe mode.
+- [#1828](https://github.com/xdan/jodit/pull/1828) Toolbar selects announce both their control and current value, such as "Font size, 16px", and update the name as the caret moves.
+
 ## 4.20.1
 
 #### :bug: Bug Fix
