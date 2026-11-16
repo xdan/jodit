@@ -38,3 +38,5 @@ const tabs = Jodit.modules.TabsWidget(editor, {
 ```
 
 Next to the hex input there is a button that removes the color. It calls the callback with an empty string, so a callback that sets a style to the value it receives removes that style.
+
+Each color is a button named by its hex code, and the current color is pressed. Tab stops at the current color, or the first one, and the arrow keys move across and down the palette as it is laid out. Enter or Space applies the color.

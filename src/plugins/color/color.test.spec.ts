@@ -31,4 +31,19 @@ test.describe('Color picker screenshot testing', () => {
 			await checkScreenshot(page, '[role="popup"] .jodit-popup__content');
 		});
 	});
+
+	// https://github.com/xdan/jodit/issues/1815
+	test.describe('Move through the colors with the keyboard', () => {
+		test('rings the focused color', async function ({ page }) {
+			await page.click('[data-ref="brush"]');
+
+			await page.waitForSelector('[role="popup"]');
+			await page.evaluate(() => editor.async.requestIdlePromise());
+			await page.focus('.jodit-color-picker__color-item[tabindex="0"]');
+			await page.keyboard.press('ArrowRight');
+			await page.keyboard.press('ArrowDown');
+			await page.keyboard.press('ArrowDown');
+			await checkScreenshot(page, '[role="popup"] .jodit-popup__content');
+		});
+	});
 });
