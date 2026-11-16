@@ -1788,10 +1788,11 @@ describe('Text Inline Popup plugin', () => {
 						'<p>some text<img alt="" src="tests/artio.jpg"></p><p>next line</p>',
 						fromLineEnd(toLine(1))
 					],
+					// One on its own has the hr plugin's popup, as an image has its own
 					[
-						'a rule on its own',
-						'<p>some text</p><hr><p>next line</p>',
-						editor => [editor.editor, 1, editor.editor, 2]
+						'two rules',
+						'<p>some text</p><hr><hr><p>next line</p>',
+						editor => [editor.editor, 1, editor.editor, 3]
 					],
 					[
 						'only &nbsp;',
@@ -1822,6 +1823,15 @@ describe('Text Inline Popup plugin', () => {
 						expect(getOpenedPopup(editor)).equals(popup);
 					});
 				});
+			});
+
+			it('Should leave a rule on its own to its popup, as an image (#1802)', async () => {
+				const [, popup] = await selectionToolbarFor(
+					'<p>some text</p><hr><p>next line</p>',
+					editor => [editor.editor, 1, editor.editor, 2]
+				);
+
+				expect(popup).is.null;
 			});
 		});
 

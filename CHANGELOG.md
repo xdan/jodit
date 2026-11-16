@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.21.0
+
+#### :rocket: New Feature
+
+- [#1802](https://github.com/xdan/jodit/issues/1802) A horizontal line is selected whole, as an image is. A click on a line, or an arrow key that comes to one, selects it with a frame, and the click opens the new `hr` popup with Delete. With a line selected, Delete and Backspace remove only the line, Enter adds an empty paragraph after it and Shift+Enter one before it, and typing starts a new paragraph after it. The arrow keys no longer stop beside a line, where typing started a stray paragraph. A line in a list item or a table cell, and an editor with `enter: 'br'`, keep the old arrow keys. A selection of a single line no longer opens the selection toolbar.
+
 ## 4.20.3
 
 #### :bug: Bug Fix
