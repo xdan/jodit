@@ -89,5 +89,9 @@ export function makeSelect(
 	target: Nullable<HTMLElement> = null
 ): IToolbarButton {
 	const ToolbarSelect = getComponentClass<IToolbarButton>('ToolbarSelect')!;
-	return new ToolbarSelect(view, control, target);
+	const select = new ToolbarSelect(view, control, target);
+
+	select.state.tabIndex = view.o.allowTabNavigation ? 0 : -1;
+
+	return select;
 }

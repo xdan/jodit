@@ -1466,6 +1466,28 @@ describe('Toolbar', () => {
 						getButton('source', editor).getAttribute('tabindex')
 					).equals('0');
 				});
+
+				it('Should set tabindex=0 for a select too', function () {
+					const editor = getJodit({
+						allowTabNavigation: true,
+						controls: { paragraph: { component: 'select' } }
+					});
+
+					const select = editor.container.querySelector(
+						'.jodit-toolbar-select_paragraph'
+					);
+
+					expect(
+						[
+							select.querySelector(
+								'.jodit-toolbar-select__button'
+							),
+							select.querySelector(
+								'.jodit-toolbar-select__trigger'
+							)
+						].map(elm => elm.getAttribute('tabindex'))
+					).deep.equals(['0', '0']);
+				});
 			});
 
 			describe('Disable', function () {
@@ -1477,6 +1499,28 @@ describe('Toolbar', () => {
 					expect(
 						getButton('source', editor).getAttribute('tabindex')
 					).equals('-1');
+				});
+
+				it('Should set tabindex=-1 for a select too', function () {
+					const editor = getJodit({
+						allowTabNavigation: false,
+						controls: { paragraph: { component: 'select' } }
+					});
+
+					const select = editor.container.querySelector(
+						'.jodit-toolbar-select_paragraph'
+					);
+
+					expect(
+						[
+							select.querySelector(
+								'.jodit-toolbar-select__button'
+							),
+							select.querySelector(
+								'.jodit-toolbar-select__trigger'
+							)
+						].map(elm => elm.getAttribute('tabindex'))
+					).deep.equals(['-1', '-1']);
 				});
 			});
 		});
