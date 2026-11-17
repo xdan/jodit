@@ -25,7 +25,7 @@ import type { IJodit } from 'jodit/types';
  */
 export function checkNotCollapsed(jodit: IJodit): boolean {
 	if (!jodit.s.isCollapsed()) {
-		jodit.execCommand('Delete');
+		jodit.execCommand('delete', false, true);
 		return true;
 	}
 

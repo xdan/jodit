@@ -755,7 +755,8 @@ describe('Backspace/Delete key', function () {
 			'<p><em>|a|</em></p> => <p>|<br></p>',
 			'<p><span>|a|</span></p> => <p>|<br></p>',
 			'<p><strong>|a|</strong></p> => <p>|<br></p>',
-			'<p><em>italic</em><strong>|a|</strong></p> => <p><em>italic|</em></p>',
+			// The next letter keeps the bold deleted whole (#1784)
+			'<p><em>italic</em><strong>|a|</strong></p> => <p><em>italic</em><strong>|</strong></p>',
 			// #1282: backspace at the start of a styled run preceded by a <br>
 			// must remove only the line break, not the whole run.
 			'<p>text<br><br><em><strong><u>|Accident History!</u></strong></em></p> => <p>text<br><em><strong><u>|Accident History!</u></strong></em></p>',

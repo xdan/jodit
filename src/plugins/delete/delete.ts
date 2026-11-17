@@ -11,7 +11,7 @@
  */
 
 import type { IJodit, Nullable } from 'jodit/types';
-import { NBSP_SPACE } from 'jodit/core/constants';
+import { INVISIBLE_SPACE, NBSP_SPACE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { call, toArray, trimInv } from 'jodit/core/helpers';
@@ -29,6 +29,22 @@ const NOT_EMPTY_CONTENT_TAGS = new Set([
 ] as const);
 
 const KEEPS_SPACES = new Set(['pre', 'pre-wrap', 'break-spaces']);
+
+/**
+ * Formatting that the next letter keeps once all of the text in it is
+ * deleted with a key: a formatting tag, or a span with styles of its own.
+ * Not a link, which new text isn't added to, or a wrapper such as a video's
+ */
+function keepsFormat(node: Nullable<Node>): node is HTMLElement {
+	return (
+		Dom.isHTMLElement(node) &&
+		(/^(STRONG|B|EM|I|U|S|SUB|SUP)$/.test(node.nodeName) ||
+			(Dom.isTag(node, 'span') &&
+				node.hasAttribute('style') &&
+				!node.hasAttribute('contenteditable') &&
+				!Dom.isTemporary(node)))
+	);
+}
 
 /**
  * A plain space beside this neighbor isn't shown: there is none, or it's a
@@ -115,7 +131,11 @@ export class deleteCommand extends Plugin {
 		}
 	}
 
-	private __onDeleteCommand(): false | void {
+	private __onDeleteCommand(
+		command?: string,
+		showUI?: unknown,
+		keepFormat?: unknown
+	): false | void {
 		const { jodit } = this;
 
 		if (jodit.s.isCollapsed()) {
@@ -127,6 +147,8 @@ export class deleteCommand extends Plugin {
 		const range = jodit.s.range;
 		this.__moveEdgesIntoCells(range);
 
+		const format =
+			keepFormat === true ? this.__formatTakenWhole(range) : [];
 		const caret = this.__clearSelectedCells(range);
 
 		if (caret && range.collapsed) {
@@ -149,8 +171,12 @@ export class deleteCommand extends Plugin {
 		range.setStartBefore(fake);
 		range.collapse(true);
 
-		this.__moveCursorInEditableSibling(jodit, leftSibling, fake, range);
-		this.__addBrInEmptyBlock(fake, range);
+		if (format.length && !caret) {
+			this.__keepFormat(format, fake, range);
+		} else {
+			this.__moveCursorInEditableSibling(jodit, leftSibling, fake, range);
+			this.__addBrInEmptyBlock(fake, range);
+		}
 
 		Dom.safeRemove(fake);
 		jodit.s.selectRange(caret ?? range);
@@ -182,6 +208,66 @@ export class deleteCommand extends Plugin {
 		if (Dom.isCell(last)) {
 			range.setEnd(last, last.childNodes.length);
 		}
+	}
+
+	/**
+	 * The formatting elements the deletion takes whole from its start,
+	 * outermost first: `<strong>` and `<em>` for all of the text in
+	 * `<strong><em>cd</em></strong>`
+	 */
+	private __formatTakenWhole(range: Range): HTMLElement[] {
+		const format: HTMLElement[] = [];
+		const whole = this.jodit.s.createRange();
+		const { startContainer, startOffset } = range;
+
+		let node: Nullable<Node> = Dom.isText(startContainer)
+			? null
+			: startContainer.childNodes[startOffset];
+
+		// Through a block taken whole, as a line holding only the word is
+		while (Dom.isHTMLElement(node)) {
+			whole.selectNode(node);
+
+			if (range.compareBoundaryPoints(Range.END_TO_END, whole) < 0) {
+				break;
+			}
+
+			if (keepsFormat(node)) {
+				format.push(node);
+			} else if (format.length || !Dom.isBlock(node)) {
+				break;
+			}
+
+			node = toArray(node.childNodes).find(
+				child => !Dom.isText(child) || trimInv(child.nodeValue ?? '')
+			) as Nullable<Node>;
+		}
+
+		return format;
+	}
+
+	/**
+	 * As the browsers do, the next letter typed keeps the formatting that was
+	 * deleted whole: empty copies go where it was, round an invisible space,
+	 * as Bold does at a collapsed caret, and the caret goes inside (#1784)
+	 */
+	private __keepFormat(
+		format: HTMLElement[],
+		fake: Text,
+		range: Range
+	): void {
+		const copies = format.map(element => element.cloneNode(false));
+
+		for (let i = 1; i < copies.length; i += 1) {
+			Dom.append(copies[i - 1], copies[i]);
+		}
+
+		const text = this.jodit.createInside.text(INVISIBLE_SPACE);
+		Dom.append(copies[copies.length - 1], text);
+		Dom.before(fake, copies[0]);
+
+		range.setStartAfter(text);
+		range.collapse(true);
 	}
 
 	/**

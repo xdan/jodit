@@ -11,8 +11,14 @@
 declare module 'jodit/types/jodit' {
 	interface IJodit {
 		/**
-		 * Delete plugin: Remove selected text
+		 * Delete plugin: Remove selected text. With `keepFormat`, as after
+		 * Backspace or Delete, the next letter keeps the formatting of an
+		 * element whose text was deleted whole
 		 */
-		execCommand(command: 'delete'): void;
+		execCommand(
+			command: 'delete',
+			showUI?: boolean,
+			keepFormat?: boolean
+		): void;
 	}
 }
