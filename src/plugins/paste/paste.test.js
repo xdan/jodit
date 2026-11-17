@@ -987,6 +987,52 @@ describe('Test paste plugin', () => {
 				);
 			});
 
+			it('Should keep a span with a normal weight inside a bold one normal', () => {
+				expect(
+					cleanFromWord(
+						'<span style="font-weight:700">A<span style="font-weight:400">B</span>C</span>'
+					)
+				).equals('<strong>A</strong><span>B</span><strong>C</strong>');
+
+				expect(
+					cleanFromWord(
+						'<p><span style="font-weight:bold">A<span style="font-weight:normal">B' +
+							'<span style="font-weight:bold">C</span></span></span></p>'
+					)
+				).equals(
+					'<p><strong>A</strong><span>B<strong>C</strong></span></p>'
+				);
+			});
+
+			it('Should keep a span with a normal style inside an italic one normal', () => {
+				expect(
+					cleanFromWord(
+						'<span style="font-style:italic">A<span style="font-style:normal">B</span>C</span>'
+					)
+				).equals('<em>A</em><span>B</span><em>C</em>');
+			});
+
+			it('Should take only the normal text out, however deep it is', () => {
+				expect(
+					cleanFromWord(
+						'<p><span style="font-weight:700;font-style:italic">A ' +
+							'<a href="/">link <span style="font-weight:400">plain</span></a> C</span></p>'
+					)
+				).equals(
+					'<p><em><strong>A </strong>' +
+						'<a href="/"><strong>link </strong><span>plain</span></a>' +
+						'<strong> C</strong></em></p>'
+				);
+			});
+
+			it('Should keep a span with a normal weight inside the b of Word normal', () => {
+				expect(
+					cleanFromWord(
+						"<p class=MsoNormal><b>A<span style='font-weight:normal'>B</span>C</b></p>"
+					)
+				).equals('<p><b>A</b><span>B</span><b>C</b></p>');
+			});
+
 			it('Should not read the mso- properties of Word as formatting', () => {
 				expect(
 					cleanFromWord(

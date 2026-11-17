@@ -68,6 +68,64 @@ function formattedSpansToTags(root: HTMLElement): void {
 }
 
 /**
+ * Takes `node` out of `format`, which stays around the rest of its content
+ */
+function liftOut(node: Node, format: HTMLElement): void {
+	const range = (node.ownerDocument as Document).createRange();
+
+	const wrap = (): void => {
+		if (!range.collapsed) {
+			range.surroundContents(format.cloneNode());
+		}
+	};
+
+	for (let child = node; child !== format; child = child.parentNode as Node) {
+		range.selectNodeContents(child.parentNode as Node);
+		range.setEndBefore(child);
+		wrap();
+
+		range.selectNodeContents(child.parentNode as Node);
+		range.setStartAfter(child);
+		wrap();
+	}
+
+	Dom.unwrap(format);
+}
+
+/**
+ * An element styled with a normal weight or style comes out of the bold or
+ * italic tags around it, which would make it bold or italic once the styles go.
+ * CSS can't take an ancestor's underline or strikethrough off, so they have no
+ * such reset
+ */
+function liftOutNormalFormatting(root: HTMLElement): void {
+	const liftOutOf = (element: HTMLElement, tags: HTMLTagNames[]): void => {
+		let format = Dom.closest(element.parentNode, tags, root);
+
+		while (format) {
+			liftOut(element, format);
+			format = Dom.closest(element.parentNode, tags, root);
+		}
+	};
+
+	toArray(root.querySelectorAll<HTMLElement>('[style]')).forEach(element => {
+		const { fontWeight, fontStyle } = element.style;
+
+		if (
+			fontWeight === 'normal' ||
+			fontWeight === 'lighter' ||
+			parseInt(fontWeight, 10) < 600
+		) {
+			liftOutOf(element, ['strong', 'b']);
+		}
+
+		if (fontStyle === 'normal') {
+			liftOutOf(element, ['em', 'i']);
+		}
+	});
+}
+
+/**
  * The method automatically cleans up content from Microsoft Word and other HTML sources to ensure clean, compliant
  * content that matches the look and feel of the site.
  *
@@ -97,6 +155,7 @@ export function cleanFromWord(
 		const listItems = readWordListItems(div);
 
 		formattedSpansToTags(div);
+		liftOutNormalFormatting(div);
 
 		if (div.firstChild) {
 			Dom.each(div, node => {
