@@ -151,6 +151,8 @@ export function hr(editor: IJodit): void {
 			: '';
 	};
 
+	const editable = (): boolean => !editor.o.readonly && !editor.isLocked;
+
 	const plain = (e: KeyboardEvent): boolean =>
 		!e.shiftKey && !e.ctrlKey && !e.metaKey && !e.altKey;
 
@@ -161,7 +163,6 @@ export function hr(editor: IJodit): void {
 		p.appendChild(br);
 		after ? Dom.after(node, p) : Dom.before(node, p);
 		editor.s.setCursorBefore(br);
-		editor.synchronizeValues();
 	};
 
 	// On from a line the way an arrow key goes: to the next line in a row,
@@ -198,8 +199,6 @@ export function hr(editor: IJodit): void {
 		} else if (next) {
 			editor.s.setCursorIn(next, next === after);
 		}
-
-		editor.synchronizeValues();
 	};
 
 	// The nodes either side of a caret left beside a line in the editor
@@ -226,7 +225,7 @@ export function hr(editor: IJodit): void {
 	const leave = (): void => {
 		const sides = around(editor.s.range);
 
-		if (!sides || editor.o.readonly || editor.isLocked) {
+		if (!sides || !editable()) {
 			return;
 		}
 
@@ -244,6 +243,7 @@ export function hr(editor: IJodit): void {
 			editor.s.setCursorIn(next, forward);
 		} else if (edge) {
 			newLine(edge, forward);
+			editor.synchronizeValues();
 		}
 	};
 
@@ -297,7 +297,6 @@ export function hr(editor: IJodit): void {
 
 		Dom.safeRemove(block);
 		editor.s.select(next);
-		editor.synchronizeValues();
 		return true;
 	};
 
@@ -350,8 +349,6 @@ export function hr(editor: IJodit): void {
 			pass(line, !back);
 		} else if (e.key === KEY_BACKSPACE || e.key === KEY_DELETE) {
 			remove(line, e.key === KEY_DELETE);
-		} else if (e.key === KEY_ENTER) {
-			newLine(line, !e.shiftKey);
 		} else {
 			// Typing starts a new paragraph after the line, and the browser
 			// types the letter into it
@@ -363,6 +360,25 @@ export function hr(editor: IJodit): void {
 		}
 
 		return true;
+	};
+
+	// Enter with a line selected adds a paragraph after the line, and
+	// Shift+Enter one before it, between the Enter plugin's own events. The
+	// plugin itself would delete the line
+	const enter = (e: KeyboardEvent, line: HTMLHRElement): void | false => {
+		const result = editor.e.fire('beforeEnter', e);
+
+		if (result !== undefined) {
+			return result;
+		}
+
+		editor.history.snapshot.transaction(() => {
+			newLine(line, !e.shiftKey);
+			editor.e.fire('afterEnter', e);
+		});
+
+		editor.synchronizeValues();
+		return false;
 	};
 
 	// How far above or below a line a click still selects it
@@ -381,18 +397,24 @@ export function hr(editor: IJodit): void {
 		.on(
 			'keydown',
 			(e: KeyboardEvent): void | false => {
-				if (editor.o.readonly || editor.isLocked || e.isComposing) {
+				if (!editable() || e.isComposing) {
 					return;
 				}
 
 				const { range } = editor.s;
 				const line = lineIn(range);
 
+				if (line && e.key === KEY_ENTER) {
+					editor.e.stopPropagation('keydown');
+					return enter(e, line);
+				}
+
 				if (line ? !onLine(e, line) : !atCaret(e, range)) {
 					return;
 				}
 
 				editor.e.stopPropagation('keydown');
+				editor.synchronizeValues();
 				return false;
 			},
 			{ top: true }
@@ -400,7 +422,7 @@ export function hr(editor: IJodit): void {
 		.on('mousedown', (e: MouseEvent): void => {
 			pressed = null;
 
-			if (editor.o.readonly || e.button !== 0 || e.shiftKey) {
+			if (!editable() || e.button !== 0 || e.shiftKey) {
 				return;
 			}
 
@@ -449,7 +471,10 @@ export function hr(editor: IJodit): void {
 			editor.async.setTimeout(leave, 1);
 		})
 		.on('deleteHorizontalRule', (line: HTMLHRElement): void => {
-			remove(line, true);
+			if (editable()) {
+				remove(line, true);
+				editor.synchronizeValues();
+			}
 		});
 }
 

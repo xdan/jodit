@@ -824,6 +824,45 @@ describe('Test helpers', () => {
 			});
 		});
 
+		describe('cssPath', () => {
+			const { cssPath } = Jodit.modules.Helpers;
+
+			// The element marked `data-target` is the one to find again
+			[
+				'<p id="section-1.2" data-target></p>',
+				'<p id="toc:intro" data-target></p>',
+				'<p id="a b" data-target></p>',
+				'<p id="2nd" data-target></p>',
+				'<p id="-2" data-target></p>',
+				'<p id="-" data-target></p>',
+				'<p id="über" data-target></p>',
+				'<p id="x{}body{background-color:rgb(1,2,3)}/*" data-target></p>',
+				'<o:p><span data-target></span></o:p>',
+				'<x{}body{color:red}><span data-target></span></x{}body{color:red}>'
+			].forEach(html => {
+				it(`Should give one selector that finds the element in ${html}`, () => {
+					const box = document.createElement('div');
+					const style = document.createElement('style');
+
+					box.innerHTML = html;
+					document.body.append(box, style);
+
+					try {
+						const target = box.querySelector('[data-target]');
+						const path = cssPath(target);
+
+						expect(document.querySelector(path)).equals(target);
+
+						style.textContent = `${path}{color:red}`;
+						expect(style.sheet.cssRules.length).equals(1);
+					} finally {
+						box.remove();
+						style.remove();
+					}
+				});
+			});
+		});
+
 		describe('convertMediaUrlToVideoEmbed', () => {
 			[
 				[

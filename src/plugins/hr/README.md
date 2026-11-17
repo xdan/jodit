@@ -26,11 +26,13 @@ A line has no text, so the browsers give the caret a place on each side of it, o
 
 - A click on the line, or just above or below it, selects it. A frame shows it's selected, and the `hr` popup opens beside it with Delete.
 - An arrow key that comes to a line selects it. The next press goes on, to the next line in a row or into the text beyond.
-- With a line selected, Delete and Backspace remove only the line, Enter adds an empty paragraph after it and Shift+Enter one before it, and typing starts a new paragraph after it.
+- With a line selected, Delete and Backspace remove only the line, Enter adds an empty paragraph after it and Shift+Enter one before it, and typing starts a new paragraph after it. Enter fires `beforeEnter` and `afterEnter` as anywhere else, and a `beforeEnter` handler that returns `false` leaves the line selected.
 - Backspace in an empty paragraph after a line, or Delete in one before it, removes the empty paragraph and selects the line.
 - A click further off a line puts the caret in the nearest line of text.
 
 Where text goes on after a line, in a list item or a table cell, and with `enter: 'br'`, the caret beside a line is a place to type, so the arrow keys pass it as before. A click on the line still selects it.
+
+A readonly or locked editor leaves its lines alone: a click doesn't select one, and the popup's Delete does nothing.
 
 The selection is a native range round the `<hr>`, so copy and cut work on it. The frame comes from a style rule in the editor's document, so nothing is added to the content.
 

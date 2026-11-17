@@ -130,6 +130,18 @@ describe('Test insert plugins', function () {
 			}));
 		};
 
+		// `dy` is from the middle of the line
+		const click = (line, dy, target = line) => {
+			const box = line.getBoundingClientRect();
+			const at = () => ({
+				button: 0,
+				clientX: box.left + 20,
+				clientY: (box.top + box.bottom) / 2 + dy
+			});
+
+			simulateEvent(['mousedown', 'mouseup', 'click'], target, at);
+		};
+
 		describe('Keys with a line selected', function () {
 			[
 				[
@@ -237,6 +249,63 @@ describe('Test insert plugins', function () {
 				expect(state(editor)).equals(
 					'<p>Above</p>[hr]<hr><hr><p>Below</p>'
 				);
+			});
+
+			describe('Enter and the Enter plugin events', function () {
+				[
+					['Enter', '<p>Above</p><hr><p><br></p><p>Below</p>'],
+					['Shift+Enter', '<p>Above</p><p><br></p><hr><p>Below</p>']
+				].forEach(([key, result]) => {
+					it(`Should fire beforeEnter, then afterEnter once the new line is in place, for ${key}`, function () {
+						const [editor] = make('<p>Above</p>[hr]<p>Below</p>');
+						const events = [];
+
+						editor.e
+							.on('beforeEnter', e => {
+								events.push(['beforeEnter', e.key, e.shiftKey]);
+							})
+							.on('afterEnter', e => {
+								events.push([
+									'afterEnter',
+									e.key,
+									editor.value.replace(/\uFEFF/g, '')
+								]);
+							});
+
+						expect(press(editor, key)).is.false;
+						expect(events).deep.equals([
+							['beforeEnter', 'Enter', key !== 'Enter'],
+							['afterEnter', 'Enter', result]
+						]);
+					});
+				});
+
+				it('Should leave the line selected when beforeEnter returns false', function () {
+					const [editor] = make('<p>Above</p>[hr]<p>Below</p>');
+					let after = 0;
+
+					editor.e
+						.on('beforeEnter', () => false)
+						.on('afterEnter', () => {
+							after += 1;
+						});
+
+					expect(press(editor, 'Enter')).is.false;
+					expect(after).equals(0);
+					expect(state(editor)).equals(
+						'<p>Above</p>[hr]<p>Below</p>'
+					);
+				});
+
+				it('Should undo the new line in one step', function () {
+					const editor = getJodit();
+					editor.value = '<p>Above</p><hr><p>Below</p>';
+					editor.s.select(editor.editor.querySelector('hr'));
+
+					press(editor, 'Enter');
+					editor.execCommand('undo');
+					expect(editor.value).equals('<p>Above</p><hr><p>Below</p>');
+				});
 			});
 		});
 
@@ -383,18 +452,6 @@ describe('Test insert plugins', function () {
 		});
 
 		describe('A click', function () {
-			// `dy` is from the middle of the line
-			const click = (line, dy, target = line) => {
-				const box = line.getBoundingClientRect();
-				const at = () => ({
-					button: 0,
-					clientX: box.left + 20,
-					clientY: (box.top + box.bottom) / 2 + dy
-				});
-
-				simulateEvent(['mousedown', 'mouseup', 'click'], target, at);
-			};
-
 			it('Should select a line and open its popup, whose Delete removes the line', async function () {
 				const [editor] = make('<p>Above</p><hr><p>Below</p>');
 
@@ -447,6 +504,37 @@ describe('Test insert plugins', function () {
 			});
 		});
 
+		describe('A readonly or locked editor', function () {
+			[
+				['readonly', editor => editor.setReadOnly(true)],
+				['locked', editor => editor.lock()]
+			].forEach(([name, freeze]) => {
+				// Locking takes the selection away until the editor is unlocked
+				it(`Should not select a line from a click in a ${name} editor`, function () {
+					const [editor] = make('<p>Above|</p><hr><p>Below</p>');
+					const { sel } = editor.s;
+
+					freeze(editor);
+					click(editor.editor.querySelector('hr'), 0);
+
+					const range = sel.rangeCount ? sel.getRangeAt(0) : null;
+					expect(range?.cloneContents().querySelector('hr') ?? null)
+						.is.null;
+				});
+
+				it(`Should keep the line on deleteHorizontalRule in a ${name} editor`, function () {
+					const [editor] = make('<p>Above</p>[hr]<p>Below</p>');
+
+					freeze(editor);
+					editor.e.fire(
+						'deleteHorizontalRule',
+						editor.editor.querySelector('hr')
+					);
+					expect(editor.value).equals('<p>Above</p><hr><p>Below</p>');
+				});
+			});
+		});
+
 		it('Should frame the selected line while it is selected', async function () {
 			const [editor] = make('<p>Above</p>[hr]<p>Below</p>');
 			const line = editor.editor.querySelector('hr');
@@ -457,6 +545,33 @@ describe('Test insert plugins', function () {
 			editor.s.setCursorIn(editor.editor.firstChild);
 			await delay(20);
 			expect(getComputedStyle(line).outlineStyle).equals('none');
+		});
+
+		[
+			'section-1.2',
+			'toc:intro',
+			'note[1]',
+			'2nd-rule',
+			'x{}body{background-color:rgb(1,2,3)}/*'
+		].forEach(id => {
+			it(`Should frame a line with the id ${id}, and nothing else`, async function () {
+				const editor = getJodit();
+				const background = getComputedStyle(
+					document.body
+				).backgroundColor;
+
+				editor.value = `<p>Above</p><hr id="${id}"><p>Below</p>`;
+				const line = editor.editor.querySelector('hr');
+				expect(line.id).equals(id);
+
+				editor.s.select(line);
+				await delay(20);
+
+				expect(getComputedStyle(line).outlineStyle).equals('solid');
+				expect(getComputedStyle(document.body).backgroundColor).equals(
+					background
+				);
+			});
 		});
 	});
 
