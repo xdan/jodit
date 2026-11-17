@@ -51,7 +51,13 @@ export function removeExtraBr(jodit: IJodit, node: Node): void {
 		// text; moving it before the `<br>` would put it on a line of its own
 		// below the block (#1315)
 		if (!Dom.isOrContains(node, jodit.s.range.startContainer)) {
-			jodit.s.setCursorBefore(br);
+			// Not with setCursorBefore: the text node it adds for the caret
+			// stays after the inserted element once the `<br>` has gone, and
+			// Right or End then take the caret into it, out of the element
+			const range = jodit.s.createRange();
+			range.setStartBefore(br);
+			range.collapse(true);
+			jodit.s.selectRange(range);
 		}
 
 		Dom.safeRemove(br);

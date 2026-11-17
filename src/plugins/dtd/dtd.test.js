@@ -389,6 +389,35 @@ describe('Test dtd plugin', () => {
 			});
 		});
 
+		describe('A style picked at the caret on an empty line', () => {
+			[
+				[['fontsize', '24px']],
+				[['bold']],
+				[['fontname', 'Georgia,serif']],
+				[['fontsize', '24px'], ['bold'], ['fontname', 'Georgia,serif']]
+			].forEach(commands => {
+				const name = commands.map(([command]) => command).join(', ');
+
+				it(`should leave no text node after the new element for ${name}, for Right or End to take the caret into`, () => {
+					const editor = getJodit();
+					editor.value = '<p>|<br></p>';
+					setCursorToChar(editor);
+					commands.forEach(([command, value]) =>
+						editor.execCommand(command, false, value)
+					);
+
+					const p = editor.editor.firstChild;
+					expect(p.childNodes.length).eq(1);
+					expect(p.firstChild.contains(editor.s.range.startContainer))
+						.is.true;
+
+					editor.s.insertHTML('Hello');
+					expect(p.childNodes.length).eq(1);
+					expect(editor.value).to.match(/Hello(<\/\w+>)+<\/p>$/);
+				});
+			});
+		});
+
 		describe('Cursor on an empty line (#1302)', () => {
 			['bold', 'underline'].forEach(cmd => {
 				it(`Should keep <br> line breaks when applying ${cmd}`, () => {
