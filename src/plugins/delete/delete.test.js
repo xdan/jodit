@@ -367,6 +367,28 @@ describe('Delete plugin', () => {
 		});
 	});
 
+	describe('Deleting a noneditable formatting element', () => {
+		['strong', 'b', 'em'].forEach(tag => {
+			[Jodit.KEY_BACKSPACE, Jodit.KEY_DELETE].forEach(key => {
+				it(`Should remove noneditable ${tag} and leave an editable caret on ${key}`, () => {
+					const editor = getJodit();
+					editor.value = `<p>Before |<${tag} contenteditable="false">token</${tag}>| after</p>`;
+					setCursorToChar(editor);
+
+					simulateEvent('keydown', key, editor.editor);
+
+					expect(editor.editor.querySelector(tag)).is.null;
+					expect(
+						Jodit.modules.Dom.isContentEditable(
+							editor.s.range.startContainer,
+							editor.editor
+						)
+					).is.true;
+				});
+			});
+		});
+	});
+
 	describe('Space left at an edge of the deleted selection', () => {
 		// https://github.com/xdan/jodit/issues/1522
 		[

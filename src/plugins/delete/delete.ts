@@ -38,11 +38,10 @@ const KEEPS_SPACES = new Set(['pre', 'pre-wrap', 'break-spaces']);
 function keepsFormat(node: Nullable<Node>): node is HTMLElement {
 	return (
 		Dom.isHTMLElement(node) &&
+		!node.hasAttribute('contenteditable') &&
+		!Dom.isTemporary(node) &&
 		(/^(STRONG|B|EM|I|U|S|SUB|SUP)$/.test(node.nodeName) ||
-			(Dom.isTag(node, 'span') &&
-				node.hasAttribute('style') &&
-				!node.hasAttribute('contenteditable') &&
-				!Dom.isTemporary(node)))
+			(Dom.isTag(node, 'span') && node.hasAttribute('style')))
 	);
 }
 
