@@ -9,6 +9,16 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.3
+
+#### :bug: Bug Fix
+
+- [#1831](https://github.com/xdan/jodit/pull/1831), [#1784](https://github.com/xdan/jodit/issues/1784) Backspace and Delete over a whole formatted word preserve its formatting for the next letter. Links, noneditable elements and temporary wrappers are not carried into the typing position. Thanks [@brendon](https://github.com/brendon).
+- [#1836](https://github.com/xdan/jodit/pull/1836), [#1834](https://github.com/xdan/jodit/issues/1834) An anchor counts as content even without text, so the placeholder disappears when it is the only content in the editor.
+- [#1837](https://github.com/xdan/jodit/pull/1837), [#1835](https://github.com/xdan/jodit/issues/1835) Toolbar selects follow `allowTabNavigation`, with the same tabindex on their button and trigger as other toolbar buttons.
+- [#1839](https://github.com/xdan/jodit/pull/1839), [#1838](https://github.com/xdan/jodit/issues/1838) The file browser preview removes its loader and shows navigation when an image fails to load; the image's alt text is the file name.
+- [#1842](https://github.com/xdan/jodit/pull/1842), [#1841](https://github.com/xdan/jodit/issues/1841) Choosing a style on an empty line no longer leaves an invisible text node after the formatted element, which could make Right or End move the caret out of the formatting.
+
 ## 4.20.2
 
 #### :bug: Bug Fix
