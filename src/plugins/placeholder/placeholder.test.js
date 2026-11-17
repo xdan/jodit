@@ -236,6 +236,35 @@ describe('Placeholder plugin', function () {
 		});
 	});
 
+	describe('An anchor, which has no text but is content', function () {
+		it('Should hide placeholder for a value of only an anchor', function () {
+			const area = appendTestArea();
+			area.value = '<p><a id="top"></a><br></p>';
+			const editor = Jodit.make(area);
+
+			expect(editor.container.querySelector('.jodit-placeholder')).is
+				.null;
+		});
+
+		it('Should hide placeholder once an anchor goes into an empty editor', function () {
+			const editor = getJodit();
+			editor.value = '<p>|<br></p>';
+			setCursorToChar(editor);
+
+			expect(editor.container.querySelector('.jodit-placeholder')).is.not
+				.null;
+
+			clickButton('anchor', editor);
+			const popup = getOpenedPopup(editor);
+			popup.querySelector('[ref=name_input]').value = 'top';
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals('<p><a id="top"></a></p>');
+			expect(editor.container.querySelector('.jodit-placeholder')).is
+				.null;
+		});
+	});
+
 	describe('ReadOnly', function () {
 		it('Should hide placeholder', function () {
 			const table_editor_interface = appendTestArea();
