@@ -26,10 +26,18 @@ declare module 'jodit/config' {
 		 * When true, show the special-characters picker as a toolbar popup instead of a modal dialog
 		 */
 		usePopupForSpecialCharacters: boolean;
+
+		/**
+		 * How many characters each row of the special-characters picker holds.
+		 * The picker widens or narrows to fit them.
+		 */
+		specialCharactersColumns: number;
 	}
 }
 
 Config.prototype.usePopupForSpecialCharacters = false;
+
+Config.prototype.specialCharactersColumns = 17;
 
 Config.prototype.specialCharacters = [
 	'!',

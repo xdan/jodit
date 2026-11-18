@@ -7,11 +7,15 @@
 @import (reference) '../../styles/variables';
 
 .jodit-symbols {
-	width: 460px;
 	padding: var(--padding-default);
 
 	&__container {
 		display: flex;
+		// 460px with the padding fits the default 17 characters a row
+		width: calc(
+			(460px - 2 * var(--padding-default)) * var(--symbols-columns, 17) /
+				17
+		);
 	}
 
 	&__container_table {

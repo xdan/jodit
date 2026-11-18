@@ -71,6 +71,22 @@ const editor2 = Jodit.make('#editor2', {
 });
 ```
 
+### `specialCharactersColumns`
+
+**Type:** `number`
+
+**Default:** `17`
+
+How many characters each row of the picker holds. The picker widens or narrows to fit them, keeping the default's proportions (460px for 17), and the Up and Down keys move by a row of this length.
+
+**Example:**
+```typescript
+// A longer character set in fewer, wider rows
+const editor = Jodit.make('#editor', {
+    specialCharactersColumns: 30
+});
+```
+
 ## Controls
 
 ### `symbols` Control
@@ -170,7 +186,7 @@ When event fired (`generateSpecialCharactersTable.symbols`):
 
 2. **Build Grid:**
    - Iterates through `specialCharacters` array
-   - Creates table rows with 17 cells each (`__countInRow`)
+   - Creates table rows of `specialCharactersColumns` cells each (17 by default)
    - Each cell contains `<a>` element with character
    - Each link has `data-index` and `data-index-j` attributes
    - All links added to `chars` array for event handling
@@ -197,7 +213,7 @@ On character click (`mousedown`):
 The `keydown` handler supports:
 
 **Arrow Keys:**
-- **Up/Down**: Move ±17 positions (±`__countInRow`)
+- **Up/Down**: Move ±`specialCharactersColumns` positions (±17 by default)
   - Wraps to last/first row if at edge
   - Maintains column position when wrapping
 - **Left/Right**: Move ±1 position
@@ -274,7 +290,7 @@ editor.e.on(container, 'close_dialog', () => {
 5. **Shift Key**: Must hold Shift during click to keep dialog open
 6. **Preview**: Updates on any focus change (mouse or keyboard)
 7. **Navigation Wrapping**: Arrows wrap at edges for continuous navigation
-8. **Incomplete Row**: Last row may have fewer than 17 characters
+8. **Incomplete Row**: Last row may have fewer than `specialCharactersColumns` characters
 9. **HTML Entities**: Displayed as rendered characters (e.g., `&copy;` → ©)
 10. **Hotkey Conflict**: Ctrl+Shift+I may conflict with browser DevTools
 
@@ -283,7 +299,7 @@ editor.e.on(container, 'close_dialog', () => {
 - Plugin is class-based, extends `Plugin` base class
 - Button in 'insert' toolbar group
 - Event namespacing: `.symbols` for clean removal
-- Grid layout: 17 characters per row (`__countInRow`)
+- Grid layout: `specialCharactersColumns` characters per row (17 by default)
 - Character links have `role="option"` and `tabindex="-1"`
 - Preview updates on `focus` event (keyboard and mouse)
 - Uses `insertHTML()` to insert character at cursor
