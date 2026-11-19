@@ -6,6 +6,23 @@
 
 describe('Speech Recognize', () => {
 	describe('Toolbar', () => {
+		['default', 'dark'].forEach(theme => {
+			it(`Should show the speech icon in the ${theme} theme`, () => {
+				const editor = getJodit({
+					theme,
+					toolbarAdaptive: false,
+					speechRecognize: { api: {} }
+				});
+				const path = getButton('speechRecognize', editor).querySelector(
+					'svg path'
+				);
+				expect(path).is.not.null;
+				expect(editor.ow.getComputedStyle(path).stroke).does.not.equal(
+					'none'
+				);
+			});
+		});
+
 		it('Should create toolbar with speech button', () => {
 			const editor = getJodit({
 				toolbarAdaptive: false,

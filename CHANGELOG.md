@@ -9,6 +9,12 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.4
+
+#### :bug: Bug Fix
+
+- Restore the speech recognition toolbar icon in light and dark themes and add strict screenshot coverage for both themes.
+
 ## 4.20.3
 
 #### :bug: Bug Fix

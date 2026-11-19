@@ -206,8 +206,5 @@ Config.prototype.controls.speechRecognize = {
 		return `<span class='jodit-speech-recognize__list-item'><input ${
 			checked ? 'checked' : ''
 		} class='jodit-checkbox' type='checkbox'>&nbsp;${value}</span>`;
-	},
-	mods: {
-		stroke: false
 	}
 } as IControlType;
