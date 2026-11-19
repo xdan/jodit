@@ -423,6 +423,22 @@ describe('Symbols plugin', () => {
 			);
 		});
 
+		[0, -3, NaN, Infinity, 2.5].forEach(value => {
+			it(`Should fall back to 17 a row for ${value}`, () => {
+				const editor = openSymbols({ specialCharactersColumns: value });
+				const dialog = getOpenedDialog(editor);
+				const chars = dialog.getElementsByTagName('a');
+
+				expect(rowLengths(dialog)[0]).equals(17);
+				expect(
+					dialog.querySelector('.jodit-symbols').offsetWidth
+				).equals(460);
+
+				pressKey(Jodit.KEY_DOWN, chars[1]);
+				expect(editor.ownerDocument.activeElement).equals(chars[18]);
+			});
+		});
+
 		it('Should keep the picker 460px wide with the default 17', () => {
 			const editor = openSymbols();
 			const dialog = getOpenedDialog(editor);

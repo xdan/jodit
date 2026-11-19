@@ -77,7 +77,7 @@ const editor2 = Jodit.make('#editor2', {
 
 **Default:** `17`
 
-How many characters each row of the picker holds. The picker widens or narrows to fit them, keeping the default's proportions (460px for 17), and the Up and Down keys move by a row of this length.
+How many characters each row of the picker holds. The picker widens or narrows to fit them, keeping the default's proportions (460px for 17), and the Up and Down keys move by a row of this length. Anything but a positive whole number (`0`, a negative, `NaN`, `Infinity` or a fraction) falls back to `17`.
 
 **Example:**
 ```typescript

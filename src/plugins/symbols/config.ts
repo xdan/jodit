@@ -29,7 +29,8 @@ declare module 'jodit/config' {
 
 		/**
 		 * How many characters each row of the special-characters picker holds.
-		 * The picker widens or narrows to fit them.
+		 * The picker widens or narrows to fit them. Anything but a positive
+		 * whole number falls back to 17.
 		 */
 		specialCharactersColumns: number;
 	}

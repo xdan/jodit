@@ -20,6 +20,7 @@ import {
 } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { extendLang, pluginSystem } from 'jodit/core/global';
+import { isInt } from 'jodit/core/helpers/checker';
 import { attr } from 'jodit/core/helpers/utils';
 import { Plugin } from 'jodit/core/plugin/plugin';
 
@@ -47,7 +48,11 @@ export class symbols extends Plugin {
 
 	override afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
-			const columns = jodit.o.specialCharactersColumns;
+			const { specialCharactersColumns } = jodit.o;
+			const columns =
+				isInt(specialCharactersColumns) && specialCharactersColumns > 0
+					? Number(specialCharactersColumns)
+					: 17;
 			const container = jodit.c.fromHTML(
 				`<div class="jodit-symbols__container">
 						<div class="jodit-symbols__container_table">
