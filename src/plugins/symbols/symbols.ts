@@ -20,6 +20,7 @@ import {
 } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { extendLang, pluginSystem } from 'jodit/core/global';
+import { isInt } from 'jodit/core/helpers/checker';
 import { attr } from 'jodit/core/helpers/utils';
 import { Plugin } from 'jodit/core/plugin/plugin';
 
@@ -40,8 +41,6 @@ export class symbols extends Plugin {
 		}
 	];
 
-	private __countInRow: number = 17;
-
 	constructor(jodit: IJodit) {
 		super(jodit);
 		extendLang(langs);
@@ -49,6 +48,11 @@ export class symbols extends Plugin {
 
 	override afterInit(jodit: IJodit): void {
 		jodit.e.on('generateSpecialCharactersTable.symbols', () => {
+			const { specialCharactersColumns } = jodit.o;
+			const columns =
+				isInt(specialCharactersColumns) && specialCharactersColumns > 0
+					? Number(specialCharactersColumns)
+					: 17;
 			const container = jodit.c.fromHTML(
 				`<div class="jodit-symbols__container">
 						<div class="jodit-symbols__container_table">
@@ -59,6 +63,11 @@ export class symbols extends Plugin {
 						</div>
 					</div>`
 			) as HTMLDivElement;
+
+			container.style.setProperty(
+				'--jd-symbols-columns',
+				String(columns)
+			);
 
 			const preview = Dom.first(
 				container,
@@ -78,8 +87,7 @@ export class symbols extends Plugin {
 
 				for (
 					let j = 0;
-					j < this.__countInRow &&
-					i < jodit.o.specialCharacters.length;
+					j < columns && i < jodit.o.specialCharacters.length;
 					j += 1, i += 1
 				) {
 					const td = jodit.c.element('td'),
@@ -99,8 +107,6 @@ export class symbols extends Plugin {
 
 				Dom.append(body, tr);
 			}
-
-			const self: symbols = this;
 
 			jodit.e
 				.on(chars, 'focus', function (this: HTMLAnchorElement) {
@@ -146,22 +152,21 @@ export class symbols extends Plugin {
 							case KEY_DOWN:
 								newIndex =
 									e.key === KEY_UP
-										? index - self.__countInRow
-										: index + self.__countInRow;
+										? index - columns
+										: index + columns;
 
 								if (chars[newIndex] === undefined) {
 									newIndex =
 										e.key === KEY_UP
 											? Math.floor(
-													chars.length /
-														self.__countInRow
+													chars.length / columns
 												) *
-													self.__countInRow +
+													columns +
 												jIndex
 											: jIndex;
 
 									if (newIndex > chars.length - 1) {
-										newIndex -= self.__countInRow;
+										newIndex -= columns;
 									}
 								}
 

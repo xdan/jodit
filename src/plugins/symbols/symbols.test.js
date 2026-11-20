@@ -345,4 +345,108 @@ describe('Symbols plugin', () => {
 			expect(popup.parentNode).is.null;
 		});
 	});
+
+	describe('Option specialCharactersColumns', () => {
+		const characters = 'abcdefghijkl'.split('');
+
+		function openSymbols(options) {
+			const editor = getJodit({
+				toolbarAdaptive: false,
+				buttons: 'symbols',
+				...options
+			});
+
+			editor.value = '<p>test|</p>';
+			simulateEvent('click', getButton('symbols', editor));
+
+			return editor;
+		}
+
+		function rowLengths(box) {
+			return Array.from(
+				box.querySelectorAll('.jodit-symbols__table tr'),
+				row => row.cells.length
+			);
+		}
+
+		function pressKey(key, target) {
+			simulateEvent('keydown', key, target, data => {
+				data.target = target;
+			});
+		}
+
+		it('Should lay the characters out in rows of that many', () => {
+			const editor = openSymbols({
+				specialCharacters: characters,
+				specialCharactersColumns: 5
+			});
+
+			expect(rowLengths(getOpenedDialog(editor))).deep.equals([5, 5, 2]);
+		});
+
+		it('Should lay them out the same in the popup', () => {
+			const editor = openSymbols({
+				specialCharacters: characters,
+				specialCharactersColumns: 5,
+				usePopupForSpecialCharacters: true
+			});
+
+			expect(rowLengths(getOpenedPopup(editor))).deep.equals([5, 5, 2]);
+		});
+
+		it('Should move up and down by that many', () => {
+			const editor = openSymbols({
+				specialCharacters: characters,
+				specialCharactersColumns: 5
+			});
+			const chars = getOpenedDialog(editor).getElementsByTagName('a');
+
+			pressKey(Jodit.KEY_DOWN, chars[1]);
+			expect(editor.ownerDocument.activeElement).equals(chars[6]);
+
+			pressKey(Jodit.KEY_UP, chars[1]);
+			expect(editor.ownerDocument.activeElement).equals(chars[11]);
+
+			pressKey(Jodit.KEY_DOWN, chars[8]);
+			expect(editor.ownerDocument.activeElement).equals(chars[3]);
+		});
+
+		it('Should widen the picker to fit the rows', () => {
+			const editor = openSymbols({ specialCharactersColumns: 30 });
+			const dialog = getOpenedDialog(editor);
+			const table = dialog.querySelector('.jodit-symbols__table');
+
+			expect(rowLengths(dialog)[0]).equals(30);
+			expect(table.offsetWidth).is.at.most(
+				dialog.querySelector('.jodit-symbols__container_table')
+					.offsetWidth
+			);
+		});
+
+		[0, -3, NaN, Infinity, 2.5].forEach(value => {
+			it(`Should fall back to 17 a row for ${value}`, () => {
+				const editor = openSymbols({ specialCharactersColumns: value });
+				const dialog = getOpenedDialog(editor);
+				const chars = dialog.getElementsByTagName('a');
+
+				expect(rowLengths(dialog)[0]).equals(17);
+				expect(
+					dialog.querySelector('.jodit-symbols').offsetWidth
+				).equals(460);
+
+				pressKey(Jodit.KEY_DOWN, chars[1]);
+				expect(editor.ownerDocument.activeElement).equals(chars[18]);
+			});
+		});
+
+		it('Should keep the picker 460px wide with the default 17', () => {
+			const editor = openSymbols();
+			const dialog = getOpenedDialog(editor);
+
+			expect(rowLengths(dialog)[0]).equals(17);
+			expect(dialog.querySelector('.jodit-symbols').offsetWidth).equals(
+				460
+			);
+		});
+	});
 });
