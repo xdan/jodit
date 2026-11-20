@@ -165,10 +165,11 @@ export const cssPath = (el: Element): Nullable<string> => {
 	let start: Nullable<Element> = el;
 
 	while (start && start.nodeType === Node.ELEMENT_NODE) {
-		let selector = start.nodeName.toLowerCase();
+		const tag = start.nodeName.toLowerCase();
+		let selector = CSS.escape(tag);
 
 		if (start.id) {
-			selector += '#' + start.id;
+			selector += '#' + CSS.escape(start.id);
 			path.unshift(selector);
 			break;
 		} else {
@@ -178,7 +179,7 @@ export const cssPath = (el: Element): Nullable<string> => {
 			do {
 				sib = sib.previousElementSibling;
 
-				if (sib && sib.nodeName.toLowerCase() === selector) {
+				if (sib && sib.nodeName.toLowerCase() === tag) {
 					nth++;
 				}
 			} while (sib);
