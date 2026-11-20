@@ -27,6 +27,9 @@ declare module 'jodit/config' {
 			formTemplate: (editor: IJodit) => string | HTMLElement | IUIForm;
 			formClassName?: string;
 
+			/** Content field format in the link form. Default: text. */
+			contentMode: 'text' | 'html';
+
 			/**
 			 * Follow link address after dblclick
 			 */
@@ -139,6 +142,7 @@ declare module 'jodit/config' {
 
 Config.prototype.link = {
 	formTemplate,
+	contentMode: 'text',
 	followOnDblClick: false,
 	processVideoLink: true,
 	processPastedLink: true,

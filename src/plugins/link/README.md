@@ -55,6 +55,24 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+#### `contentMode`
+
+**Type:** `'text' | 'html'`
+
+**Default:** `'text'`
+
+In text mode the content field edits plain text; typed tags are displayed literally. Set `contentMode: 'html'` to show a textarea containing the link's inner HTML, including formatting and images. Changes use the editor's `safeHTML` handling, including `cleanHTML.sanitizer`; nested links are unwrapped before insertion.
+
+Changing only the URL or link attributes preserves the existing child nodes in both modes, including icon-only links. Clearing the content field uses the URL as the link text.
+
+```typescript
+Jodit.make('#editor', {
+    link: {
+        contentMode: 'html'
+    }
+});
+```
+
 #### `followOnDblClick`
 
 **Type:** `boolean`

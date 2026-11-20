@@ -10,7 +10,7 @@ Provides a toolbar button and popup for inserting file links into the editor via
 
 ## Description
 
-This plugin adds a "file" button that opens a popup with file selection options. Users can browse files from a server (via FileBrowser), upload files, or enter a URL manually. When a file is selected, it's inserted as an `<a>` link. If editing an existing link, it updates that link instead of creating a new one.
+This plugin adds a "file" button that opens a popup with file selection options. Users can browse files from a server (via FileBrowser), upload files, or enter a URL manually. When a file is selected, it's inserted as an `<a>` link. When browsing for a file while the cursor or selection is inside an existing link, the first selected file updates its URL and preserves its contents. Additional selected files are inserted as separate links after it.
 
 ## Features
 

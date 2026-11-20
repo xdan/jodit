@@ -108,16 +108,28 @@ Config.prototype.controls.file = {
 	popup: (editor: IJodit, current: Node | false, close) => {
 		// The popup's first field takes the focus, so the selection the
 		// popup was opened for is kept and put back before the link goes in
-		const selected = editor.s.isCollapsed() ? null : editor.s.range;
+		let selected = editor.s.isCollapsed() ? null : editor.s.range;
 
 		const restoreSelection = (): void => {
 			if (selected) {
 				editor.s.selectRange(selected);
+				selected = null;
 			}
 		};
 
 		const insert = (url: string, title: string = ''): void => {
 			restoreSelection();
+
+			if (sourceAnchor && Dom.isOrContains(editor.editor, sourceAnchor)) {
+				attr(sourceAnchor, 'href', url);
+				if (title) {
+					attr(sourceAnchor, 'title', title);
+				}
+				editor.s.setCursorAfter(sourceAnchor);
+				sourceAnchor = null;
+				editor.synchronizeValues();
+				return;
+			}
 
 			if (wrapSelectionInLink(editor, url, title)) {
 				return;

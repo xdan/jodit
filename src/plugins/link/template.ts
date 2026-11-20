@@ -15,7 +15,8 @@ import {
 	UICheckbox,
 	UIForm,
 	UIInput,
-	UISelect
+	UISelect,
+	UITextArea
 } from 'jodit/core/ui/form';
 
 export const formTemplate = (editor: IJodit): IUIForm => {
@@ -24,6 +25,7 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 		noFollowCheckbox,
 		ariaLabelInput,
 		modeClassName,
+		contentMode,
 		selectSizeClassName,
 		selectMultipleClassName,
 		selectOptionsClassName
@@ -54,10 +56,10 @@ export const formTemplate = (editor: IJodit): IUIForm => {
 		new UIBlock(
 			editor,
 			[
-				new UIInput(editor, {
+				new (contentMode === 'html' ? UITextArea : UIInput)(editor, {
 					name: 'content',
 					ref: 'content_input',
-					label: 'Text'
+					label: contentMode === 'html' ? 'HTML' : 'Text'
 				})
 			],
 			{

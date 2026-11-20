@@ -28,6 +28,7 @@ import {
 	convertMediaUrlToVideoEmbed,
 	getAnchorName,
 	getAnchors,
+	htmlspecialchars,
 	isString,
 	isURL,
 	position,
@@ -191,7 +192,8 @@ export class link extends Plugin {
 			noFollowCheckbox,
 			formTemplate,
 			formClassName,
-			modeClassName
+			modeClassName,
+			contentMode
 		} = jodit.o.link;
 
 		const html = formTemplate(jodit);
@@ -208,9 +210,12 @@ export class link extends Plugin {
 		const { target_checkbox, nofollow_checkbox, url_input } =
 			elements as IDictionary<HTMLInputElement>;
 		const currentElement = current;
-		const isImageContent = Dom.isImage(currentElement);
+		const isImageContent =
+			contentMode !== 'html' && Dom.isImage(currentElement);
 
-		let { content_input } = elements as IDictionary<HTMLInputElement>;
+		let { content_input } = elements as IDictionary<
+			HTMLInputElement | HTMLTextAreaElement
+		>;
 
 		const { className_input } = elements as IDictionary<HTMLInputElement>,
 			{ className_select } = elements as IDictionary<HTMLSelectElement>,
@@ -233,10 +238,14 @@ export class link extends Plugin {
 
 		let link: false | HTMLAnchorElement;
 
-		const getSelectionText = (): string =>
-			link
+		const getSelectionContent = (): string => {
+			if (contentMode === 'html') {
+				return link ? link.innerHTML : jodit.s.html;
+			}
+			return link
 				? link.innerText
 				: stripTags(jodit.s.range.cloneContents(), jodit.ed);
+		};
 
 		if (current && Dom.closest(current, 'a', jodit.editor)) {
 			link = Dom.closest(current, 'a', jodit.editor) as HTMLAnchorElement;
@@ -245,8 +254,10 @@ export class link extends Plugin {
 		}
 
 		if (!isImageContent && current) {
-			content_input.value = getSelectionText();
+			content_input.value = getSelectionContent();
 		}
+
+		const initialContent = content_input.value;
 
 		if (aria_label_input) {
 			aria_label_input.value = link ? attr(link, 'aria-label') || '' : '';
@@ -284,7 +295,11 @@ export class link extends Plugin {
 				!isImageContent &&
 				!url_input.value.trim()
 			) {
-				url_input.value = guessUrlFromText(content_input.value);
+				url_input.value = guessUrlFromText(
+					contentMode === 'html'
+						? stripTags(content_input.value, jodit.ed)
+						: content_input.value
+				);
 			}
 
 			if (openInNewTabCheckbox && target_checkbox) {
@@ -327,8 +342,7 @@ export class link extends Plugin {
 			jodit.editor.normalize();
 			jodit.history.snapshot.restore(snapshot);
 
-			const textWasChanged =
-				getSelectionText() !== content_input.value.trim();
+			const contentWasChanged = initialContent !== content_input.value;
 
 			const ci = jodit.createInside;
 			let caretAfter: HTMLAnchorElement | null = null;
@@ -365,7 +379,14 @@ export class link extends Plugin {
 				);
 
 				if (!isImageContent) {
-					writeImage(a, content_input, textWasChanged, url_input);
+					writeContent(
+						jodit,
+						a,
+						content_input.value,
+						contentWasChanged,
+						url_input.value,
+						contentMode
+					);
 				}
 
 				if (openInNewTabCheckbox && target_checkbox) {
@@ -625,7 +646,7 @@ pluginSystem.add('link', link);
 function addAnchorList(
 	jodit: IJodit,
 	url: HTMLInputElement,
-	content: HTMLInputElement,
+	content: HTMLInputElement | HTMLTextAreaElement,
 	isImage: boolean
 ): void {
 	const anchors = getAnchors(jodit.editor);
@@ -718,7 +739,10 @@ function addAnchorList(
 				!isImage &&
 				(!content.value.trim() || content.value === filled)
 			) {
-				content.value = filled = text;
+				content.value = filled =
+					jodit.o.link.contentMode === 'html'
+						? htmlspecialchars(text)
+						: text;
 			}
 
 			url.focus();
@@ -919,25 +943,25 @@ function readClassnames(
 	}
 }
 
-function writeImage(
-	a: HTMLAnchorElement,
-	content_input: HTMLInputElement,
-	textWasChanged: boolean,
-	url_input: HTMLInputElement
+function writeContent(
+	editor: IJodit,
+	anchor: HTMLAnchorElement,
+	value: string,
+	changed: boolean,
+	url: string,
+	mode: 'text' | 'html'
 ): void {
-	let newContent = a.textContent;
-
-	if (content_input.value.trim().length) {
-		if (textWasChanged) {
-			newContent = content_input.value;
-		}
-	} else {
-		newContent = url_input.value;
+	if (!changed && anchor.hasChildNodes()) {
+		return;
 	}
-
-	const content = a.textContent;
-
-	if (newContent !== content) {
-		a.textContent = newContent;
+	if (mode === 'text' || !value.trim()) {
+		anchor.textContent = value.trim() ? value : url;
+		return;
 	}
+	const sandbox = editor.od.implementation.createHTMLDocument('').body;
+	sandbox.innerHTML = value;
+	editor.e.fire('safeHTML', sandbox);
+	sandbox.querySelectorAll('a').forEach(link => Dom.unwrap(link));
+	Dom.detach(anchor);
+	Dom.moveContent(sandbox, anchor);
 }
