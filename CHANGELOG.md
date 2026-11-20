@@ -9,6 +9,14 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.20.5
+
+#### :bug: Bug Fix
+
+- Preserve nested markup and icon-only links when changing their URL, and update an existing link when selecting a document instead of inserting a nested link.
+- Add opt-in `link.contentMode: 'html'` with synchronous cleaning before insertion; active document elements, event handlers and executable URLs are removed or neutralized even when the clean-html plugin is disabled.
+- Add all-icons dialog screenshots in light and dark themes.
+
 ## 4.20.4
 
 #### :bug: Bug Fix

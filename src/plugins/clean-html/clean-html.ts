@@ -54,6 +54,7 @@ export class cleanHtml extends Plugin {
 		// sanitises them.
 		jodit.e
 			.on('safeHTML', this.onSafeHTML)
+			.on('cleanHTML', this.onCleanHTML)
 			.on('beforeSetNativeEditorValue', this.onBeforeSetNativeEditorValue)
 			.on('afterSetNativeEditorValue', this.onAfterSetNativeEditorValue);
 	}
@@ -330,10 +331,23 @@ export class cleanHtml extends Plugin {
 		safeHTML(sandBox, this.j.o.cleanHTML);
 	}
 
+	@autobind
+	protected onCleanHTML(sandBox: HTMLElement): void {
+		const allow = getHash(this.j.o.cleanHTML.allowTags);
+		const deny = getHash(this.j.o.cleanHTML.denyTags);
+		const nodes = Array.from(sandBox.querySelectorAll('*'));
+		for (const node of nodes) {
+			if (Dom.isOrContains(sandBox, node)) {
+				visitNodeWalker(this.j, node, allow, deny, null);
+			}
+		}
+	}
+
 	/** @override */
 	protected override beforeDestruct(): void {
 		this.j.e
 			.off('safeHTML', this.onSafeHTML)
+			.off('cleanHTML', this.onCleanHTML)
 			.off(
 				'beforeSetNativeEditorValue',
 				this.onBeforeSetNativeEditorValue
