@@ -257,9 +257,9 @@ The `__isMobile()` method:
 - `sizeSM` default is 768px (typical mobile breakpoint)
 - Detects narrow viewports as mobile
 
-### Dummy Box (IE)
+### Legacy Dummy Box
 
-For old Internet Explorer (non-ES-next):
+The legacy non-ES-next Internet Explorer code path remains in the implementation, but Internet Explorer is not a supported browser:
 - Creates invisible dummy div: `.jodit_sticky-dummy_toolbar`
 - Inserted before toolbar in container
 - Height set to match toolbar height
