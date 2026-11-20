@@ -76,7 +76,7 @@ Buttons to exclude from inline toolbars.
 
 **Type:** `IDictionary<Array<string> | Function>`
 
-**Default:** Configured for `a`, `img`, `cells`, `selection`, `toolbar`, `iframe`
+**Default:** Configured for `a`, `img`, `cells`, `selection`, `toolbar`, `iframe`, `hr`
 
 Defines toolbar buttons or content for each element type.
 
@@ -140,6 +140,7 @@ Jodit.make('#editor', {
 - **`selection`**: Bold, italic, underline, lists, alignment, etc.
 - **`toolbar`**: General inline toolbar
 - **`iframe`/`jodit-media`**: Media element tools: Replace (the video popup's tabs), Delete, Edit (the video properties dialog) and Align
+- **`hr`** (horizontal lines): Delete, for a line the `hr` plugin has selected
 
 ## How It Works
 

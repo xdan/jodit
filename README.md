@@ -269,7 +269,6 @@ const editor = Jodit.make('#editor', {
 
 ## Browser Support
 
--   Internet Explorer 11
 -   Latest Chrome
 -   Latest Firefox
 -   Latest Safari

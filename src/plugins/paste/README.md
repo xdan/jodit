@@ -99,6 +99,23 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `pasteKeepAttributes`
+
+**Type:** `string[]`
+
+**Default:** `['src', 'href', 'rel', 'content', 'alt', 'title', 'colspan', 'rowspan', 'scope', 'target']`
+
+The attributes a clean paste keeps: `INSERT_CLEAR_HTML`, and Clean for HTML from Word. It removes every other attribute, and every style. The default keeps what links and media need, and what carries a table's structure or the meaning of an image or a link, so merged cells, alt text and a link's `target` survive.
+
+Bold, italic, underline and strikethrough set by styles on a `<span>`, as Google Docs sets them, become `<strong>`, `<em>`, `<u>` and `<s>` before the styles go. Text inside them that a style sets back to a normal weight or style comes out of the `<strong>` or `<em>`, and out of a `<b>` or `<i>`, so it stays normal.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    pasteKeepAttributes: ['src', 'href', 'alt', 'colspan', 'rowspan', 'class']
+});
+```
+
 ### `pasteHTMLActionList`
 
 **Type:** `IUIOption[]`

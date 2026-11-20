@@ -109,13 +109,13 @@ export class pasteFromWord extends Plugin {
 			}
 
 			case INSERT_AS_TEXT: {
-				html = cleanFromWord(html);
+				html = cleanFromWord(html, this.j.o.pasteKeepAttributes);
 				break;
 			}
 
 			case INSERT_ONLY_TEXT: {
 				html = stripTags(
-					cleanFromWord(html),
+					cleanFromWord(html, this.j.o.pasteKeepAttributes),
 					this.j.ed,
 					new Set(this.j.o.pasteExcludeStripTags),
 					this.j.o.nl2brInPlainText
