@@ -64,7 +64,7 @@ describe('Test insert plugins', function () {
 			const prefix = document.createElement('template');
 			prefix.innerHTML = source
 				.slice(0, Math.max(source.indexOf('^'), 0))
-				.replace('|', '')
+				.replace(/\|/g, '')
 				.replace('[hr]', '<hr>');
 			const offset = prefix.content.childNodes.length;
 
