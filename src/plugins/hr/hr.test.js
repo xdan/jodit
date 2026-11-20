@@ -539,11 +539,15 @@ describe('Test insert plugins', function () {
 			const [editor] = make('<p>Above</p>[hr]<p>Below</p>');
 			const line = editor.editor.querySelector('hr');
 
-			await delay(20);
+			await waitForCondition(
+				() => getComputedStyle(line).outlineStyle === 'solid'
+			);
 			expect(getComputedStyle(line).outlineStyle).equals('solid');
 
 			editor.s.setCursorIn(editor.editor.firstChild);
-			await delay(20);
+			await waitForCondition(
+				() => getComputedStyle(line).outlineStyle === 'none'
+			);
 			expect(getComputedStyle(line).outlineStyle).equals('none');
 		});
 
