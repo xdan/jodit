@@ -1988,6 +1988,80 @@ describe('Link plugin', () => {
 		});
 	});
 
+	describe('Link with class name (modeClassName=select) and selectKeepOtherClassNames (#1785)', () => {
+		const options = [
+			{ value: 'no-icon', text: 'No Icon' },
+			{ value: 'awesome', text: 'Button' },
+			{ value: 'green', text: 'Green' }
+		];
+
+		const save = (value, selected, selectKeepOtherClassNames = true) => {
+			const editor = getJodit({
+				link: {
+					modeClassName: 'select',
+					selectKeepOtherClassNames,
+					selectOptionsClassName: options
+				}
+			});
+
+			editor.value = value;
+			editor.s.setCursorIn(editor.editor.querySelector('a').firstChild);
+
+			clickButton('link', editor);
+
+			const form = getOpenedPopup(editor).querySelector('.jodit-ui-form');
+			const select = form.querySelector('select[ref=className_select]');
+
+			Array.from(select.options).forEach(option => {
+				option.selected = selected.includes(option.value);
+			});
+
+			simulateEvent('submit', 0, form);
+
+			return editor.value;
+		};
+
+		it('Should keep a class that is not in the list when another style is chosen', () => {
+			expect(
+				save(
+					'<p><a href="/files/terms.pdf" class="fr-file awesome">Term dates</a></p>',
+					['green']
+				)
+			).equals(
+				'<p><a href="/files/terms.pdf" class="fr-file green">Term dates</a></p>'
+			);
+		});
+
+		it('Should keep it when every style is taken off', () => {
+			expect(
+				save(
+					'<p><a href="/files/terms.pdf" class="fr-file awesome">Term dates</a></p>',
+					[]
+				)
+			).equals(
+				'<p><a href="/files/terms.pdf" class="fr-file">Term dates</a></p>'
+			);
+		});
+
+		it('Should remove the attribute when only styles from the list were there', () => {
+			expect(
+				save('<p><a href="/page" class="awesome">Our page</a></p>', [])
+			).equals('<p><a href="/page">Our page</a></p>');
+		});
+
+		it('Should set only the chosen styles without the option, as before', () => {
+			expect(
+				save(
+					'<p><a href="/files/terms.pdf" class="fr-file awesome">Term dates</a></p>',
+					['green'],
+					false
+				)
+			).equals(
+				'<p><a href="/files/terms.pdf" class="green">Term dates</a></p>'
+			);
+		});
+	});
+
 	describe('Link with class name (modeClassName=select)', () => {
 		describe('Add class name on link', () => {
 			it('Should insert new link with a class name', () => {

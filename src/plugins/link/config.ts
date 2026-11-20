@@ -130,6 +130,14 @@ declare module 'jodit/config' {
 			 */
 			selectOptionsClassName: IUIOption[];
 
+			/**
+			 * With modeClassName="select", keep the link's classes that the list
+			 * doesn't offer, such as one an integration gives some of its links,
+			 * and change only the listed ones. Off, the form sets the link's
+			 * classes to the selected ones alone
+			 */
+			selectKeepOtherClassNames: boolean;
+
 			hotkeys: string[];
 
 			/**
@@ -159,6 +167,7 @@ Config.prototype.link = {
 	preventReadOnlyNavigation: true,
 	selectSizeClassName: 3,
 	selectOptionsClassName: [],
+	selectKeepOtherClassNames: false,
 	hotkeys: ['ctrl+k', 'cmd+k']
 };
 

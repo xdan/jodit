@@ -350,6 +350,28 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+#### `selectKeepOtherClassNames`
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+When `modeClassName` is `'select'`, saving the form sets the link's classes to the selected options alone, so any other class on the link is removed. With `selectKeepOtherClassNames: true`, only the classes the options offer change, and the others stay, such as a class an integration gives its file links for an icon. The `class` attribute goes when no class is left.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    link: {
+        modeClassName: 'select',
+        selectKeepOtherClassNames: true,
+        selectOptionsClassName: [
+            { value: 'button', text: 'Button' },
+            { value: 'no-icon', text: 'No Icon' }
+        ]
+    }
+});
+```
+
 #### `hotkeys`
 
 **Type:** `string | string[]`
