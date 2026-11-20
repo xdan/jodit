@@ -198,6 +198,24 @@ export const INSERT_AS_TEXT = 'insert_as_text';
  */
 export const INSERT_ONLY_TEXT = 'insert_only_text';
 
+/**
+ * The attributes a clean paste ([[INSERT_CLEAR_HTML]], and Clean for HTML from
+ * Word) keeps by default: what links and media need, and what carries a table's
+ * structure or the meaning of an image or a link
+ */
+export const PASTE_KEEP_ATTRIBUTES: readonly string[] = [
+	'src',
+	'href',
+	'rel',
+	'content',
+	'alt',
+	'title',
+	'colspan',
+	'rowspan',
+	'scope',
+	'target'
+];
+
 export const SAFE_COUNT_CHANGE_CALL = 10;
 
 // Connector answer code for a file name that is already taken (same as the HTTP status)

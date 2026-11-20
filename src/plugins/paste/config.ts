@@ -20,6 +20,7 @@ import {
 	INSERT_AS_TEXT,
 	INSERT_ONLY_TEXT,
 	IS_PROD,
+	PASTE_KEEP_ATTRIBUTES,
 	TEXT_HTML,
 	TEXT_PLAIN
 } from 'jodit/core/constants';
@@ -56,6 +57,12 @@ declare module 'jodit/config' {
 		pasteExcludeStripTags: HTMLTagNames[];
 
 		/**
+		 * The attributes a clean paste (INSERT_CLEAR_HTML, and Clean for HTML
+		 * from Word) keeps. It removes every other attribute, and every style
+		 */
+		pasteKeepAttributes: string[];
+
+		/**
 		 * Options when inserting HTML string
 		 */
 		pasteHTMLActionList: IUIOption[];
@@ -71,6 +78,7 @@ Config.prototype.askBeforePasteHTML = true;
 Config.prototype.processPasteHTML = true;
 Config.prototype.scrollToPastedContent = true;
 Config.prototype.pasteExcludeStripTags = ['br', 'hr'];
+Config.prototype.pasteKeepAttributes = [...PASTE_KEEP_ATTRIBUTES];
 
 Config.prototype.pasteHTMLActionList = [
 	{ value: INSERT_AS_HTML, text: 'Keep' },
