@@ -34,6 +34,7 @@ import {
 	position,
 	prepareEmbedCode,
 	refs,
+	safeHTML,
 	stripTags
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
@@ -958,10 +959,28 @@ function writeContent(
 		anchor.textContent = value.trim() ? value : url;
 		return;
 	}
-	const sandbox = editor.od.implementation.createHTMLDocument('').body;
+	const sandboxDocument = editor.od.implementation.createHTMLDocument('');
+	const sandbox = sandboxDocument.createElement('div');
 	sandbox.innerHTML = value;
 	editor.e.fire('safeHTML', sandbox);
+	sanitizeLinkHTML(sandbox);
+	sandboxDocument.body.appendChild(sandbox);
+	editor.e.fire('cleanHTML', sandbox);
+	sanitizeLinkHTML(sandbox);
 	sandbox.querySelectorAll('a').forEach(link => Dom.unwrap(link));
 	Dom.detach(anchor);
 	Dom.moveContent(sandbox, anchor);
+}
+
+function sanitizeLinkHTML(sandbox: HTMLElement): void {
+	sandbox
+		.querySelectorAll(
+			'script,style,iframe,frame,frameset,object,embed,base,link,meta,template'
+		)
+		.forEach(node => Dom.safeRemove(node));
+	safeHTML(sandbox, {
+		removeEventAttributes: true,
+		removeOnError: true,
+		safeJavaScriptLink: true
+	});
 }

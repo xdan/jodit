@@ -61,7 +61,7 @@ const editor = Jodit.make('#editor', {
 
 **Default:** `'text'`
 
-In text mode the content field edits plain text; typed tags are displayed literally. Set `contentMode: 'html'` to show a textarea containing the link's inner HTML, including formatting and images. Changes use the editor's `safeHTML` handling, including `cleanHTML.sanitizer`; nested links are unwrapped before insertion.
+In text mode the content field edits plain text; typed tags are displayed literally. Set `contentMode: 'html'` to show a textarea containing the link's inner HTML, including formatting and images. Changes pass through `cleanHTML.sanitizer` and the configured tag, attribute and style filters before insertion. Active document elements (including scripts, styles, frames and templates), event handlers and executable URLs are always removed or neutralized in this field, even when the clean-html plugin is disabled; nested links are unwrapped.
 
 Changing only the URL or link attributes preserves the existing child nodes in both modes, including icon-only links. Clearing the content field uses the URL as the link text.
 

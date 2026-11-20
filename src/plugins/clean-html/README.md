@@ -415,3 +415,7 @@ console.log(editor.value); // <script>alert(1)</script>
 - Filters can be found in `helpers/visitor/filters/`
 - Essential for security in user-generated content scenarios
 - See [Security Guide](https://xdsoft.net/jodit/docs/security.html) for comprehensive security documentation
+
+### Synchronous cleaning before insertion
+
+The `cleanHTML` event applies the configured tag, attribute and style filters synchronously to a container in an inert document. The link HTML field uses it after `safeHTML` and before moving nodes into the editable document; normal background cleaning is unchanged.
