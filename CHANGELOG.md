@@ -14,6 +14,19 @@
 #### :rocket: New Feature
 
 - [#1802](https://github.com/xdan/jodit/issues/1802) A horizontal line is selected whole, as an image is. A click on a line, or an arrow key that comes to one, selects it with a frame, and the click opens the new `hr` popup with Delete. With a line selected, Delete and Backspace remove only the line, Enter adds an empty paragraph after it and Shift+Enter one before it, and typing starts a new paragraph after it. The arrow keys no longer stop beside a line, where typing started a stray paragraph. A line in a list item or a table cell, and an editor with `enter: 'br'`, keep the old arrow keys. A selection of a single line no longer opens the selection toolbar.
+- [#1830](https://github.com/xdan/jodit/pull/1830), [#1780](https://github.com/xdan/jodit/issues/1780) Clean paste preserves merged table cells, image descriptions, link targets and styled bold/italic text, including nested resets; configure retained attributes with `pasteKeepAttributes`.
+- [#1832](https://github.com/xdan/jodit/pull/1832), [#1785](https://github.com/xdan/jodit/issues/1785) Set `link.selectKeepOtherClassNames: true` to preserve classes not offered by a select-mode link form; the default remains unchanged.
+- [#1844](https://github.com/xdan/jodit/pull/1844), [#1843](https://github.com/xdan/jodit/issues/1843) Configure special-character picker columns with `specialCharactersColumns`; invalid values fall back to 17 for layout and navigation.
+
+Thanks [@brendon](https://github.com/brendon).
+
+#### :boom: Breaking Change
+
+- Horizontal-rule selection now has its own popup and keyboard handling; integrations that customized selection toolbars for a single horizontal rule should configure `popup.hr` instead. Clean paste now retains the documented formatting and attributes; set `pasteKeepAttributes: ['src', 'href', 'rel', 'content']` to retain the earlier attribute list.
+
+#### :memo: Documentation
+
+- Remove the unsupported Internet Explorer 11 compatibility claim; use a supported modern browser with Jodit 4.
 
 ## 4.20.5
 
