@@ -12,7 +12,6 @@ import autoprefixer from 'autoprefixer';
 import * as fs from 'fs';
 import * as path from 'path';
 import postcss from 'postcss';
-import postcssCssVariables from 'postcss-css-variables';
 
 export default ({
 	argv,
@@ -29,10 +28,10 @@ export default ({
 					'>1%',
 					'last 4 versions',
 					'Firefox ESR',
-					'ie >= 11'
+					'not ie > 0',
+					'not ie_mob > 0'
 				]
-			}),
-			postcssCssVariables
+			})
 		]);
 
 		const file = path.resolve(
