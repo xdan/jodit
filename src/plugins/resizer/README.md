@@ -506,9 +506,7 @@ editor.e.on('afterInsertImage', (image) => {
 
 11. **Touch Events**: Full support for touchstart/touchmove/touchend
 
-12. **IE Compatibility**: Prevents native IE image resizer with preventDefault
-
-13. **Fullscreen Mode**: Frame z-index adjusted to appear above fullscreen editor
+12. **Fullscreen Mode**: Frame z-index adjusted to appear above fullscreen editor
 
 ## Notes
 

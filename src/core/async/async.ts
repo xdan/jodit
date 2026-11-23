@@ -319,26 +319,6 @@ export class Async implements IAsync {
 			return (p as any).status;
 		}
 
-		// Hi IE11
-		if (!Promise.race) {
-			return new Promise(resolve => {
-				p.then(
-					v => {
-						resolve('fulfilled');
-						return v;
-					},
-					e => {
-						resolve('rejected');
-						throw e;
-					}
-				);
-
-				this.setTimeout(() => {
-					resolve('pending');
-				}, 100);
-			});
-		}
-
 		const t = {};
 
 		return Promise.race([p, t]).then(

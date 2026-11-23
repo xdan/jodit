@@ -9,20 +9,12 @@
  */
 
 import type { HTMLTagNames, IDictionary, Nullable } from 'jodit/types/';
-import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import { toArray } from 'jodit/core/helpers/array/to-array';
 import { isString } from 'jodit/core/helpers/checker/is-string';
 import { camelCase } from 'jodit/core/helpers/string/camel-case';
 import { attr } from 'jodit/core/helpers/utils/attr';
 import { error } from 'jodit/core/helpers/utils/error';
-
-let temp = 1;
-
-const $$temp = (): number => {
-	temp++;
-	return temp;
-};
 
 /**
  * Find all elements by selector and return Array. If it did not find any element, it is return empty array
@@ -60,33 +52,7 @@ export function $$<T extends Element>(
 	selector: string | HTMLTagNames,
 	root: HTMLElement | DocumentFragment
 ): T[] {
-	let result: NodeList;
-
-	if (
-		!IS_ES_NEXT &&
-		/:scope/.test(selector) &&
-		IS_IE &&
-		!(root && root.nodeType === Node.DOCUMENT_NODE)
-	) {
-		const id: string = (root as Element).id,
-			temp_id: string =
-				id ||
-				'_selector_id_' + String(Math.random()).slice(2) + $$temp();
-
-		selector = selector.replace(/:scope/g, '#' + temp_id);
-
-		!id && (root as Element).setAttribute('id', temp_id);
-
-		result = (root.parentNode as Element).querySelectorAll(selector);
-
-		if (!id) {
-			(root as Element).removeAttribute('id');
-		}
-	} else {
-		result = root.querySelectorAll(selector);
-	}
-
-	return [].slice.call(result);
+	return [].slice.call(root.querySelectorAll(selector));
 }
 
 /**

@@ -9,6 +9,15 @@
 > - :house: [Internal]
 > - :nail_care: [Polish]
 
+## 4.21.1
+
+#### :house: Internal
+
+- Remove the compatibility code that only Internet Explorer 11 needed, as Jodit 4 can't run there.
+  - The editor no longer checks `IS_IE`: `beautifyHTML` defaults to `true`, `TEXT_PLAIN`, `TEXT_HTML` and `TEXT_RTF` are always the standard MIME types, and the IE paths in the sticky toolbar, the resizer, the uploader's paste handler, `$$` and `Async.promiseState` are gone. `Jodit.constants.IS_IE` remains, deprecated.
+  - The ES5 build's `polyfills.js` is now empty. It is still built, so pages that load `es5/polyfills.min.js` keep working.
+  - The ES5 build's CSS keeps its custom properties, as the other builds' CSS does, and has no `-ms-` prefixes.
+
 ## 4.21.0
 
 #### :rocket: New Feature

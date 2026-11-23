@@ -98,7 +98,7 @@ const editor = Jodit.make('#editor', {
 
 **Type:** `boolean`
 
-**Default:** `true` (false in IE)
+**Default:** `true`
 
 When enabled, beautifies HTML code in source mode using js-beautify library loaded from CDN. Improves code readability with proper indentation and formatting.
 
@@ -571,13 +571,12 @@ Custom editors must implement this interface:
 ## Edge Cases
 
 1. **Shadow DOM**: Falls back to textarea when shadow root detected (Ace incompatible)
-2. **IE Browser**: `beautifyHTML` defaults to false (performance)
-3. **ESC Key**: Blurs source editor when ESC pressed in source mode
-4. **Lock Flag**: Prevents circular updates between WYSIWYG and source
-5. **Selection in Tags**: Normalized to avoid splitting tags during mode switch
-6. **Invisible Spaces**: Used for position calculation in script/style/iframe tags
-7. **Beautify Failure**: Silently falls back to unformatted HTML
-8. **CDN Load Failure**: Textarea used if Ace fails to load
+2. **ESC Key**: Blurs source editor when ESC pressed in source mode
+3. **Lock Flag**: Prevents circular updates between WYSIWYG and source
+4. **Selection in Tags**: Normalized to avoid splitting tags during mode switch
+5. **Invisible Spaces**: Used for position calculation in script/style/iframe tags
+6. **Beautify Failure**: Silently falls back to unformatted HTML
+7. **CDN Load Failure**: Textarea used if Ace fails to load
 9. **Mode Switch**: Selection preserved across WYSIWYG ↔ source transitions
 10. **Read-only Mode**: Synchronized to source editor
 

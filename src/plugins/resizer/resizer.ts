@@ -12,7 +12,7 @@
 
 import type { HTMLTagNames, IBound, IJodit, Nullable } from 'jodit/types';
 import * as consts from 'jodit/core/constants';
-import { IS_ES_NEXT, IS_IE, KEY_ALT } from 'jodit/core/constants';
+import { KEY_ALT } from 'jodit/core/constants';
 import { autobind, watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { eventEmitter, getContainer, pluginSystem } from 'jodit/core/global';
@@ -679,15 +679,6 @@ export class resizer extends Plugin {
 		}
 
 		this.j.e.on(element, 'dragstart', this.hide);
-
-		if (!IS_ES_NEXT && IS_IE) {
-			// for IE don't show native resizer
-			this.j.e.on(element, 'mousedown', (event: MouseEvent) => {
-				if (Dom.isTag(element, 'img')) {
-					event.preventDefault();
-				}
-			});
-		}
 	}
 
 	private onClickElement = (element: HTMLElement): void => {

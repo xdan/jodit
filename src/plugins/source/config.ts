@@ -9,7 +9,7 @@
  */
 
 import type { IControlType, IJodit, ISourceEditor } from 'jodit/types';
-import { IS_IE, MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
+import { MODE_SOURCE, MODE_SPLIT } from 'jodit/core/constants';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
 
@@ -69,7 +69,7 @@ declare module 'jodit/config' {
 	}
 }
 
-Config.prototype.beautifyHTML = !IS_IE;
+Config.prototype.beautifyHTML = true;
 Config.prototype.sourceEditor = 'ace';
 
 Config.prototype.sourceEditorNativeOptions = {

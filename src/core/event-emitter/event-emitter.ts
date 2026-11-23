@@ -133,20 +133,6 @@ export class EventEmitter implements IEventEmitter {
 		if (!(e as any).originalEvent) {
 			(e as any).originalEvent = e;
 		}
-
-		if (
-			e.type === 'paste' &&
-			(e as ClipboardEvent).clipboardData === undefined &&
-			(this.__doc.defaultView as any).clipboardData
-		) {
-			Object.defineProperty(e, 'clipboardData', {
-				get: () => {
-					return (this.__doc.defaultView as any).clipboardData;
-				},
-				configurable: true,
-				enumerable: true
-			});
-		}
 	};
 
 	private __triggerNativeEvent(
