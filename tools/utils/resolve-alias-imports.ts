@@ -71,11 +71,6 @@ if (!fs.existsSync(cwd) || !fs.statSync(cwd).isDirectory()) {
 
 const allowPackages = new Set([
 	'a-color-picker',
-	'classlist-polyfill',
-	'es6-promise/auto',
-	'core-js/es/symbol',
-	'core-js/es/array/find-index',
-	'core-js/es/array/from',
 	'marked',
 	'@jodit/image-editor'
 ]);
