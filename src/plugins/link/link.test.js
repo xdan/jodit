@@ -1535,7 +1535,7 @@ describe('Link plugin', () => {
 					});
 				});
 
-				it('Should restore source text after user clicked on Unlink button', () => {
+				it('Should restore source text after user clicked on Unlink button', async () => {
 					const editor = getJodit({
 						history: {
 							timeout: 0
@@ -1570,9 +1570,16 @@ describe('Link plugin', () => {
 						popup.querySelector('[ref="unlink"]').style.display
 					).does.not.equal('none');
 
-					expect(
-						popup.querySelector('[ref=insert]').innerHTML
-					).equals(editor.i18n('Update'));
+					await Promise.resolve();
+
+					// In the button's text element, which carries its font
+					const insertText = popup.querySelector(
+						'[ref=insert] .jodit-ui-button__text'
+					);
+
+					expect(insertText && insertText.textContent).equals(
+						editor.i18n('Update')
+					);
 
 					simulateEvent(
 						'click',
