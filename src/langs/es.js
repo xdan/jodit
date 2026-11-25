@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': 'Insertar ancla',
 	'Link to an anchor': 'Enlazar a un ancla',
 	'On this page': 'En esta página',
+	'Choose a link': 'Elegir un vínculo',
+	Links: 'Vínculos',
 	'The name cannot contain spaces': 'El nombre no puede contener espacios',
 	'This name is already in use': 'Este nombre ya está en uso',
 	'Font size': 'Tamaño de letra',

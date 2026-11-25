@@ -21,7 +21,7 @@ Provides comprehensive link management functionality for the Jodit editor. This 
 - Class name management (input or select mode)
 - "Open in new tab" checkbox
 - "No follow" checkbox for SEO control
-- The document's anchors, listed by a dropdown arrow inside the URL field, to pick as the URL (see the anchor plugin)
+- The document's anchors and the links in `list`, such as the site's own pages, listed by a dropdown arrow inside the URL field, to pick as the URL (see the anchor plugin)
 - Form field references for programmatic access
 - Custom form template support
 
@@ -207,6 +207,39 @@ URL or an email address. A bare domain gets `https://` (`example.com` →
 const editor = Jodit.make('#editor', {
     link: {
         deriveUrlFromText: true
+    }
+});
+```
+
+#### `list`
+
+**Type:** `ILinkListItem[] | ((jodit: IJodit) => ILinkListItem[] | Promise<ILinkListItem[]>)`
+
+**Default:** `[]`
+
+Links to choose from, such as the site's own pages, so that linking to one
+doesn't mean opening it to copy its address. They're listed in the URL field's
+dropdown under "Links", after the document's anchors under "On this page".
+Each item has a `text`, shown in the list and given to a new link with no
+text, a `url`, and an optional `description`, shown in grey on the right, such
+as "Page" or "Form". A function is called each time the link form opens, so
+the list can be loaded when it's needed, and may return a promise.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    link: {
+        list: [
+            { text: 'School fees', url: '/pages/fees', description: 'Page' },
+            { text: 'Enrolment', url: '/forms/enrol', description: 'Form' }
+        ]
+    }
+});
+
+// Or loaded when the form opens
+const editor2 = Jodit.make('#editor2', {
+    link: {
+        list: () => fetch('/links.json').then(response => response.json())
     }
 });
 ```
@@ -584,7 +617,7 @@ editor.e.on('processPaste.link', (e, text, insert) => {
 The default form includes:
 
 1. **URL Input**: Required URL input (`type="url"`, so touch keyboards leave the address as typed) with `url_input` ref
-2. **Anchor List**: When the document has anchors (empty `<a id>` or `<a name>` with no `href`), a dropdown arrow inside the URL field (`.jodit-link-anchors__toggle`) lists them under "On this page" (`.jodit-link-anchors`), each by the words after it and its `#name`. Picking one fills in its `#name`, and gives a link with no text those words, leaving the form open to insert the link. The list opens in a popup of its own over the form, from the arrow or the down arrow key, with the anchor in the URL marked (`aria-current`). It's as wide as the URL field, or wider for longer text, up to 360px, and scrolls past `min(260px, 40vh)`. A long name is cut short at 35% of the row, so the text keeps the rest. The arrow keys move through it, and Escape, a click outside it or typing an address closes it
+2. **Anchor and Link List**: When the document has anchors (empty `<a id>` or `<a name>` with no `href`) or `list` has links, a dropdown arrow inside the URL field (`.jodit-link-anchors__toggle`) lists them (`.jodit-link-anchors`): the anchors under "On this page", each by the words after it and its `#name`, then the links under "Links", each by its `text` and `description`. Each heading starts a `role="group"` (`.jodit-link-anchors__group`) labelled by it. Picking one fills in its address, and gives a link with no text the anchor's words or the link's `text`, leaving the form open to insert the link. The list opens in a popup of its own over the form, from the arrow or the down arrow key with everything in it, with the address in the URL field marked (`aria-current`). Typing in the URL field opens it too, showing only the places whose text or address holds what's typed, and closes it when nothing does; a pasted address leaves it closed. It's as wide as the URL field, or wider for longer text, up to 360px, and scrolls past `min(260px, 40vh)`. A long name is cut short at 35% of the row, so the text keeps the rest. The arrow keys move through it, and Escape or a click outside it closes it
 3. **Content Input**: Optional text input for link text with `content_input` ref
 4. **Class Name Field**: Input or select based on `modeClassName`:
    - Input mode: Text field with `className_input` ref

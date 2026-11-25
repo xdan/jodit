@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'إدراج مرساة',
 	'Link to an anchor': 'ربط بمرساة',
 	'On this page': 'في هذه الصفحة',
+	'Choose a link': 'اختيار رابط',
+	Links: 'روابط',
 	'The name cannot contain spaces': 'لا يمكن أن يحتوي الاسم على مسافات',
 	'This name is already in use': 'هذا الاسم مستخدم بالفعل',
 	'Font size': 'حجم الخط',

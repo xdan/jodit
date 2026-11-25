@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': 'Horgony beszúrás',
 	'Link to an anchor': 'Hivatkozás horgonyra',
 	'On this page': 'Ezen az oldalon',
+	'Choose a link': 'Link kiválasztása',
+	Links: 'Linkek',
 	'The name cannot contain spaces': 'A név nem tartalmazhat szóközt',
 	'This name is already in use': 'Ez a név már foglalt',
 	'Font size': 'Betűméret',

@@ -43,6 +43,8 @@ module.exports = {
 	'Insert anchor': 'Lövbər əlavə et',
 	'Link to an anchor': 'Lövbərə keçid',
 	'On this page': 'Bu səhifədə',
+	'Choose a link': 'Keçid seçin',
+	Links: 'Keçidlər',
 	'The name cannot contain spaces': 'Adda boşluq ola bilməz',
 	'This name is already in use': 'Bu ad artıq istifadə olunur',
 	'Font size': 'Şrift ölçüsü',

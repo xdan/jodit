@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'Sisipkan jangkar',
 	'Link to an anchor': 'Tautkan ke jangkar',
 	'On this page': 'Di halaman ini',
+	'Choose a link': 'Pilih tautan',
+	Links: 'Tautan',
 	'The name cannot contain spaces': 'Nama tidak boleh mengandung spasi',
 	'This name is already in use': 'Nama ini sudah digunakan',
 	'Font size': 'Ukuran font',

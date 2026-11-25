@@ -42,6 +42,8 @@ module.exports = {
 	'Insert anchor': 'Зангуу нэмэх',
 	'Link to an anchor': 'Зангуу руу холбох',
 	'On this page': 'Энэ хуудсанд',
+	'Choose a link': 'Холбоос сонгох',
+	Links: 'Холбоосууд',
 	'The name cannot contain spaces': 'Нэрэнд хоосон зай байж болохгүй',
 	'This name is already in use': 'Энэ нэр аль хэдийн ашиглагдаж байна',
 	'Font size': 'Фонтын хэмжээ',

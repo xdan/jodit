@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': 'افزودن لنگر',
 	'Link to an anchor': 'پیوند به لنگر',
 	'On this page': 'در این صفحه',
+	'Choose a link': 'انتخاب لینک',
+	Links: 'لینک‌ها',
 	'The name cannot contain spaces': 'نام نمی‌تواند فاصله داشته باشد',
 	'This name is already in use': 'این نام قبلاً استفاده شده است',
 	'Font size': 'اندازه فونت',

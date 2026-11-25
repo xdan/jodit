@@ -39,6 +39,8 @@ module.exports = {
 	'Insert anchor': 'Sett inn anker',
 	'Link to an anchor': 'Lenke til et anker',
 	'On this page': 'På denne siden',
+	'Choose a link': 'Velg en lenke',
+	Links: 'Lenker',
 	'The name cannot contain spaces': 'Navnet kan ikke inneholde mellomrom',
 	'This name is already in use': 'Dette navnet er allerede i bruk',
 	'Font size': 'Skriftstørrelse',

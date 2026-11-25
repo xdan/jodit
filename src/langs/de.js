@@ -42,6 +42,8 @@ module.exports = {
 	'Insert anchor': 'Anker einfügen',
 	'Link to an anchor': 'Mit einem Anker verlinken',
 	'On this page': 'Auf dieser Seite',
+	'Choose a link': 'Link auswählen',
+	Links: 'Links',
 	'The name cannot contain spaces':
 		'Der Name darf keine Leerzeichen enthalten',
 	'This name is already in use': 'Dieser Name wird bereits verwendet',

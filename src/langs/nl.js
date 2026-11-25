@@ -42,6 +42,8 @@ module.exports = {
 	'Insert anchor': 'Anker toevoegen',
 	'Link to an anchor': 'Naar een anker linken',
 	'On this page': 'Op deze pagina',
+	'Choose a link': 'Kies een link',
+	Links: 'Links',
 	'The name cannot contain spaces': 'De naam mag geen spaties bevatten',
 	'This name is already in use': 'Deze naam is al in gebruik',
 	'Font size': 'Tekstgrootte',

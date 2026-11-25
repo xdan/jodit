@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'Çapa Ekle',
 	'Link to an anchor': 'Çapaya bağlantı',
 	'On this page': 'Bu sayfada',
+	'Choose a link': 'Bağlantı seçin',
+	Links: 'Bağlantılar',
 	'The name cannot contain spaces': 'Ad boşluk içeremez',
 	'This name is already in use': 'Bu ad zaten kullanılıyor',
 	'Font size': 'Font Boyutu',

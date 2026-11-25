@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'Infoga ankare',
 	'Link to an anchor': 'Länka till ett ankare',
 	'On this page': 'På den här sidan',
+	'Choose a link': 'Välj en länk',
+	Links: 'Länkar',
 	'The name cannot contain spaces': 'Namnet får inte innehålla mellanslag',
 	'This name is already in use': 'Det här namnet används redan',
 	'Font size': 'Teckenstorlek',

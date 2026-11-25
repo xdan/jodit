@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'アンカーを挿入',
 	'Link to an anchor': 'アンカーにリンク',
 	'On this page': 'このページ内',
+	'Choose a link': 'リンクを選択',
+	Links: 'リンク',
 	'The name cannot contain spaces': '名前にスペースは使えません',
 	'This name is already in use': 'この名前はすでに使われています',
 	'Font size': 'フォントサイズ',

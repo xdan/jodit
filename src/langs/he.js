@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'הכנס עוגן',
 	'Link to an anchor': 'קישור לעוגן',
 	'On this page': 'בדף זה',
+	'Choose a link': 'בחירת קישור',
+	Links: 'קישורים',
 	'The name cannot contain spaces': 'השם לא יכול להכיל רווחים',
 	'This name is already in use': 'השם הזה כבר בשימוש',
 	'Font size': 'גודל גופן',

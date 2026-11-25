@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': '插入锚点',
 	'Link to an anchor': '链接到锚点',
 	'On this page': '在本页',
+	'Choose a link': '选择链接',
+	Links: '链接',
 	'The name cannot contain spaces': '名称不能包含空格',
 	'This name is already in use': '此名称已被使用',
 	'Font size': '字号',

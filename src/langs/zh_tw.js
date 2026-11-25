@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': '插入錨點',
 	'Link to an anchor': '連結到錨點',
 	'On this page': '在本頁',
+	'Choose a link': '選擇連結',
+	Links: '連結',
 	'The name cannot contain spaces': '名稱不能包含空格',
 	'This name is already in use': '此名稱已被使用',
 	'Font size': '文字大小',

@@ -42,6 +42,8 @@ module.exports = {
 	'Insert anchor': 'Wstaw kotwicę',
 	'Link to an anchor': 'Link do kotwicy',
 	'On this page': 'Na tej stronie',
+	'Choose a link': 'Wybierz link',
+	Links: 'Linki',
 	'The name cannot contain spaces': 'Nazwa nie może zawierać spacji',
 	'This name is already in use': 'Ta nazwa jest już używana',
 	'Font size': 'Rozmiar tekstu',

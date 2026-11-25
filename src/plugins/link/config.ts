@@ -9,6 +9,7 @@
  */
 
 import type { IControlType, IJodit, IUIForm, IUIOption } from 'jodit/types';
+import type { ILinkListItem } from 'jodit/plugins/link/interface';
 import { Dom } from 'jodit/core/dom/dom';
 import { Icon } from 'jodit/core/ui/icon';
 import { Config } from 'jodit/config';
@@ -89,6 +90,18 @@ declare module 'jodit/config' {
 			deriveUrlFromText: boolean;
 
 			/**
+			 * Links to choose from, such as the site's own pages, listed in the
+			 * URL field's dropdown under "Links", below the document's anchors.
+			 * A function is called each time the link form opens, so the list
+			 * can be loaded when it's needed. Default: `[]`.
+			 */
+			list:
+				| ILinkListItem[]
+				| ((
+						jodit: IJodit
+				  ) => ILinkListItem[] | Promise<ILinkListItem[]>);
+
+			/**
 			 * Show `no follow` checkbox in link dialog.
 			 */
 			noFollowCheckbox: boolean;
@@ -158,6 +171,7 @@ Config.prototype.link = {
 	typedLinkTlds: [],
 	typedLinkFileEndings: ['zip', 'mov', 'md', 'py', 'sh', 'pub'],
 	deriveUrlFromText: false,
+	list: [],
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
 	openInNewTabCheckboxDefaultChecked: false,

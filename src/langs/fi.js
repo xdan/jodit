@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': 'Lisää ankkuri',
 	'Link to an anchor': 'Linkitä ankkuriin',
 	'On this page': 'Tällä sivulla',
+	'Choose a link': 'Valitse linkki',
+	Links: 'Linkit',
 	'The name cannot contain spaces': 'Nimessä ei voi olla välilyöntejä',
 	'This name is already in use': 'Tämä nimi on jo käytössä',
 	'Font size': 'Kirjasimen koko',

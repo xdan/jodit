@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'Inserir âncora',
 	'Link to an anchor': 'Vincular a uma âncora',
 	'On this page': 'Nesta página',
+	'Choose a link': 'Escolher um link',
+	Links: 'Links',
 	'The name cannot contain spaces': 'O nome não pode conter espaços',
 	'This name is already in use': 'Este nome já está em uso',
 	'Font size': 'Tamanho da letra',

@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': 'Inserisci ancora',
 	'Link to an anchor': "Collega a un'ancora",
 	'On this page': 'In questa pagina',
+	'Choose a link': 'Scegli un link',
+	Links: 'Link',
 	'The name cannot contain spaces': 'Il nome non può contenere spazi',
 	'This name is already in use': 'Questo nome è già in uso',
 	'Font size': 'Dimensione carattere',

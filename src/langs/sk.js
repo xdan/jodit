@@ -41,6 +41,8 @@ module.exports = {
 	'Insert anchor': 'Vložiť kotvu',
 	'Link to an anchor': 'Odkaz na kotvu',
 	'On this page': 'Na tejto stránke',
+	'Choose a link': 'Vybrať odkaz',
+	Links: 'Odkazy',
 	'The name cannot contain spaces': 'Názov nesmie obsahovať medzery',
 	'This name is already in use': 'Tento názov sa už používa',
 	'Font size': 'Veľkosť písma',

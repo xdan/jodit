@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'Вставити якір',
 	'Link to an anchor': 'Посилання на якір',
 	'On this page': 'На цій сторінці',
+	'Choose a link': 'Вибрати посилання',
+	Links: 'Посилання',
 	'The name cannot contain spaces': "Ім'я не може містити пробілів",
 	'This name is already in use': "Це ім'я вже використовується",
 	'Font size': 'Розмір шрифту',

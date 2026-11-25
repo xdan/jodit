@@ -40,6 +40,8 @@ module.exports = {
 	'Insert anchor': 'Вставить якорь',
 	'Link to an anchor': 'Ссылка на якорь',
 	'On this page': 'На этой странице',
+	'Choose a link': 'Выбрать ссылку',
+	Links: 'Ссылки',
 	'The name cannot contain spaces': 'Имя не может содержать пробелы',
 	'This name is already in use': 'Это имя уже используется',
 	'Font size': 'Размер шрифта',
