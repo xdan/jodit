@@ -1,7 +1,8 @@
 @import (reference) '../../styles/mixins';
 
 .jodit-link-anchors {
-	max-width: 360px;
+	width: 360px;
+	max-width: calc(100vw - 2 * var(--padding-default));
 	max-height: min(260px, 40vh);
 	box-sizing: border-box;
 	padding-bottom: calc(var(--padding-default) / 2);
@@ -87,5 +88,91 @@
 		flex-shrink: 0;
 		color: var(--color-placeholder);
 		font-size: var(--font-size-small);
+	}
+
+	&__count {
+		margin-left: calc(var(--padding-default) / 2);
+		padding: 1px calc(var(--padding-default) / 2);
+		border-radius: 8px;
+		background: var(--color-background-gray);
+		color: var(--color-default);
+		font-size: 10px;
+		font-weight: normal;
+		vertical-align: 1px;
+	}
+
+	&__tabs {
+		position: sticky;
+		z-index: 1;
+		top: 0;
+		display: flex;
+		margin-bottom: calc(var(--padding-default) / 2);
+		background: var(--color-background-default);
+		border-bottom: 1px solid var(--color-border);
+
+		&[hidden] {
+			display: none;
+		}
+	}
+
+	&__tab {
+		flex: 1;
+		padding: var(--padding-default);
+		border: 0;
+		border-bottom: 2px solid transparent;
+		margin-bottom: -1px;
+		background: none;
+		color: var(--color-label);
+		cursor: pointer;
+		font: inherit;
+
+		&:hover,
+		&:focus-visible {
+			background-color: var(--color-background-button-hover);
+		}
+
+		&[aria-selected='true'] {
+			border-bottom-color: var(--color-default);
+			color: var(--color-default);
+			font-weight: bold;
+		}
+
+		&[aria-disabled='true'] {
+			opacity: 0.5;
+		}
+	}
+
+	&__hint {
+		display: flex;
+		width: 100%;
+		box-sizing: border-box;
+		align-items: center;
+		padding: calc(var(--padding-default) / 2) var(--padding-default);
+		border: 1px dashed var(--color-border);
+		margin-top: calc(var(--padding-default) / 2);
+		background: none;
+		border-radius: var(--border-radius-default);
+		color: var(--color-default);
+		cursor: pointer;
+		font: inherit;
+		font-size: var(--font-size-small);
+		gap: var(--padding-default);
+		text-align: left;
+
+		&:hover {
+			background-color: var(--color-background-button-hover);
+			border-style: solid;
+		}
+
+		&[hidden] {
+			display: none;
+		}
+
+		svg {
+			.size(12px);
+
+			flex-shrink: 0;
+			color: var(--color-icon);
+		}
 	}
 }

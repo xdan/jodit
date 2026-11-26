@@ -22,6 +22,7 @@ Provides comprehensive link management functionality for the Jodit editor. This 
 - "Open in new tab" checkbox
 - "No follow" checkbox for SEO control
 - The document's anchors and the links in `list`, such as the site's own pages, listed by a dropdown arrow inside the URL field, to pick as the URL (see the anchor plugin)
+- Suggestions from the link's text among those anchors and links (`suggestFromText`)
 - Form field references for programmatic access
 - Custom form template support
 
@@ -219,8 +220,8 @@ const editor = Jodit.make('#editor', {
 
 Links to choose from, such as the site's own pages, so that linking to one
 doesn't mean opening it to copy its address. They're listed in the URL field's
-dropdown under "Links", after the document's anchors under "On this page".
-Each item has a `text`, shown in the list and given to a new link with no
+dropdown under "Links", in a tab of their own beside "On this page" when the
+document has anchors too. Each item has a `text`, shown in the list and given to a new link with no
 text, a `url`, and an optional `description`, shown in grey on the right, such
 as "Page" or "Form". A function is called each time the link form opens, so
 the list can be loaded when it's needed, and may return a promise.
@@ -240,6 +241,50 @@ const editor = Jodit.make('#editor', {
 const editor2 = Jodit.make('#editor2', {
     link: {
         list: () => fetch('/links.json').then(response => response.json())
+    }
+});
+```
+
+#### `suggestFromText`
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+Suggests the anchors and links whose names share words with the link's text,
+as "the enrolment form" does "Enrolment", up to three at the top of the URL
+field's dropdown under "Suggested", and the first under the URL field, as a
+"Link to …" button, while the field is empty. A word counts when it's the same
+as one in the name, or starts it or is started by it, as "enrol" and
+"enrolment", ignoring case and accents. A word that few places have counts for
+more. It follows the text as it's typed in the form.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    link: {
+        list: [{ text: 'Enrolment', url: '/forms/enrol', description: 'Form' }],
+        suggestFromText: true
+    }
+});
+```
+
+#### `suggestIgnoredWords`
+
+**Type:** `string[]`
+
+**Default:** common English words, such as `the`, `page` and `click`
+
+With `suggestFromText`, the words that don't help find a link, in lower case.
+Words of one or two letters are always left out. Use `Jodit.atom` to replace
+the whole list, as for another language.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    link: {
+        suggestFromText: true,
+        suggestIgnoredWords: Jodit.atom(['der', 'die', 'das', 'und', 'seite'])
     }
 });
 ```
@@ -617,7 +662,7 @@ editor.e.on('processPaste.link', (e, text, insert) => {
 The default form includes:
 
 1. **URL Input**: Required URL input (`type="url"`, so touch keyboards leave the address as typed) with `url_input` ref
-2. **Anchor and Link List**: When the document has anchors (empty `<a id>` or `<a name>` with no `href`) or `list` has links, a dropdown arrow inside the URL field (`.jodit-link-anchors__toggle`) lists them (`.jodit-link-anchors`): the anchors under "On this page", each by the words after it and its `#name`, then the links under "Links", each by its `text` and `description`. Each heading starts a `role="group"` (`.jodit-link-anchors__group`) labelled by it. Picking one fills in its address, and gives a link with no text the anchor's words or the link's `text`, leaving the form open to insert the link. The list opens in a popup of its own over the form, from the arrow or the down arrow key with everything in it, with the address in the URL field marked (`aria-current`). Typing in the URL field opens it too, showing only the places whose text or address holds what's typed, and closes it when nothing does; a pasted address leaves it closed. It's as wide as the URL field, or wider for longer text, up to 360px, and scrolls past `min(260px, 40vh)`. A long name is cut short at 35% of the row, so the text keeps the rest. The arrow keys move through it, and Escape or a click outside it closes it
+2. **Anchor and Link List**: When the document has anchors (empty `<a id>` or `<a name>` with no `href`) or `list` has links, a dropdown arrow inside the URL field (`.jodit-link-anchors__toggle`) lists them (`.jodit-link-anchors`), and the URL field's placeholder becomes "Search or paste a link": the links under "Links", each by its `text` and `description`, and the anchors under "On this page", each by the words after it and its `#name`. With both, each has a tab (`role="tab"`, `.jodit-link-anchors__tab`) with its count, links first, in a `role="tablist"` (`.jodit-link-anchors__tabs`) that stays at the top as the list scrolls, and each group (`.jodit-link-anchors__group`) is a `role="tabpanel"` labelled by its tab; it opens on the tab of the address in the URL field, and the left and right arrows go to the other tab. With one, its group is a `role="group"` labelled by its heading. Picking one fills in its address, and gives a link with no text the anchor's words or the link's `text`, leaving the form open to insert the link. The list opens in a popup of its own over the form, from the arrow or the down arrow key with everything in it, with the address in the URL field marked (`aria-current`). Typing in the URL field opens it too, showing only the places whose text or address holds what's typed, with the counts on the tabs following, and closes it when nothing does; a pasted address leaves it closed. It's 360px wide, or as wide as a wider URL field, so it keeps its width from tab to tab, and scrolls past `min(260px, 40vh)`. A long name is cut short at 35% of the row, so the text keeps the rest. The up and down arrows move through it, and Escape or a click outside it closes it. With `suggestFromText`, its suggestions come first, under "Suggested", and the first is offered under the URL field (`.jodit-link-anchors__hint`) while the field is empty
 3. **Content Input**: Optional text input for link text with `content_input` ref
 4. **Class Name Field**: Input or select based on `modeClassName`:
    - Input mode: Text field with `className_input` ref

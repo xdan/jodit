@@ -91,15 +91,34 @@ declare module 'jodit/config' {
 
 			/**
 			 * Links to choose from, such as the site's own pages, listed in the
-			 * URL field's dropdown under "Links", below the document's anchors.
-			 * A function is called each time the link form opens, so the list
-			 * can be loaded when it's needed. Default: `[]`.
+			 * URL field's dropdown under "Links", in a tab of their own when
+			 * the document has anchors too. A function is called each time the
+			 * link form opens, so the list can be loaded when it's needed.
+			 * Default: `[]`.
 			 */
 			list:
 				| ILinkListItem[]
 				| ((
 						jodit: IJodit
 				  ) => ILinkListItem[] | Promise<ILinkListItem[]>);
+
+			/**
+			 * Suggest the anchors and links whose names share words with the
+			 * link's text, as "enrolment form" does "Enrolment", at the top of
+			 * the URL field's dropdown, and the first under the URL field while
+			 * it's empty. Default: false.
+			 */
+			suggestFromText: boolean;
+
+			/**
+			 * With `suggestFromText`, the words that don't help find a link, in
+			 * lower case. Words of one or two letters are always left out. A
+			 * plain list replaces this one entry by entry from the start, so
+			 * use `Jodit.atom` to replace the whole list, as for another
+			 * language. Default: common English words, such as `the`, `page`
+			 * and `click`.
+			 */
+			suggestIgnoredWords: string[];
 
 			/**
 			 * Show `no follow` checkbox in link dialog.
@@ -172,6 +191,37 @@ Config.prototype.link = {
 	typedLinkFileEndings: ['zip', 'mov', 'md', 'py', 'sh', 'pub'],
 	deriveUrlFromText: false,
 	list: [],
+	suggestFromText: false,
+	suggestIgnoredWords: [
+		'the',
+		'and',
+		'for',
+		'our',
+		'your',
+		'you',
+		'this',
+		'that',
+		'with',
+		'from',
+		'here',
+		'click',
+		'please',
+		'read',
+		'more',
+		'see',
+		'about',
+		'page',
+		'link',
+		'site',
+		'website',
+		'visit',
+		'find',
+		'check',
+		'latest',
+		'new',
+		'information',
+		'info'
+	],
 	noFollowCheckbox: true,
 	openInNewTabCheckbox: true,
 	openInNewTabCheckboxDefaultChecked: false,
