@@ -3,6 +3,14 @@
 .jodit-context,
 .jodit-wysiwyg {
 	table {
+		.jodit-table-cell-selection();
+	}
+}
+
+// `:where()` keeps the selector's specificity as it was
+.jodit-context,
+.jodit-wysiwyg:not(:where(.jodit-wysiwyg_page-tables)) {
+	table {
 		.jodit-tablet-style();
 	}
 }

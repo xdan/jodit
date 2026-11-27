@@ -134,14 +134,11 @@
 	empty-cells: show;
 
 	tr {
-		user-select: none;
-
 		th,
 		td {
 			min-width: 2em;
 			padding: 0.4em;
 			border: 1px solid var(--color-border);
-			user-select: text;
 			vertical-align: middle;
 
 			/**
@@ -151,6 +148,18 @@
 				border-style: double !important;
 			}
 			*/
+		}
+	}
+}
+
+// Cell selection relies on these, whoever styles the table
+.jodit-table-cell-selection() {
+	tr {
+		user-select: none;
+
+		th,
+		td {
+			user-select: text;
 		}
 	}
 }

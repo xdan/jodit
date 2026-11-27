@@ -34,6 +34,13 @@ declare module 'jodit/config' {
 			splitBlockOnInsertTable: boolean;
 			selectionCellStyle: string;
 			useExtraClassesOptions: boolean;
+
+			/**
+			 * Leave the look of tables in the editing area to the page's
+			 * stylesheet. Otherwise Jodit's margins, cell padding, borders
+			 * and minimum cell width outrank the page's own rules for tables
+			 */
+			leaveStylesToPage: boolean;
 		};
 	}
 }
@@ -41,7 +48,8 @@ declare module 'jodit/config' {
 Config.prototype.table = {
 	splitBlockOnInsertTable: true,
 	selectionCellStyle: 'border: 1px double #1e88e5 !important;',
-	useExtraClassesOptions: false
+	useExtraClassesOptions: false,
+	leaveStylesToPage: false
 };
 
 Icon.set('table', tableIcon);

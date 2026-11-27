@@ -45,6 +45,31 @@ const editor = Jodit.make('#editor', {
 });
 ```
 
+### `table.leaveStylesToPage`
+
+**Type:** `boolean`
+
+**Default:** `false`
+
+Jodit's stylesheet gives tables in the editing area a `1em` margin above and below, and their cells `0.4em` padding, a `2em` minimum width and a border. Its rules outrank the page's usual rules for tables, such as `.content td`, so in the inline editor, for example, tables can look different from how they look where the content is shown.
+
+When enabled, Jodit leaves the look of tables in the editing area to the page's stylesheet, and to the browser's defaults where it has no rules, so the editor shows tables as the page does. Selecting cells works as before.
+
+In iframe mode, the default `iframeStyle`'s rules for tables do the same, leaving their look to the `iframeCSSLinks` stylesheets. An `iframeStyle` of your own is left as it is, and so is a document edited with `editHTMLDocumentMode`, which brings its own styles.
+
+The preview keeps Jodit's look.
+
+**Example:**
+```typescript
+const editor = Jodit.make('#editor', {
+    inline: true,
+    editorClassName: 'content',
+    table: {
+        leaveStylesToPage: true
+    }
+});
+```
+
 ## Controls
 
 ### `table` Control

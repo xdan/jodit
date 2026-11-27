@@ -22,6 +22,14 @@ export function table(editor: IJodit): void {
 		name: 'table',
 		group: 'insert'
 	});
+
+	editor.e.on('afterInit afterAddPlace', () => {
+		// With `editHTMLDocumentMode`, the body is part of the value
+		editor.editor.classList.toggle(
+			'jodit-wysiwyg_page-tables',
+			editor.o.table.leaveStylesToPage && !editor.o.editHTMLDocumentMode
+		);
+	});
 }
 
 pluginSystem.add('table', table);
