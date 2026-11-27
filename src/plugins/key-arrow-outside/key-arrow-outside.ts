@@ -11,7 +11,7 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { KEY_RIGHT, NBSP_SPACE } from 'jodit/core/constants';
+import { KEY_RIGHT } from 'jodit/core/constants';
 import { watch } from 'jodit/core/decorators';
 import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
@@ -44,7 +44,7 @@ export class keyArrowOutside extends Plugin {
 				Dom.isInlineBlock(parentNode) &&
 				!Dom.findNotEmptyNeighbor(parentNode, false, this.j.editor)
 			) {
-				Dom.after(parentNode, this.j.createInside.text(NBSP_SPACE));
+				Dom.after(parentNode, this.j.createInside.fake());
 			}
 		}
 	}
