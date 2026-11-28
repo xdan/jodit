@@ -5,39 +5,38 @@
  */
 
 describe('Link plugin', () => {
+	const openLinkFor = (value, options) => {
+		const editor = getJodit(options);
+		editor.value = value;
+		setCursorToChar(editor);
+
+		clickButton('link', editor);
+		return { editor, popup: getOpenedPopup(editor) };
+	};
+
+	// The list opens in a popup of its own, outside the form
+	const list = () => document.querySelector('.jodit-link-anchors');
+	const toggle = popup => popup.querySelector('.jodit-link-anchors__toggle');
+	const openList = popup => {
+		simulateEvent('click', toggle(popup));
+		return list();
+	};
+	const items = () =>
+		Array.from(list().querySelectorAll('.jodit-link-anchors__item'));
+	const texts = (part, from = items()) =>
+		from.map(
+			item =>
+				item.querySelector('.jodit-link-anchors__' + part)
+					?.textContent ?? ''
+		);
+	const isOpen = popup =>
+		Boolean(popup.isConnected && popup.getClientRects().length);
+
 	// https://github.com/xdan/jodit/issues/1715
 	describe('Anchors in the document (#1715)', () => {
 		const ANCHORS =
 			'<h2><a id="fees"></a>School fees</h2>' +
 			'<p>Uniform<a name="uniform"></a> is sold on Thursdays.</p>';
-
-		const openLinkFor = value => {
-			const editor = getJodit();
-			editor.value = value;
-			setCursorToChar(editor);
-
-			clickButton('link', editor);
-			return { editor, popup: getOpenedPopup(editor) };
-		};
-
-		// The list opens in a popup of its own, outside the form
-		const list = () => document.querySelector('.jodit-link-anchors');
-		const toggle = popup =>
-			popup.querySelector('.jodit-link-anchors__toggle');
-		const openList = popup => {
-			simulateEvent('click', toggle(popup));
-			return list();
-		};
-		const items = () =>
-			Array.from(list().querySelectorAll('.jodit-link-anchors__item'));
-		const texts = part =>
-			items().map(
-				item =>
-					item.querySelector('.jodit-link-anchors__' + part)
-						.textContent
-			);
-		const isOpen = popup =>
-			Boolean(popup.isConnected && popup.getClientRects().length);
 
 		it("should list the document's anchors by the text after them, under a heading, from its arrow", () => {
 			const { popup } = openLinkFor('<p>|See the fees|</p>' + ANCHORS);
@@ -51,8 +50,13 @@ describe('Link plugin', () => {
 
 			expect(toggle(popup).getAttribute('aria-expanded')).equals('true');
 			expect(heading.textContent).equals('On this page');
-			expect(list().getAttribute('role')).equals('group');
-			expect(list().getAttribute('aria-labelledby')).equals(heading.id);
+			expect(toggle(popup).getAttribute('aria-label')).equals(
+				'Link to an anchor'
+			);
+			expect(heading.parentElement.getAttribute('role')).equals('group');
+			expect(
+				heading.parentElement.getAttribute('aria-labelledby')
+			).equals(heading.id);
 			expect(texts('text')).deep.equals([
 				'School fees',
 				'is sold on Thursdays.'
@@ -249,6 +253,9 @@ describe('Link plugin', () => {
 
 			expect(toggle(popup)).is.null;
 			expect(list()).is.null;
+			expect(popup.querySelector('[ref=url_input]').placeholder).equals(
+				'http://'
+			);
 		});
 
 		it('should destruct the list with the form, whether it opened or not', () => {
@@ -276,6 +283,468 @@ describe('Link plugin', () => {
 			expect(list()).is.null;
 			expect(lists().length).equals(0);
 			expect(dropdown.isDestructed).is.true;
+		});
+	});
+
+	// https://github.com/xdan/jodit/issues/1755
+	describe('Links to choose from (#1755)', () => {
+		const ANCHOR = '<h2><a id="fees"></a>Fees for 2027</h2>';
+		const LINKS = [
+			{ text: 'School fees', url: '/pages/fees', description: 'Page' },
+			{ text: 'Enrolment', url: '/forms/enrol', description: 'Form' },
+			{ text: 'Term dates', url: '/pages/term-dates' }
+		];
+
+		const withLinks = (value, list = LINKS, options = {}) =>
+			openLinkFor(value, { link: { list, ...options } });
+		const headings = () =>
+			Array.from(
+				list().querySelectorAll('.jodit-link-anchors__heading')
+			).filter(heading => !heading.closest('[hidden]'));
+		const shown = () => items().filter(item => !item.closest('[hidden]'));
+		const tabs = () =>
+			Array.from(list().querySelectorAll('.jodit-link-anchors__tab'));
+		const counts = () =>
+			tabs().map(
+				tab =>
+					tab.querySelector('.jodit-link-anchors__count').textContent
+			);
+		const selectedTab = () =>
+			tabs().find(tab => tab.getAttribute('aria-selected') === 'true')
+				.firstChild.textContent;
+		const type = (url, value, inputType = 'insertText') => {
+			url.value = value;
+			simulateEvent('input', url, options => {
+				options.inputType = inputType;
+			});
+		};
+		const press = (key, target) =>
+			simulateEvent('keydown', target, options => {
+				options.key = key;
+			});
+
+		it('should give the links and the anchors a tab each, links first, with their counts and descriptions', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>' + ANCHOR);
+
+			expect(toggle(popup).getAttribute('aria-label')).equals(
+				'Choose a link'
+			);
+			expect(popup.querySelector('[ref=url_input]').placeholder).equals(
+				'Search or paste a link'
+			);
+
+			openList(popup);
+
+			const [linksTab, anchorsTab] = tabs();
+
+			expect(headings()).deep.equals([]);
+			expect(linksTab.parentElement.getAttribute('role')).equals(
+				'tablist'
+			);
+			expect(tabs().map(tab => tab.firstChild.textContent)).deep.equals([
+				'Links',
+				'On this page'
+			]);
+			expect(counts()).deep.equals(['3', '1']);
+			expect(selectedTab()).equals('Links');
+			expect(texts('text', shown())).deep.equals([
+				'School fees',
+				'Enrolment',
+				'Term dates'
+			]);
+			expect(texts('name', shown())).deep.equals(['Page', 'Form', '']);
+
+			const panel = shown()[0].parentElement;
+
+			expect(panel.getAttribute('role')).equals('tabpanel');
+			expect(panel.getAttribute('aria-labelledby')).equals(linksTab.id);
+			expect(linksTab.getAttribute('aria-controls')).equals(panel.id);
+
+			simulateEvent('click', anchorsTab);
+
+			expect(selectedTab()).equals('On this page');
+			expect(linksTab.getAttribute('aria-selected')).equals('false');
+			expect(texts('text', shown())).deep.equals(['Fees for 2027']);
+			expect(texts('name', shown())).deep.equals(['#fees']);
+			expect(list()).is.not.null;
+			expect(isOpen(popup)).is.true;
+		});
+
+		it('should show the arrow for links alone, in a document with no anchors, under a heading', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>');
+
+			openList(popup);
+
+			expect(list().querySelector('.jodit-link-anchors__tabs').hidden).is
+				.true;
+			expect(headings().map(heading => heading.textContent)).deep.equals([
+				'Links'
+			]);
+			expect(texts('text')).deep.equals([
+				'School fees',
+				'Enrolment',
+				'Term dates'
+			]);
+		});
+
+		it('should fill in the link picked, and give a link with no text its text', () => {
+			const { editor, popup } = withLinks('<p>See |</p>');
+
+			openList(popup);
+			simulateEvent('click', items()[1]);
+
+			expect(popup.querySelector('[ref=url_input]').value).equals(
+				'/forms/enrol'
+			);
+			expect(popup.querySelector('[ref=content_input]').value).equals(
+				'Enrolment'
+			);
+			expect(list()).is.null;
+			expect(isOpen(popup)).is.true;
+
+			simulateEvent('submit', popup.querySelector('form'));
+
+			expect(editor.value).equals(
+				'<p>See <a href="/forms/enrol">Enrolment</a></p>'
+			);
+		});
+
+		it('should mark the link in the URL', () => {
+			const { popup } = withLinks(
+				'<p><a href="/pages/term-dates">See |the| dates</a></p>'
+			);
+
+			openList(popup);
+
+			expect(
+				items().map(item => item.getAttribute('aria-current'))
+			).deep.equals(['false', 'false', 'true']);
+		});
+
+		it('should open on the tab of the place in the URL', () => {
+			const { popup } = withLinks(
+				'<p><a href="#fees">See |the| fees</a></p>' + ANCHOR
+			);
+
+			openList(popup);
+
+			expect(selectedTab()).equals('On this page');
+			expect(texts('text', shown())).deep.equals(['Fees for 2027']);
+			expect(shown()[0].getAttribute('aria-current')).equals('true');
+		});
+
+		it('should open as an address is typed, with the places whose text or address holds it, counted on their tabs', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>' + ANCHOR);
+			const url = popup.querySelector('[ref=url_input]');
+
+			type(url, 'Fees');
+
+			expect(list()).is.not.null;
+			expect(counts()).deep.equals(['1', '1']);
+			expect(texts('text', shown())).deep.equals(['School fees']);
+
+			type(url, '/forms');
+
+			expect(counts()).deep.equals(['1', '0']);
+			expect(tabs()[1].getAttribute('aria-disabled')).equals('true');
+			expect(texts('text', shown())).deep.equals(['Enrolment']);
+
+			press('ArrowDown', url);
+
+			expect(document.activeElement).equals(shown()[0]);
+
+			// A tab with nothing found gives way to one with something
+			type(url, '2027');
+
+			expect(counts()).deep.equals(['0', '1']);
+			expect(selectedTab()).equals('On this page');
+			expect(texts('text', shown())).deep.equals(['Fees for 2027']);
+
+			type(url, 'https://example.com');
+
+			expect(list()).is.null;
+		});
+
+		it('should go to the other tab with the left and right arrows', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>' + ANCHOR);
+
+			press('ArrowDown', popup.querySelector('[ref=url_input]'));
+
+			expect(document.activeElement).equals(shown()[0]);
+
+			press('ArrowRight', shown()[0]);
+
+			expect(selectedTab()).equals('On this page');
+			expect(document.activeElement).equals(shown()[0]);
+			expect(texts('text', [document.activeElement])).deep.equals([
+				'Fees for 2027'
+			]);
+
+			press('ArrowLeft', document.activeElement);
+
+			expect(selectedTab()).equals('Links');
+			expect(texts('text', [document.activeElement])).deep.equals([
+				'School fees'
+			]);
+		});
+
+		it('should open with everything from the arrow, after a search', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>' + ANCHOR);
+			const url = popup.querySelector('[ref=url_input]');
+
+			type(url, 'enrol');
+			simulateEvent('mousedown', toggle(popup));
+			simulateEvent('click', toggle(popup));
+
+			expect(list()).is.null;
+
+			openList(popup);
+
+			expect(counts()).deep.equals(['3', '1']);
+			expect(shown().length).equals(3);
+		});
+
+		it('should close as Tab moves on to the fields it covers', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>');
+			const url = popup.querySelector('[ref=url_input]');
+
+			type(url, 'fees');
+			press('Tab', url);
+
+			expect(list()).is.null;
+			expect(isOpen(popup)).is.true;
+		});
+
+		it('should leave it closed for a pasted address', () => {
+			const { popup } = withLinks('<p>|See the fees|</p>');
+			const url = popup.querySelector('[ref=url_input]');
+
+			type(url, '/pages/fees', 'insertFromPaste');
+
+			expect(list()).is.null;
+		});
+
+		it('should call a function each time the form opens, and wait for its promise', async () => {
+			let calls = 0;
+			let resolveLinks;
+			const { editor, popup } = withLinks('<p>|See the fees|</p>', () => {
+				calls += 1;
+				return new Promise(resolve => {
+					resolveLinks = resolve;
+				});
+			});
+
+			expect(calls).equals(1);
+			expect(toggle(popup)).is.null;
+
+			resolveLinks(LINKS);
+			await Promise.resolve();
+			openList(popup);
+
+			expect(texts('text')).deep.equals([
+				'School fees',
+				'Enrolment',
+				'Term dates'
+			]);
+
+			editor.e.fire('closeAllPopups');
+			clickButton('link', editor);
+
+			expect(calls).equals(2);
+
+			// Too late for a form that has closed
+			editor.e.fire('closeAllPopups');
+			resolveLinks(LINKS);
+			await Promise.resolve();
+
+			expect(list()).is.null;
+		});
+
+		describe('Suggestions from the link text', () => {
+			const ANCHORS =
+				ANCHOR + '<h2><a id="enrolling"></a>How to enrol</h2>';
+			const suggest = (value, list = LINKS, options = {}) =>
+				withLinks(value, list, { suggestFromText: true, ...options });
+			const hint = popup =>
+				popup.querySelector('.jodit-link-anchors__hint');
+			const suggestions = () =>
+				Array.from(
+					list().firstElementChild.querySelectorAll(
+						'.jodit-link-anchors__item'
+					)
+				);
+
+			it('should be off by default', () => {
+				const { popup } = withLinks(
+					'<p>|the enrolment form|</p>' + ANCHORS
+				);
+
+				openList(popup);
+
+				expect(hint(popup)).is.null;
+				expect(
+					Array.from(
+						list().querySelectorAll('.jodit-link-anchors__heading')
+					).map(heading => heading.textContent)
+				).not.includes('Suggested');
+			});
+
+			it('should list the places that share words with the text above the tabs, until an address is typed', () => {
+				const { popup } = suggest(
+					'<p>|the enrolment form|</p>' + ANCHORS
+				);
+				const url = popup.querySelector('[ref=url_input]');
+
+				openList(popup);
+
+				const group = list().firstElementChild;
+
+				expect(
+					group.querySelector('.jodit-link-anchors__heading')
+						.textContent
+				).equals('Suggested');
+				expect(group.hidden).is.false;
+				expect(texts('text', suggestions())).deep.equals([
+					'Enrolment',
+					'How to enrol'
+				]);
+				expect(texts('name', suggestions())).deep.equals([
+					'Form',
+					'#enrolling'
+				]);
+				expect(shown()[0]).equals(suggestions()[0]);
+				expect(shown()[1]).equals(suggestions()[1]);
+				expect(counts()).deep.equals(['3', '2']);
+
+				press('ArrowDown', url);
+
+				expect(document.activeElement).equals(suggestions()[0]);
+
+				type(url, 'term');
+
+				expect(group.hidden).is.true;
+
+				simulateEvent('mousedown', toggle(popup));
+				simulateEvent('click', toggle(popup));
+				openList(popup);
+				simulateEvent('click', suggestions()[1]);
+
+				expect(url.value).equals('#enrolling');
+				expect(popup.querySelector('[ref=content_input]').value).equals(
+					'the enrolment form'
+				);
+			});
+
+			it('should offer the first under the URL field while the field is empty', () => {
+				const { editor, popup } = suggest(
+					'<p>|the enrolment form|</p>' + ANCHORS
+				);
+				const url = popup.querySelector('[ref=url_input]');
+
+				expect(hint(popup).hidden).is.false;
+				expect(hint(popup).previousElementSibling).equals(
+					url.closest('.jodit-ui-input__wrapper')
+				);
+				expect(texts('text', [hint(popup)])).deep.equals([
+					'Link to Enrolment'
+				]);
+				expect(texts('name', [hint(popup)])).deep.equals(['Form']);
+				expect(hint(popup).querySelector('strong').textContent).equals(
+					'Enrolment'
+				);
+
+				type(url, 'https://example.com');
+
+				expect(hint(popup).hidden).is.true;
+
+				type(url, '');
+
+				expect(hint(popup).hidden).is.false;
+
+				simulateEvent('click', hint(popup));
+
+				expect(url.value).equals('/forms/enrol');
+				expect(hint(popup).hidden).is.true;
+
+				simulateEvent('submit', popup.querySelector('form'));
+
+				expect(editor.value).equals(
+					'<p><a href="/forms/enrol">the enrolment form</a></p>' +
+						ANCHORS
+				);
+			});
+
+			it('should leave out the ignored words, and the field of a link with an address', () => {
+				const { editor, popup } = suggest(
+					'<p><a href="/pages/fees">See |the| fees</a></p>' + ANCHORS
+				);
+
+				expect(hint(popup).hidden).is.true;
+
+				openList(popup);
+
+				expect(texts('text', suggestions())).deep.equals([
+					'School fees',
+					'Fees for 2027'
+				]);
+
+				editor.e.fire('closeAllPopups');
+
+				const { popup: other } = suggest(
+					'<p>|See the fees|</p>' + ANCHORS,
+					LINKS,
+					{ suggestIgnoredWords: Jodit.atom(['fees']) }
+				);
+
+				expect(hint(other).hidden).is.true;
+
+				openList(other);
+
+				expect(suggestions()).deep.equals([]);
+				expect(list().firstElementChild.hidden).is.true;
+			});
+
+			it('should follow the text as it is typed', () => {
+				const { popup } = suggest('<p>See |</p>' + ANCHORS);
+				const content = popup.querySelector('[ref=content_input]');
+
+				expect(hint(popup).hidden).is.true;
+
+				content.value = 'term dates';
+				simulateEvent('input', content);
+
+				expect(hint(popup).querySelector('strong').textContent).equals(
+					'Term dates'
+				);
+
+				openList(popup);
+
+				expect(texts('text', suggestions())).deep.equals([
+					'Term dates'
+				]);
+			});
+
+			it('should suggest from the links once their promise settles', async () => {
+				let resolveLinks;
+				const { popup } = suggest(
+					'<p>|the enrolment form|</p>' + ANCHORS,
+					() =>
+						new Promise(resolve => {
+							resolveLinks = resolve;
+						})
+				);
+
+				expect(hint(popup).querySelector('strong').textContent).equals(
+					'How to enrol'
+				);
+
+				resolveLinks(LINKS);
+				await Promise.resolve();
+
+				expect(hint(popup).querySelector('strong').textContent).equals(
+					'Enrolment'
+				);
+			});
 		});
 	});
 

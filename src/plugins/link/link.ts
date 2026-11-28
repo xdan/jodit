@@ -12,10 +12,13 @@
 
 import type { IDictionary, IJodit, IUIForm, Nullable } from 'jodit/types';
 import type { UIForm } from 'jodit/core/ui/form/form';
+import type { ILinkListItem } from 'jodit/plugins/link/interface';
 import {
 	KEY_BACKSPACE,
 	KEY_DOWN,
 	KEY_ESC,
+	KEY_LEFT,
+	KEY_RIGHT,
 	KEY_TAB,
 	KEY_UP
 } from 'jodit/core/constants';
@@ -29,6 +32,8 @@ import {
 	getAnchorName,
 	getAnchors,
 	htmlspecialchars,
+	isFunction,
+	isPromise,
 	isString,
 	isURL,
 	position,
@@ -309,7 +314,7 @@ export class link extends Plugin {
 			}
 		}
 
-		addAnchorList(jodit, url_input, content_input, isImageContent);
+		addLinkList(jodit, url_input, content_input, isImageContent);
 
 		jodit.editor.normalize();
 		const snapshot = jodit.history.snapshot.make();
@@ -641,39 +646,59 @@ const MODIFIER_KEYS = new Set(['Shift', 'Control', 'Alt', 'Meta', 'CapsLock']);
 pluginSystem.add('link', link);
 
 /**
- * A dropdown arrow in the URL field that lists the document's anchors by the
- * words after them, and fills in the one picked. The list opens in a popup of
- * its own, from the arrow or the down arrow key, and closes once an address is
- * typed
+ * A dropdown arrow in the URL field that lists the document's anchors, by the
+ * words after them, and the links in `link.list`, in a tab each when there are
+ * both, and fills in the one picked. The list opens in a popup of its own: from
+ * the arrow or the down arrow key with everything in it, or as an address is
+ * typed with the places whose text or address holds it. With
+ * `link.suggestFromText`, the places whose names share words with the link's
+ * text are suggested above them, and the first under the URL field while it's
+ * empty
  */
-function addAnchorList(
+function addLinkList(
 	jodit: IJodit,
 	url: HTMLInputElement,
 	content: HTMLInputElement | HTMLTextAreaElement,
 	isImage: boolean
 ): void {
-	const anchors = getAnchors(jodit.editor);
 	const field = url?.closest<HTMLElement>('.jodit-ui-input__wrapper');
 	const input = field && UIElement.closestElement(field, UIElement);
 
-	if (!field || !input || !anchors.length) {
+	if (!field || !input) {
 		return;
 	}
 
+	interface Place {
+		item: HTMLElement;
+		url: string;
+		text: string;
+		detail?: string;
+		iconName: string;
+	}
+
+	interface Group {
+		box: HTMLElement;
+		heading: HTMLElement;
+		places: Place[];
+	}
+
+	interface Tab extends Group {
+		tab: HTMLElement;
+		count: HTMLElement;
+		matches: number;
+	}
+
 	const { c } = jodit;
-	const label = jodit.i18n('Link to an anchor');
+	const { suggestFromText, suggestIgnoredWords } = jodit.o.link;
 	const toggle = c.element('button', {
 		type: 'button',
-		class: 'jodit-link-anchors__toggle',
-		title: label,
-		'aria-label': label
+		class: 'jodit-link-anchors__toggle'
 	});
-	const heading = c.div('jodit-link-anchors__heading', {
-		id: 'jodit-link-anchors-' + uniqueUid()
-	});
-	const list = c.div('jodit-link-anchors', {
-		role: 'group',
-		'aria-labelledby': heading.id
+	const list = c.div('jodit-link-anchors');
+	const tablist = c.div('jodit-link-anchors__tabs', { role: 'tablist' });
+	const hint = c.element('button', {
+		type: 'button',
+		class: 'jodit-link-anchors__hint'
 	});
 	const icon = (name: string): Node =>
 		Icon.makeIcon(jodit, {
@@ -684,73 +709,350 @@ function addAnchorList(
 		}) ?? c.span();
 
 	const dropdown = new Popup(jodit).setMod('padding', false);
-	const items: HTMLElement[] = [];
 	let filled = '';
+	let destructed = false;
+	let query = '';
+	let hinted: Place | undefined;
 
-	const open = (): void => {
-		if (dropdown.isOpened) {
-			return;
+	const pick = (place: Place): void => {
+		dropdown.close();
+		url.value = place.url;
+
+		if (!isImage && (!content.value.trim() || content.value === filled)) {
+			content.value = filled =
+				jodit.o.link.contentMode === 'html'
+					? htmlspecialchars(place.text)
+					: place.text;
 		}
 
-		// Clicks in the list then count as the form's, which stays open
-		dropdown.parentElement ||= input;
-		list.style.minWidth = field.offsetWidth + 'px';
-		dropdown.open(() => position(field));
-		attr(toggle, 'aria-expanded', true);
-		items.forEach((item, index) =>
-			attr(
-				item,
-				'aria-current',
-				url.value === '#' + getAnchorName(anchors[index])
-			)
-		);
-		list.querySelector<HTMLElement>('[aria-current=true]')?.scrollIntoView({
-			block: 'nearest'
+		url.focus();
+		showHint();
+	};
+
+	const makeGroup = (title: string): Group => {
+		const heading = c.div('jodit-link-anchors__heading', {
+			id: 'jodit-link-anchors-' + uniqueUid()
+		});
+		heading.textContent = jodit.i18n(title);
+
+		const box = c.div('jodit-link-anchors__group', {
+			id: 'jodit-link-anchors-' + uniqueUid(),
+			role: 'group',
+			'aria-labelledby': heading.id
+		});
+		box.appendChild(heading);
+
+		return { box, heading, places: [] };
+	};
+
+	const makeTab = (title: string): Tab => {
+		const group = makeGroup(title);
+		const count = c.span('jodit-link-anchors__count');
+		const tab = c.element('button', {
+			type: 'button',
+			tabindex: -1,
+			id: 'jodit-link-anchors-' + uniqueUid(),
+			role: 'tab',
+			'aria-controls': group.box.id,
+			class: 'jodit-link-anchors__tab'
+		});
+		tab.append(jodit.i18n(title), count);
+		tablist.appendChild(tab);
+
+		return { ...group, tab, count, matches: 0 };
+	};
+
+	const fill = (
+		group: Group,
+		iconName: string,
+		entries: Array<{ url: string; text: string; detail?: string }>
+	): void => {
+		if (entries.length && !group.box.parentNode) {
+			list.appendChild(group.box);
+		}
+
+		entries.forEach(entry => {
+			const item = c.element('button', {
+				type: 'button',
+				tabindex: -1,
+				class: 'jodit-link-anchors__item'
+			});
+			const place = { ...entry, item, iconName };
+			group.places.push(place);
+
+			const textBox = c.span('jodit-link-anchors__text');
+			textBox.textContent = entry.text;
+			item.append(icon(iconName), textBox);
+
+			if (entry.detail) {
+				const detailBox = c.span('jodit-link-anchors__name');
+				detailBox.textContent = entry.detail;
+				item.appendChild(detailBox);
+			}
+
+			group.box.appendChild(item);
+			jodit.e.on(item, 'click', () => pick(place));
 		});
 	};
 
+	const suggested = makeGroup('Suggested');
+
+	if (suggestFromText) {
+		list.appendChild(suggested.box);
+	}
+
+	list.appendChild(tablist);
+	const links = makeTab('Links');
+	const anchors = makeTab('On this page');
+	const tabs = [links, anchors];
+	let selected = links;
+
+	const places = (): Place[] => [...links.places, ...anchors.places];
+
+	const visible = (): HTMLElement[] =>
+		Array.from(
+			list.querySelectorAll<HTMLElement>('.jodit-link-anchors__item')
+		).filter(item => !item.closest('[hidden]'));
+
+	// The places whose text or address holds the query, or all of them
+	const show = (q: string): boolean => {
+		query = q.trim().toLowerCase();
+
+		tabs.forEach(group => {
+			group.places.forEach(place => {
+				place.item.hidden = Boolean(
+					query &&
+					!place.text.toLowerCase().includes(query) &&
+					!place.url.toLowerCase().includes(query)
+				);
+			});
+
+			group.matches = group.places.filter(
+				place => !place.item.hidden
+			).length;
+			group.count.textContent = String(group.matches);
+		});
+
+		const tabbed = tabs.every(group => group.places.length);
+
+		// A tab with nothing found gives way to one with something
+		if (tabbed && !selected.matches) {
+			selected = tabs.find(group => group.matches) ?? selected;
+		}
+
+		tabs.forEach(group => {
+			group.box.hidden = !group.matches || (tabbed && group !== selected);
+			group.heading.hidden = tabbed;
+			attr(group.box, {
+				role: tabbed ? 'tabpanel' : 'group',
+				'aria-labelledby': (tabbed ? group.tab : group.heading).id
+			});
+			attr(group.tab, {
+				'aria-selected': group === selected,
+				'aria-disabled': !group.matches
+			});
+		});
+
+		tablist.hidden = !tabbed;
+		suggested.box.hidden = Boolean(query) || !suggested.places.length;
+
+		return tabs.some(group => group.matches);
+	};
+
+	const open = (): void => {
+		// Clicks in the list then count as the form's, which stays open
+		dropdown.parentElement ||= input;
+		list.style.minWidth = field.offsetWidth + 'px';
+
+		[...suggested.places, ...places()].forEach(place =>
+			attr(place.item, 'aria-current', url.value === place.url)
+		);
+
+		// The tab of the one in the URL
+		const marked = tabs.find(group =>
+			group.places.some(place => place.url === url.value)
+		);
+
+		if (marked && !query) {
+			selected = marked;
+			show('');
+		}
+
+		if (dropdown.isOpened) {
+			dropdown.updatePosition();
+		} else {
+			dropdown.open(() => position(field));
+		}
+
+		attr(toggle, 'aria-expanded', true);
+		visible()
+			.find(item => attr(item, 'aria-current') === 'true')
+			?.scrollIntoView({
+				block: 'nearest'
+			});
+	};
+
+	// Words of three letters or more, without their accents
+	const words = (text: string): string[] =>
+		text
+			.toLowerCase()
+			.normalize('NFKD')
+			.replace(/[\u0300-\u036f]/g, '')
+			.split(/[\s!-/:-@[-`{-~\u00a0-\u00bf\u2000-\u206f\u3000-\u303f]+/)
+			.filter(
+				word => word.length > 2 && !suggestIgnoredWords.includes(word)
+			);
+
+	// The same word, or one that starts the other, as "enrol" and "enrolment"
+	const near = (a: string, b: string): boolean =>
+		a === b ||
+		(Math.min(a.length, b.length) > 3 &&
+			(a.startsWith(b) || b.startsWith(a)));
+
+	// The places with the most of the text's words, a word that few places
+	// have counting for more, and then the most of their own words matched
+	const suggest = (): void => {
+		suggested.places.forEach(place => {
+			jodit.e.off(place.item);
+			Dom.safeRemove(place.item);
+		});
+		suggested.places = [];
+
+		const text =
+			jodit.o.link.contentMode === 'html'
+				? stripTags(content.value, jodit.ed)
+				: content.value;
+		const wanted = isImage ? [] : Array.from(new Set(words(text)));
+		const all = places().map(place => ({ place, own: words(place.text) }));
+		const has = (own: string[], word: string): boolean =>
+			own.some(other => near(word, other));
+		const weight = (word: string): number =>
+			1 / all.filter(({ own }) => has(own, word)).length;
+
+		all.map(({ place, own }) => {
+			const hits = wanted.filter(word => has(own, word));
+
+			return {
+				place,
+				hits: hits.length,
+				score:
+					hits.reduce((sum, word) => sum + weight(word), 0) +
+					hits.length / own.length / 2
+			};
+		})
+			.filter(result => result.hits)
+			.sort((a, b) => b.score - a.score)
+			.slice(0, 3)
+			.forEach(({ place }) => fill(suggested, place.iconName, [place]));
+
+		showHint();
+	};
+
+	const showHint = (): void => {
+		hinted = url.value.trim() ? undefined : suggested.places[0];
+		hint.hidden = !hinted;
+		Dom.detach(hint);
+
+		if (hinted) {
+			const [before, after = ''] = jodit.i18n('Link to %s').split('%s');
+			const name = c.element('strong');
+			name.textContent = hinted.text;
+
+			const textBox = c.span('jodit-link-anchors__text');
+			textBox.append(before, name, after);
+
+			const detailBox = c.span('jodit-link-anchors__name');
+			detailBox.textContent = hinted.detail ?? '';
+			hint.append(icon(hinted.iconName), textBox, detailBox);
+		}
+	};
+
+	const update = (): void => {
+		if (!places().length) {
+			return;
+		}
+
+		if (suggestFromText) {
+			suggest();
+		}
+
+		show(query);
+
+		const label = jodit.i18n(
+			links.places.length ? 'Choose a link' : 'Link to an anchor'
+		);
+		attr(toggle, { title: label, 'aria-label': label });
+		url.placeholder = jodit.i18n('Search or paste a link');
+
+		if (!toggle.isConnected) {
+			Dom.after(url, toggle);
+
+			if (suggestFromText) {
+				Dom.after(field, hint);
+			}
+		}
+
+		if (dropdown.isOpened) {
+			dropdown.updatePosition();
+		}
+	};
+
+	tabs.forEach(group =>
+		jodit.e.on(group.tab, 'click', () => {
+			selected = group;
+			show(query);
+			dropdown.updatePosition();
+		})
+	);
+
 	toggle.append(icon('chevron'));
 	attr(toggle, 'aria-expanded', false);
-	heading.textContent = jodit.i18n('On this page');
-	list.appendChild(heading);
+	hint.hidden = true;
 	dropdown.setContent(list);
 
-	anchors.forEach(anchor => {
-		const name = getAnchorName(anchor);
-		const text = textAfter(jodit, anchor) || name;
-		const item = c.element('button', {
-			type: 'button',
-			tabindex: -1,
-			class: 'jodit-link-anchors__item'
-		});
-		items.push(item);
+	fill(
+		anchors,
+		'anchor',
+		getAnchors(jodit.editor).map(anchor => {
+			const name = getAnchorName(anchor);
 
-		const textBox = c.span('jodit-link-anchors__text');
-		textBox.textContent = text;
+			return {
+				url: '#' + name,
+				text: textAfter(jodit, anchor) || name,
+				detail: '#' + name
+			};
+		})
+	);
+	update();
 
-		const nameBox = c.span('jodit-link-anchors__name');
-		nameBox.textContent = '#' + name;
+	const addLinks = (items: unknown): void => {
+		if (destructed || !Array.isArray(items)) {
+			return;
+		}
 
-		item.append(icon('anchor'), textBox, nameBox);
-		list.appendChild(item);
+		fill(
+			links,
+			'link',
+			(items as ILinkListItem[])
+				.filter(link => link && isString(link.url) && link.url)
+				.map(link => ({
+					url: link.url,
+					text:
+						isString(link.text) && link.text ? link.text : link.url,
+					detail: link.description
+				}))
+		);
+		update();
+	};
 
-		jodit.e.on(item, 'click', () => {
-			dropdown.close();
-			url.value = '#' + name;
+	const { list: given } = jodit.o.link;
+	const result = isFunction(given) ? given(jodit) : given;
 
-			if (
-				!isImage &&
-				(!content.value.trim() || content.value === filled)
-			) {
-				content.value = filled =
-					jodit.o.link.contentMode === 'html'
-						? htmlspecialchars(text)
-						: text;
-			}
-
-			url.focus();
-		});
-	});
+	if (isPromise(result)) {
+		result.then(addLinks, () => null);
+	} else {
+		addLinks(result);
+	}
 
 	// A press on the arrow closes the open list before the click
 	let wasOpen = false;
@@ -759,32 +1061,86 @@ function addAnchorList(
 		.on(dropdown, 'beforeClose', () => attr(toggle, 'aria-expanded', false))
 		.on(toggle, 'mousedown', () => (wasOpen = dropdown.isOpened))
 		.on(toggle, 'click', () => {
-			wasOpen || dropdown.isOpened ? dropdown.close() : open();
+			if (wasOpen || dropdown.isOpened) {
+				dropdown.close();
+			} else {
+				show('');
+				open();
+			}
+
 			wasOpen = false;
 		})
-		.on(url, 'input.anchors', () => {
-			if (url.value && !url.value.startsWith('#')) {
+		.on(hint, 'click', () => hinted && pick(hinted))
+		.on(content, 'input.anchors', () => {
+			if (suggestFromText && content.value !== filled) {
+				suggest();
+				show(query);
+			}
+		})
+		.on(url, 'input.anchors', (e: InputEvent) => {
+			// A pasted or dropped address is finished, not a search
+			const typed = !/^insertFrom(Paste|Drop)/.test(e.inputType ?? '');
+
+			showHint();
+
+			if (typed && url.value.trim() && show(url.value)) {
+				open();
+			} else {
 				dropdown.close();
 			}
 		})
 		.on(url, 'keydown.anchors', (e: KeyboardEvent) => {
+			if (!places().length) {
+				return;
+			}
+
 			if (e.key === KEY_DOWN) {
 				e.preventDefault();
-				open();
-				items[0].focus();
+
+				if (!dropdown.isOpened) {
+					show('');
+					open();
+				}
+
+				visible()[0]?.focus();
 			}
 
 			if (e.key === KEY_ESC && dropdown.isOpened) {
 				e.stopPropagation();
 				dropdown.close();
 			}
+
+			// On to the fields it covers
+			if (e.key === KEY_TAB) {
+				dropdown.close();
+			}
 		})
 		.on(list, 'keydown', (e: KeyboardEvent) => {
+			const items = visible();
 			const index = items.indexOf(e.target as HTMLElement);
 
 			if (e.key === KEY_DOWN || e.key === KEY_UP) {
 				e.preventDefault();
 				items[index + (e.key === KEY_DOWN ? 1 : -1)]?.focus();
+			}
+
+			// Left and right go to the other tab
+			const other = tabs.find(
+				group => group !== selected && group.matches
+			);
+
+			if (
+				(e.key === KEY_LEFT || e.key === KEY_RIGHT) &&
+				!tablist.hidden &&
+				other
+			) {
+				e.preventDefault();
+				selected = other;
+				show(query);
+				visible()
+					.find(item => other.box.contains(item))
+					?.focus();
+				dropdown.updatePosition();
 			}
 
 			if (e.key === KEY_ESC) {
@@ -796,11 +1152,19 @@ function addAnchorList(
 
 	// The URL input is destructed when the form closes
 	input.hookStatus('destructed', () => {
+		destructed = true;
 		dropdown.destruct();
-		jodit.e.off([toggle, list, ...items]).off(url, '.anchors');
+		jodit.e
+			.off([
+				toggle,
+				list,
+				hint,
+				...tabs.map(group => group.tab),
+				...[...suggested.places, ...places()].map(place => place.item)
+			])
+			.off(url, '.anchors')
+			.off(content, '.anchors');
 	});
-
-	Dom.after(url, toggle);
 }
 
 /**
