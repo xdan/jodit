@@ -21,7 +21,6 @@ import type {
 	Nullable
 } from 'jodit/types';
 import { STATUSES, ViewComponent } from 'jodit/core/component/';
-import { IS_ES_NEXT, IS_IE } from 'jodit/core/constants';
 import { Dom } from 'jodit/core/dom/dom';
 import {
 	attr,
@@ -36,7 +35,6 @@ import {
 	hasFiles,
 	hasItems,
 	normalizeUploaderData,
-	processOldBrowserDrag,
 	send,
 	sendFiles
 } from 'jodit/modules/uploader/helpers';
@@ -123,7 +121,7 @@ export class Uploader extends ViewComponent implements IUploader {
 				};
 
 				// send data on server
-				if (!IS_IE && hasFiles(cData)) {
+				if (hasFiles(cData)) {
 					sendFiles(
 						self,
 						cData.files,
@@ -133,18 +131,10 @@ export class Uploader extends ViewComponent implements IUploader {
 					return false;
 				}
 
-				if (IS_IE && !IS_ES_NEXT) {
-					return processOldBrowserDrag(
-						self,
-						cData,
-						handlerSuccess,
-						handlerError,
-						onFinally
-					);
-				}
-
-				if (hasItems(cData)) {
-					const { items } = cData;
+				// `hasFiles` narrows `cData` to `null` here, but a clipboard
+				// without files can still hold items, so read them off the event
+				if (hasItems(e.clipboardData)) {
+					const { items } = e.clipboardData;
 
 					for (i = 0; i < items.length; i += 1) {
 						if (

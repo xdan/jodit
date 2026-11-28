@@ -126,7 +126,6 @@ Config.prototype.iframeStyle =
 	'border:1px solid #ccc;' +
 	'-webkit-user-select:text;' +
 	'-moz-user-select:text;' +
-	'-ms-user-select:text;' +
 	'user-select:text' +
 	'}' +
 	'p{' +
@@ -137,8 +136,7 @@ Config.prototype.iframeStyle =
 	'-o-user-select: none;' +
 	'-moz-user-select: none;' +
 	'-khtml-user-select: none;' +
-	'-webkit-user-select: none;' +
-	'-ms-user-select: none' +
+	'-webkit-user-select: none' +
 	'}';
 Config.prototype.iframeCSSLinks = [];
 Config.prototype.iframeSandbox = null;

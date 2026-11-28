@@ -8,7 +8,7 @@
  * You can use Jodit constants in your code
  * ```javascript
  * import { Jodit } from 'jodit';
- * console.log(Jodit.constants.IS_IE);
+ * console.log(Jodit.constants.MODE_WYSIWYG);
  * console.log(Jodit.constants.APP_VERSION);
  * ```
  * @packageDocumentation
@@ -132,6 +132,8 @@ export const MODE_SPLIT = 3;
 
 /**
  * Is Internet Explorer
+ * @deprecated Internet Explorer is not supported, and Jodit no longer reads
+ * this constant. It will be removed in a future major version.
  */
 export const IS_IE =
 	typeof navigator !== 'undefined' &&
@@ -139,11 +141,11 @@ export const IS_IE =
 		/rv:11.0/i.test(navigator.userAgent));
 
 /**
- * For IE11 it will be 'text'. Need for dataTransfer.setData
+ * Formats for `DataTransfer.getData` and `DataTransfer.setData`
  */
-export const TEXT_PLAIN = IS_IE ? 'text' : 'text/plain';
-export const TEXT_HTML = IS_IE ? 'html' : 'text/html';
-export const TEXT_RTF = IS_IE ? 'rtf' : 'text/rtf';
+export const TEXT_PLAIN = 'text/plain';
+export const TEXT_HTML = 'text/html';
+export const TEXT_RTF = 'text/rtf';
 
 export const MARKER_CLASS = 'jodit-selection_marker';
 

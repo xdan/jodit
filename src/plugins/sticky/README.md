@@ -14,7 +14,6 @@ Makes the toolbar "stick" to the top of the viewport when scrolling, keeping it 
 - Automatic activation when scrolling past editor
 - Configurable top offset for fixed headers
 - Mobile device detection and disable option
-- Dummy box to prevent content jump (IE)
 - Smooth sticky/unsticky transitions
 - Width auto-adjustment on resize
 - WYSIWYG mode only (no sticky in source mode)
@@ -232,13 +231,11 @@ The `__onScroll()` method (throttled):
 
 The `addSticky()` method:
 1. If not already stuck:
-   - Creates dummy box (IE only) if needed
    - Adds `.jodit_sticky` class to container
    - Sets `__isToolbarStuck = true`
 2. Always (even if already stuck):
    - Sets toolbar `top` CSS to `toolbarStickyOffset` (or null if 0)
    - Sets toolbar `width` to container width - 2px (for borders)
-   - Sets dummy box `height` to toolbar height (prevents content jump)
 
 ### Remove Sticky
 
@@ -257,20 +254,11 @@ The `__isMobile()` method:
 - `sizeSM` default is 768px (typical mobile breakpoint)
 - Detects narrow viewports as mobile
 
-### Legacy Dummy Box
-
-The legacy non-ES-next Internet Explorer code path remains in the implementation, but Internet Explorer is not a supported browser:
-- Creates invisible dummy div: `.jodit_sticky-dummy_toolbar`
-- Inserted before toolbar in container
-- Height set to match toolbar height
-- Prevents content jump when toolbar becomes fixed
-- Not needed in modern browsers (handled by CSS)
-
 ### CSS Classes
 
 When sticky active:
 - Container gets `.jodit_sticky` class
-- CSS sets toolbar `position: fixed` and `z-index`
+- CSS sets toolbar `position: sticky` and `z-index`
 - Width and top applied inline for precise control
 
 ### Width Management
@@ -291,7 +279,6 @@ The `__onScroll` method decorated with `@throttle()`:
 ### Cleanup
 
 On `beforeDestruct`:
-- Removes dummy box from DOM
 - Unregisters all `.sticky` namespaced events
 - Removes all event listeners from owner window
 
@@ -340,8 +327,7 @@ if (isStuck) {
 6. **Resize**: Toolbar width recalculated on window resize
 7. **Multiple Editors**: Each editor has independent sticky state
 8. **Fixed Headers**: Use `toolbarStickyOffset` to avoid overlap
-9. **IE Dummy Box**: Only created in old IE to prevent content jump
-10. **Scroll Events**: Throttled to prevent performance issues
+9. **Scroll Events**: Throttled to prevent performance issues
 
 ## Notes
 
@@ -349,12 +335,10 @@ if (isStuck) {
 - Uses `@throttle` decorator for scroll handler
 - Event namespacing: `.sticky` for clean removal
 - CSS class: `.jodit_sticky` on container when active
-- Dummy box class: `.jodit_sticky-dummy_toolbar` (IE only)
 - Mobile detection via `sizeSM` config (default 768px)
 - Width calculation: `container.offsetWidth - 2` (for borders)
 - Top position: `toolbarStickyOffset` or null
 - Sticky only in WYSIWYG mode, not in source/split modes
-- The `NEED_DUMMY_BOX` constant checks for IE (!IS_ES_NEXT && IS_IE)
 - Scroll position calculated with fallback chain
 - Uses `offset()` helper to get editor position
 - The `addSticky` and `removeSticky` methods are public

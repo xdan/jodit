@@ -13,7 +13,6 @@ import type { Nullable } from 'jodit/types';
 export * from './build-data';
 export * from './data-uri-to-blob';
 export * from './normalize-uploader-data';
-export * from './process-old-browser-drag';
 export * from './send';
 export * from './send-files';
 

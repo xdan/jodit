@@ -11,9 +11,8 @@
  */
 
 import type { IJodit } from 'jodit/types';
-import { IS_ES_NEXT, IS_IE, MODE_WYSIWYG } from 'jodit/core/constants';
+import { MODE_WYSIWYG } from 'jodit/core/constants';
 import { throttle } from 'jodit/core/decorators';
-import { Dom } from 'jodit/core/dom/dom';
 import { pluginSystem } from 'jodit/core/global';
 import { css, offset } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin/plugin';
@@ -22,27 +21,14 @@ import './config';
 
 import './sticky.less';
 
-const NEED_DUMMY_BOX = !IS_ES_NEXT && IS_IE;
-
 export class sticky extends Plugin {
 	private __isToolbarStuck: boolean = false;
-	private __dummyBox?: HTMLElement;
-
-	private __createDummy = (toolbar: HTMLElement): void => {
-		this.__dummyBox = this.j.c.div();
-		this.__dummyBox.classList.add('jodit_sticky-dummy_toolbar');
-		Dom.before(toolbar, this.__dummyBox);
-	};
 
 	/**
 	 * Add sticky
 	 */
 	addSticky = (toolbar: HTMLElement): void => {
 		if (!this.__isToolbarStuck) {
-			if (NEED_DUMMY_BOX && !this.__dummyBox) {
-				this.__createDummy(toolbar);
-			}
-
 			this.j.container.classList.add('jodit_sticky');
 			this.__isToolbarStuck = true;
 		}
@@ -52,11 +38,6 @@ export class sticky extends Plugin {
 			top: this.j.o.toolbarStickyOffset || null,
 			width: this.j.container.offsetWidth - 2
 		});
-
-		this.__dummyBox &&
-			css(this.__dummyBox, {
-				height: toolbar.offsetHeight
-			});
 	};
 
 	/**
@@ -138,8 +119,6 @@ export class sticky extends Plugin {
 	}
 
 	override beforeDestruct(jodit: IJodit): void {
-		Dom.safeRemove(this.__dummyBox);
-
 		jodit.e
 			.off(
 				jodit.ow,
