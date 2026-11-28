@@ -316,4 +316,117 @@ describe('Test table plugin', () => {
 			});
 		});
 	});
+
+	describe('leaveStylesToPage option', () => {
+		const table =
+			'<table><tbody><tr><th>1</th><td>2</td></tr></tbody></table>';
+
+		const styleOf = (editor, selector) =>
+			editor.ew.getComputedStyle(editor.editor.querySelector(selector));
+
+		beforeEach(() => {
+			applyGlobalStyle(
+				'.page-content th,.page-content td{padding:1px;border:2px dotted rgb(1, 2, 3)}'
+			);
+		});
+
+		describe('Disabled', () => {
+			it("should style tables with Jodit's look over the page's own rules", () => {
+				const editor = getJodit({ editorClassName: 'page-content' });
+				editor.value = table;
+
+				const tableStyle = styleOf(editor, 'table');
+				expect(parseFloat(tableStyle.marginTop)).eq(
+					parseFloat(tableStyle.fontSize)
+				);
+
+				['th', 'td'].forEach(cell => {
+					const style = styleOf(editor, cell);
+					expect(parseFloat(style.paddingTop)).is.closeTo(
+						parseFloat(style.fontSize) * 0.4,
+						0.1
+					);
+					expect(style.borderTopStyle).eq('solid');
+					expect(style.borderTopWidth).eq('1px');
+				});
+			});
+		});
+
+		describe('Enabled', () => {
+			it("should leave the look of tables to the page's stylesheet", () => {
+				const editor = getJodit({
+					editorClassName: 'page-content',
+					table: { leaveStylesToPage: true }
+				});
+				editor.value = table;
+
+				expect(styleOf(editor, 'table').marginTop).eq('0px');
+
+				['th', 'td'].forEach(cell => {
+					const style = styleOf(editor, cell);
+					expect(style.paddingTop).eq('1px');
+					expect(style.borderTopStyle).eq('dotted');
+					expect(style.borderTopWidth).eq('2px');
+				});
+			});
+
+			it('should keep the cells selectable', () => {
+				const editor = getJodit({ table: { leaveStylesToPage: true } });
+				editor.value = table;
+
+				expect(styleOf(editor, 'tr').userSelect).eq('none');
+				expect(styleOf(editor, 'td').userSelect).eq('text');
+			});
+		});
+
+		describe('In iframe mode', () => {
+			const getIframeJodit = options => {
+				const editor = getJodit({
+					iframe: true,
+					iframeCSSLinks: Jodit.atom([]),
+					...options
+				});
+
+				// Before the default iframeStyle, where iframeCSSLinks go
+				const style = editor.ed.createElement('style');
+				style.textContent =
+					'table{border-collapse:separate}td{border:2px dotted rgb(1, 2, 3)}';
+				editor.ed.head.prepend(style);
+
+				editor.value = table;
+				return editor;
+			};
+
+			it("should style tables with the default iframeStyle's look by default", () => {
+				const editor = getIframeJodit({});
+
+				expect(styleOf(editor, 'table').borderCollapse).eq('collapse');
+				expect(styleOf(editor, 'td').borderTopStyle).eq('solid');
+				expect(styleOf(editor, 'td').borderTopWidth).eq('1px');
+			});
+
+			it('should leave the look of tables to the iframeCSSLinks stylesheets', () => {
+				const editor = getIframeJodit({
+					table: { leaveStylesToPage: true }
+				});
+
+				expect(styleOf(editor, 'table').borderCollapse).eq('separate');
+				expect(styleOf(editor, 'td').borderTopStyle).eq('dotted');
+				expect(styleOf(editor, 'td').borderTopWidth).eq('2px');
+				expect(styleOf(editor, 'td').userSelect).eq('text');
+			});
+
+			it('should keep its class out of the value with editHTMLDocumentMode', () => {
+				const editor = getJodit({
+					iframe: true,
+					editHTMLDocumentMode: true,
+					iframeCSSLinks: Jodit.atom([]),
+					table: { leaveStylesToPage: true }
+				});
+				editor.value = '<p>test</p>';
+
+				expect(editor.value).does.not.match(/<body[^>]*page-tables/);
+			});
+		});
+	});
 });

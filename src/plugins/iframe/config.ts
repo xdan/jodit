@@ -50,7 +50,8 @@ declare module 'jodit/config' {
 		 * Custom style to be used inside the iframe to display content.
 		 * It goes in after `iframeCSSLinks`. The rules Jodit's own plugins need
 		 * in the editing document are added apart from it, so a value of your
-		 * own doesn't have to repeat them.
+		 * own doesn't have to repeat them. The default's rules for the look of
+		 * tables skip the body with `table.leaveStylesToPage`.
 		 *
 		 * ```javascript
 		 * Jodit.make('#editor', {
@@ -114,16 +115,19 @@ Config.prototype.iframeStyle =
 	'overflow:auto;' +
 	'outline:none;' +
 	'}' +
-	'table{' +
+	':where(body:not(.jodit-wysiwyg_page-tables)) table{' +
 	'width:100%;' +
 	'border:none;' +
 	'border-collapse:collapse;' +
 	'empty-cells: show;' +
 	'max-width: 100%;' +
 	'}' +
-	'th,td{' +
+	':where(body:not(.jodit-wysiwyg_page-tables)) th,' +
+	':where(body:not(.jodit-wysiwyg_page-tables)) td{' +
 	'padding: 2px 5px;' +
 	'border:1px solid #ccc;' +
+	'}' +
+	'th,td{' +
 	'-webkit-user-select:text;' +
 	'-moz-user-select:text;' +
 	'-ms-user-select:text;' +

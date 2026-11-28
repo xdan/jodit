@@ -57,6 +57,19 @@ describe('Preview plugin', () => {
 		});
 	});
 
+	describe('With the table plugin leaving styles to the page', () => {
+		it("should keep Jodit's look for tables", () => {
+			const jodit = getJodit({ table: { leaveStylesToPage: true } });
+			jodit.value = '<table><tbody><tr><td>1</td></tr></tbody></table>';
+			clickButton('preview', jodit);
+
+			const cell = getOpenedDialog(jodit).querySelector(
+				'.jodit__preview-box td'
+			);
+			expect(window.getComputedStyle(cell).borderTopStyle).eq('solid');
+		});
+	});
+
 	describe('In iframe mode', () => {
 		it('should show the same content', () => {
 			const jodit = getJodit({ iframe: true });

@@ -96,12 +96,15 @@ Custom inline CSS to be injected into the iframe document, after the `iframeCSSL
 
 The rules Jodit's own plugins need in the editing document, such as the cover that lets a click on an embed select it and the selected image's highlight, are added apart from `iframeStyle`, so a value of your own doesn't have to repeat them.
 
+The default's rules for the look of tables skip the body when `table.leaveStylesToPage` is on, leaving it to the `iframeCSSLinks` stylesheets.
+
 **Default value:**
 ```css
 html{margin:0;padding:0;min-height:100%;}
 body{box-sizing:border-box;font-size:13px;line-height:1.6;padding:10px;margin:0;background:transparent;color:#000;position:relative;z-index:2;user-select:auto;overflow:auto;outline:none;}
-table{width:100%;border:none;border-collapse:collapse;empty-cells:show;max-width:100%;}
-th,td{padding:2px 5px;border:1px solid #ccc;user-select:text;}
+:where(body:not(.jodit-wysiwyg_page-tables)) table{width:100%;border:none;border-collapse:collapse;empty-cells:show;max-width:100%;}
+:where(body:not(.jodit-wysiwyg_page-tables)) th,:where(body:not(.jodit-wysiwyg_page-tables)) td{padding:2px 5px;border:1px solid #ccc;}
+th,td{user-select:text;}
 p{margin-top:0;}
 .jodit_disabled{user-select:none;}
 ```
