@@ -609,7 +609,18 @@ export class Table extends ViewComponent<IJodit> {
 				cells[columnIndex] !== cells[newColumnIndex] ||
 				columnIndex === newColumnIndex
 			) {
-				const cell = this.j.createInside.element('td');
+				// A header row's cell is a header cell, as `toggleHeaderRow` makes them
+				const header = Dom.isTag(
+					cells[columnIndex].parentElement?.parentElement,
+					'thead'
+				);
+
+				const cell = this.j.createInside.element(header ? 'th' : 'td');
+
+				if (header) {
+					attr(cell, 'scope', 'col');
+				}
+
 				Dom.append(cell, this.j.createInside.element('br'));
 				if (insertAfter) {
 					Dom.after(cells[columnIndex], cell);

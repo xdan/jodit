@@ -610,6 +610,53 @@ describe('Tables Jodit Editor Tests', () => {
 				});
 			});
 
+			describe('In a table with a header row', () => {
+				[
+					['after the last column', 1, true],
+					['before the first column', 0, false]
+				].forEach(([name, index, insertAfter]) => {
+					it(
+						'should add a header cell to the header row ' + name,
+						async () => {
+							const editor = getJodit({
+								cleanHTML: { fillEmptyParagraph: true }
+							});
+
+							editor.value =
+								'<table>' +
+								'<thead><tr><th scope="col">A</th><th scope="col">B</th></tr></thead>' +
+								'<tbody><tr><td>1</td><td>2</td></tr></tbody>' +
+								'</table>';
+
+							editor
+								.getInstance(Jodit.modules.Table)
+								.appendColumn(
+									editor.editor.firstChild,
+									editor.editor.querySelectorAll('td')[index],
+									insertAfter
+								);
+
+							await waitingForEvent(
+								editor,
+								'finishedCleanHTMLWorker'
+							);
+
+							expect(sortAttributes(editor.value)).equals(
+								insertAfter
+									? '<table>' +
+											'<thead><tr><th scope="col">A</th><th scope="col">B</th><th scope="col"><br></th></tr></thead>' +
+											'<tbody><tr><td>1</td><td>2</td><td><br></td></tr></tbody>' +
+											'</table>'
+									: '<table>' +
+											'<thead><tr><th scope="col"><br></th><th scope="col">A</th><th scope="col">B</th></tr></thead>' +
+											'<tbody><tr><td><br></td><td>1</td><td>2</td></tr></tbody>' +
+											'</table>'
+							);
+						}
+					);
+				});
+			});
+
 			describe('With merged cells (issue #1334)', () => {
 				it('should insert column after C when A+B are merged and cursor is in C', async () => {
 					const editor = getJodit({
