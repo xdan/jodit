@@ -38,6 +38,7 @@ import {
 	stripTags
 } from 'jodit/core/helpers';
 import { Plugin } from 'jodit/core/plugin';
+import { UIButton } from 'jodit/core/ui/button';
 import { UIElement } from 'jodit/core/ui/element';
 import { Icon } from 'jodit/core/ui/icon';
 import { Popup } from 'jodit/core/ui/popup/popup';
@@ -287,7 +288,14 @@ export class link extends Plugin {
 					.includes('nofollow');
 			}
 
-			insert.textContent = i18n('Update');
+			// Through the button's state, so its text keeps its own element and styles
+			const insertButton = UIElement.closestElement(insert, UIButton);
+
+			if (insertButton) {
+				(insertButton as UIButton).state.text = 'Update';
+			} else {
+				insert.textContent = i18n('Update');
+			}
 		} else {
 			Dom.hide(unlink);
 
